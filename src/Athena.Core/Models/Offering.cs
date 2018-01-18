@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Athena.Core.Models
 {
@@ -22,10 +21,5 @@ namespace Athena.Core.Models
         /// The date that the offering ends on
         /// </summary>
         public DateTime End { get; set; }
-        
-        /// <summary>
-        /// A list of meeting dates and times for the offering
-        /// </summary>
-        public List<Meeting> Meetings { get; set; } = new List<Meeting>();
     }
 }

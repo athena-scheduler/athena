@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Athena.Core.Models
 {
@@ -16,20 +15,5 @@ namespace Athena.Core.Models
         /// A description or motto for the institution
         /// </summary>
         public string Description { get; set; }
-
-        /// <summary>
-        /// The campuses on which the institution offers coursese
-        /// </summary>
-        public List<Campus> Campuses { get; } = new List<Campus>();
-
-        /// <summary>
-        /// The programs offerred by the institution
-        /// </summary>
-        public List<Program> Programs { get; } = new List<Program>();
-        
-        /// <summary>
-        /// The courses offerred by the institution
-        /// </summary>
-        public List<Course> Courses { get; } = new List<Course>();
     }
 }
