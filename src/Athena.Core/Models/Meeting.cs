@@ -23,6 +23,6 @@ namespace Athena.Core.Models
         /// <summary>
         /// The room the meeting is in
         /// </summary>
-        public Room Room { get; set; }
+        public string Room { get; set; }
     }
 }

@@ -27,19 +27,5 @@ namespace Athena.Core.Repositories
         /// <param name="campus">The campus the institution no longer offers courses on</param>
         /// <param name="institution">The institutiton to dissassociate the campus with</param>
         Task DissassociateCampusWithInstitutionAsync(Campus campus, Institution institution);
-
-        /// <summary>
-        /// Add a room to the campus
-        /// </summary>
-        /// <param name="campus">The campus to modify</param>
-        /// <param name="room">The roomm to add</param>
-        Task AddRoomAsync(Campus campus, Room room);
-        
-        /// <summary>
-        /// Remove a room from the campus
-        /// </summary>
-        /// <param name="campus">The campus to modify</param>
-        /// <param name="room">The roomm to remove</param>
-        Task RemoveRoomAsync(Campus campus, Room room);
     }
 }
