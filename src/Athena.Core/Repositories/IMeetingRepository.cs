@@ -12,6 +12,10 @@ namespace Athena.Core.Repositories
         /// </summary>
         /// <param name="offering">The offering to get meetings for</param>
         /// <returns>An IEnumerable of Meetings</returns>
+        /// <remarks>
+        /// To modify this collection, use <see cref="IOfferingReository.AddMeetingAsync"/>
+        /// and <see cref="IOfferingReository.RemoveMeetingAsync"/>
+        /// </remarks>
         Task<IEnumerable<Meeting>> GetMeetingsForOfferingAsync(Offering offering);
     }
 }

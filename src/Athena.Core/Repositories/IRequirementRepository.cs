@@ -12,6 +12,10 @@ namespace Athena.Core.Repositories
         /// </summary>
         /// <param name="course">The course to get requirements for</param>
         /// <returns>An IEnumerable of requirements</returns>
+        /// <remarks>
+        /// Modify this collection with <see cref="ICourseRepositorycs.AddSatisfiedRequirementAsync"/>
+        /// and <see cref="ICourseRepositorycs.RemoveSatisfiedRequirementAsync"/>
+        /// </remarks>
         Task<IEnumerable<Requirement>> GetRequirementsCourseSatisfiesAsync(Course course);
 
         /// <summary>
@@ -19,6 +23,10 @@ namespace Athena.Core.Repositories
         /// </summary>
         /// <param name="course">The course to get prereqs for</param>
         /// <returns>An IEnumerable of requirements</returns>
+        /// <remarks>
+        /// Modify this collection with <see cref="ICourseRepositorycs.AddPrerequisiteAsync"/>
+        /// and <see cref="ICourseRepositorycs.RemovePrerequisiteAsync"/>
+        /// </remarks>
         Task<IEnumerable<Requirement>> GetPrereqsForCourseAsync(Course course);
 
         /// <summary>
@@ -26,6 +34,10 @@ namespace Athena.Core.Repositories
         /// </summary>
         /// <param name="course">The course to get prereqs for</param>
         /// <returns>An IEnumerable of requirements</returns>
+        /// <remarks>
+        /// Modify this collection with <see cref="ICourseRepositorycs.AddConcurrentPrerequisiteAsync"/>
+        /// and <see cref="ICourseRepositorycs.RemoveConcurrentPrerequisiteAsync"/>
+        /// </remarks>
         Task<IEnumerable<Requirement>> GetConcurrentPrereqsAsync(Course course);
 
         /// <summary>
@@ -33,6 +45,10 @@ namespace Athena.Core.Repositories
         /// </summary>
         /// <param name="program">The program to get requirements for</param>
         /// <returns>An IEnumerable of requirements</returns>
+        /// <remarks>
+        /// Modify this collection with <see cref="IProgramRepository.AddRequirementAsync"/>
+        /// and <see cref="IProgramRepository.RemoveRequirementAsync"/>
+        /// </remarks>
         Task<IEnumerable<Requirement>> GetRequirementsForProgramAsync(Program program);
     }
 }

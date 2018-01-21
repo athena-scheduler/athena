@@ -12,6 +12,10 @@ namespace Athena.Core.Repositories
         /// </summary>
         /// <param name="campus">The campus to get institutions for</param>
         /// <returns>An IEnumerable of Institutions</returns>
+        /// <remarks>
+        /// To modify this collection, use <see cref="ICampusRepository.AssociateCampusWithInstitutionAsync"/>
+        /// and <see cref="ICampusRepository.DissassociateCampusWithInstitutionAsync"/>
+        /// </remarks>
         Task<IEnumerable<Institution>> GetInstitutionsOnCampusAsync(Campus campus);
 
         /// <summary>
@@ -20,5 +24,19 @@ namespace Athena.Core.Repositories
         /// <param name="student">The student to get institutions for</param>
         /// <returns>An IEnumerable of Institutions</returns>
         Task<IEnumerable<Institution>> GetInstitutionsForStudentAsync(Student student);
+
+        /// <summary>
+        /// Mark the provided student as enrolled with the specified institution
+        /// </summary>
+        /// <param name="institution">The institution to enroll the student with</param>
+        /// <param name="student">The student to enroll</param>
+        Task EnrollStudentAsync(Institution institution, Student student);
+        
+        /// <summary>
+        /// Mark the provided student as enrolled with the specified institution
+        /// </summary>
+        /// <param name="institution">The institution to unenroll the student with</param>
+        /// <param name="student">The student to unenroll</param>
+        Task UnenrollStudentAsync(Institution institution, Student student);
     }
 }

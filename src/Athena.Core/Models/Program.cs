@@ -16,5 +16,10 @@ namespace Athena.Core.Models
         /// A description of the Program
         /// </summary>
         public string Description { get; set; }
+        
+        /// <summary>
+        /// The institution that offers this institution
+        /// </summary>
+        public Institution Institution { get; set; }
     }
 }

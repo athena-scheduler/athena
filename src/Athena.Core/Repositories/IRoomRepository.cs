@@ -12,6 +12,10 @@ namespace Athena.Core.Repositories
         /// </summary>
         /// <param name="campus">The campus to get rooms for</param>
         /// <returns>An IEnumerable of Rooms</returns>
+        /// <remarks>
+        /// Modify this collection with <see cref="ICampusRepository.AddRoomAsync"/>
+        /// and <see cref="ICampusRepository.RemoveRoomAsync"/>
+        /// </remarks>
         Task<IEnumerable<Room>> GetRoomsOnCampusAsync(Campus campus);
     }
 }
