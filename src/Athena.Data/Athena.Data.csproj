@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Athena.Core\Athena.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.4" />
+    <PackageReference Include="Npgsql" Version="3.2.6" />
+    <PackageReference Include="Simple.Migrations" Version="0.9.18" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Migrations/src/**/*.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations/src/**/*.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\src" />
+  </ItemGroup>
+</Project>
