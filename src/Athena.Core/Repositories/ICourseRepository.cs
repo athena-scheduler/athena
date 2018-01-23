@@ -5,7 +5,7 @@ using Athena.Core.Models;
 
 namespace Athena.Core.Repositories
 {
-    public interface ICourseRepositorycs : IRepository<Course, Guid>
+    public interface ICourseRepository : IRepository<Course, Guid>
     {
         /// <summary>
         /// Get all courses offered by the provided institution
