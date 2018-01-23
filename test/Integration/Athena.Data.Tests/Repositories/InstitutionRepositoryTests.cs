@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Athena.Core.Exceptions;
 using Athena.Core.Models;
 using Athena.Data.Repositories;
-using Athena.Data.Tests.Util;
 using AutoFixture.Xunit2;
 using Xunit;
 
@@ -12,7 +11,6 @@ namespace Athena.Data.Tests.Repositories
 {
     public class InstitutionRepositoryTests : DataTest
     {
-        private readonly IEqualityComparer<Institution> _comparator = new PropertyEqualityComparer<Institution>();
         private readonly InstitutionRepository _sut;
 
         public InstitutionRepositoryTests() => _sut = new InstitutionRepository(_db);
@@ -23,7 +21,7 @@ namespace Athena.Data.Tests.Repositories
             await _sut.AddAsync(institution);
 
             var result = await _sut.GetAsync(institution.Id);
-            Assert.Equal(institution, result, _comparator);
+            Assert.Equal(institution, result);
         }
 
         [Theory, AutoData]
@@ -43,7 +41,7 @@ namespace Athena.Data.Tests.Repositories
             await _sut.EditAsync(changes);
 
             var result = await _sut.GetAsync(changes.Id);
-            Assert.Equal(changes, result, _comparator);
+            Assert.Equal(changes, result);
         }
 
         [Theory, AutoData]
@@ -71,7 +69,7 @@ namespace Athena.Data.Tests.Repositories
             var results = (await _sut.GetInstitutionsOnCampusAsync(campus)).ToList();
             
             Assert.Equal(institutions.Count, results.Count);
-            Assert.All(institutions, i => Assert.Contains(i, results, _comparator));
+            Assert.All(institutions, i => Assert.Contains(i, results));
         }
     }
 }
