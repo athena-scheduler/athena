@@ -65,11 +65,6 @@ CREATE TABLE IF NOT EXISTS campus_x_institution (
   institution UUID REFERENCES institutions (id) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS course_x_institution (
-  course UUID REFERENCES courses (id) NOT NULL,
-  institution UUID REFERENCES institutions (id) NOT NULL 
-);
-
 CREATE TABLE IF NOT EXISTS student_x_completed_course (
   student UUID REFERENCES students (id) NOT NULL,
   course UUID REFERENCES courses (id) NOT NULL
