@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Athena.Core.Exceptions;
 using Athena.Core.Models;
@@ -53,6 +54,51 @@ namespace Athena.Data.Tests.Repositories
 
             await _sut.DeleteAsync(campus);
             Assert.Null(await _sut.GetAsync(campus.Id));
+        }
+
+        [Theory, AutoData]
+        public async Task CanAssociateCampusWithInstitution(List<Campus> campuses, Institution institution)
+        {
+            var institutionRepo = new InstitutionRepository(_db);
+
+            await institutionRepo.AddAsync(institution);
+            foreach (var campus in campuses)
+            {
+                await _sut.AddAsync(campus);
+                await _sut.AssociateCampusWithInstitutionAsync(campus, institution);
+            }
+
+            var results = (await _sut.GetCampusesForInstitutionAsync(institution)).ToList();
+            
+            Assert.Equal(campuses.Count, results.Count);
+            Assert.All(campuses, c => Assert.Contains(c, results, _comparator));
+        }
+        
+        [Theory, AutoData]
+        public async Task CanDisassociateCampusWithInstitution(Campus extra, List<Campus> campuses, Institution institution)
+        {
+            var institutionRepo = new InstitutionRepository(_db);
+
+            await institutionRepo.AddAsync(institution);
+            foreach (var campus in campuses.Union(new[] {extra}))
+            {
+                await _sut.AddAsync(campus);
+                await _sut.AssociateCampusWithInstitutionAsync(campus, institution);
+            }
+
+            var results = (await _sut.GetCampusesForInstitutionAsync(institution)).ToList();
+            
+            Assert.Equal(campuses.Count + 1, results.Count);
+            Assert.All(campuses, c => Assert.Contains(c, results, _comparator));
+            Assert.Contains(extra, results, _comparator);
+
+            await _sut.DissassociateCampusWithInstitutionAsync(extra, institution);
+            
+            results = (await _sut.GetCampusesForInstitutionAsync(institution)).ToList();
+            
+            Assert.Equal(campuses.Count, results.Count);
+            Assert.All(campuses, c => Assert.Contains(c, results, _comparator));
+            Assert.DoesNotContain(extra, results, _comparator);
         }
     }
 }

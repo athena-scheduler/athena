@@ -17,8 +17,8 @@ namespace Athena.Data.Tests
         private readonly TransactionScope _scope;
 
         static DataTest() => new DatabaseMigrator(ConnectionString).Migrate();
-        
-        public DataTest()
+
+        protected DataTest()
         {
             _db = new NpgsqlConnection(ConnectionString);
             if (_db.State != ConnectionState.Open)

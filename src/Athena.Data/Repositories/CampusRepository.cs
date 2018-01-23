@@ -17,7 +17,8 @@ namespace Athena.Data.Repositories
         }
 
         public async Task<Campus> GetAsync(Guid id) =>
-    (await _db.QueryAsync<Campus>("select * from campuses where id = @id", new {id})).FirstOrDefault();
+            (await _db.QueryAsync<Campus>("SELECT * FROM campuses WHERE id = @id", new {id}))
+                .FirstOrDefault();
 
         public async Task AddAsync(Campus obj) => await _db.InsertUniqueAsync(
             "INSERT INTO campuses VALUES (@id, @name, @description, @location)",
@@ -43,12 +44,11 @@ namespace Athena.Data.Repositories
                 SELECT c.id,
                        c.name,
                        c.description,
-                       c.location,
+                       c.location
                 FROM campuses c
                     LEFT JOIN campus_x_institution link
                         ON c.id = link.campus
-                WHERE link.institution = @id
-                ",
+                WHERE link.institution = @id",
                 new {institution.Id}
             );
 
