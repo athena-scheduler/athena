@@ -12,7 +12,7 @@ namespace Athena.Data.Tests
         private static readonly string ConnectionString = Environment.GetEnvironmentVariable("ATHENA_DATA_TESTS_CON")
                                                           ?? DEFAULT_CONNECTION_STRING;
 
-        private readonly IDbConnection _db;
+        protected readonly IDbConnection _db;
 
         private readonly TransactionScope _scope;
 
