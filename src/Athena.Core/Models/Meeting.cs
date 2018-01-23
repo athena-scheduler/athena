@@ -14,7 +14,7 @@ namespace Athena.Core.Models
         /// <summary>
         /// The time of day the meeting is at
         /// </summary>
-        public DateTime Time { get; set; }
+        public TimeSpan Time { get; set; }
         /// <summary>
         /// The durationof the meeting
         /// </summary>
@@ -31,8 +31,8 @@ namespace Athena.Core.Models
             if (ReferenceEquals(this, other)) return true;
             return Id.Equals(other.Id) &&
                    Day == other.Day &&
-                   Time.Equals(other.Time) && 
-                   Duration.Equals(other.Duration) &&
+                   Math.Floor(Time.TotalMilliseconds).Equals(Math.Floor(other.Time.TotalMilliseconds)) &&
+                   Math.Floor(Duration.TotalMilliseconds).Equals(Math.Floor(other.Duration.TotalMilliseconds)) &&
                    string.Equals(Room, other.Room);
         }
 
