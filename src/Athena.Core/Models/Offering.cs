@@ -28,8 +28,8 @@ namespace Athena.Core.Models
             if (ReferenceEquals(this, other)) return true;
             return Id.Equals(other.Id) &&
                    Equals(Campus, other.Campus) &&
-                   Start.Equals(other.Start) &&
-                   End.Equals(other.End);
+                   Start.Date.Equals(other.Start.Date) &&
+                   End.Date.Equals(other.End.Date);
         }
 
         public override bool Equals(object obj)

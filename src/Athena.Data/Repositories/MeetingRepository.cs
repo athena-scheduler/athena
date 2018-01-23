@@ -43,7 +43,7 @@ namespace Athena.Data.Repositories
         public async Task<IEnumerable<Meeting>> GetMeetingsForOfferingAsync(Offering offering) =>
             await _db.QueryAsync<Meeting>(@"
                 SELECT m.id,
-                       m.day
+                       m.day,
                        m.time,
                        m.duration,
                        m.room
