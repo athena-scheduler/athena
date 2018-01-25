@@ -163,5 +163,86 @@ namespace Athena.Data.Tests.Repositories
             
             Assert.Empty(await requirementRepository.GetPrereqsForCourseAsync(course));
         }
+
+        [Theory, AutoData]
+        public async Task TracksCompletedCoursesForStudent(List<Course> courses, Student student)
+        {
+            var studentRepo = new StudentRepository(_db);
+            await studentRepo.AddAsync(student);
+
+            foreach (var c in courses)
+            {
+                await _institutions.AddAsync(c.Institution);
+                await _sut.AddAsync(c);
+                await _sut.MarkCourseAsCompletedForStudentAsync(c, student);
+            }
+
+            var results = (await _sut.GetCompletedCoursesForStudentAsync(student)).ToList();
+            
+            Assert.Equal(courses.Count, results.Count);
+            Assert.All(courses, c => Assert.Contains(c, results));
+
+            foreach (var c in courses)
+            {
+                await _sut.MarkCourseAsUncompletedForStudentAsync(c, student);
+            }
+            
+            Assert.Empty(await _sut.GetCompletedCoursesForStudentAsync(student));
+        }
+        
+        [Theory, AutoData]
+        public async Task TracksInProgressCoursesForStudent(List<Course> courses, Student student)
+        {
+            var studentRepo = new StudentRepository(_db);
+            await studentRepo.AddAsync(student);
+
+            foreach (var c in courses)
+            {
+                await _institutions.AddAsync(c.Institution);
+                await _sut.AddAsync(c);
+                await _sut.MarkCourseInProgressForStudentAsync(c, student);
+            }
+
+            var results = (await _sut.GetInProgressCoursesForStudentAsync(student)).ToList();
+            
+            Assert.Equal(courses.Count, results.Count);
+            Assert.All(courses, c => Assert.Contains(c, results));
+
+            foreach (var c in courses)
+            {
+                await _sut.MarkCourseNotInProgressForStudentAsync(c, student);
+            }
+            
+            Assert.Empty(await _sut.GetInProgressCoursesForStudentAsync(student));
+        }
+
+        [Theory, AutoData]
+        public async Task TracksOfferings(List<Offering> offerings, Course course, Campus common)
+        {
+            var campusRepo = new CampusRepository(_db);
+            var offeringRepo = new OfferingRepository(_db);
+
+            await _institutions.AddAsync(course.Institution);
+            await _sut.AddAsync(course);
+            await campusRepo.AddAsync(common);
+            foreach (var o in offerings)
+            {
+                o.Campus = common;
+                await offeringRepo.AddAsync(o);
+                await _sut.AddOfferingAsync(course, o);
+            }
+
+            var results = (await offeringRepo.GetOfferingsForCourseAsync(course)).ToList();
+            
+            Assert.Equal(offerings.Count, results.Count);
+            Assert.All(offerings, o => Assert.Contains(o, results));
+
+            foreach (var o in offerings)
+            {
+                await _sut.RemoveOfferingAsync(course, o);
+            }
+            
+            Assert.Empty(await offeringRepo.GetOfferingsForCourseAsync(course));
+        }
     }
 }

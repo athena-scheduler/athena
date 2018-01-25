@@ -72,6 +72,8 @@ namespace Athena.Data.Repositories
                        i.name,
                        i.description
                 FROM courses c
+                    LEFT JOIN institutions i
+                        ON c.institution = i.id
                     LEFT JOIN student_x_completed_course link
                         ON c.id = link.course
                 WHERE link.student = @student",
@@ -92,14 +94,19 @@ namespace Athena.Data.Repositories
             );
 
         public async Task<IEnumerable<Course>> GetInProgressCoursesForStudentAsync(Student student) =>
-            await _db.QueryAsync<Course>(@"
+            await _db.QueryAsync<Course, Institution, Course>(@"
                 SELECT c.id,
                        c.name,
-                       c.institution
+                       i.id,
+                       i.name,
+                       i.description
                 FROM courses c
+                    LEFT JOIN institutions i
+                        ON c.institution = i.id
                     LEFT JOIN student_x_in_progress_course link
                         ON c.id = link.course
                 WHERE link.student = @student",
+                _mapInstitution,
                 new { student = student.Id }
             );
 

@@ -55,7 +55,7 @@ namespace Athena.Data.Tests.Repositories
         }
 
         [Theory, AutoData]
-        public async Task CanGetInstitutionsOnCampus(Campus campus, List<Institution> institutions)
+        public async Task TracksCampuses(Campus campus, List<Institution> institutions)
         {
             var campusRepo = new CampusRepository(_db);
 
@@ -70,6 +70,38 @@ namespace Athena.Data.Tests.Repositories
             
             Assert.Equal(institutions.Count, results.Count);
             Assert.All(institutions, i => Assert.Contains(i, results));
+
+            foreach (var institution in institutions)
+            {
+                await campusRepo.DissassociateCampusWithInstitutionAsync(campus, institution);
+            }
+            
+            Assert.Empty(await _sut.GetInstitutionsOnCampusAsync(campus));
+        }
+
+        [Theory, AutoData]
+        public async Task TracksStudents(List<Institution> institutions, Student student)
+        {
+            var studentRepo = new StudentRepository(_db);
+
+            await studentRepo.AddAsync(student);
+            foreach (var i in institutions)
+            {
+                await _sut.AddAsync(i);
+                await _sut.EnrollStudentAsync(i, student);
+            }
+
+            var results = (await _sut.GetInstitutionsForStudentAsync(student)).ToList();
+            
+            Assert.Equal(institutions.Count, results.Count);
+            Assert.All(institutions, i => Assert.Contains(i, results));
+
+            foreach (var i in institutions)
+            {
+                await _sut.UnenrollStudentAsync(i, student);
+            }
+            
+            Assert.Empty(await _sut.GetInstitutionsForStudentAsync(student));
         }
     }
 }

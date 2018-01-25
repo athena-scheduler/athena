@@ -53,34 +53,5 @@ namespace Athena.Data.Tests.Repositories
             await _sut.DeleteAsync(meeting);
             Assert.Null(await _sut.GetAsync(meeting.Id));
         }
-
-        [Theory, AutoData]
-        public async Task GetMeetingsForOffering(List<Meeting> meetings, Meeting extra, Offering offering)
-        {
-            var _c = new CampusRepository(_db);
-            var _o = new OfferingRepository(_db);
-
-            await _c.AddAsync(offering.Campus);
-            await _o.AddAsync(offering);
-
-            foreach (var meeting in meetings.Union(new [] {extra}))
-            {
-                await _sut.AddAsync(meeting);
-                await _o.AddMeetingAsync(offering, meeting);
-            }
-
-            var results = (await _sut.GetMeetingsForOfferingAsync(offering)).ToList();
-            
-            Assert.Equal(meetings.Count + 1, results.Count);
-            Assert.All(meetings, m => Assert.Contains(m, results));
-            Assert.Contains(extra, results);
-
-            await _o.RemoveMeetingAsync(offering, extra);
-            results = (await _sut.GetMeetingsForOfferingAsync(offering)).ToList();
-            
-            Assert.Equal(meetings.Count, results.Count);
-            Assert.All(meetings, m => Assert.Contains(m, results));
-            Assert.DoesNotContain(extra, results);
-        }
     }
 }
