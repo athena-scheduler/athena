@@ -42,5 +42,18 @@ namespace Athena.Core.Models
             if (ReferenceEquals(this, obj)) return true;
             return obj.GetType() == this.GetType() && Equals((Meeting) obj);
         }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = Id.GetHashCode();
+                hashCode = (hashCode * 397) ^ (int) Day;
+                hashCode = (hashCode * 397) ^ Time.GetHashCode();
+                hashCode = (hashCode * 397) ^ Duration.GetHashCode();
+                hashCode = (hashCode * 397) ^ (Room != null ? Room.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
     }
 }
