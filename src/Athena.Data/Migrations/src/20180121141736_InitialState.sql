@@ -52,61 +52,61 @@ CREATE TABLE IF NOT EXISTS students (
 );
 
 CREATE TABLE IF NOT EXISTS campus_x_institution (
-  campus UUID REFERENCES campuses (id) NOT NULL,
-  institution UUID REFERENCES institutions (id) NOT NULL
+  campus UUID NOT NULL REFERENCES campuses (id) ON DELETE CASCADE,
+  institution UUID NOT NULL REFERENCES institutions (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS student_x_completed_course (
-  student UUID REFERENCES students (id) NOT NULL,
-  course UUID REFERENCES courses (id) NOT NULL
+  student UUID NOT NULL REFERENCES students (id) ON DELETE CASCADE,
+  course UUID NOT NULL REFERENCES courses (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS student_x_in_progress_course (
-  student UUID REFERENCES students (id) NOT NULL,
-  course UUID REFERENCES courses (id) NOT NULL
+  student UUID NOT NULL REFERENCES students (id) ON DELETE CASCADE,
+  course UUID NOT NULL REFERENCES courses (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS course_x_offering (
-  course UUID REFERENCES courses (id) NOT NULL,
-  offering UUID REFERENCES offerings (id) NOT NULL
+  course UUID NOT NULL REFERENCES courses (id) ON DELETE CASCADE,
+  offering UUID NOT NULL REFERENCES offerings (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS course_requirements (
-  course UUID REFERENCES courses (id) NOT NULL,
-  requirement UUID REFERENCES requirements (id) NOT NULL
+  course UUID NOT NULL REFERENCES courses (id) ON DELETE CASCADE,
+  requirement UUID NOT NULL REFERENCES requirements (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS course_prereqs (
-  course UUID REFERENCES courses (id) NOT NULL,
-  prereq UUID REFERENCES requirements (id) NOT NULL
+  course UUID NOT NULL REFERENCES courses (id) ON DELETE CASCADE,
+  prereq UUID NOT NULL REFERENCES requirements (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS course_concurrent_prereqs (
-  course UUID REFERENCES courses (id) NOT NULL,
-  prereq UUID REFERENCES requirements (id) NOT NULL
+  course UUID NOT NULL REFERENCES courses (id) ON DELETE CASCADE,
+  prereq UUID NOT NULL REFERENCES requirements (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS institution_x_student (
-  institution UUID REFERENCES institutions (id) NOT NULL,
-  student UUID REFERENCES students (id) NOT NULL
+  institution UUID NOT NULL REFERENCES institutions (id) ON DELETE CASCADE,
+  student UUID NOT NULL REFERENCES students (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS offering_x_meeting (
-  offering UUID REFERENCES offerings (id) NOT NULL,
-  meeting UUID REFERENCES meetings (id) NOT NULL
+  offering UUID NOT NULL REFERENCES offerings (id) ON DELETE CASCADE,
+  meeting UUID NOT NULL REFERENCES meetings (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS instituion_x_program (
-  institution UUID REFERENCES institutions (id) NOT NULL,
-  program UUID REFERENCES programs (id) NOT NULL
+  institution UUID NOT NULL REFERENCES institutions (id) ON DELETE CASCADE,
+  program UUID NOT NULL REFERENCES programs (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS program_requirements (
-  program UUID REFERENCES programs (id) NOT NULL,
-  requirement UUID REFERENCES requirements (id) NOT NULL
+  program UUID NOT NULL REFERENCES programs (id) ON DELETE CASCADE,
+  requirement UUID NOT NULL REFERENCES requirements (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS student_x_program (
-  student UUID REFERENCES students (id) NOT NULL,
-  program UUID REFERENCES programs (id) NOT NULL
+  student UUID NOT NULL REFERENCES students (id) ON DELETE CASCADE,
+  program UUID NOT NULL REFERENCES programs (id) ON DELETE CASCADE
 );
