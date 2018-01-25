@@ -86,5 +86,32 @@ namespace Athena.Data.Tests.Repositories
             Assert.All(programs, p => Assert.Contains(p, results));
             Assert.DoesNotContain(exclude, results);
         }
+
+        [Theory, AutoData]
+        public async Task TracksRequirements(List<Requirement> requirements, Program program)
+        {
+            var requirementRepository = new RequirementRepository(_db);
+            
+            await _instutitons.AddAsync(program.Institution);
+            await _sut.AddAsync(program);
+
+            foreach (var r in requirements)
+            {
+                await requirementRepository.AddAsync(r);
+                await _sut.AddRequirementAsync(program, r);
+            }
+
+            var results = (await requirementRepository.GetRequirementsForProgramAsync(program)).ToList();
+            
+            Assert.Equal(requirements.Count, results.Count);
+            Assert.All(requirements, r => Assert.Contains(r, results));
+
+            foreach (var r in requirements)
+            {
+                await _sut.RemoveRequirementAsync(program, r);
+            }
+
+            Assert.Empty(await requirementRepository.GetRequirementsForProgramAsync(program));
+        }
     }
 }

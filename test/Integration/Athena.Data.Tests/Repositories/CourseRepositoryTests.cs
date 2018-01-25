@@ -82,5 +82,86 @@ namespace Athena.Data.Tests.Repositories
             Assert.Equal(courses.Count, results.Count);
             Assert.All(courses, c => Assert.Contains(c, results));
         }
+
+        [Theory, AutoData]
+        public async Task TracksRequirements(List<Requirement> requirements, Course course)
+        {
+            var requirementRepository = new RequirementRepository(_db);
+
+            await _institutions.AddAsync(course.Institution);
+            await _sut.AddAsync(course);
+
+            foreach (var r in requirements)
+            {
+                await requirementRepository.AddAsync(r);
+                await _sut.AddSatisfiedRequirementAsync(course, r);
+            }
+
+            var results = (await requirementRepository.GetRequirementsCourseSatisfiesAsync(course)).ToList();
+            
+            Assert.Equal(requirements.Count, results.Count);
+            Assert.All(requirements, r => Assert.Contains(r, results));
+
+            foreach (var r in requirements)
+            {
+                await _sut.RemoveSatisfiedRequirementAsync(course, r);
+            }
+            
+            Assert.Empty(await requirementRepository.GetRequirementsCourseSatisfiesAsync(course));
+        }
+
+        [Theory, AutoData]
+        public async Task TracksPrereqs(List<Requirement> prereqs, Course course)
+        {
+            var requirementRepository = new RequirementRepository(_db);
+
+            await _institutions.AddAsync(course.Institution);
+            await _sut.AddAsync(course);
+
+            foreach (var r in prereqs)
+            {
+                await requirementRepository.AddAsync(r);
+                await _sut.AddPrerequisiteAsync(course, r);
+            }
+
+            var results = (await requirementRepository.GetPrereqsForCourseAsync(course)).ToList();
+            
+            Assert.Equal(prereqs.Count, results.Count);
+            Assert.All(prereqs, r => Assert.Contains(r, results));
+
+            foreach (var r in prereqs)
+            {
+                await _sut.RemovePrerequisiteAsync(course, r);
+            }
+            
+            Assert.Empty(await requirementRepository.GetPrereqsForCourseAsync(course));
+        }
+        
+        [Theory, AutoData]
+        public async Task TracksConcurrentPrereqs(List<Requirement> prereqs, Course course)
+        {
+            var requirementRepository = new RequirementRepository(_db);
+
+            await _institutions.AddAsync(course.Institution);
+            await _sut.AddAsync(course);
+
+            foreach (var r in prereqs)
+            {
+                await requirementRepository.AddAsync(r);
+                await _sut.AddConcurrentPrerequisiteAsync(course, r);
+            }
+
+            var results = (await requirementRepository.GetConcurrentPrereqsAsync(course)).ToList();
+            
+            Assert.Equal(prereqs.Count, results.Count);
+            Assert.All(prereqs, r => Assert.Contains(r, results));
+
+            foreach (var r in prereqs)
+            {
+                await _sut.RemoveConcurrentPrerequisiteAsync(course, r);
+            }
+            
+            Assert.Empty(await requirementRepository.GetPrereqsForCourseAsync(course));
+        }
     }
 }
