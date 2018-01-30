@@ -13,8 +13,8 @@ namespace Athena.Core.Repositories
         /// <param name="course">The course to get requirements for</param>
         /// <returns>An IEnumerable of requirements</returns>
         /// <remarks>
-        /// Modify this collection with <see cref="ICourseRepositorycs.AddSatisfiedRequirementAsync"/>
-        /// and <see cref="ICourseRepositorycs.RemoveSatisfiedRequirementAsync"/>
+        /// Modify this collection with <see cref="ICourseRepository.AddSatisfiedRequirementAsync"/>
+        /// and <see cref="ICourseRepository.RemoveSatisfiedRequirementAsync"/>
         /// </remarks>
         Task<IEnumerable<Requirement>> GetRequirementsCourseSatisfiesAsync(Course course);
 
@@ -24,8 +24,8 @@ namespace Athena.Core.Repositories
         /// <param name="course">The course to get prereqs for</param>
         /// <returns>An IEnumerable of requirements</returns>
         /// <remarks>
-        /// Modify this collection with <see cref="ICourseRepositorycs.AddPrerequisiteAsync"/>
-        /// and <see cref="ICourseRepositorycs.RemovePrerequisiteAsync"/>
+        /// Modify this collection with <see cref="ICourseRepository.AddPrerequisiteAsync"/>
+        /// and <see cref="ICourseRepository.RemovePrerequisiteAsync"/>
         /// </remarks>
         Task<IEnumerable<Requirement>> GetPrereqsForCourseAsync(Course course);
 
@@ -35,8 +35,8 @@ namespace Athena.Core.Repositories
         /// <param name="course">The course to get prereqs for</param>
         /// <returns>An IEnumerable of requirements</returns>
         /// <remarks>
-        /// Modify this collection with <see cref="ICourseRepositorycs.AddConcurrentPrerequisiteAsync"/>
-        /// and <see cref="ICourseRepositorycs.RemoveConcurrentPrerequisiteAsync"/>
+        /// Modify this collection with <see cref="ICourseRepository.AddConcurrentPrerequisiteAsync"/>
+        /// and <see cref="ICourseRepository.RemoveConcurrentPrerequisiteAsync"/>
         /// </remarks>
         Task<IEnumerable<Requirement>> GetConcurrentPrereqsAsync(Course course);
 

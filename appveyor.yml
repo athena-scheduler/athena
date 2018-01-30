@@ -1,5 +1,9 @@
 version: 1.0.{build}
 image: Visual Studio 2017
 
+services: postgresql96
+environment:
+  ATHENA_DATA_TESTS_CON: Server=localhost;User ID=postgres;Password=Password12!;Database=postgres
+
 build_script:
 - ps: ./build.ps1
