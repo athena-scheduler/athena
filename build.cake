@@ -1,4 +1,5 @@
 #addin "nuget:?package=Cake.Docker&version=0.8.2"
+#addin "nuget:?package=Cake.NPM&version=0.12.1"
 
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -45,14 +46,39 @@ Task("Clean")
     DotNetCoreClean(SOLUTION);
 });
 
-Task("Restore")
+Task("Restore::NPM")
+    .Does(() =>
+{
+    NpmInstall(new NpmInstallSettings
+    {
+        WorkingDirectory = "./src/Athena"
+    });
+});
+
+Task("Restore::Nuget")
     .Does(() =>
 {
     DotNetCoreRestore(SOLUTION);
 });
 
+Task("Restore")
+    .IsDependentOn("Restore::NPM")
+    .IsDependentOn("Restore::Nuget");
+
+Task("Bundle")
+    .IsDependentOn("Restore::NPM")
+    .Does(() => 
+{
+    NpmRunScript(new NpmRunScriptSettings
+    {
+        WorkingDirectory = "./src/Athena",
+        ScriptName = configuration == "Release" ? "bundle"  : "bundle::dev"
+    });
+});
+
 Task("Build")
     .IsDependentOn("Restore")
+    .IsDependentOn("Bundle")
     .Does(() =>
 {
     DotNetCoreBuild(SOLUTION, new DotNetCoreBuildSettings {
