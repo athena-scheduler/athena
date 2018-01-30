@@ -29,6 +29,16 @@ namespace Athena.Controllers
             return View();
         }
 
+        public IActionResult NewAccountPage()
+        {
+            return View();
+        }
+
+        public IActionResult Main_Page()
+        {
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

@@ -15,9 +15,68 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+    <script>
+        var arr, body, tab, tr, td, tn, row, col, p, s, max;
+        arr = [
+            [0, 1, 2],
+            [1, 2, 3, 4],
+            [2, 3, 4, 5, 6]
+        ];
+
+        body = document.getElementsByTagName('body')[0];
+        tab = document.createElement('table');
+        max = arr[0].length;
+        for (row = 0; row < arr.length; row++) {
+            tr = document.createElement('tr');
+            for (col = 0; col < arr[row].length; col++) {
+                td = document.createElement('td');
+                tn = document.createTextNode(arr[row][col]);
+                td.appendChild(tn);
+                tr.appendChild(td);
+            }
+            tab.appendChild(tr);
+            max = col > max ? col : max;
+        }
+        body.appendChild(tab);
+        p = document.createElement('p');
+        tn = document.createTextNode('Max columns: ');
+        p.appendChild(tn);
+        s = document.createElement('span');
+        tn = document.createTextNode(max);
+        s.appendChild(tn);
+        p.appendChild(s);
+        body.appendChild(p);
+        tr = document.getElementsByTagName('tr');
+        for (row = 0; row < arr.length; row++) {
+            col = arr[row].length;
+            while (col < max) {
+                td = document.createElement('td');
+                tn = document.createTextNode(' ');
+                td.appendChild(tn);
+                tr[row].appendChild(td);
+                col++;
+            }
+        }
+    </script>
+
+
 </head>
+
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+
+
+
+
+    <!--<nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -33,11 +92,12 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Main_Page">Main Page</a></li>
                 </ul>
             </div>
         </div>
-    </nav>
-    <div class="container body-content">
+    </nav>-->
+    <div class="container body-content;">
         @RenderBody()
         <hr />
         <footer>
@@ -67,5 +127,75 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
+
+    <script>
+        $('.dropdown-button').dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            constrainWidth: false, // Does not change width of dropdown to that of the activator
+            hover: true, // Activate on hover
+            gutter: 0, // Spacing from edge
+            belowOrigin: false, // Displays dropdown below the button
+            alignment: 'left', // Displays dropdown with edge aligned to the left of button
+            stopPropagation: false // Stops event propagation
+        }
+        );</script>
+
+    <script>    $(".button-collapse").sideNav();</script>
+
+    <script>
+        $('.button-collapse').sideNav({
+            menuWidth: 300, // Default is 300
+            edge: 'right', // Choose the horizontal origin
+            closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+            draggable: true, // Choose whether you can drag to open on touch screens,
+            onOpen: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
+            onClose: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
+        }
+        );
+    </script>
+
+    <!--Import jQuery before materialize.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+
+
+
+
+<script>
+        $(document).ready(function () {
+            var date = new Date();
+            var d = date.getDate();
+            var m = date.getMonth();
+            var y = date.getFullYear();
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek,basicDay'
+                },
+                defaultView: 'basicWeek',
+                editable: true,
+                firstDay: new Date().getDay(),
+                events: [
+                    {
+                        title: 'All Day Event',
+                        start: new Date(y, m, 1)
+                    },
+                    {
+                        title: 'Long Event',
+                        start: new Date(y, m, d - 5),
+                        end: new Date(y, m, d - 2)
+                    },
+                    {
+                        id: 999,
+                        title: 'Repeating Event',
+                        start: new Date(y, m, d - 3, 16, 0),
+                        allDay: false
+                    }
+                ]
+            });
+        });
+</script>
 </body>
 </html>
