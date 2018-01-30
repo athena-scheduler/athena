@@ -66,6 +66,7 @@ Task("Restore")
     .IsDependentOn("Restore::Nuget");
 
 Task("Bundle")
+    .IsDependentOn("Restore::NPM")
     .Does(() => 
 {
     NpmRunScript(new NpmRunScriptSettings
