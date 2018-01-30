@@ -2,9 +2,11 @@
   "name": "athena",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "bundle.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bundle": "webpack --config webpack.prod.js",
+    "bundle::dev": "webpack --config webpack.dev.js",
+    "bundle::watch": "webpack --config webpack.dev.js --watch"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,22 @@
   "bugs": {
     "url": "https://github.com/athena-scheduler/athena/issues"
   },
-  "homepage": "https://github.com/athena-scheduler/athena#readme"
+  "homepage": "https://github.com/athena-scheduler/athena#readme",
+  "dependencies": {
+    "fullcalendar": "^3.8.1",
+    "jquery": "^3.3.1",
+    "materialize-css": "^0.100.2"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^0.1.18",
+    "copy-webpack-plugin": "^4.3.1",
+    "css-loader": "^0.28.9",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "file-loader": "^1.1.6",
+    "style-loader": "^0.20.1",
+    "uglifyjs-webpack-plugin": "^1.1.8",
+    "webpack": "^3.10.0",
+    "webpack-bundle-size-analyzer": "^2.7.0",
+    "webpack-merge": "^4.1.1"
+  }
 }
