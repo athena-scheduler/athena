@@ -7,6 +7,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.4" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" />
     <PackageReference Include="Npgsql" Version="3.2.6" />
     <PackageReference Include="Simple.Migrations" Version="0.9.18" />
   </ItemGroup>
