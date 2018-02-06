@@ -3,19 +3,16 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="wwwroot\images\UT-color-vert-trans.gif\**" />
-    <Content Remove="wwwroot\images\UT-color-vert-trans.gif\**" />
-    <EmbeddedResource Remove="wwwroot\images\UT-color-vert-trans.gif\**" />
-    <None Remove="wwwroot\images\UT-color-vert-trans.gif\**" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" />
+    <PackageReference Include="Serilog.AspNetCore" Version="2.1.0" />
+    <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content" />
+    <ProjectReference Include="..\Athena.Core\Athena.Core.csproj" />
+    <ProjectReference Include="..\Athena.Data\Athena.Data.csproj" />
   </ItemGroup>
 </Project>

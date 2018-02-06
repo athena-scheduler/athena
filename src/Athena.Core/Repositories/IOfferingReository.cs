@@ -13,8 +13,8 @@ namespace Athena.Core.Repositories
         /// <param name="course">The course to get offerings for</param>
         /// <returns>An IEnumerable of offerings</returns>
         /// <remarks>
-        /// Modify this collection with <see cref="ICourseRepositorycs.AddOfferingAsync"/>
-        /// and <see cref="ICourseRepositorycs.RemoveOfferingAsync"/>
+        /// Modify this collection with <see cref="ICourseRepository.AddOfferingAsync"/>
+        /// and <see cref="ICourseRepository.RemoveOfferingAsync"/>
         /// </remarks>
         Task<IEnumerable<Offering>> GetOfferingsForCourseAsync(Course course);
 

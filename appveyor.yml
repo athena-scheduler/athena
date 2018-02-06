@@ -10,5 +10,9 @@ install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
 
+services: postgresql96
+environment:
+  ATHENA_DATA_TESTS_CON: Server=localhost;User ID=postgres;Password=Password12!;Database=postgres
+
 build_script:
 - ps: ./build.ps1

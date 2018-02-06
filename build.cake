@@ -1,5 +1,6 @@
 #addin "nuget:?package=Cake.Docker&version=0.8.2"
 #addin "nuget:?package=Cake.NPM&version=0.12.1"
+#l "./build/AddMigration.cake"
 
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -138,7 +139,7 @@ Task("Test::Integration")
 
     try
     {
-        foreach(var project in GetFiles("./test/integration/**/*.csproj"))
+        foreach(var project in GetFiles("./test/Integration/**/*.csproj"))
         {
             DotNetCoreTest(project.FullPath, settings);
         }
