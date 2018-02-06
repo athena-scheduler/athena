@@ -10,7 +10,17 @@ namespace Athena.Controllers
 {
     public class HomeController : Controller
     {
+        public IActionResult Home()
+        {
+            return View();
+        }
+
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Login_Page()
         {
             return View();
         }
@@ -22,10 +32,8 @@ namespace Athena.Controllers
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult Schedule_Page()
         {
-            ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 

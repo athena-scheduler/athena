@@ -37,9 +37,6 @@ body {
     }
 }
 
-
-
-
 .all-rounded {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -51,7 +48,7 @@ body {
 }
 
 #progress-bar {
-    width: 100px;
+    width: 1000px;
     background: #cccccc;
     position: relative;
 }
@@ -71,8 +68,6 @@ body {
     left: 0;
 }
 
-
-
 body {
     margin-top: 40px;
     text-align: center;
@@ -83,4 +78,12 @@ body {
 #calendar {
     width: 900px;
     margin: 0 auto;
+}
+
+.overlay {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0
 }
