@@ -3,5 +3,11 @@ mono: latest
 dotnet: 2.0.0
 dist: trusty
 
+services:
+  - postgresql
+
+addons:
+  postgresql: "9.6"
+
 script:
   - ./build.sh

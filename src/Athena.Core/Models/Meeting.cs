@@ -2,7 +2,7 @@
 
 namespace Athena.Core.Models
 {
-    public class Meeting : IUniqueObject<Guid>
+    public class Meeting : IUniqueObject<Guid>, IEquatable<Meeting>
     {
         /// <inheritdoc />
         public Guid Id { get; set; }
@@ -14,7 +14,7 @@ namespace Athena.Core.Models
         /// <summary>
         /// The time of day the meeting is at
         /// </summary>
-        public DateTime Time { get; set; }
+        public TimeSpan Time { get; set; }
         /// <summary>
         /// The durationof the meeting
         /// </summary>
@@ -24,5 +24,36 @@ namespace Athena.Core.Models
         /// The room the meeting is in
         /// </summary>
         public string Room { get; set; }
+
+        public bool Equals(Meeting other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Id.Equals(other.Id) &&
+                   Day == other.Day &&
+                   Math.Floor(Time.TotalMilliseconds).Equals(Math.Floor(other.Time.TotalMilliseconds)) &&
+                   Math.Floor(Duration.TotalMilliseconds).Equals(Math.Floor(other.Duration.TotalMilliseconds)) &&
+                   string.Equals(Room, other.Room);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj.GetType() == this.GetType() && Equals((Meeting) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = Id.GetHashCode();
+                hashCode = (hashCode * 397) ^ (int) Day;
+                hashCode = (hashCode * 397) ^ Time.GetHashCode();
+                hashCode = (hashCode * 397) ^ Duration.GetHashCode();
+                hashCode = (hashCode * 397) ^ (Room != null ? Room.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
     }
 }
