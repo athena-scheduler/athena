@@ -76,7 +76,7 @@ Task("Test::Unit")
         Logger = "trx;LogFileName=UnitTestResults.trx",
     };
 
-    foreach(var project in GetFiles("./test/unit/**/*.csproj"))
+    foreach(var project in GetFiles("./test/Unit/**/*.csproj"))
     {
         DotNetCoreTest(project.FullPath, settings);
     }
