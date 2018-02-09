@@ -80,5 +80,35 @@
             })
         });
     </script>
+
+    <script type="text/javascript" src="~/jquery.collapsible.js"></script>
+    <script type="text/javascript">$('#first').collapsible('accordion-open', {
+    /* Speeds for opening */
+    accordionUpSpeed: 400,
+    accordionDownSpeed: 400,
+    collapseSpeed: 400,
+    /* Default pane open, if any */
+    contentOpen: 0,
+    /* Classes for dropdown arrow */
+    arrowRclass: 'arrow-r',
+    arrowDclass: 'arrow-d',
+    animate: true
+        });</script>
+
+    <script>
+        var names = [];
+
+
+        function displayUserName() {
+            var theName = document.getElementById("enter").value;
+            if (theName == "" || theName.length == 0) {
+                return false; //stop the function since the value is empty.
+            }
+            names.push(theName);
+            document.getElementById("name").children[0].innerHTML += "<li>" + names[names.length - 1] + "</li>";
+        }
+    </script>
+
+
 </body>
 </html>

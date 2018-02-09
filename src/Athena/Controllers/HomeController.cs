@@ -7,6 +7,7 @@ namespace Athena.Controllers
     [Route("[controller]")]
     public class HomeController : Controller
     {
+        [HttpGet("Home")]
         public IActionResult Home()
         {
             return View();
@@ -18,29 +19,31 @@ namespace Athena.Controllers
             return View();
         }
 
+        [HttpGet("Login_Page")]
         public IActionResult Login_Page()
         {
             return View();
         }
 
-        [HttpGet("About")]
-        public IActionResult About()
+        [HttpGet("Add_Classes")]
+        public IActionResult Add_Classes()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
+        [HttpGet("Schedule_Page")]
         public IActionResult Schedule_Page()
         {
             return View();
         }
 
+        [HttpGet("NewAccountPage")]
         public IActionResult NewAccountPage()
         {
             return View();
         }
 
+        [HttpGet("Main_Page")]
         public IActionResult Main_Page()
         {
             return View();
