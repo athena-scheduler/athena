@@ -133,7 +133,7 @@ Task("CodeCov::Publish")
     .IsDependentOn("Test")
     .Does(() =>
 {
-    Codecov(GetFiles("./_tests/*_coverage.xml").Select(f => f.FullPath));
+    Codecov("./_tests/coverage.xml");
 });
 
 //////////////////////////////////////////////////////////////////////

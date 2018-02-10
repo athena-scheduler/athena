@@ -8,7 +8,7 @@ public void TestProject(FilePath project)
         ArgumentCustomization = args => args.AppendSwitch("--results-directory", resultsDirectory),
         Configuration = configuration,
         NoBuild = true,
-        Logger = "trx;LogFileName=UnitTestResults.trx",
+        Logger = $"trx;LogFileName={project.GetFilenameWithoutExtension()}_results.trx"
     };
     var coverageSettings = new OpenCoverSettings
     {
@@ -22,7 +22,7 @@ public void TestProject(FilePath project)
         OpenCover(tool => {
                 tool.DotNetCoreTest(project.FullPath, settings);
             },
-            Directory(resultsDirectory) + File(project.GetFilenameWithoutExtension() + "_coverage.xml"),
+            Directory(resultsDirectory) + File("coverage.xml"),
             coverageSettings
         );
     }
