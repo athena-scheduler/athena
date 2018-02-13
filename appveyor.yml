@@ -6,4 +6,4 @@ environment:
   ATHENA_DATA_TESTS_CON: Server=localhost;User ID=postgres;Password=Password12!;Database=postgres
 
 build_script:
-- ps: ./build.ps1
+- ps: ./build.ps1 -t CodeCov::Publish

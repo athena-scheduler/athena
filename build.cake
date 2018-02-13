@@ -1,5 +1,10 @@
 #addin "nuget:?package=Cake.Docker&version=0.8.2"
+#addin "nuget:?package=Cake.Codecov&version=0.3.0"
+#tool "nuget:?package=Codecov&version=1.0.3"
+#tool "nuget:?package=OpenCover&version=4.6.519"
+
 #l "./build/AddMigration.cake"
+#l "./build/util.cake"
 
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -66,19 +71,9 @@ Task("Test::Unit")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    EnsureDirectoryExists("_tests");
-
-    var settings = new DotNetCoreTestSettings
-    {
-        ArgumentCustomization = args => args.AppendSwitch("--results-directory", MakeAbsolute(Directory("_tests")).FullPath),
-        Configuration = configuration,
-        NoBuild = true,
-        Logger = "trx;LogFileName=UnitTestResults.trx",
-    };
-
     foreach(var project in GetFiles("./test/Unit/**/*.csproj"))
     {
-        DotNetCoreTest(project.FullPath, settings);
+        TestProject(project);
     }
 });
 
@@ -87,8 +82,6 @@ Task("Test::Integration")
     .IsDependentOn("Build")
     .Does(() => 
 {
-    EnsureDirectoryExists("_tests");
-
     var container = Guid.Empty;
     if(HasArgument("UseDocker"))
     {
@@ -103,19 +96,11 @@ Task("Test::Integration")
         System.Threading.Thread.Sleep(10000);
     }
 
-    var settings = new DotNetCoreTestSettings
-    {
-        ArgumentCustomization = args => args.AppendSwitch("--results-directory", MakeAbsolute(Directory("_tests")).FullPath),
-        Configuration = configuration,
-        NoBuild = true,
-        Logger = "trx;LogFileName=IntegrationTestResults.trx",
-    };
-
     try
     {
         foreach(var project in GetFiles("./test/Integration/**/*.csproj"))
         {
-            DotNetCoreTest(project.FullPath, settings);
+            TestProject(project);
         }
     }
     finally
@@ -142,6 +127,13 @@ Task("Docker")
     .IsDependentOn("Dist")
     .Does(() =>
 {
+});
+
+Task("CodeCov::Publish")
+    .IsDependentOn("Test")
+    .Does(() =>
+{
+    Codecov("./_tests/coverage.xml");
 });
 
 //////////////////////////////////////////////////////////////////////
