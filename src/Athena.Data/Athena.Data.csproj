@@ -9,7 +9,9 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="2.0.1" />
     <PackageReference Include="Npgsql" Version="3.2.6" />
+    <PackageReference Include="Serilog" Version="2.6.0" />
     <PackageReference Include="Simple.Migrations" Version="0.9.18" />
   </ItemGroup>
   <ItemGroup>
@@ -20,5 +22,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\src" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.Identity.Stores, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+      <HintPath>..\..\..\..\..\.nuget\packages\microsoft.extensions.identity.stores\2.0.1\lib\netstandard2.0\Microsoft.Extensions.Identity.Stores.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

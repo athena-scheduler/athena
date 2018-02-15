@@ -1,0 +1,39 @@
+﻿@using Athena.Core.Models.Identity
+@using Microsoft.AspNetCore.Identity
+@model Athena.Models.Login.LoginViewModel
+
+@inject SignInManager<AthenaUser> SignInManager
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "_Layout";
+}
+
+<h2>Login</h2>
+
+
+@{
+    var providers = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+    if (providers.Count == 0)
+    {
+        <div>
+            <p>
+                Your administrator did not setup any authentication providers so we can't log you in. Ask them to fix
+                the setup!
+            </p>
+        </div>
+    }
+    else
+    {
+        foreach (var provider in providers)
+        {
+            <form asp-action="LoginWithExternalProvider" asp-route-provider="@provider.Name" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <div>
+                    <p>
+                        <button type="submit" title="Log in using your @provider.DisplayName account">@provider.Name</button>
+                    </p>
+                </div>
+            </form>
+        }
+    }
+}

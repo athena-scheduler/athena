@@ -29,6 +29,7 @@ namespace Athena.Setup
             app.UseMiddleware<SerilogHttpMiddleware>();
             app.UseMiddleware<CustomErrorHandlerMiddleware>();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseMvc();
             
             return app;

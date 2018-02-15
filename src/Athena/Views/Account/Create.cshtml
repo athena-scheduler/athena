@@ -1,0 +1,25 @@
+﻿@model Athena.Models.Login.CreateUserViewModel
+
+@{
+    ViewBag.Title = "Create User";
+    Layout = "_Layout";
+}
+
+<h2>Welcome to Athena, @Model.Name</h2>
+
+<p>
+    Thanks for logging in via @(Model.LoginProvider). We're getting a few things ready. Please confirm that your email
+    address is <code>@(Model.Email)</code>.
+</p>
+
+<p>
+    When this is implemented, we'll send you back to @(Model.ReturnUrl ?? "the home page")
+</p>
+
+<form asp-action="CreateAccount" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    @Html.HiddenFor(m => m.Email)
+    @Html.HiddenFor(m => m.LoginProvider)
+    @Html.HiddenFor(m => m.Name)
+    @Html.HiddenFor(m => m.ReturnUrl)
+    <button type="submit">LGTM!</button>
+</form>

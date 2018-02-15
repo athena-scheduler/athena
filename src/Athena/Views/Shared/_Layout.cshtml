@@ -38,6 +38,19 @@
         </div>
     </nav>
     <div class="container body-content">
+        <div>
+            <p>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <h2>Welcome to Athena, @User.Identity.Name!</h2>
+                }
+                else
+                {
+                    <h2>Welcome to Athena! Please log in</h2>
+                }
+                
+            </p>
+        </div>
         @RenderBody()
         <hr />
         <footer>
