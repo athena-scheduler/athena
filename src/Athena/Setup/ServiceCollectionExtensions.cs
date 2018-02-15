@@ -1,4 +1,6 @@
-﻿using Athena.Data.Extensions;
+﻿using Athena.Core.Validation;
+using Athena.Data.Extensions;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,9 +12,8 @@ namespace Athena.Setup
             IConfiguration conf)
         {
             services.AddAthenaRepositoriesUsingPostgres()
-                    .AddMvc(options =>
-                    {
-                    });
+                .AddMvc(options => { })
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<StudentValidator>());
             
             return services;
         }

@@ -4,6 +4,7 @@
     <DebugType>Full</DebugType>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="7.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Serilog.AspNetCore" Version="2.1.0" />
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
@@ -12,6 +13,10 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Athena.Core.Validation\Athena.Core.Validation.csproj">
+      <Project>{F244C821-37F1-402E-9F29-1EEBD81031A4}</Project>
+      <Name>Athena.Core.Validation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Athena.Core\Athena.Core.csproj" />
     <ProjectReference Include="..\Athena.Data\Athena.Data.csproj" />
   </ItemGroup>

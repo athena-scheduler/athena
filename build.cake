@@ -71,7 +71,7 @@ Task("Test::Unit")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    foreach(var project in GetFiles("./test/unit/**/*.csproj"))
+    foreach(var project in GetFiles("./test/Unit/**/*.csproj"))
     {
         TestProject(project);
     }
