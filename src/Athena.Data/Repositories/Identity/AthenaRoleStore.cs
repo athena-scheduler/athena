@@ -32,7 +32,7 @@ namespace Athena.Data.Repositories.Identity
             try
             {
                 var count = await _db.InsertUniqueAsync(@"
-                    INSERT INTO users VALUES (
+                    INSERT INTO roles VALUES (
                         @id,
                         @name,
                         @normalizedName

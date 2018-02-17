@@ -54,7 +54,11 @@ namespace Athena.Data.Repositories.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            user.Id = user.Id == Guid.Empty ? Guid.NewGuid() : user.Id;
+            if (user.Id == Guid.Empty)
+            {
+                _log.Fatal("This can't possibly work. Tried to add {@user} but the ID is an empty guid. This must match the ID of a student", user);
+                return IdentityResult.Failed();
+            }
 
             try
             {

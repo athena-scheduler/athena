@@ -12,6 +12,13 @@ namespace Athena.Data.Repositories.Identity
 {
     public partial class AthenaUserStore : IUserLoginStore<AthenaUser>, IUserEmailStore<AthenaUser>
     {
+        private class UserLoginInfoEx
+        {
+            public string LoginProvider { get; set; }
+            public string ProviderKey { get; set; }
+            public string ProviderDisplayName { get; set; }
+        }
+        
         public async Task AddLoginAsync(AthenaUser user, UserLoginInfo login, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -55,8 +62,15 @@ namespace Athena.Data.Repositories.Identity
         }
 
         public async Task<IList<UserLoginInfo>> GetLoginsAsync(AthenaUser user, CancellationToken cancellationToken) =>
-            (await _db.QueryAsync<UserLoginInfo>("SELECT * FROM external_logins WHERE user_id = @id", new {user.Id}))
-                .ToList();
+            (await _db.QueryAsync<UserLoginInfoEx>(@"
+                SELECT login_provider,
+                       provider_key,
+                       provider_display_name
+                FROM external_logins
+                WHERE user_id = @id",
+                new {user.Id}
+            )).Select((e) => new UserLoginInfo(e.LoginProvider, e.ProviderKey, e.ProviderDisplayName))
+              .ToList();
 
         public async Task<AthenaUser> FindByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken) =>
             (await _db.QueryAsync<AthenaUser>(@"
