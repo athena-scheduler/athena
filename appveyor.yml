@@ -14,4 +14,4 @@ install:
 services: postgresql96
 
 build_script:
-- ps: ./build.ps1
+- ps: ./build.ps1 -t CodeCov::Publish
