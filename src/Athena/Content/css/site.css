@@ -1,4 +1,5 @@
 ﻿@import '~materialize-css/dist/css/materialize.css';
+@import '~material-design-icons/iconfont/material-icons.css';
 @import '~fullcalendar/dist/fullcalendar.css';
 
 /* Wrapping element */
@@ -42,21 +43,23 @@
     display: block;
 }
 
-#progress-bar {
+.progress-bar {
+    height:2em;
     width: 1000px;
     background: #cccccc;
     position: relative;
 }
 
-#progress-bar-percentage {
+.progress-bar-percentage {
     background: #3063A5;
     padding: 5px 0px;
     color: #FFF;
     text-align: center;
-    height: 20px;
+    height: 2em;
+    width:68%;
 }
 
-#progress-bar-percentage span {
+.progress-bar-percentage span {
     display: inline-block;
     position: absolute;
     width: 100%;
@@ -71,7 +74,6 @@ body {
 }
 
 #calendar {
-    width: 900px;
     margin: 0 auto;
 }
 
@@ -83,3 +85,31 @@ body {
     top: 0
 }
 
+.btn {
+    background-color: #0D47A1;
+}
+
+.btn:hover {
+    background-color: #1a237e;
+}
+
+.brand-logo {
+    margin-top: 12px;
+    font-size: 3em;
+    font-weight: bold;
+    font-family: 'Palatino Linotype';
+}
+
+.progress{
+    height:2em;
+    background-color:darkgrey;
+}
+
+.determinate {
+    color: white;
+    background-color: #1a237e;
+    display: inline-block;
+    position: absolute;
+    width: 30%;
+    left: 0;
+}

@@ -7,9 +7,6 @@
     <link rel="stylesheet" type="text/css" href="~/athena.css" />
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 </head>
 
 <body>
@@ -23,14 +20,18 @@
                     <li><a href="NewAccountPage">New Account<i class="material-icons right">person_add</i></a></li>
                     <li><a href="Login_Page">Login<i class="material-icons right">person_outline</i></a></li>
                 </ul>
-                <ul class="side-nav" id="mobile-demo">
-                    <li><a href="NewAccountPage">New Account</a></li>
-                    <li><a href="Login_Page">Login</a></li>
-                </ul>
-                <h2 class="brand-logo no-pad-top" style="margin-top:12px;font-size:3em;font-weight:bold;font-family:'Palatino Linotype'">Athena</h2>
+
+                
+                <h2 class="brand-logo no-pad-top">Athena</h2>
             </div>
         </nav>
     </div>
+
+    <ul class="side-nav" id="mobile-demo">
+        <li><a href="NewAccountPage">New Account</a></li>
+        <li><a href="Login_Page">Login</a></li>
+    </ul>
+
         <div class="container body-content;">
             @RenderBody()
             <hr />

@@ -38,8 +38,8 @@ namespace Athena.Controllers
             return View();
         }
 
-        [HttpGet("Main_Page")]
-        public IActionResult Main_Page()
+        [HttpGet("User_Page")]
+        public IActionResult User_Page()
         {
             return View();
         }
