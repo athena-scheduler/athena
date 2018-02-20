@@ -1,11 +1,6 @@
 ﻿@import '~materialize-css/dist/css/materialize.css';
 @import '~fullcalendar/dist/fullcalendar.css';
 
-body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -69,10 +64,10 @@ body {
 }
 
 body {
-    margin-top: 40px;
     text-align: center;
     font-size: 14px;
     font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    padding-bottom: 20px;
 }
 
 #calendar {
@@ -87,6 +82,4 @@ body {
     right: 0;
     top: 0
 }
-
-
 

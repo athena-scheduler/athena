@@ -4,17 +4,12 @@ using Athena.Models;
 
 namespace Athena.Controllers
 {
-    [Route("[controller]")]
+    [Route("")]
     public class HomeController : Controller
     {
         [HttpGet("Home")]
+        [HttpGet]
         public IActionResult Home()
-        {
-            return View();
-        }
-		
-        [HttpGet("")]
-        public IActionResult Index()
         {
             return View();
         }

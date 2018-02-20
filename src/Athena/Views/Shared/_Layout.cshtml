@@ -4,111 +4,109 @@
     <meta charset="utf-8" />
     <title>@ViewData["Title"] - Athena</title>
 
-    <link rel="stylesheet" type="text/css" href="~/athena.css"/>
+    <link rel="stylesheet" type="text/css" href="~/athena.css" />
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 
 <body>
+    <div class="navbar-fixed indigo darken-4">
+        <nav>
+            <div class="nav-wrapper indigo darken-4">
+                <img src="~/images/owl icon.svg" class="left responsive-img" style="max-height:96px; max-width:96px; padding-left: 3em" />
 
-    <div class="container body-content;">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - Athena</p>
-        </footer>
+                <a href="#" data-activates="mobile-demo" class="right button-collapse"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="NewAccountPage">New Account<i class="material-icons right">person_add</i></a></li>
+                    <li><a href="Login_Page">Login<i class="material-icons right">person_outline</i></a></li>
+                </ul>
+                <ul class="side-nav" id="mobile-demo">
+                    <li><a href="NewAccountPage">New Account</a></li>
+                    <li><a href="Login_Page">Login</a></li>
+                </ul>
+                <h2 class="brand-logo no-pad-top" style="margin-top:12px;font-size:3em;font-weight:bold;font-family:'Palatino Linotype'">Athena</h2>
+            </div>
+        </nav>
     </div>
+        <div class="container body-content;">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; 2018 - Athena</p>
+            </footer>
+        </div>
 
-    <script type="text/javascript" src="~/athena.js"></script>
+        <script type="text/javascript" src="~/athena.js"></script>
 
-    @RenderSection("Scripts", required: false)
+        @RenderSection("Scripts", required: false)
 
-    <script>
-        $('.dropdown-button').dropdown({
-            inDuration: 300,
-            outDuration: 225,
-            constrainWidth: false, // Does not change width of dropdown to that of the activator
-            hover: true, // Activate on hover
-            gutter: 0, // Spacing from edge
-            belowOrigin: false, // Displays dropdown below the button
-            alignment: 'left', // Displays dropdown with edge aligned to the left of button
-            stopPropagation: false // Stops event propagation
-        }
-        );</script>
-
-    <script>    $(".button-collapse").sideNav();</script>
-
-    <script>
-        $('.button-collapse').sideNav({
-            menuWidth: 300, // Default is 300
-            edge: 'right', // Choose the horizontal origin
-            closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-            draggable: true, // Choose whether you can drag to open on touch screens,
-            onOpen: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
-            onClose: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
-        }
-        );
-    </script>
-
-    <script type="text/javascript">
-        $('#mySchedule').weekly_schedule({
-            // Days displayed
-            days: ["mon", "tue", "wed", "thu", "fri"],
-            // Hours displyed
-            hours: "7:00AM-8:00PM",
-            // Font used in the component
-            fontFamily: "Montserrat",
-            // Font colot used in the component
-            fontColor: "black",
-            // Font weight used in the component
-            fontWeight: "100",
-            // Font size used in the component
-            fontSize: "0.8em",
-            // Background color when hovered
-            hoverColor: "#727bad",
-            // Background color when selected
-            selectionColor: "#9aa7ee",
-            // Background color of headers
-            headerBackgroundColor: "transparent"
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            // page is now ready, initialize the calendar...
-            $('#calendar').fullCalendar({
-                // put your options and callbacks here
-            })
-        });
-    </script>
-
-    <script type="text/javascript" src="~/jquery.collapsible.js"></script>
-    <script type="text/javascript">$('#first').collapsible('accordion-open', {
-    /* Speeds for opening */
-    accordionUpSpeed: 400,
-    accordionDownSpeed: 400,
-    collapseSpeed: 400,
-    /* Default pane open, if any */
-    contentOpen: 0,
-    /* Classes for dropdown arrow */
-    arrowRclass: 'arrow-r',
-    arrowDclass: 'arrow-d',
-    animate: true
-        });</script>
-
-    <script>
-        var names = [];
-
-
-        function displayUserName() {
-            var theName = document.getElementById("enter").value;
-            if (theName == "" || theName.length == 0) {
-                return false; //stop the function since the value is empty.
+        <script>
+            $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrainWidth: false, // Does not change width of dropdown to that of the activator
+                hover: true, // Activate on hover
+                gutter: 0, // Spacing from edge
+                belowOrigin: false, // Displays dropdown below the button
+                alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                stopPropagation: false // Stops event propagation
             }
-            names.push(theName);
-            document.getElementById("name").children[0].innerHTML += "<li>" + names[names.length - 1] + "</li>";
-        }
-    </script>
+            );</script>
 
+        <script>    $(".button-collapse").sideNav();</script>
+
+        <script>
+            $('.button-collapse').sideNav({
+                menuWidth: 300, // Default is 300
+                edge: 'right', // Choose the horizontal origin
+                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                draggable: true, // Choose whether you can drag to open on touch screens,
+                onOpen: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
+                onClose: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
+            }
+            );
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                // page is now ready, initialize the calendar...
+                $('#calendar').fullCalendar({
+                    // put your options and callbacks here
+                })
+            });
+        </script>
+
+        <script type="text/javascript" src="~/jquery.collapsible.js"></script>
+        <script type="text/javascript">
+            $('#first').collapsible('accordion-open', {
+                /* Speeds for opening */
+                accordionUpSpeed: 400,
+                accordionDownSpeed: 400,
+                collapseSpeed: 400,
+                /* Default pane open, if any */
+                contentOpen: 0,
+                /* Classes for dropdown arrow */
+                arrowRclass: 'arrow-r',
+                arrowDclass: 'arrow-d',
+                animate: true
+            });</script>
+
+        <script>
+            var names = [];
+
+
+            function displayUserName() {
+                var theName = document.getElementById("enter").value;
+                if (theName == "" || theName.length == 0) {
+                    return false; //stop the function since the value is empty.
+                }
+                names.push(theName);
+                document.getElementById("name").children[0].innerHTML += "<li>" + names[names.length - 1] + "</li>";
+            }
+        </script>
 
 </body>
 </html>
