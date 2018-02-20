@@ -79,7 +79,6 @@
             });
         </script>
 
-        <script type="text/javascript" src="~/jquery.collapsible.js"></script>
         <script type="text/javascript">
             $('#first').collapsible('accordion-open', {
                 /* Speeds for opening */
@@ -87,12 +86,13 @@
                 accordionDownSpeed: 400,
                 collapseSpeed: 400,
                 /* Default pane open, if any */
-                contentOpen: 0,
+                contentOpen: 1,
                 /* Classes for dropdown arrow */
                 arrowRclass: 'arrow-r',
                 arrowDclass: 'arrow-d',
                 animate: true
-            });</script>
+            });
+        </script>
 
         <script>
             var names = [];
