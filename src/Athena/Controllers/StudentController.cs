@@ -6,10 +6,11 @@ using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Athena.Core.Repositories;
+using Athena.Core.Models;
 
 namespace Athena.Controllers
 {
-    public class StudentController : Controller 
+    public class StudentController : Controller
     {
         private readonly IStudentRepository _students;
 
@@ -34,10 +35,12 @@ namespace Athena.Controllers
         }
 
         // POST: Student/Create
+        /*
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task Create([FromBody] Student s )
+        public async Task<ActionResult> Create([FromBody] Student s )
         {
+            
             try
             {
                 // TODO: Add insert logic here
@@ -48,7 +51,8 @@ namespace Athena.Controllers
             {
                 return View();
             }
-        }
+
+        }*/
 
         // GET: Student/Edit/5
         public ActionResult Edit(int id)
@@ -69,9 +73,9 @@ namespace Athena.Controllers
         }
 
         // POST: Student/Delete/5
-        [HttpDelete("{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task Delete(Guid id) => await _students.DeleteAsync(id);
-        
+        //[HttpDelete("{id}")]
+        // [ValidateAntiForgeryToken]
+        //public async Task Delete(Guid id) => await _students.DeleteAsync(id);
+
     }
 }

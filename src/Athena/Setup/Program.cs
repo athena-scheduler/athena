@@ -1,11 +1,10 @@
 ﻿using System;
 using Athena.Data;
-using Athena.Setup;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Serilog;
 
-namespace Athena
+namespace Athena.Setup
 {
     public class Program
     {
