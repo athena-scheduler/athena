@@ -30,6 +30,7 @@ namespace Athena.Setup
             app.UseMiddleware<CustomErrorHandlerMiddleware>();
             app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseMiddleware<AthenaPrincipalMiddleware>();
             app.UseMvc();
             
             return app;

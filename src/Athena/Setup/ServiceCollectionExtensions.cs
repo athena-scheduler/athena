@@ -2,6 +2,7 @@
 using Athena.Core.Models.Identity;
 using Athena.Core.Validation;
 using Athena.Data.Extensions;
+using Athena.Middleware;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -23,7 +24,7 @@ namespace Athena.Setup
         {
             services.AddIdentity<AthenaUser, AthenaRole>()
                 .AddDefaultTokenProviders();
-            
+
             services.AddAthenaRepositoriesUsingPostgres()
                 .AddAthenaIdentityServices()
                 .AddAuthenticationProviders()
@@ -40,7 +41,7 @@ namespace Athena.Setup
         private static IServiceCollection AddAuthenticationProviders(this IServiceCollection services)
         {
             var auth = services.AddAuthentication();
-
+            
             if (!auth.TryAddGoogle())
             {
                 Serilog.Log.Fatal($"Failed to add google authentication. Did you set {AUTH_GOOGLE_CLIENT_KEY} and {AUTH_GOOGLE_CLIENT_SECRET}?");

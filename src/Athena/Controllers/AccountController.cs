@@ -141,7 +141,8 @@ namespace Athena.Controllers
                 {
                     Id = student.Id,
                     UserName = model.Email,
-                    Email = model.Email
+                    Email = model.Email,
+                    Student = student
                 };
 
                 var result = await _userManager.CreateAsync(user);

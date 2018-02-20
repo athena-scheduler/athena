@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+@using Athena.Core.Models.Identity
+@using Athena.Extensions
+@using Athena.Models.Identity
+@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<AthenaUser> _um;
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -42,7 +50,7 @@
             <p>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <h2>Welcome to Athena, @User.Identity.Name!</h2>
+                    <h2>Welcome to Athena, @User.Identity.Name, or should I say @(User.GetStudent()?.Name ?? "unknown")</h2>
                 }
                 else
                 {

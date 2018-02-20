@@ -3,6 +3,7 @@ using System.Data;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Athena.Core.Models;
 using Athena.Core.Models.Identity;
 using Athena.Data.Extensions;
 using Dapper;
@@ -130,15 +131,45 @@ namespace Athena.Data.Repositories.Identity
         }
 
         public async Task<AthenaUser> FindByIdAsync(string userId, CancellationToken cancellationToken) =>
-            (await _db.QueryAsync<AthenaUser>(
-                "SELECT * FROM users WHERE id = @id",
+            (await _db.QueryAsync<AthenaUser, Student, AthenaUser>(@"
+                SELECT u.id,
+                       u.username,
+                       u.normalized_username,
+                       u.email,
+                       u.normalized_email,
+                       u.email_confirmed,
+                       s.id,
+                       s.name,
+                       s.email
+                FROM users u
+                    LEFT JOIN students s ON u.id = s.id
+                WHERE u.id = @id",
+                MapUser,
                 new {id = new Guid(userId)}
             )).FirstOrDefault();
 
         public async Task<AthenaUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken) =>
-            (await _db.QueryAsync<AthenaUser>(
-                "SELECT * FROM users WHERE normalized_username = @normalizedUserName",
+            (await _db.QueryAsync<AthenaUser, Student, AthenaUser>(@"
+                SELECT u.id,
+                       u.username,
+                       u.normalized_username,
+                       u.email,
+                       u.normalized_email,
+                       u.email_confirmed,
+                       s.id,
+                       s.name,
+                       s.email
+                FROM users u
+                    LEFT JOIN students s ON u.id = s.id
+                WHERE normalized_username = @normalizedUserName",
+                MapUser,
                 new {normalizedUserName}
             )).FirstOrDefault();
+
+        private static AthenaUser MapUser(AthenaUser u, Student s)
+        {
+            u.Student = s;
+            return u;
+        }
     }
 }
