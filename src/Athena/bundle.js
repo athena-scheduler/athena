@@ -1,2 +1,2 @@
-import './Content/css/site.css';
-import './Content/js/site.js';
+import "./Content/css/site.css";
+import "./Content/js/site.js";
