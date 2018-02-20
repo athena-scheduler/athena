@@ -75,6 +75,8 @@ body {
 
 #calendar {
     margin: 0 auto;
+    background-color:darkgrey;
+    border-radius:2em;
 }
 
 .overlay {
