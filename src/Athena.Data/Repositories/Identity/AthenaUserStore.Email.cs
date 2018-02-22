@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Athena.Core.Models;
 using Athena.Core.Models.Identity;
 using Dapper;
 using Microsoft.AspNetCore.Identity;
@@ -34,8 +35,20 @@ namespace Athena.Data.Repositories.Identity
         }
 
         public async Task<AthenaUser> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken) =>
-            (await _db.QueryAsync<AthenaUser>(
-                "SELECT * FROM users WHERE normalized_email = @normalizedEmail",
+            (await _db.QueryAsync<AthenaUser, Student, AthenaUser>(@"
+                SELECT u.id,
+                       u.username,
+                       u.normalized_username,
+                       u.email,
+                       u.normalized_email,
+                       u.email_confirmed,
+                       s.id,
+                       s.name,
+                       s.email
+                FROM users u
+                    LEFT JOIN students s ON u.id = s.id
+                WHERE normalized_email = @normalizedEmail",
+                MapUser,
                 new {normalizedEmail}
             )).FirstOrDefault();
 

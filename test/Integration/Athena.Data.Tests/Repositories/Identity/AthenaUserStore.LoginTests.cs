@@ -14,10 +14,10 @@ namespace Athena.Data.Tests.Repositories.Identity
     public partial class AthenaUserStoreTests
     {
         [Theory, AutoData]
-        public async Task AddLoginValid(Student student, AthenaUser user, UserLoginInfo info)
+        public async Task AddLoginValid(AthenaUser user, UserLoginInfo info)
         {
-            student.Id = user.Id;
-            await _students.AddAsync(student);
+            user.Student.Id = user.Id;
+            await _students.AddAsync(user.Student);
             await _sut.CreateAsync(user, CancellationToken.None);
 
             await _sut.AddLoginAsync(user, info, CancellationToken.None);
@@ -38,10 +38,10 @@ namespace Athena.Data.Tests.Repositories.Identity
         }
 
         [Theory, AutoData]
-        public async Task AddLogin_ThrowsForDuplicate(Student student, AthenaUser user, UserLoginInfo info)
+        public async Task AddLogin_ThrowsForDuplicate(AthenaUser user, UserLoginInfo info)
         {
-            student.Id = user.Id;
-            await _students.AddAsync(student);
+            user.Student.Id = user.Id;
+            await _students.AddAsync(user.Student);
             await _sut.CreateAsync(user, CancellationToken.None);
 
             await _sut.AddLoginAsync(user, info, CancellationToken.None);

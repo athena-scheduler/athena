@@ -44,11 +44,11 @@ namespace Athena.Data.Tests.Repositories.Identity
         }
         
         [Theory, AutoData]
-        public async Task FindByEmailValid(Student student, AthenaUser user)
+        public async Task FindByEmailValid(AthenaUser user)
         {
-            student.Id = user.Id;
+            user.Student.Id = user.Id;
             
-            await _students.AddAsync(student);
+            await _students.AddAsync(user.Student);
             await _sut.CreateAsync(user, CancellationToken.None);
 
             var result = await _sut.FindByEmailAsync(user.NormalizedEmail, CancellationToken.None);

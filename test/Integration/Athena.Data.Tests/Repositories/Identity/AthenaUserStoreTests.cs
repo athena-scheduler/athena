@@ -62,10 +62,10 @@ namespace Athena.Data.Tests.Repositories.Identity
         }
 
         [Theory, AutoData]
-        public async Task CreateValid(Student student, AthenaUser user)
+        public async Task CreateValid(AthenaUser user)
         {
-            student.Id = user.Id;
-            await _students.AddAsync(student);
+            user.Student.Id = user.Id;
+            await _students.AddAsync(user.Student);
             
             await _sut.CreateAsync(user, CancellationToken.None);
 
@@ -94,10 +94,10 @@ namespace Athena.Data.Tests.Repositories.Identity
         }
 
         [Theory, AutoData]
-        public async Task Create_FailureForDuplicate(Student student, AthenaUser user)
+        public async Task Create_FailureForDuplicate(AthenaUser user)
         {
-            student.Id = user.Id;
-            await _students.AddAsync(student);
+            user.Student.Id = user.Id;
+            await _students.AddAsync(user.Student);
             
             var result = await _sut.CreateAsync(user, CancellationToken.None);
             Assert.True(result.Succeeded);
@@ -107,13 +107,14 @@ namespace Athena.Data.Tests.Repositories.Identity
         }
 
         [Theory, AutoData]
-        public async Task UpdateValid(Student student, AthenaUser user, AthenaUser changes)
+        public async Task UpdateValid(AthenaUser user, AthenaUser changes)
         {
-            student.Id = user.Id;
-            await _students.AddAsync(student);
+            user.Student.Id = user.Id;
+            await _students.AddAsync(user.Student);
             await _sut.CreateAsync(user, CancellationToken.None);
 
             changes.Id = user.Id;
+            changes.Student = user.Student;
             await _sut.UpdateAsync(changes, CancellationToken.None);
 
             var result = await _sut.FindByIdAsync(changes.Id.ToString(), CancellationToken.None);
@@ -134,10 +135,10 @@ namespace Athena.Data.Tests.Repositories.Identity
         }
 
         [Theory, AutoData]
-        public async Task DeleteValid(Student student, AthenaUser user)
+        public async Task DeleteValid(AthenaUser user)
         {
-            student.Id = user.Id;
-            await _students.AddAsync(student);
+            user.Student.Id = user.Id;
+            await _students.AddAsync(user.Student);
             await _sut.CreateAsync(user, CancellationToken.None);
 
             await _sut.DeleteAsync(user, CancellationToken.None);

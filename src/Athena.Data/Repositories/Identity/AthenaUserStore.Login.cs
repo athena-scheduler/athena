@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Athena.Core.Models;
 using Athena.Core.Models.Identity;
 using Athena.Data.Extensions;
 using Dapper;
@@ -73,16 +74,21 @@ namespace Athena.Data.Repositories.Identity
               .ToList();
 
         public async Task<AthenaUser> FindByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken) =>
-            (await _db.QueryAsync<AthenaUser>(@"
+            (await _db.QueryAsync<AthenaUser, Student, AthenaUser>(@"
                 SELECT u.id,
                        u.username,
                        u.normalized_username,
                        u.email,
                        u.normalized_email,
-                       u.email_confirmed
+                       u.email_confirmed,
+                       s.id,
+                       s.name,
+                       s.email
                 FROM users u
+                    LEFT JOIN students s ON u.id = s.id
                     LEFT JOIN external_logins link ON u.id = link.user_id
                 WHERE link.login_provider = @loginProvider AND link.provider_key = @providerKey",
+                MapUser,
                 new {loginProvider, providerKey}
             )).FirstOrDefault();
     }
