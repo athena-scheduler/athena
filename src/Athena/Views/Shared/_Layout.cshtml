@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿
+@{
+    var athenaUser = User.ToAthenaUser();
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -10,53 +15,42 @@
 </head>
 
 <body>
-    <div class="navbar-fixed indigo darken-4">
-        <nav>
-            <div class="nav-wrapper blue darken-4">
-                <img src="~/images/owl icon.svg" class="left responsive-img" style="max-height:96px; max-width:96px; padding-left: 3em" />
 
-                <a href="#" data-activates="mobile-demo" class="right button-collapse"><i class="material-icons">menu</i></a>
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="NewAccountPage">New Account<i class="material-icons right">person_add</i></a></li>
-                    <li><a href="Login_Page">Login<i class="material-icons right">person_outline</i></a></li>
-                </ul>
+@Html.Partial("_Nav", athenaUser)
 
-
-                <h2 class="brand-logo no-pad-top">Athena</h2>
-            </div>
-        </nav>
-    </div>
-
-    <ul class="side-nav" id="mobile-demo">
-        <li><a href="NewAccountPage">New Account</a></li>
-        <li><a href="Login_Page">Login</a></li>
-    </ul>
-
+<main>
     <div class="container body-content;">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - Athena</p>
-        </footer>
     </div>
+</main>
 
-    <script type="text/javascript" src="~/athena.js"></script>
+<footer class="page-footer indigo darken-4">
+    <div class="footer-copyright">
+        <div class="container">
+            <span class="left">
+                &copy; 2018 - Athena
+            </span>
+        </div>
+    </div>
+</footer>
 
-    @RenderSection("Scripts", required: false)
+<script type="text/javascript" src="~/athena.js"></script>
 
-    <script>    $(".button-collapse").sideNav();</script>
+@RenderSection("Scripts", required: false)
 
-    <script>
-        $('.button-collapse').sideNav({
+<script> $(".button-collapse").sideNav();</script>
+
+<script>
+    $('.button-collapse').sideNav({
             menuWidth: 300, // Default is 300
             edge: 'right', // Choose the horizontal origin
             closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
             draggable: true, // Choose whether you can drag to open on touch screens,
-            onOpen: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
-            onClose: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
+            onOpen: function(el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
+            onClose: function(el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
         }
-        );
-    </script>
+    );
+</script>
 
 </body>
 </html>

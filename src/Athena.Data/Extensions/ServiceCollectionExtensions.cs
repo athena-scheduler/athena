@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Data;
+using Athena.Core.Models.Identity;
 using Athena.Core.Repositories;
 using Athena.Data.Repositories;
+using Athena.Data.Repositories.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 
@@ -35,6 +38,14 @@ namespace Athena.Data.Extensions
             services.AddScoped<IProgramRepository, ProgramRepository>();
             services.AddScoped<IRequirementRepository, RequirementRepository>();
             services.AddScoped<IStudentRepository, StudentRepository>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddAthenaIdentityServices(this IServiceCollection services)
+        {
+            services.AddTransient<IUserStore<AthenaUser>, AthenaUserStore>();
+            services.AddTransient<IRoleStore<AthenaRole>, AthenaRoleStore>();
 
             return services;
         }

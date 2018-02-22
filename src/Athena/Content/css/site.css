@@ -2,6 +2,9 @@
 @import '~material-design-icons/iconfont/material-icons.css';
 @import '~fullcalendar/dist/fullcalendar.css';
 
+@import 'nav.css';
+@import 'footer.css';
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -42,10 +45,13 @@
     }
 
 body {
-    text-align: center;
-    font-size: 14px;
-    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-    padding-bottom: 20px;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
 }
 
 #calendar {
@@ -68,13 +74,6 @@ body {
     .btn:hover {
         background-color: #1a237e;
     }
-
-.brand-logo {
-    margin-top: 12px;
-    font-size: 3em;
-    font-weight: bold;
-    font-family: 'Palatino Linotype';
-}
 
 .progress{
     height:2em;
