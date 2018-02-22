@@ -15,3 +15,6 @@ services: postgresql96
 
 build_script:
 - ps: ./build.ps1 -t CodeCov::Publish
+
+# We run tests in our build. Appveyor shouldn't try to discover them
+test: off
