@@ -1,21 +1,17 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Athena.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Athena.Controllers
 {
     [Route("")]
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         [HttpGet("Home")]
         [HttpGet]
         public IActionResult Home()
-        {
-            return View();
-        }
-
-        [HttpGet("Login_Page")]
-        public IActionResult Login_Page()
         {
             return View();
         }
@@ -28,12 +24,6 @@ namespace Athena.Controllers
 
         [HttpGet("Schedule_Page")]
         public IActionResult Schedule_Page()
-        {
-            return View();
-        }
-
-        [HttpGet("NewAccountPage")]
-        public IActionResult NewAccountPage()
         {
             return View();
         }

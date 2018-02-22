@@ -8,11 +8,11 @@ namespace Athena.Data.Extensions
 {
     public static class DbConnectionExtensions
     {
-        public static async Task InsertUniqueAsync(this IDbConnection db, string sql, object param)
+        public static async Task<int> InsertUniqueAsync(this IDbConnection db, string sql, object param)
         {
             try
             {
-                await db.ExecuteAsync(sql, param);
+                return await db.ExecuteAsync(sql, param);
             }
             catch (PostgresException ex)
             {

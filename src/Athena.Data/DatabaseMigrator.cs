@@ -10,6 +10,14 @@ namespace Athena.Data
 
         public DatabaseMigrator(string connectionString) => _connectionString = connectionString;
 
+        /// <summary>
+        /// The database needs migrated to do anything so this is a good place for global database init stuff
+        /// </summary>
+        static DatabaseMigrator()
+        {
+            Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+        }
+        
         public void Migrate()
         {
             using (var db = new NpgsqlConnection(_connectionString))
