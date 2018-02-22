@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewData["Title"] = "NewAccountPage";
+}
+
+<h2>Welcome to the Athena Scheduler!</h2>
+
+<div class="container-fluid">
+
+    <!-- Dropdown Trigger -->
+    <a class='dropdown-button btn' href='#' data-activates='dropdown1'>Select Your University</a>
+
+    <!-- Dropdown Structure -->
+    <ul id='dropdown1' class='dropdown-content'>
+        <li><a href="#!">University one</a></li>
+        <li><a href="#!">University two</a></li>
+    </ul>
+
+    <a href="User_Page" class="btn">Create Account</a>
+    <a href="Home" class="btn">Cancel</a>
+</div>
+
+@section scripts {
+
+    <script>
+        $('.dropdown-button').dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            constrainWidth: false, // Does not change width of dropdown to that of the activator
+            hover: true, // Activate on hover
+            gutter: 0, // Spacing from edge
+            belowOrigin: false, // Displays dropdown below the button
+            alignment: 'left', // Displays dropdown with edge aligned to the left of button
+            stopPropagation: false // Stops event propagation
+        }
+        );</script>
+}

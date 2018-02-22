@@ -4,29 +4,43 @@ using Athena.Models;
 
 namespace Athena.Controllers
 {
-    [Route("[controller]")]
     [Route("")]
     public class HomeController : Controller
     {
-        [HttpGet("")]
-        public IActionResult Index()
+        [HttpGet("Home")]
+        [HttpGet]
+        public IActionResult Home()
         {
             return View();
         }
 
-        [HttpGet("About")]
-        public IActionResult About()
+        [HttpGet("Login_Page")]
+        public IActionResult Login_Page()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
-        [HttpGet("Contact")]
-        public IActionResult Contact()
+        [HttpGet("Add_Classes")]
+        public IActionResult Add_Classes()
         {
-            ViewData["Message"] = "Your contact page.";
+            return View();
+        }
 
+        [HttpGet("Schedule_Page")]
+        public IActionResult Schedule_Page()
+        {
+            return View();
+        }
+
+        [HttpGet("NewAccountPage")]
+        public IActionResult NewAccountPage()
+        {
+            return View();
+        }
+
+        [HttpGet("User_Page")]
+        public IActionResult User_Page()
+        {
             return View();
         }
 

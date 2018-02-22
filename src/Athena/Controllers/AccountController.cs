@@ -52,7 +52,7 @@ namespace Athena.Controllers
             _log.Information("{user} logged out", User.Identity.Name);
             await _signInManager.SignOutAsync();
 
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction(nameof(HomeController.Home), "Home");
         }
 
         [HttpGet("{provider}")]
@@ -176,7 +176,7 @@ namespace Athena.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Home), "Home");
             }
         }
     }

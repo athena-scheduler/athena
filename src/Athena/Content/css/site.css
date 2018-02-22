@@ -1,0 +1,94 @@
+@import '~materialize-css/dist/css/materialize.css';
+@import '~material-design-icons/iconfont/material-icons.css';
+@import '~fullcalendar/dist/fullcalendar.css';
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.all-rounded {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.spacer {
+    display: block;
+}
+
+.progress-bar {
+    height:2em;
+    width: 1000px;
+    background: #cccccc;
+    position: relative;
+}
+
+.progress-bar-percentage {
+    background: #3063A5;
+    padding: 5px 0px;
+    color: #FFF;
+    text-align: center;
+    height: 2em;
+    width:68%;
+}
+
+.progress-bar-percentage span {
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+    left: 0;
+}
+
+body {
+    text-align: center;
+    font-size: 14px;
+    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    padding-bottom: 20px;
+}
+
+#calendar {
+    margin: 0 auto;
+    padding: 2em;
+    background-color: lightgrey;
+    border-radius: 2em;
+}
+
+.overlay {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0
+}
+
+.btn {
+    background-color: #0D47A1;
+}
+
+.btn:hover {
+    background-color: #1a237e;
+}
+
+.brand-logo {
+    margin-top: 12px;
+    font-size: 3em;
+    font-weight: bold;
+    font-family: 'Palatino Linotype';
+}
+
+.progress{
+    height:2em;
+    background-color:darkgrey;
+}
+
+.determinate {
+    color: white;
+    background-color: #1a237e;
+    display: inline-block;
+    position: absolute;
+    width: 70%;
+    left: 0;
+}
