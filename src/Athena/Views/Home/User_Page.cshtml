@@ -1,49 +1,75 @@
 ﻿@{
     ViewData["Title"] = "User_Page";
 }
-<br />
-<div class="row">
-    <div class="col s2">
-        <h4>Degree Progress:</h4>
-    </div>
-    <div class="col s2 offset-s2">
-        <!--<div id="progress-bar" class="all-rounded">
-            <div id="progress-bar-percentage" class="all-rounded"><span>68/100</span></div>
-        </div>-->
-        <div class="progress">
-            <div class="determinate indigo darken-4"><span>70/100</span></div>
+
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s3"><a href="#student">Student</a></li>
+                <li class="tab col s3"><a href="#schedule">Schedule</a></li>
+            </ul>
+        </div>
+
+        <div id="student" class="col s12">
+            <br /><br />
+            <div class="row">
+                <div class="col s2">
+                    <h4>Degree Progress:</h4>
+                </div>
+                <div class="col s2 offset-s2">
+                    <div id="progress-bar" class="all-rounded">
+                        <div id="progress-bar-percentage" class="all-rounded" style="width: 68%"><span>68/100</span></div>
+                    </div>
+                    <!-- <div class="progress">
+                <div class="determinate blue darken-4"> <span>70/100</span></div>
+            </div>-->
+                </div>
+                <div class="col s2 offset-s1">
+                    <h5>ETC:</h5>
+                    <h6>??/??/????</h6>
+                </div>
+            </div>
+
+            <br /><br />
+            <div class="row">
+                <a href="Schedule_Page" class="btn col s2 offset-s1">New Schedule</a>
+                <a href="Add_Classes" class="btn col s2 offset-s1">Complete Classes</a>
+            </div>
+        </div>
+
+        <div id="schedule" class="col s12">
+            <div class="row">
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            <h4>Weekly Schedule:</h4>
+                            <div id='calendar'></div>
+                        </div>
+                        <a class="btn-floating halfway-fab waves-effect waves-light blue darken-4"><i class="material-icons">print</i></a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col s2 offset-s1">
-        <h5>ETC:</h5>
-    </div>
-    <div class="col s2 offset-s1">
-        <h6>??/??/????</h6>
-    </div>
-</div>
-<br />
-
-<h4>Class Schedule:</h4>
-<div class="row">
-    <div id='calendar' class="col s12"></div>
-</div>
-
-<a href="Schedule_Page" class="btn">New Schedule</a>
-
-<div class="btn">
-    print
-</div>
-
-<a href="Add_Classes" class="btn">Complete Classes</a>
 
 
-@section scripts {
-    <script>
-        $(document).ready(function () {
-            // page is now ready, initialize the calendar...
-            $('#calendar').fullCalendar({
-                // put your options and callbacks here
-            })
-        });
-    </script>
-}
+    @section scripts {
+        <script>
+            $(document).ready(function () {
+                // page is now ready, initialize the calendar...
+                $('#calendar').fullCalendar({
+                    // put your options and callbacks here
+                    defaultView: "agendaWeek",
+                    minTime: "07:00:00",
+                    maxTime: "22:00:00",
+                    allDaySlot: false,
+                    slotDuration: "1:00",
+                    height: "auto",
+                    header: false,
+                    columnFormat: 'ddd',
+                });
+
+                $('#calendar').fullCalendar('next');
+            });
+        </script>
+    }

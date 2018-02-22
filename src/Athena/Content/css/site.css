@@ -19,28 +19,27 @@
     display: block;
 }
 
-.progress-bar {
-    height:2em;
-    width: 1000px;
+#progress-bar {
+    width: 15em;
+    height: 2em;
     background: #cccccc;
     position: relative;
 }
 
-.progress-bar-percentage {
+#progress-bar-percentage {
     background: #3063A5;
     padding: 5px 0px;
     color: #FFF;
     text-align: center;
     height: 2em;
-    width:68%;
 }
 
-.progress-bar-percentage span {
-    display: inline-block;
-    position: absolute;
-    width: 100%;
-    left: 0;
-}
+    #progress-bar-percentage span {
+        display: inline-block;
+        position: absolute;
+        width: 100%;
+        left: 0;
+    }
 
 body {
     text-align: center;
@@ -51,9 +50,7 @@ body {
 
 #calendar {
     margin: 0 auto;
-    padding: 2em;
-    background-color: lightgrey;
-    border-radius: 2em;
+    background-color:white
 }
 
 .overlay {
@@ -68,9 +65,9 @@ body {
     background-color: #0D47A1;
 }
 
-.btn:hover {
-    background-color: #1a237e;
-}
+    .btn:hover {
+        background-color: #1a237e;
+    }
 
 .brand-logo {
     margin-top: 12px;
@@ -86,9 +83,30 @@ body {
 
 .determinate {
     color: white;
-    background-color: #1a237e;
+    background-color: #0d47a1;
     display: inline-block;
     position: absolute;
     width: 70%;
     left: 0;
+}
+
+.card-content{
+    background-color:lightgray;
+    padding-top:5em;
+}
+
+.tabs .tab a.active {
+    color: #0d47a1;
+}
+
+.tabs .tab a:hover {
+    color: #0d47a1;
+}
+
+.tabs .tab a {
+    color: #0d47a1;
+}
+
+.tabs .indicator {
+    background-color: #0d47a1;
 }
