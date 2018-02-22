@@ -13,12 +13,6 @@ CREATE TABLE IF NOT EXISTS roles (
   normalized_name TEXT UNIQUE NOT NULL
 );
 
-INSERT INTO roles (id, name, normalized_name)
-  VALUES ('f839e0f0-e29d-4c89-b406-51a52dbb08b5', 'Administrator', 'administrator')
-  ON CONFLICT (id) DO UPDATE SET
-    name = 'Administrator',
-    normalized_name = 'administrator';
-
 CREATE TABLE IF NOT EXISTS external_logins (
   provider_key TEXT NOT NULL,
   login_provider TEXT NOT NULL,
