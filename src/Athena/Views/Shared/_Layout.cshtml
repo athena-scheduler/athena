@@ -21,7 +21,7 @@
                     <li><a href="Login_Page">Login<i class="material-icons right">person_outline</i></a></li>
                 </ul>
 
-                
+
                 <h2 class="brand-logo no-pad-top">Athena</h2>
             </div>
         </nav>
@@ -32,82 +32,31 @@
         <li><a href="Login_Page">Login</a></li>
     </ul>
 
-        <div class="container body-content;">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; 2018 - Athena</p>
-            </footer>
-        </div>
+    <div class="container body-content;">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2018 - Athena</p>
+        </footer>
+    </div>
 
-        <script type="text/javascript" src="~/athena.js"></script>
+    <script type="text/javascript" src="~/athena.js"></script>
 
-        @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 
-        <script>
-            $('.dropdown-button').dropdown({
-                inDuration: 300,
-                outDuration: 225,
-                constrainWidth: false, // Does not change width of dropdown to that of the activator
-                hover: true, // Activate on hover
-                gutter: 0, // Spacing from edge
-                belowOrigin: false, // Displays dropdown below the button
-                alignment: 'left', // Displays dropdown with edge aligned to the left of button
-                stopPropagation: false // Stops event propagation
-            }
-            );</script>
+    <script>    $(".button-collapse").sideNav();</script>
 
-        <script>    $(".button-collapse").sideNav();</script>
-
-        <script>
-            $('.button-collapse').sideNav({
-                menuWidth: 300, // Default is 300
-                edge: 'right', // Choose the horizontal origin
-                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                draggable: true, // Choose whether you can drag to open on touch screens,
-                onOpen: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
-                onClose: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
-            }
-            );
-        </script>
-
-        <script>
-            $(document).ready(function () {
-                // page is now ready, initialize the calendar...
-                $('#calendar').fullCalendar({
-                    // put your options and callbacks here
-                })
-            });
-        </script>
-
-        <script type="text/javascript">
-            $('#first').collapsible('accordion-open', {
-                /* Speeds for opening */
-                accordionUpSpeed: 400,
-                accordionDownSpeed: 400,
-                collapseSpeed: 400,
-                /* Default pane open, if any */
-                contentOpen: 1,
-                /* Classes for dropdown arrow */
-                arrowRclass: 'arrow-r',
-                arrowDclass: 'arrow-d',
-                animate: true
-            });
-        </script>
-
-        <script>
-            var names = [];
-
-
-            function displayUserName() {
-                var theName = document.getElementById("enter").value;
-                if (theName == "" || theName.length == 0) {
-                    return false; //stop the function since the value is empty.
-                }
-                names.push(theName);
-                document.getElementById("name").children[0].innerHTML += "<li>" + names[names.length - 1] + "</li>";
-            }
-        </script>
+    <script>
+        $('.button-collapse').sideNav({
+            menuWidth: 300, // Default is 300
+            edge: 'right', // Choose the horizontal origin
+            closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+            draggable: true, // Choose whether you can drag to open on touch screens,
+            onOpen: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
+            onClose: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
+        }
+        );
+    </script>
 
 </body>
 </html>

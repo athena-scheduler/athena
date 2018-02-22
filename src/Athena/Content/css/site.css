@@ -9,30 +9,6 @@
     padding-right: 15px;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
-}
-
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
-}
-
-/* QR code generator */
-#qrCode {
-    margin: 15px;
-}
-
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
-}
-
 .all-rounded {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -75,8 +51,9 @@ body {
 
 #calendar {
     margin: 0 auto;
-    background-color:darkgrey;
-    border-radius:2em;
+    padding: 2em;
+    background-color: lightgrey;
+    border-radius: 2em;
 }
 
 .overlay {
@@ -112,6 +89,6 @@ body {
     background-color: #1a237e;
     display: inline-block;
     position: absolute;
-    width: 30%;
+    width: 70%;
     left: 0;
 }
