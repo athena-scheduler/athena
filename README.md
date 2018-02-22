@@ -55,3 +55,7 @@ Athena uses third party OAuth2 providers for authentication Currently, the follo
 
 * Google
   * Follow the [ASP.NET Core Guide for Configuring Google Auth](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins?tabs=aspnetcore2x#create-the-app-in-google-api-console) to create the client secret and client id. Set the `AUTH_GOOGLE_CLIENT_KEY` and `AUTH_GOOGLE_CLIENT_SECRET` environment variables to enable google authentication.
+
+## License
+
+Athena is licensed under the `MIT` license. See [`LICENSE.md`](/LICENSE.md) for details.
