@@ -1,0 +1,11 @@
+.brand-logo {
+    margin-top: 12px;
+    font-size: 3em;
+    font-weight: bold;
+}
+
+#athena-icon {
+    max-height: 6rem;
+    max-width: 6rem;
+    padding-left: 3em;
+}

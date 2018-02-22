@@ -2,38 +2,48 @@
 @using Microsoft.AspNetCore.Identity
 @model Athena.Models.Login.LoginViewModel
 
-@inject SignInManager<AthenaUser> SignInManager
+@inject SignInManager<AthenaUser> SignInManager;
 
 @{
     ViewBag.Title = "Login";
     Layout = "_Layout";
 }
 
-<h2>Login</h2>
+<h3>Login Required</h3>
 
-
+<div class="row">
+    <div class="col s12">
+        Athena uses your accounts from other services for authentication. To create an account or log into an existing
+        account, please choose an authentication provider below
+    </div>
+</div>
+<div class="row">
 @{
     var providers = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
     if (providers.Count == 0)
     {
-        <div>
-            <p>
-                Your administrator did not setup any authentication providers so we can't log you in. Ask them to fix
-                the setup!
-            </p>
+        <div class="col s12">
+            Your administrator did not setup any authentication providers so we can't log you in. Ask them to fix
+            the setup!
         </div>
     }
     else
     {
         foreach (var provider in providers)
         {
-            <form asp-action="LoginWithExternalProvider" asp-route-provider="@provider.Name" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                <div>
-                    <p>
-                        <button type="submit" title="Log in using your @provider.DisplayName account">@provider.Name</button>
-                    </p>
+            <div class="col s3">
+                <div class="card">
+                    <div class="card-content">
+                        Login using your @provider.DisplayName account
+                    </div>
+                    <div class="card-action">
+                        <a href="@Url.Action(nameof(AccountController.LoginWithExternalProvider), "Account", new {provider = provider.Name, returnUrl = Model.ReturnUrl})">
+                            Login
+                        </a>
+                    </div>
                 </div>
-            </form>
+            </div>
         }
     }
 }
+</div>

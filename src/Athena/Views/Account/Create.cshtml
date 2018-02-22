@@ -5,21 +5,43 @@
     Layout = "_Layout";
 }
 
-<h2>Welcome to Athena, @Model.Name</h2>
+<h3>Welcome to Athena, @Model.Name</h3>
 
-<p>
-    Thanks for logging in via @(Model.LoginProvider). We're getting a few things ready. Please confirm that your email
-    address is <code>@(Model.Email)</code>.
-</p>
+<div class="row">
+    <div class="col s12">
+        Thanks for logging in via @(Model.LoginProvider). While we get a few things finalized, please confirm that the
+        following information is correct:
+    </div>
+</div>
+<div class="row">
+    <form class="col s12" asp-action="CreateAccount" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <div class="row">
+            <div class="input-field col s6">
+                <i class="material-icons prefix">school</i>
+                @Html.TextBoxFor(m => m.Name)
+                @Html.LabelFor(m => m.Name)
+            </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">cloud_circle</i>
+                @Html.TextBoxFor(m => m.LoginProvider, new {disabled = true})
+                @Html.LabelFor(m => m.LoginProvider, "Authentication Provider")
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s8">
+                <i class="material-icons prefix">email</i>
+                @Html.TextBoxFor(m => m.Email)
+                @Html.LabelFor(m => m.Email)
+            </div>
+            <div class="col s4">
+                <button class="btn waves-effect waves-light" type="submit">
+                    <i class="material-icons right">person_add</i>
+                    Create My Account
+                </button>
+            </div>
+        </div>
+        @Html.HiddenFor(m => m.ReturnUrl)
+    </form>
+</div>
 
-<p>
-    When this is implemented, we'll send you back to @(Model.ReturnUrl ?? "the home page")
-</p>
 
-<form asp-action="CreateAccount" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-    @Html.HiddenFor(m => m.Email)
-    @Html.HiddenFor(m => m.LoginProvider)
-    @Html.HiddenFor(m => m.Name)
-    @Html.HiddenFor(m => m.ReturnUrl)
-    <button type="submit">LGTM!</button>
-</form>
