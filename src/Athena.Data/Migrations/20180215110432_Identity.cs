@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Athena.Core.Models.Identity;
 using Athena.Data.Repositories.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -29,12 +30,12 @@ namespace Athena.Data.Migrations
 
                 role.NormalizedName = normalizer.Normalize(role.Name);
 
-                if (roles.FindByIdAsync(role.Id.ToString(), CancellationToken.None).GetAwaiter().GetResult() != null)
+                if (Task.Run(() => roles.FindByIdAsync(role.Id.ToString(), CancellationToken.None)).GetAwaiter().GetResult() != null)
                 {
                     return;
                 }
 
-                if (roles.CreateAsync(role, CancellationToken.None).GetAwaiter().GetResult() != IdentityResult.Success)
+                if (Task.Run(() => roles.CreateAsync(role, CancellationToken.None)).GetAwaiter().GetResult() != IdentityResult.Success)
                 {
                     throw new MigrationException("Failed to create administrator role");
                 }
