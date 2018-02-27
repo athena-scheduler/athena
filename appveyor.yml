@@ -13,6 +13,10 @@ install:
 
 services: postgresql96
 
+cache:
+ - 'src\Athena\node_modules'
+ - '%USERPROFILE%\.nuget\packages'
+
 build_script:
 - ps: ./build.ps1 -t CodeCov::Publish
 

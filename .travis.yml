@@ -9,5 +9,9 @@ services:
 addons:
   postgresql: "9.6"
 
+cache:
+  directories:
+    - src/Athena/node_modules
+
 script:
   - ./build.sh
