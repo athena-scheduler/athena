@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "User_Page";
+}
+<br />
+<div class="row">
+    <div class="col s2">
+        <h4>Degree Progress:</h4>
+    </div>
+    <div class="col s2 offset-s2">
+        <!--<div id="progress-bar" class="all-rounded">
+            <div id="progress-bar-percentage" class="all-rounded"><span>68/100</span></div>
+        </div>-->
+        <div class="progress">
+            <div class="determinate indigo darken-4"><span>70/100</span></div>
+        </div>
+    </div>
+    <div class="col s2 offset-s1">
+        <h5>ETC:</h5>
+    </div>
+    <div class="col s2 offset-s1">
+        <h6>??/??/????</h6>
+    </div>
+</div>
+<br />
+
+<h4>Class Schedule:</h4>
+<div class="row">
+    <div id='calendar' class="col s12"></div>
+</div>
+
+<a href="Schedule_Page" class="btn">New Schedule</a>
+
+<div class="btn">
+    print
+</div>
+
+<a href="Add_Classes" class="btn">Complete Classes</a>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // page is now ready, initialize the calendar...
+            $('#calendar').fullCalendar({
+                // put your options and callbacks here
+            })
+        });
+    </script>
+}

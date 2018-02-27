@@ -1,0 +1,31 @@
+﻿@model Athena.Core.Models.Identity.AthenaUser
+
+<div class="navbar-fixed">
+    <nav>
+        <div class="nav-wrapper indigo darken-4">
+            <img src="@Url.Content("~/images/owl icon.svg")" class="left responsive-img" id="athena-icon" alt="Athena"/>
+
+            <h2 class="brand-logo center"><a href="@Url.Action(nameof(HomeController.Home), "Home")">Athena</a></h2>
+            
+            <ul class="right">
+                @if (Model == null)
+                {
+                    <li><a href="@Url.Action(nameof(AccountController.Login), "Account")">Sign Up / Log In<i class="material-icons right">person_outline</i></a></li>
+                }
+                else
+                {
+                    <li>
+                        <div class="chip">
+                            <img gravatar-email="@Model.Student.Email" gravatar-size="80" gravatar-default-image="retro" gravatar-force-https="true" gravatar-rating="@GravatarRating.PG" alt="" />
+                            @Model.Student.Name
+                        </div>
+                    </li>
+                    <li>
+                        <a href="@Url.Action(nameof(AccountController.Logout), "Account")" tooltip="Log Out"><i class="material-icons right">exit_to_app</i></a>
+                    </li>
+                }
+            </ul>
+            
+        </div>
+    </nav>
+</div>

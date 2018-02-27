@@ -1,31 +1,36 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Athena.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Athena.Controllers
 {
-    [Route("[controller]")]
+    [Route("")]
+    [AllowAnonymous]
     public class HomeController : Controller
     {
-        [HttpGet("")]
-        public IActionResult Index()
+        [HttpGet("Home")]
+        [HttpGet]
+        public IActionResult Home()
         {
             return View();
         }
 
-        [HttpGet("About")]
-        public IActionResult About()
+        [HttpGet("Add_Classes")]
+        public IActionResult Add_Classes()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
-        [HttpGet("Contact")]
-        public IActionResult Contact()
+        [HttpGet("Schedule_Page")]
+        public IActionResult Schedule_Page()
         {
-            ViewData["Message"] = "Your contact page.";
+            return View();
+        }
 
+        [HttpGet("User_Page")]
+        public IActionResult User_Page()
+        {
             return View();
         }
 

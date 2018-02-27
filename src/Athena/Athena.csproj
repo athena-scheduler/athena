@@ -1,8 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <DebugType>Full</DebugType>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="7.4.0" />
+    <PackageReference Include="GravatarHelper.AspNetCore" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" />
     <PackageReference Include="Serilog.AspNetCore" Version="2.1.0" />
@@ -12,6 +15,11 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content" />
+    <ProjectReference Include="..\Athena.Core.Validation\Athena.Core.Validation.csproj">
+      <Project>{F244C821-37F1-402E-9F29-1EEBD81031A4}</Project>
+      <Name>Athena.Core.Validation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Athena.Core\Athena.Core.csproj" />
     <ProjectReference Include="..\Athena.Data\Athena.Data.csproj" />
   </ItemGroup>

@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewData["Title"] = "Schedule_Page";
+}
+
+<h2>Schedule</h2>
+
+
+<div id="name"><ul></ul></div>
+
+
+<div id="first">
+    <div class="row">
+        <h1 id="specific" class="btn col s6 offset-s3">Degree Specific Courses</h1>
+    </div>
+    <div>
+        <p>First Section Content</p>
+        <input id="enter" type="text">
+        <input type="button" value="Enter name" onclick="displayUserName()">
+    </div>
+    <div class="row">
+        <h1 class="btn col s6 offset-s3">All Courses</h1>
+    </div>
+    <div>
+        <p>Second Section Content</p>
+    </div>
+
+</div>
+<div class="row">
+    <a href="User_Page" class="btn col s6 offset-s3">Submit</a>
+</div>
+
+
+@section scripts {
+    <script type="text/javascript">
+        $('#first').collapsible('accordion-open', {
+            /* Speeds for opening */
+            accordionUpSpeed: 400,
+            accordionDownSpeed: 400,
+            collapseSpeed: 400,
+            /* Default pane open, if any */
+            contentOpen: 1,
+            /* Classes for dropdown arrow */
+            arrowRclass: 'arrow-r',
+            arrowDclass: 'arrow-d',
+            animate: true
+        });
+    </script>
+
+
+
+    <script type="text/javascript">
+        var names = [];
+
+        function displayUserName() {
+            var newterm = false;
+            var theName = document.getElementById("enter").value;
+            if (theName == "" || theName.length == 0) {
+                return false; //stop the function since the value is empty.
+            }
+
+          /* for (i = 0; i++; i < names.length-1) {
+                if (names[i] == theName) newterm = false; 
+            }
+            if (newterm == true) names.push(theName);
+            else return false;*/
+
+            names.push(theName);
+
+            document.getElementById("name").children[0].innerHTML += "<li>" + names[names.length - 1] + "</li>";
+        }
+    </script>
+}
