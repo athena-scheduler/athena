@@ -4,90 +4,50 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Athena.Core.Repositories;
+using Athena.Core.Models;
+using Athena.Exceptions;
+using System.Net;
+
 
 namespace Athena.Controllers.api
 {
     public class MeetingController : Controller
     {
-        // GET: Meeting
-        public ActionResult Index()
+        private readonly IMeetingRepository meetings;
+        private readonly IOfferingReository offerings;
+
+        public MeetingController (IMeetingRepository meetingsRepository, IOfferingReository offeringsRepository)
         {
-            return View();
+            meetings = meetingsRepository ?? throw new ArgumentNullException(nameof(meetingsRepository));
+            offerings = offeringsRepository ?? throw new ArgumentNullException(nameof(offeringsRepository));
         }
 
-        // GET: Meeting/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Meeting/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Meeting/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
+        public async Task AddMeeting([FromBody] Meeting meeting) => await meetings.AddAsync(meeting);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+        [HttpGet("{id}")]
+        public async Task<Meeting> GetMeeting(Guid id) => await meetings.GetAsync(id);
+
+        [HttpPut("{id}")]
+        public async Task EditMeeting(Guid id, [FromBody] Meeting meeting)
+        {
+            if (id != meeting.Id)
             {
-                return View();
+                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to edit {id} but got a model for {meeting.Id}");
             }
+            await meetings.EditAsync(meeting);
         }
 
-        // GET: Meeting/Edit/5
-        public ActionResult Edit(int id)
+        [HttpDelete("{id}")]
+        public async Task DeleteMeeting(Guid id)
         {
-            return View();
-        }
-
-        // POST: Meeting/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
+            var meeting = await meetings.GetAsync(id);
+            if (meeting == null)
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
+                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to delete {meeting} that does not exist");
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Meeting/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Meeting/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            await meetings.DeleteAsync(meeting);
         }
     }
 }

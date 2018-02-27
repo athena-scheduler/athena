@@ -55,16 +55,6 @@ namespace Athena.Controllers.api
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Course>> GetCoursesForInstitutionAsync(Institution institution)
-        {
-            if (institution == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get course for {institution} that does not exist");
-            }
-            return (await courses.GetCoursesForInstitutionAsync(institution));
-        }
-
-        [HttpGet]
         public async Task<IEnumerable<Course>> GetCompletedCoursesForStudentAsync(Student student)
         {
             if (student == null)
@@ -74,122 +64,37 @@ namespace Athena.Controllers.api
             return (await courses.GetCompletedCoursesForStudentAsync(student));
         }
 
-        public async Task MarkCourseAsCompletedForStudentAsync(Course course, Student student)
+        [HttpGet("{id}/requirements")]
+        public async Task<IEnumerable<Requirement>> GetRequirementsCourseSatisfiesAsync(Guid id)
         {
-            if (student == null)
+            var course =  await courses.GetAsync(id);
+            if (course == null)
             {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to mark course as completed for {student} that does not exist");
+                throw new ApiException(HttpStatusCode.NotFound, $"course with id {id} not found");
             }
-             await courses.MarkCourseAsCompletedForStudentAsync(course, student);
+            return (await requirements.GetRequirementsCourseSatisfiesAsync(course));
         }
 
-        public async Task MarkCourseAsUncompletedForStudentAsync(Course course, Student student)
+        [HttpGet("{id}/requirements")]
+        public async Task<IEnumerable<Requirement>> GetPrereqsForCourseAsync(Guid id)
         {
-            if (student == null)
+            var course = await courses.GetAsync(id);
+            if (course == null)
             {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to mark course as uncompleted for {student} that does not exist");
+                throw new ApiException(HttpStatusCode.NotFound, $"course with id {id} not found");
             }
-            await courses.MarkCourseAsUncompletedForStudentAsync(course, student);
+            return (await requirements.GetPrereqsForCourseAsync(course));
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<Course>> GetInProgressCoursesForStudentAsync(Student student)
+        [HttpGet("{id}/requirements")]
+        public async Task<IEnumerable<Requirement>> GetConcurrentPrereqsAsync(Guid id)
         {
-            if (student == null)
+            var course = await courses.GetAsync(id);
+            if (course == null)
             {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get in-progress for {student} that does not exist");
+                throw new ApiException(HttpStatusCode.BadRequest, $"course with id {id} not found");
             }
-            return (await courses.GetInProgressCoursesForStudentAsync(student));
-        }
-
-        public async Task MarkCourseInProgressForStudentAsync(Course course, Student student)
-        {
-            if (student == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to mark in-progress courses for {student} that does not exist");
-            }
-            await courses.MarkCourseInProgressForStudentAsync(course , student);
-        }
-
-        public async Task MarkCourseNotInProgressForStudentAsync(Course course, Student student)
-        {
-            if (student == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to mark not in-progress courses for {student} that does not exist");
-            }
-            await courses.MarkCourseNotInProgressForStudentAsync(course, student);
-        }
-
-        public async Task AddOfferingAsync(Course course, Offering offering)
-        {
-            if (offering == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to add offering {offering} to course {course} that doesn't exist");
-            }
-            await courses.AddOfferingAsync(course, offering);
-        }
-
-        public async Task RemoveOfferingAsync(Course course, Offering offering)
-        {
-            if (offering == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to remove offering {offering} to course {course} that doesn't exist");
-            }
-            await courses.RemoveOfferingAsync(course, offering);
-        }
-
-        public async Task AddSatisfiedRequirementAsync(Course course, Requirement requirement)
-        {
-            if (requirement == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to add satisfied requirements {requirement} to course {course} that doesn't exist");
-            }
-            await courses.AddSatisfiedRequirementAsync(course, requirement);
-        }
-
-        public async Task RemoveSatisfiedRequirementAsync(Course course, Requirement requirement)
-        {
-            if (requirement == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to remove satisfied requirements {requirement} to course {course} that doesn't exist");
-            }
-            await courses.RemoveSatisfiedRequirementAsync(course, requirement);
-        }
-
-        public async Task AddPrerequisiteAsync(Course course, Requirement prereq)
-        {
-            if (prereq == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to add prereq {prereq} to course {course} that doesn't exist");
-            }
-            await courses.AddPrerequisiteAsync(course, prereq);
-        }
-
-        public async Task RemovePrerequisiteAsync(Course course, Requirement prereq)
-        {
-            if (prereq == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to remove prereq {prereq} to course {course} that doesn't exist");
-            }
-            await courses.RemovePrerequisiteAsync(course, prereq);
-        }
-
-        public async Task AddConcurrentPrerequisiteAsync(Course course, Requirement prereq)
-        {
-            if (prereq == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to add concurrent prereq {prereq} to course {course} that doesn't exist");
-            }
-            await courses.AddConcurrentPrerequisiteAsync(course, prereq);
-        }
-
-        public async Task RemoveConcurrentPrerequisiteAsync(Course course, Requirement prereq)
-        {
-            if (prereq == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to remove concurrent prereq {prereq} to course {course} that doesn't exist");
-            }
-            await courses.RemoveConcurrentPrerequisiteAsync(course, prereq);
+            return (await requirements.GetConcurrentPrereqsAsync(course));
         }
     }
 }

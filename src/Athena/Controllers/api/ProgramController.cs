@@ -54,42 +54,35 @@ namespace Athena.Controllers.api
             await programs.DeleteAsync(program);
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<Program>> GetProgramsOfferedByInstitutionAsync(Institution institution)
+        [HttpGet("{id}/requirements")]
+        public async Task<IEnumerable<Requirement>> GetRequirementsForProgramAsync(Guid id)
         {
-            if (institution == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get Programs from {institution}, where {institution} does not exist");
-            }
-            return (await programs.GetProgramsOfferedByInstitutionAsync(institution));
-        }
-        
-        [HttpGet]
-        public async Task<IEnumerable<Program>> GetProgramsForStudentAsync(Student student)
-        {
-            if (student == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get Programs for {student}, where {student} does not exist");
-            }
-            return (await programs.GetProgramsForStudentAsync(student));
-        }
-
-        public async Task AddRequirementAsync(Program program, Requirement requirement)
-        {
+            var program = await programs.GetAsync(id);
             if (program == null)
             {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to add Requirements for {program}, where {program} does not exist");
+                throw new ApiException(HttpStatusCode.NotFound, $"program with id {id} not found");
             }
-            await programs.AddRequirementAsync(program, requirement);
+            return (await requirements.GetRequirementsForProgramAsync(program));
         }
 
-        public async Task RemoveRequirementAsync(Program program, Requirement requirement)
+        [HttpPost("api/v1/student/{id}/programs/{programId}")]
+        public async Task RegisterStudnetForProgram(Student student, Program program)
         {
-            if (program == null)
+            if (student == null || program == null)
             {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to remove Requirements for {program}, where {program} does not exist");
+                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to register for program {program}, where the student {student} or program {program} does not exist");
             }
-            await programs.RemoveRequirementAsync(program, requirement);
+            await students.RegisterForProgramAsync(student, program);
+        }
+
+        [HttpDelete("api/v1/student/{id}/programs/{programId}")]
+        public async Task UnregisterForProgram(Student student, Program program)
+        {
+            if (student == null || program == null)
+            {
+                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to register for program {program}, where the student {student} or program {program} does not exist");
+            }
+            await students.UnregisterForProgramAsync(student, program);
         }
     }
 }

@@ -4,90 +4,111 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Athena.Core.Repositories;
+using Athena.Core.Models;
+using Athena.Exceptions;
+using System.Net;
 
 namespace Athena.Controllers.api
 {
+    [Route("api/v1/[Controller]")]
     public class OfferingController : Controller
     {
-        // GET: Offering
-        public ActionResult Index()
-        {
-            return View();
-        }
+        private readonly IOfferingReository offerings;
+        private readonly IMeetingRepository meetings;
+        private readonly ICourseRepository courses;
 
-        // GET: Offering/Details/5
-        public ActionResult Details(int id)
+        public OfferingController(IOfferingReository offeringsRepository, IMeetingRepository meetingsRepository, ICourseRepository coursesRepository)
         {
-            return View();
+            offerings = offeringsRepository ?? throw new ArgumentNullException(nameof(offeringsRepository));
+            meetings = meetingsRepository ?? throw new ArgumentNullException(nameof(meetingsRepository));
+            courses = coursesRepository ?? throw new ArgumentNullException(nameof(coursesRepository));
         }
-
-        // GET: Offering/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Offering/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
+        public async Task AddOffering([FromBody] Offering offering) => await offerings.AddAsync(offering);
+        
+        [HttpGet("{id}")]
+        public async Task<Offering> GetOffering(Guid id) => await offerings.GetAsync(id);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+        [HttpPut("{id}")]
+        public async Task EditOffering(Guid id, [FromBody] Offering offering)
+        {
+            if (id != offering.Id)
             {
-                return View();
+                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to edit {id} but got a model for {offering.Id}");
             }
+            await offerings.EditAsync(offering);
         }
 
-        // GET: Offering/Edit/5
-        public ActionResult Edit(int id)
+        [HttpDelete("{id}")]
+        public async Task DeleteOfffering(Guid id)
         {
-            return View();
+            var offering = await offerings.GetAsync(id);
+            if (offering == null)
+            {
+                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to delete {offering} that does not exist");
+            }
+            await offerings.DeleteAsync(offering);
         }
 
-        // POST: Offering/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpGet("api/v1/course/{id}/offering/{offeringId}")]
+        public async Task<IEnumerable<Offering>> GetOfferingsForCourseAsync(Course course)
         {
-            try
+            if (course == null)
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
+                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get offering for {course} that doesn't exist");
             }
-            catch
-            {
-                return View();
-            }
+            return (await offerings.GetOfferingsForCourseAsync(course));
         }
 
-        // GET: Offering/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+        [HttpPost("api/v1/course/{id}/offering/{offeringId}/meeting")]
+        public async Task AddMeetingAsync(Offering offering, Meeting meeting)
+        {                                       
+            if (meeting == null)
+            {
+                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to add meeting {meeting} where meeting does not exist");
+            }
+            await offerings.AddMeetingAsync(offering, meeting);
         }
 
-        // POST: Offering/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [HttpDelete("api/v1/course/{id}/offering/{offeringId}/meeting")]
+        public async Task RemoveMeetingAsync(Offering offering, Meeting meeting)
         {
-            try
+            if (meeting == null)
             {
-                // TODO: Add delete logic here
+                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to remove meeting {meeting} where meeting does not exist");
+            }
+            await offerings.RemoveMeetingAsync(offering, meeting);
+        }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+        [HttpGet("api/v1/course/{id}/offering/{offeringId}/meeting")]
+        public async Task<IEnumerable<Meeting>> GetMeetingsForOfferingAsync(Offering offering)
+        {
+            if (offering == null)
             {
-                return View();
+                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get meetings for {offering} where offering doesn't exist");
             }
+            return (await meetings.GetMeetingsForOfferingAsync(offering));
+        }
+
+        [HttpPost("api/v1/course/{id}/offering/{offeringId}")]
+        public async Task AddOfferingAsync(Course course, Offering offering)
+        {
+            if (offering == null)
+            {
+                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to add offering {offering} to course {course} that doesn't exist");
+            }
+            await courses.AddOfferingAsync(course, offering);
+        }
+
+        [HttpDelete("api/v1/course/{id}/offering/{offeringId}")]
+        public async Task RemoveOfferingAsync(Course course, Offering offering)
+        {
+            if (offering == null)
+            {
+                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to remove offering {offering} to course {course} that doesn't exist");
+            }
+            await courses.RemoveOfferingAsync(course, offering);
         }
     }
 }

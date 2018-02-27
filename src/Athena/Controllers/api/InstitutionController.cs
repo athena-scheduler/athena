@@ -17,12 +17,14 @@ namespace Athena.Controllers.api
         private readonly IInstitutionRepository institutions;
         private readonly ICampusRepository campuses;
         private readonly IStudentRepository students;
+        private readonly IProgramRepository programs;
 
-        public InstitutionController(IInstitutionRepository institutionRepository, ICampusRepository campusRepository, IStudentRepository studentRepository)
+        public InstitutionController(IInstitutionRepository institutionRepository, ICampusRepository campusRepository, IStudentRepository studentRepository, IProgramRepository programsRepository)
         {
             institutions = institutionRepository ?? throw new ArgumentNullException(nameof(institutionRepository));
             campuses = campusRepository ?? throw new ArgumentNullException(nameof(campusRepository));
             students = studentRepository ?? throw new ArgumentNullException(nameof(studentRepository));
+            programs = programsRepository ?? throw new ArgumentNullException(nameof(programsRepository));
         }
 
         [HttpPost]
@@ -52,15 +54,6 @@ namespace Athena.Controllers.api
             await institutions.DeleteAsync(institution);
         }
 
-        public async Task<IEnumerable<Institution>> GetInstitutionsOnCampusAsync(Campus campus)
-        {
-            if (campus == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get Institutions for {campus} that does not exist");
-            }
-            return (await institutions.GetInstitutionsOnCampusAsync(campus));
-        }
-
         public async Task<IEnumerable<Institution>> GetInstitutionsForStudentAsync(Student student)
         {
             if (student == null)
@@ -86,6 +79,16 @@ namespace Athena.Controllers.api
                 throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get Unenroll {student} in Institution {institution} where eihter the student or institution not exist");
             }
             await institutions.UnenrollStudentAsync(institution, student);
+        }
+
+        [HttpGet("/{id}/programs")]
+        public async Task<IEnumerable<Program>> GetProgramsOfferedByInstitutionAsync(Institution institution)
+        {
+            if (institution == null)
+            {
+                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get Programs from {institution}, where {institution} does not exist");
+            }
+            return (await programs.GetProgramsOfferedByInstitutionAsync(institution));
         }
     }
 }
