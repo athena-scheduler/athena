@@ -14,7 +14,9 @@ public void TestProject(FilePath project)
     {
        OldStyle = true,
        MergeOutput = true 
-    }.WithFilter("+[Athena.*]*")
+    }.WithFilter("+[Athena]*")
+     .WithFilter("+[Athena.*]*")
+     .WithFilter("-[Athena.Tests]*")
      .WithFilter("-[Athena.*.Tests]*");
     
     if(IsRunningOnWindows())
