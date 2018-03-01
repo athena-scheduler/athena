@@ -66,7 +66,7 @@ namespace Athena.Controllers.api
         }
 
         [HttpPost("api/v1/student/{id}/programs/{programId}")]
-        public async Task RegisterStudnetForProgram(Student student, Program program)
+        public async Task RegisterStudentForProgram(Student student, Program program)
         {
             if (student == null || program == null)
             {

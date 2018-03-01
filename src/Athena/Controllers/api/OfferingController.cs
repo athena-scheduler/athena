@@ -41,7 +41,7 @@ namespace Athena.Controllers.api
         }
 
         [HttpDelete("{id}")]
-        public async Task DeleteOfffering(Guid id)
+        public async Task DeleteOffering(Guid id)
         {
             var offering = await offerings.GetAsync(id);
             if (offering == null)
