@@ -1,6 +1,7 @@
 #addin "nuget:?package=Cake.Docker&version=0.8.2"
 #addin "nuget:?package=Cake.NPM&version=0.12.1"
 #addin "nuget:?package=Cake.Codecov&version=0.3.0"
+
 #tool "nuget:?package=Codecov&version=1.0.3"
 #tool "nuget:?package=OpenCover&version=4.6.519"
 
@@ -15,6 +16,7 @@ const string SOLUTION = "./Athena.sln";
 
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
+var imageTag = Argument("imageTag", "latest");
 
 //////////////////////////////////////////////////////////////////////
 // TASKS
@@ -147,12 +149,31 @@ Task("Dist")
     .IsDependentOn("Test")
     .Does(() => 
 {
+    EnsureDirectoryExists("./_dist");
+
+    DotNetCorePublish("./src/Athena/Athena.csproj", new DotNetCorePublishSettings
+    {
+        Configuration = configuration,
+        NoRestore = true,
+        OutputDirectory = MakeAbsolute(Directory("./_dist/Athena")).FullPath
+    });
 });
 
-Task("Docker")
+Task("Docker::Build")
     .IsDependentOn("Dist")
     .Does(() =>
 {
+    DockerBuild(new DockerImageBuildSettings
+    {
+        Tag = new []{$"athenascheduler/athena:{imageTag}"}
+    }, ".");
+});
+
+Task("Docker::Push")
+    .IsDependentOn("Docker::Build")
+    .Does(() =>
+{
+    DockerPush($"athenascheduler/athena:{imageTag}");
 });
 
 Task("CodeCov::Publish")

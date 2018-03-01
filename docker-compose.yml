@@ -1,0 +1,17 @@
+version: '3'
+services:
+  athena:
+    build: '.'
+    ports:
+      - "5000:5000"
+    environment:
+      - "ATHENA_CONNECTION_STRING=Server=db;User ID=postgres;Database=postgres"
+      # - AUTH_GOOGLE_CLIENT_KEY=...
+      # - AUTH_GOOGLE_CLIENT_SECRET=...
+    depends_on:
+      - db
+    command:
+      - /contrib/wait-postgres.sh
+      - db
+  db:
+    image: postgres:alpine
