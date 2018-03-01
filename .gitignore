@@ -8,6 +8,10 @@
 _dist/
 _tests/
 
+# MiniCover
+*coverage*
+*coverage*/
+
 # User-specific files
 *.suo
 *.user
