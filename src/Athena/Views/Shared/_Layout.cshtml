@@ -1,6 +1,7 @@
 ﻿
 @{
     var athenaUser = User.ToAthenaUser();
+    MiniProfiler.Current.AddCustomLink("All Profiler Results", Url.Content("~/_profile/results-index"));
 }
 
 <!DOCTYPE html>
@@ -19,7 +20,9 @@
 
 <main>
     <div class="container body-content;">
-        @RenderBody()
+        <profile name="RenderBody">
+            @RenderBody()            
+        </profile>
     </div>
 </main>
 
@@ -35,7 +38,9 @@
 
 <script type="text/javascript" src="~/athena.js"></script>
 
-@RenderSection("Scripts", required: false)
+<profile name="RenderScripts">
+    @RenderSection("Scripts", required: false)
+</profile>
 
 <script> $(".button-collapse").sideNav();</script>
 
@@ -51,5 +56,6 @@
     );
 </script>
 
+<mini-profiler position="@RenderPosition.BottomRight" />
 </body>
 </html>

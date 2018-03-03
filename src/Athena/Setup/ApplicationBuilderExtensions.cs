@@ -38,6 +38,9 @@ namespace Athena.Setup
             app.UseMiddleware<SerilogHttpMiddleware>();
             app.UseMiddleware<CustomErrorHandlerMiddleware>();
             app.UseStaticFiles();
+
+            app.UseMiniProfiler();
+            
             app.UseAuthentication();
             
             app.UseWhen(ctx => ctx.Request.Path.HasValue && ctx.Request.Path.StartsWithSegments("/api"), builder =>
