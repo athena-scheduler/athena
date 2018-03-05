@@ -71,5 +71,21 @@ namespace Athena.Tests.Controllers.Api
 
             Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
         }
+
+        [Theory, AutoData]
+        public async Task GetProgramsOfferedByInstitution(Institution institution)
+        {
+            await _controller.GetProgramsOfferedByInstitutionAsync(institution);
+
+            Programs.Verify(p => p.GetProgramsOfferedByInstitutionAsync(institution), Times.Once);
+        }
+
+        [Fact]
+        public async Task GetProgramsOfferedByInstitution_ThrowsforNullInstitution()
+        {
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetProgramsOfferedByInstitutionAsync(null));
+
+            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+        }
     }
 }

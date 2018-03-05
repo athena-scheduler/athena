@@ -54,33 +54,6 @@ namespace Athena.Controllers.api
             await institutions.DeleteAsync(institution);
         }
 
-        public async Task<IEnumerable<Institution>> GetInstitutionsForStudentAsync(Student student)
-        {
-            if (student == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get Institutions for {student} that does not exist");
-            }
-            return (await institutions.GetInstitutionsForStudentAsync(student));
-        }
-
-        public async Task EnrollStudentAsync(Institution institution, Student student)
-        {
-            if (student == null || institution == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get Enroll {student} in Institution {institution} where eihter the student or institution not exist");
-            }
-            await institutions.EnrollStudentAsync(institution, student);
-        }
-
-        public async Task UnenrollStudentAsync(Institution institution, Student student)
-        {
-            if (institution == null || student == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get Unenroll {student} in Institution {institution} where eihter the student or institution not exist");
-            }
-            await institutions.UnenrollStudentAsync(institution, student);
-        }
-
         [HttpGet("/{id}/programs")]
         public async Task<IEnumerable<Program>> GetProgramsOfferedByInstitutionAsync(Institution institution)
         {

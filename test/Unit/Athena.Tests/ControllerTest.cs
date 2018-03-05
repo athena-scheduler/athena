@@ -16,7 +16,7 @@ namespace Athena.Tests
         protected readonly Mock<IProgramRepository> Programs = new Mock<IProgramRepository>();
         protected readonly Mock<IRequirementRepository> Requirements = new Mock<IRequirementRepository>();
         protected readonly Mock<IStudentRepository> Students = new Mock<IStudentRepository>();
-       
+        
 
 
     }
