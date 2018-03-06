@@ -91,11 +91,12 @@ namespace Athena.Tests.Controllers.Api
         [Theory, AutoData]
         public async Task EnrollStudent_Valid(Institution institution, Student student)
         {
+            Institutions.Setup(i => i.GetAsync(It.IsAny<Guid>())).ReturnsAsync(default(Institution));
             Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(default(Student));
 
             await _controller.EnrollStudentAsync(institution, student);
 
-            Institutions.Verify(i => i.GetInstitutionsForStudentAsync(student));
+            Institutions.Verify(i => i.EnrollStudentAsync(institution, student));
         }
 
         [Theory, AutoData]
@@ -121,13 +122,13 @@ namespace Athena.Tests.Controllers.Api
 
             await _controller.UnenrollStudentAsync(institution, student);
 
-            Institutions.Verify(i => i.GetInstitutionsForStudentAsync(student));
+            Institutions.Verify(i => i.UnenrollStudentAsync(institution, student));
         }
 
         [Theory, AutoData]
         public async Task UnenrollStudent_ThrowsforNullStudent(Institution institution)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.EnrollStudentAsync(institution, null));
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.UnenrollStudentAsync(institution, null));
 
             Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
         }
@@ -135,7 +136,7 @@ namespace Athena.Tests.Controllers.Api
         [Theory, AutoData]
         public async Task UnenrollStudent_ThrowsforNullInstitution(Student student)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.EnrollStudentAsync(null, student));
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.UnenrollStudentAsync(null, student));
 
             Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
         }

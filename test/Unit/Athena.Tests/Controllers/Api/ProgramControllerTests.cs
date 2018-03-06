@@ -121,15 +121,15 @@ namespace Athena.Tests.Controllers.Api
         }
 
         [Theory, AutoData]
-        public async Task UnRegisterStudentForProgram_Valid(Program program, Student student)
+        public async Task UnRegisterForProgram_Valid(Program program, Student student)
         {
-            await _controller.RegisterStudentForProgram(student, program);
+            await _controller.UnregisterForProgram(student, program);
 
-            Students.Verify(s => s.RegisterForProgramAsync(student, program), Times.Once);
+            Students.Verify(s => s.UnregisterForProgramAsync(student, program), Times.Once);
         }
 
         [Theory, AutoData]
-        public async Task UnRegisterStudentForProgram_ThrowsforNullProgram(Student student)
+        public async Task UnRegisterForProgram_ThrowsforNullProgram(Student student)
         {
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.UnregisterForProgram(student, null));
 
@@ -137,7 +137,7 @@ namespace Athena.Tests.Controllers.Api
         }
 
         [Theory, AutoData]
-        public async Task UnRegisterStudentForProgram_ThrowsforNullStudent(Program program)
+        public async Task UnRegisterForProgram_ThrowsforNullStudent(Program program)
         {
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.UnregisterForProgram(null, program));
 
