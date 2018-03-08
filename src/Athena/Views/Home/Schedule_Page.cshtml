@@ -2,72 +2,144 @@
 @{
     ViewData["Title"] = "Schedule_Page";
 }
-
+<br /><br /><br />
 <h2>Schedule</h2>
 
 
-<div id="name"><ul></ul></div>
 
 
-<div id="first">
-    <div class="row">
-        <h1 id="specific" class="btn col s6 offset-s3">Degree Specific Courses</h1>
-    </div>
-    <div>
-        <p>First Section Content</p>
-        <input id="enter" type="text">
-        <input type="button" value="Enter name" onclick="displayUserName()">
-    </div>
-    <div class="row">
-        <h1 class="btn col s6 offset-s3">All Courses</h1>
-    </div>
-    <div>
-        <p>Second Section Content</p>
-    </div>
-
-</div>
 <div class="row">
-    <a href="User_Page" class="btn col s6 offset-s3">Submit</a>
+    <div class="col s9">
+
+        <div class="card">
+            <div class="card-content cal-card-content">
+                <div id='calendar' class="user-tabs"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <a href="User_Page" class="btn col s4 offset-s1">Submit</a>
+            <a href="User_Page" class="btn col s4 offset-s2">Cancel</a>
+        </div>
+    </div>
+
+    <div class="col s3">
+        <div id="first">
+            <div class="row">
+                <h1 id="specific" class="btn col s8 offset-s1">Degree Specific</h1>
+            </div>
+            <div>
+                <ul class="classUnordered">
+                    <li>
+                        <div class="card">
+                            <span class="card-title">Math</span>
+                            <a class="btn-floating halfway-fab waves-effect waves-light blue darken-4" onclick="changesymbol(this, this.id, 'Math', '12:30', '14:30', [1, 3, 5])" id="1520"><i class="material-icons">add</i></a>
+                            <div class="card-content">
+                                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                                <!--<p>Math</p><p>1520</p><p>12:30-14:30</p><p>Mon,Wed,Fri</p>-->
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card">
+                            <span class="card-title">Reading</span>
+                            <a class="btn-floating halfway-fab waves-effect waves-light blue darken-4" onclick="changesymbol(this, this.id, 'Reading', '16:30', '18:00', [2, 4])" id="3004"><i class="material-icons">add</i></a>
+                            <div class="card-content">
+                                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
 </div>
+                <div class="row">
+                    <h1 class="btn col s8 offset-s1">All Courses</h1>
+                </div>
+                <div>
+                    <p>Second Section Content</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 
-@section scripts {
-    <script type="text/javascript">
-        $('#first').collapsible('accordion-open', {
-            /* Speeds for opening */
-            accordionUpSpeed: 400,
-            accordionDownSpeed: 400,
-            collapseSpeed: 400,
-            /* Default pane open, if any */
-            contentOpen: 1,
-            /* Classes for dropdown arrow */
-            arrowRclass: 'arrow-r',
-            arrowDclass: 'arrow-d',
-            animate: true
-        });
-    </script>
+    <!--
+     <div id="name"><ul></ul></div>
+                <input id="enter" type="text">
+                <input type="button" value="Enter name" onclick="displayUserName()">
+            </div>
+    -->
+
+    @section scripts {
 
 
 
-    <script type="text/javascript">
-        var names = [];
+        <script type="text/javascript">
 
-        function displayUserName() {
-            var newterm = false;
-            var theName = document.getElementById("enter").value;
-            if (theName == "" || theName.length == 0) {
-                return false; //stop the function since the value is empty.
+            function changesymbol(elmnt, crsID, crsTitle, startTime, endTime, days) {
+                var event = {
+                    id: crsID, title: crsTitle, start: startTime, end: endTime, dow: days};
+                    $('#calendar').fullCalendar('renderEvent', event, false);
+                   // elmnt.parentElement.style.display = "none";
+                    $(elmnt.parentElement).fadeOut(400);
+                }
+        </script>
+
+        <script type="text/javascript">
+            $('#first').collapsible('accordion-open', {
+                /* Speeds for opening */
+                accordionUpSpeed: 400,
+                accordionDownSpeed: 400,
+                collapseSpeed: 400,
+                /* Default pane open, if any */
+                contentOpen: 1,
+                /* Classes for dropdown arrow */
+                arrowRclass: 'arrow-r',
+                arrowDclass: 'arrow-d',
+                animate: true
+            });
+        </script>
+
+
+
+        <script type="text/javascript">
+            var names = [];
+
+            function displayUserName() {
+                var newterm = false;
+                var theName = document.getElementById("enter").value;
+                if (theName == "" || theName.length == 0) {
+                    return false; //stop the function since the value is empty.
+                }
+                names.push(theName);
+
+                document.getElementById("name").children[0].innerHTML += "<li>" + names[names.length - 1] + "</li>";
             }
+        </script>
 
-          /* for (i = 0; i++; i < names.length-1) {
-                if (names[i] == theName) newterm = false; 
-            }
-            if (newterm == true) names.push(theName);
-            else return false;*/
+        <script type="text/javascript">
+            $(document).ready(function () {
+                // page is now ready, initialize the calendar...
+                $('#calendar').fullCalendar({
+                    // put your options and callbacks here
+                    defaultView: "agendaWeek",
+                    minTime: "07:00:00",
+                    maxTime: "22:00:00",
+                    allDaySlot: false,
+                    slotDuration: "1:00",
+                    slotWidth: 2,
+                    height: "auto",
+                    header: false,
+                    columnFormat: 'ddd',
+                    eventClick: function (event) {
+                        $('#calendar').fullCalendar('removeEvents', event.id);
+                        $(document.getElementById(event.id).parentElement).fadeIn(400);
+                    }
+                });
+                $('#calendar').fullCalendar('next');
+                $('#calendar').fullCalendar('render');
+            });
+        </script>
+    }
 
-            names.push(theName);
 
-            document.getElementById("name").children[0].innerHTML += "<li>" + names[names.length - 1] + "</li>";
-        }
-    </script>
-}

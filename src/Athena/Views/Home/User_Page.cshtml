@@ -84,7 +84,6 @@
         <div class="card-content cal-card-content">
             <h4>Weekly Schedule:</h4>
             <div id='calendar' class="user-tabs"></div>
-
         </div>
         <a class="btn-floating halfway-fab waves-effect waves-light blue darken-4 tooltipped printBtn hidden-print" data-position="left" data-delay="50" data-tooltip="Print schedule here"><i class="material-icons">print</i></a>
     </div>
@@ -111,6 +110,7 @@
             });
 
             $('#calendar').fullCalendar('next');
+            $('#calendar').fullCalendar('render');
 
             $('ul.tabs').tabs({
                 swipeable: true,
