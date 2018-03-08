@@ -1,7 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
+using Athena.Core.Models;
+using Athena.Importer.Provider;
 using McMaster.Extensions.CommandLineUtils;
 using Serilog;
+using Serilog.Core;
 
 namespace Athena.Importer
 {
@@ -29,15 +33,29 @@ namespace Athena.Importer
                 return 1;
             }
 
-            if (!Uri.TryCreate(ApiEndpoint, UriKind.Absolute, out var url))
+            if (!Uri.TryCreate(ApiEndpoint, UriKind.Absolute, out var uri))
             {
                 app.ShowHelp();
                 return 1;
             }
 
+            if (!Directory.Exists(DataPath))
+            {
+                Log.Fatal("Could not find all or part of the path {dataPath}", DataPath);
+                return 1;
+            }
+
             try
             {
-                await new Importer(url, DataPath).Import();
+                await new GenericImporter<Campus>(uri, new JsonFilesystemDataProvider<Campus>(DataPath)).Import();
+                await new GenericImporter<Institution>(uri, new JsonFilesystemDataProvider<Institution>(DataPath)).Import();
+                await new GenericImporter<Course>(uri, new JsonFilesystemDataProvider<Course>(DataPath)).Import();
+                await new GenericImporter<Offering>(uri, new JsonFilesystemDataProvider<Offering>(DataPath)).Import();
+                await new GenericImporter<Meeting>(uri, new JsonFilesystemDataProvider<Meeting>(DataPath)).Import();
+                await new GenericImporter<Core.Models.Program>(uri, new JsonFilesystemDataProvider<Core.Models.Program>(DataPath)).Import();
+                await new GenericImporter<Requirement>(uri, new JsonFilesystemDataProvider<Requirement>(DataPath)).Import();
+
+                await new ObjectMapImporter(uri).Import();
             }
             catch (Exception e)
             {

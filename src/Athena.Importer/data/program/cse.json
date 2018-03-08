@@ -2,5 +2,8 @@
     "id": "5e4c8570-610a-4333-b15d-2d3097251a33",
     "name": "Ba. CSE",
     "description": "Bachelor of Computer Science And Engineering",
-    "institution": "dcf8a9ef-1480-475d-a437-bf36d6409b66"
+    "institution": 
+    {
+        "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66"
+    }
 }
