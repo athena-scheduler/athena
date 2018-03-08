@@ -67,8 +67,7 @@ namespace Athena.Importer.Tests
             Assert.Equal(0, result);
             _http.ShouldHaveCalled($"{ApiTestEndpoint}/v1/campus")
                 .WithVerb(HttpMethod.Post)
-                .WithContentType("application/json")
-                .Times(3);
+                .WithContentType("application/json");
         }
         
         [Fact]
@@ -79,8 +78,7 @@ namespace Athena.Importer.Tests
             Assert.Equal(0, result);
             _http.ShouldHaveCalled($"{ApiTestEndpoint}/v1/course")
                 .WithVerb(HttpMethod.Post)
-                .WithContentType("application/json")
-                .Times(3);
+                .WithContentType("application/json");
         }
         
         [Fact]
@@ -91,8 +89,7 @@ namespace Athena.Importer.Tests
             Assert.Equal(0, result);
             _http.ShouldHaveCalled($"{ApiTestEndpoint}/v1/institution")
                 .WithVerb(HttpMethod.Post)
-                .WithContentType("application/json")
-                .Times(2);
+                .WithContentType("application/json");
         }
         
         [Fact]
@@ -103,8 +100,7 @@ namespace Athena.Importer.Tests
             Assert.Equal(0, result);
             _http.ShouldHaveCalled($"{ApiTestEndpoint}/v1/meeting")
                 .WithVerb(HttpMethod.Post)
-                .WithContentType("application/json")
-                .Times(10);
+                .WithContentType("application/json");
         }
         
         [Fact]
@@ -115,8 +111,7 @@ namespace Athena.Importer.Tests
             Assert.Equal(0, result);
             _http.ShouldHaveCalled($"{ApiTestEndpoint}/v1/offering")
                 .WithVerb(HttpMethod.Post)
-                .WithContentType("application/json")
-                .Times(4);
+                .WithContentType("application/json");
         }
         
         [Fact]
@@ -127,8 +122,7 @@ namespace Athena.Importer.Tests
             Assert.Equal(0, result);
             _http.ShouldHaveCalled($"{ApiTestEndpoint}/v1/program")
                 .WithVerb(HttpMethod.Post)
-                .WithContentType("application/json")
-                .Times(1);
+                .WithContentType("application/json");
         }
         
         [Fact]
@@ -139,8 +133,7 @@ namespace Athena.Importer.Tests
             Assert.Equal(0, result);
             _http.ShouldHaveCalled($"{ApiTestEndpoint}/v1/requirement")
                 .WithVerb(HttpMethod.Post)
-                .WithContentType("application/json")
-                .Times(1);
+                .WithContentType("application/json");
         }
 
         public void Dispose() => _http.Dispose();

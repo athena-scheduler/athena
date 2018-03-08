@@ -5,7 +5,6 @@ using Athena.Core.Models;
 using Athena.Importer.Provider;
 using McMaster.Extensions.CommandLineUtils;
 using Serilog;
-using Serilog.Core;
 
 namespace Athena.Importer
 {
@@ -55,7 +54,7 @@ namespace Athena.Importer
                 await new GenericImporter<Core.Models.Program>(uri, new JsonFilesystemDataProvider<Core.Models.Program>(DataPath)).Import();
                 await new GenericImporter<Requirement>(uri, new JsonFilesystemDataProvider<Requirement>(DataPath)).Import();
 
-                await new ObjectMapImporter(uri).Import();
+                await new ObjectMapImporter(uri, new JsonFilesystemObjectMapProvider(DataPath)).Import();
             }
             catch (Exception e)
             {
