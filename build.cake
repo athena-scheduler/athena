@@ -187,6 +187,13 @@ Task("Dist")
         NoRestore = true,
         OutputDirectory = MakeAbsolute(Directory("./_dist/Athena")).FullPath
     });
+
+    DotNetCorePublish("./src/Athena.Importer/Athena.Importer.csproj", new DotNetCorePublishSettings
+    {
+        Configuration = configuration,
+        NoRestore = true,
+        OutputDirectory = MakeAbsolute(Directory("./_dist/Athena.Importer")).FullPath
+    });
 });
 
 Task("Docker::Build")
@@ -197,6 +204,12 @@ Task("Docker::Build")
     {
         Tag = new []{$"athenascheduler/athena:{imageTag}"}
     }, ".");
+
+    DockerBuild(new DockerImageBuildSettings
+    {
+        Tag = new []{$"athenascheduler/importer:{imageTag}"},
+        File = "./src/Athena.Importer/Dockerfile"
+    }, ".");
 });
 
 Task("Docker::Push")
@@ -204,6 +217,7 @@ Task("Docker::Push")
     .Does(() =>
 {
     DockerPush($"athenascheduler/athena:{imageTag}");
+    DockerPush($"athenascheduler/importer:{imageTag}");
 });
 
 Task("CodeCov::Publish")
