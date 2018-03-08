@@ -15,22 +15,21 @@ namespace Athena.Controllers.api
 
     public class StudentController : Controller
     {
-
-        private readonly IStudentRepository students;
-        private readonly IProgramRepository programs;
-        private readonly IInstitutionRepository institutions;
+        private readonly IStudentRepository _students;
+        private readonly IProgramRepository _programs;
+        private readonly IInstitutionRepository _institutions;
         public StudentController(IStudentRepository studentsRepository, IProgramRepository programsRepository, IInstitutionRepository institutionsRepository)
         {
-            students = studentsRepository ?? throw new ArgumentNullException(nameof(studentsRepository));
-            programs = programsRepository ?? throw new ArgumentNullException(nameof(programsRepository));
-            institutions = institutionsRepository ?? throw new ArgumentNullException(nameof(institutionsRepository));
+            _students = studentsRepository ?? throw new ArgumentNullException(nameof(studentsRepository));
+            _programs = programsRepository ?? throw new ArgumentNullException(nameof(programsRepository));
+            _institutions = institutionsRepository ?? throw new ArgumentNullException(nameof(institutionsRepository));
         }
 
         [HttpPost]
-        public async Task AddStudent([FromBody] Student student) => await students.AddAsync(student);
+        public async Task AddStudent([FromBody] Student student) => await _students.AddAsync(student);
 
         [HttpGet("{id}")]
-        public async Task<Student> GetStudent(Guid id) => await students.GetAsync(id);
+        public async Task<Student> GetStudent(Guid id) => await _students.GetAsync(id) ?? throw new ApiException(HttpStatusCode.NotFound, "student not found");
 
         [HttpPut("{id}")]
         public async Task EditStudent(Guid id, [FromBody] Student student)
@@ -39,58 +38,64 @@ namespace Athena.Controllers.api
             {
                 throw new ApiException(HttpStatusCode.BadRequest, $"Tried to edit {id} but got a model for {student.Id}");
             }
-            await students.EditAsync(student);
+            await _students.EditAsync(student);
         }
 
         [HttpDelete("{id}")]
         public async Task DeleteStudent(Guid id)
         {
-            var student = await students.GetAsync(id);
+            var student = await _students.GetAsync(id);
             if (student == null)
             {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to delete {student} that does not exist");
+                throw new ApiException(HttpStatusCode.NotFound, $"Tried to delete {student} that does not exist");
             }
-            await students.DeleteAsync(student);
+            await _students.DeleteAsync(student);
         }
 
-        [HttpGet("/{id}/institutions")]
+        [HttpGet("{id}/institutions")]
         public async Task<IEnumerable<Institution>> GetInstitutionsForStudentAsync(Student student)
         {
             if (student == null)
             {
                 throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get Institutions for {student} that does not exist");
             }
-            return (await institutions.GetInstitutionsForStudentAsync(student));
+            return await _institutions.GetInstitutionsForStudentAsync(student);
         }
 
-        [HttpPost("/{id}/institutions/{institutionId}")]
-        public async Task EnrollStudentAsync(Institution institution, Student student)
+        [HttpPost("{id}/institutions/{institutionId}")]
+        public async Task EnrollStudentAsync(Guid institutionId, Guid studentId)
         {
+            var institution = await _institutions.GetAsync(institutionId);
+            var student = await _students.GetAsync(studentId);
+
             if (student == null || institution == null)
             {
                 throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get Enroll {student} in Institution {institution} where eihter the student or institution not exist");
             }
-            await institutions.EnrollStudentAsync(institution, student);
+            await _institutions.EnrollStudentAsync(institution, student);
         }
 
-        [HttpDelete("/{id}/institutions/{institutionId}")]
-        public async Task UnenrollStudentAsync(Institution institution, Student student)
+        [HttpDelete("{id}/institutions/{institutionId}")]
+        public async Task UnenrollStudentAsync(Guid institutionId, Guid studentId)
         {
+            var institution = await _institutions.GetAsync(institutionId);
+            var student = await _students.GetAsync(studentId);
+
             if (institution == null || student == null)
             {
                 throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get Unenroll {student} in Institution {institution} where eihter the student or institution not exist");
             }
-            await institutions.UnenrollStudentAsync(institution, student);
+            await _institutions.UnenrollStudentAsync(institution, student);
         }
 
-        [HttpGet("/{id}/institutions/{institutionId}")]
+        [HttpGet("{id}/institutions/{institutionId}")]
         public async Task<IEnumerable<Program>> GetProgramsForStudentAsync(Student student)
         {
             if (student == null)
             {
                 throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get Programs for {student}, where {student} does not exist");
             }
-            return (await programs.GetProgramsForStudentAsync(student));
+            return await _programs.GetProgramsForStudentAsync(student);
         }
     }
 }

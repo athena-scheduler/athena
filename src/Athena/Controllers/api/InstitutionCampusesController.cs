@@ -10,45 +10,54 @@ using System.Net;
 
 namespace Athena.Controllers.api
 {
+    [Route("api/v1/institution/{id}/campuses")]
     public class InstitutionCampusesController : Controller
     {
-        private readonly ICampusRepository campuses;
-        private readonly IInstitutionRepository institutions;
+        private readonly ICampusRepository _campuses;
+        private readonly IInstitutionRepository _institutions;
 
         public InstitutionCampusesController(ICampusRepository campusesRepository, IInstitutionRepository institutionsRepository)
         {
-            campuses = campusesRepository ?? throw new ArgumentNullException(nameof(campusesRepository));
-            institutions = institutionsRepository ?? throw new ArgumentNullException(nameof(institutionsRepository));
+            _campuses = campusesRepository ?? throw new ArgumentNullException(nameof(campusesRepository));
+            _institutions = institutionsRepository ?? throw new ArgumentNullException(nameof(institutionsRepository));
         }
 
-        [HttpGet("api/v1/institution/{id}/campuses")]
-        public async Task<IEnumerable<Campus>> GetCampusesForInstitutionAsync(Institution institution)
+        [HttpGet]
+        public async Task<IEnumerable<Campus>> GetCampusesForInstitutionAsync(Guid id)
         {
+            var institution = await _institutions.GetAsync(id);
+
             if (institution == null)
             {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get campus for {institution} that does not exist");
+                throw new ApiException(HttpStatusCode.NotFound, $"Tried to get campus for {institution} that does not exist");
             }
-            return (await (campuses.GetCampusesForInstitutionAsync(institution)));
+            return await _campuses.GetCampusesForInstitutionAsync(institution);
         }
 
-        [HttpPut("api/v1/institution/{id}/campuses/{campusId}")]
-        public async Task AssociateCampusWithInstitutionAsync(Campus campus, Institution institution)
+        [HttpPut("{campusId}")]
+        public async Task AssociateCampusWithInstitutionAsync(Guid campusId, Guid institutionId)
         {
+            var campus = await _campuses.GetAsync(campusId);
+            var institution = await _institutions.GetAsync(institutionId);
+
             if (institution == null)
             {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to assciate {campus} with {institution} that does not exist");
+                throw new ApiException(HttpStatusCode.NotFound, $"Tried to assciate {campus} with {institution} that does not exist");
             }
-            await (campuses.AssociateCampusWithInstitutionAsync(campus, institution));
+            await _campuses.AssociateCampusWithInstitutionAsync(campus, institution);
         }
 
-        [HttpDelete("api/v1/institution/{id}/campuses/{campusId}")]
-        public async Task DissassociateCampusWithInstitutionAsync(Campus campus, Institution institution)
+        [HttpDelete("{campusId}")]
+        public async Task DissassociateCampusWithInstitutionAsync(Guid campusId, Guid institutionId)
         {
+            var campus = await _campuses.GetAsync(campusId);
+            var institution = await _institutions.GetAsync(institutionId);
+
             if (institution == null)
             {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to dissassciate {campus} with {institution} that does not exist");
+                throw new ApiException(HttpStatusCode.NotFound, $"Tried to dissassciate {campus} with {institution} that does not exist");
             }
-            await (campuses.DissassociateCampusWithInstitutionAsync(campus, institution));
+            await _campuses.DissassociateCampusWithInstitutionAsync(campus, institution);
         }
     }
 }

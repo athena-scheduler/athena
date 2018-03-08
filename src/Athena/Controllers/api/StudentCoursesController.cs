@@ -10,25 +10,26 @@ using System.Net;
 
 namespace Athena.Controllers.api
 {
+    [Route("api/v1/student/{id}")]
     public class StudentCoursesController : Controller
     {
-        private readonly ICourseRepository courses;
-        private readonly IStudentRepository students;
+        private readonly ICourseRepository _courses;
+        private readonly IStudentRepository _students;
 
         public StudentCoursesController(ICourseRepository coursesRepository, IStudentRepository studentRepository)
         {
-            courses = coursesRepository ?? throw new ArgumentNullException(nameof(coursesRepository));
-            students = studentRepository ?? throw new ArgumentNullException(nameof(studentRepository));
+            _courses = coursesRepository ?? throw new ArgumentNullException(nameof(coursesRepository));
+            _students = studentRepository ?? throw new ArgumentNullException(nameof(studentRepository));
         }
 
-        [HttpGet("api/v1/student/{id}/courses/completed")]
+        [HttpGet("courses/completed")]
         public async Task<IEnumerable<Course>> GetCompletedCoursesForStudentAsync(Student student)
         {
             if (student == null)
             {
                 throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get course for {student} that does not exist");
             }
-            return (await courses.GetCompletedCoursesForStudentAsync(student));
+            return await _courses.GetCompletedCoursesForStudentAsync(student);
         }
 
         [HttpPost("api/v1/student/{id}/courses/completed/{courseId}")]
@@ -38,7 +39,7 @@ namespace Athena.Controllers.api
             {
                 throw new ApiException(HttpStatusCode.BadRequest, $"Tried to mark course as completed for {student} that does not exist");
             }
-            await courses.MarkCourseAsCompletedForStudentAsync(course, student);
+            await _courses.MarkCourseAsCompletedForStudentAsync(course, student);
         }
 
         [HttpDelete("api/v1/student/{id}/courses/completed/{courseId}")]
@@ -48,7 +49,7 @@ namespace Athena.Controllers.api
             {
                 throw new ApiException(HttpStatusCode.BadRequest, $"Tried to mark course as uncompleted for {student} that does not exist");
             }
-            await courses.MarkCourseAsUncompletedForStudentAsync(course, student);
+            await _courses.MarkCourseAsUncompletedForStudentAsync(course, student);
         }
 
         [HttpGet("api/v1/student/{id}/courses/in-progress")]
@@ -58,7 +59,7 @@ namespace Athena.Controllers.api
             {
                 throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get in-progress for {student} that does not exist");
             }
-            return (await courses.GetInProgressCoursesForStudentAsync(student));
+            return await _courses.GetInProgressCoursesForStudentAsync(student);
         }
 
         [HttpPost("api/v1/student/{id}/courses/in-progress/{courseId}")]
@@ -68,7 +69,7 @@ namespace Athena.Controllers.api
             {
                 throw new ApiException(HttpStatusCode.BadRequest, $"Tried to mark in-progress courses for {student} that does not exist");
             }
-            await courses.MarkCourseInProgressForStudentAsync(course, student);
+            await _courses.MarkCourseInProgressForStudentAsync(course, student);
         }
 
         [HttpDelete("api/v1/student/{id}/courses/in-progress/{courseId}")]
@@ -78,7 +79,7 @@ namespace Athena.Controllers.api
             {
                 throw new ApiException(HttpStatusCode.BadRequest, $"Tried to mark not in-progress courses for {student} that does not exist");
             }
-            await courses.MarkCourseNotInProgressForStudentAsync(course, student);
+            await _courses.MarkCourseNotInProgressForStudentAsync(course, student);
         }
     }
 }

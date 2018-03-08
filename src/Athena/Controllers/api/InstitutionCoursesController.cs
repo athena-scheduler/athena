@@ -10,25 +10,27 @@ using System.Net;
 
 namespace Athena.Controllers.api
 {
+    [Route("api/v1/institution/{id}/courses")]
     public class InstitutionCoursesController : Controller
     {
-        private readonly IInstitutionRepository institutions;
-        private readonly ICourseRepository courses;
+        private readonly IInstitutionRepository _institutions;
+        private readonly ICourseRepository _courses;
 
         public InstitutionCoursesController(IInstitutionRepository institutionRepository,ICourseRepository courseRepository)
         {
-            institutions = institutionRepository ?? throw new ArgumentNullException(nameof(institutionRepository));
-            courses = courseRepository ?? throw new ArgumentNullException(nameof(courseRepository));
+            _institutions = institutionRepository ?? throw new ArgumentNullException(nameof(institutionRepository));
+            _courses = courseRepository ?? throw new ArgumentNullException(nameof(courseRepository));
         }
 
-        [HttpGet("api/v1/institution/{id}/courses")]
-        public async Task<IEnumerable<Course>> GetCoursesForInstitutionAsync(Institution institution)
+        [HttpGet()]
+        public async Task<IEnumerable<Course>> GetCoursesForInstitutionAsync(Guid institutionId)
         {
+            var institution = await _institutions.GetAsync(institutionId);
             if (institution == null)
             {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get course for {institution} that does not exist");
+                throw new ApiException(HttpStatusCode.NotFound, $"Tried to get course for {institution} that does not exist");
             }
-            return (await courses.GetCoursesForInstitutionAsync(institution));
+            return await _courses.GetCoursesForInstitutionAsync(institution);
         }
     }
 }

@@ -91,9 +91,7 @@ namespace Athena.Tests.Controllers.Api
         [Theory, AutoData]
         public async Task EnrollStudent_Valid(Institution institution, Student student)
         {
-            Institutions.Setup(i => i.GetAsync(It.IsAny<Guid>())).ReturnsAsync(default(Institution));
-            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(default(Student));
-
+            
             await _controller.EnrollStudentAsync(institution, student);
 
             Institutions.Verify(i => i.EnrollStudentAsync(institution, student));

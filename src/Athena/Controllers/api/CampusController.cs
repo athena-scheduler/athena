@@ -14,20 +14,20 @@ namespace Athena.Controllers.api
     [Route("api/v1/[Controller]")]
     public class CampusController : Controller
     {
-        private readonly ICampusRepository campuses;
-        private readonly IInstitutionRepository institutions;
+        private readonly ICampusRepository _campuses;
+        private readonly IInstitutionRepository _institutions;
 
         public CampusController(ICampusRepository campusesRepository, IInstitutionRepository institutionsRepository)
         {
-            campuses = campusesRepository ?? throw new ArgumentNullException(nameof(campusesRepository));
-            institutions = institutionsRepository ?? throw new ArgumentNullException(nameof(institutionsRepository));
+            _campuses = campusesRepository ?? throw new ArgumentNullException(nameof(campusesRepository));
+            _institutions = institutionsRepository ?? throw new ArgumentNullException(nameof(institutionsRepository));
         }
 
         [HttpPost]
-        public async Task AddCampus([FromBody] Campus campus) => await campuses.AddAsync(campus);
+        public async Task AddCampus([FromBody] Campus campus) => await _campuses.AddAsync(campus);
 
         [HttpGet("{id}")]
-        public async Task<Campus> GetCampus(Guid id) => await campuses.GetAsync(id);
+        public async Task<Campus> GetCampus(Guid id) => (await _campuses.GetAsync(id)) ?? throw new ApiException(HttpStatusCode.NotFound, "campus not found");
 
         [HttpPut("{id}")]
         public async Task EditCampus(Guid id, [FromBody] Campus campus)
@@ -36,18 +36,18 @@ namespace Athena.Controllers.api
             {
                 throw new ApiException(HttpStatusCode.BadRequest, $"Tried to edit {id} but got a model for {campus.Id}");
             }
-            await campuses.EditAsync(campus);
+            await _campuses.EditAsync(campus);
         }
 
         [HttpDelete("{id}")]
         public async Task DeleteCampus(Guid id)
         {
-            var campus = await campuses.GetAsync(id);
+            var campus = await _campuses.GetAsync(id);
             if (campus == null)
             {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to delete {campus} that does not exist");
+                throw new ApiException(HttpStatusCode.NotFound, $"Tried to delete {campus} that does not exist");
             }
-            await campuses.DeleteAsync(campus);
+            await _campuses.DeleteAsync(campus);
         }
 
         [HttpGet("api/v1/campus/{id}/institutions")]
@@ -55,9 +55,9 @@ namespace Athena.Controllers.api
         {
             if (campus == null)
             {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get Institutions for {campus} that does not exist");
+                throw new ApiException(HttpStatusCode.NotFound, $"Tried to get Institutions for {campus} that does not exist");
             }
-            return (await institutions.GetInstitutionsOnCampusAsync(campus));
+            return await _institutions.GetInstitutionsOnCampusAsync(campus);
         }
     }
 }
