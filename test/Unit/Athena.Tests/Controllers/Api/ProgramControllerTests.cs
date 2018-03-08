@@ -70,7 +70,7 @@ namespace Athena.Tests.Controllers.Api
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.DeleteProgram(id));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
@@ -91,57 +91,6 @@ namespace Athena.Tests.Controllers.Api
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetRequirementsForProgramAsync(id));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
-        }
-
-        [Theory, AutoData]
-        public async Task RegisterStudentForProgram_Valid(Program program , Student student)
-        {
-
-            await _controller.RegisterStudentForProgram(student,program);
-
-            Students.Verify(s => s.RegisterForProgramAsync(student, program), Times.Once);
-        }
-
-        [Theory, AutoData]
-        public async Task RegisterStudentForProgram_ThrowsforNullProgram(Student student)
-        {
-            
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RegisterStudentForProgram(student, null));
-
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
-        }
-
-        [Theory, AutoData]
-        public async Task RegisterStudentForProgram_ThrowsforNullStudent(Program program)
-        {
-            
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RegisterStudentForProgram(null, program));
-
-           Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
-        }
-
-        [Theory, AutoData]
-        public async Task UnRegisterForProgram_Valid(Program program, Student student)
-        {
-            await _controller.UnregisterForProgram(student, program);
-
-            Students.Verify(s => s.UnregisterForProgramAsync(student, program), Times.Once);
-        }
-
-        [Theory, AutoData]
-        public async Task UnRegisterForProgram_ThrowsforNullProgram(Student student)
-        {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.UnregisterForProgram(student, null));
-
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
-        }
-
-        [Theory, AutoData]
-        public async Task UnRegisterForProgram_ThrowsforNullStudent(Program program)
-        {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.UnregisterForProgram(null, program));
-
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
         }
     }
 }

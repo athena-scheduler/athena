@@ -12,12 +12,12 @@ using System.Net;
 namespace Athena.Controllers.api
 {
     [Route("api/v1/student/{id}/programs/{programId}")]
-    public class StudentProgramControllerController : Controller
+    public class StudentProgramController : Controller
     {
         private readonly IStudentRepository _students;
         private readonly IProgramRepository _programs;
 
-        public StudentProgramControllerController(IStudentRepository studentsRepository, IProgramRepository programsRepository)
+        public StudentProgramController(IStudentRepository studentsRepository, IProgramRepository programsRepository)
         {
             _students = studentsRepository ?? throw new ArgumentNullException(nameof(studentsRepository));
             _programs = programsRepository ?? throw new ArgumentNullException(nameof(programsRepository));

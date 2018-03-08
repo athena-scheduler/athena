@@ -70,24 +70,10 @@ namespace Athena.Tests.Controllers.Api
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.DeleteCourse(id));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
-        [Theory, AutoData]
-        public async Task GetCompletedCoursesForStudent_Valid(Student student)
-        {
-            await _controller.GetCompletedCoursesForStudentAsync(student);
-
-            Coureses.Verify(c => c.GetCompletedCoursesForStudentAsync(student), Times.Once);
-        }
-
-        [Fact]
-        public async Task GetCompletedCoursesForStudent_ThrowsforNullStudent()
-        {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetCompletedCoursesForStudentAsync(null));
-
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
-        }
+        
 
         [Theory, AutoData]
         public async Task GetRequirementsCourseSatisfies_Valid(Course course)
@@ -146,7 +132,7 @@ namespace Athena.Tests.Controllers.Api
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetConcurrentPrereqsAsync(id));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
     }
 }

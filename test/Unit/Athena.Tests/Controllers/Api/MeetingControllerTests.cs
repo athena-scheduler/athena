@@ -69,7 +69,7 @@ namespace Athena.Tests.Controllers.Api
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.DeleteMeeting(id));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
     }
 }

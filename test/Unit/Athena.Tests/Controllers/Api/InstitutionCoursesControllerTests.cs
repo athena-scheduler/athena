@@ -9,6 +9,7 @@ using Moq;
 using System.Threading.Tasks;
 using Xunit;
 using System.Net;
+using Athena.Tests.Extensions;
 
 namespace Athena.Tests.Controllers.Api
 {
@@ -19,19 +20,23 @@ namespace Athena.Tests.Controllers.Api
         public InstitutionCoursesControllerTests() => _controller = new InstitutionCoursesController(Institutions.Object, Coureses.Object);
 
         [Theory, AutoData]
-        public async Task GetCoursesForInstitution_Valid(Institution institution)
+        public async Task GetCoursesForInstitution_Valid(Guid institutionId, Institution institution)
         {
-            await _controller.GetCoursesForInstitutionAsync(institution);
+            Institutions.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(institution);
+
+            await _controller.GetCoursesForInstitutionAsync(institutionId);
 
             Coureses.Verify(c => c.GetCoursesForInstitutionAsync(institution));
         }
 
-        [Fact]
-        public async Task GetCoursesForInstitution_ThrowsforNullInstitution()
+        [Theory, AutoData]
+        public async Task GetCoursesForInstitution_ThrowsforNullInstitution(Guid institutionId)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetCoursesForInstitutionAsync(null));
+            Institutions.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetCoursesForInstitutionAsync(institutionId));
+
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
     } 
 }

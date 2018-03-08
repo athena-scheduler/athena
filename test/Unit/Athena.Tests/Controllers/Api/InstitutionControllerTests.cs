@@ -70,7 +70,7 @@ namespace Athena.Tests.Controllers.Api
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.DeleteInstitution(id));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
@@ -90,7 +90,7 @@ namespace Athena.Tests.Controllers.Api
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetProgramsOfferedByInstitutionAsync(institionId));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
     }
 }

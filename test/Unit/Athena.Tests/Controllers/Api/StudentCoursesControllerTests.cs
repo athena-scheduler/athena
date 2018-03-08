@@ -32,7 +32,6 @@ namespace Athena.Tests.Controllers.Api
         [Theory, AutoData]
         public async Task GetCompletedCoursesForStudent_ThrowsforNullStudent(Student student)
         {
-            
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetCompletedCoursesForStudentAsync(null));
 
             Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);

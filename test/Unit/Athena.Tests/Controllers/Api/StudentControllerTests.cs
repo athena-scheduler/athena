@@ -1,6 +1,7 @@
 ﻿using Athena.Controllers.api;
 using Athena.Core.Models;
 using Athena.Exceptions;
+using Athena.Tests.Extensions;
 using AutoFixture.Xunit2;
 using Moq;
 using System;
@@ -69,7 +70,7 @@ namespace Athena.Tests.Controllers.Api
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.DeleteStudent(id));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
@@ -89,52 +90,63 @@ namespace Athena.Tests.Controllers.Api
         }
 
         [Theory, AutoData]
-        public async Task EnrollStudent_Valid(Institution institution, Student student)
+        public async Task EnrollStudent_Valid(Guid institutionId, Guid studentId, Institution institution, Student student)
         {
-            
-            await _controller.EnrollStudentAsync(institution, student);
+            Institutions.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(institution);
+            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(student);
+
+            await _controller.EnrollStudentAsync(institutionId, studentId);
 
             Institutions.Verify(i => i.EnrollStudentAsync(institution, student));
         }
 
         [Theory, AutoData]
-        public async Task EnrollStudent_ThrowsforNullStudent(Institution institution)
+        public async Task EnrollStudent_ThrowsforNullStudent(Guid institutionId, Guid studentId)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.EnrollStudentAsync(institution, null));
+            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.EnrollStudentAsync(institutionId, studentId));
 
             Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task EnrollStudent_ThrowsforNullInstitution(Student student)
+        public async Task EnrollStudent_ThrowsforNullInstitution(Guid institutionId, Guid studentId)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.EnrollStudentAsync(null, student));
+            Institutions.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.EnrollStudentAsync(institutionId, studentId));
 
             Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task UnenrollStudent_Valid(Institution institution, Student student)
+        public async Task UnenrollStudent_Valid(Guid institutionId, Guid studentId, Institution institution, Student student)
         {
-            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(default(Student));
+            Institutions.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(institution);
+            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(student);
 
-            await _controller.UnenrollStudentAsync(institution, student);
+            await _controller.UnenrollStudentAsync(institutionId, studentId);
 
             Institutions.Verify(i => i.UnenrollStudentAsync(institution, student));
         }
 
         [Theory, AutoData]
-        public async Task UnenrollStudent_ThrowsforNullStudent(Institution institution)
+        public async Task UnenrollStudent_ThrowsforNullStudent(Guid institutionId, Guid studentId)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.UnenrollStudentAsync(institution, null));
+            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.UnenrollStudentAsync(institutionId, studentId));
 
             Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task UnenrollStudent_ThrowsforNullInstitution(Student student)
+        public async Task UnenrollStudent_ThrowsforNullInstitution(Guid institutionId, Guid studentId)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.UnenrollStudentAsync(null, student));
+            Institutions.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.UnenrollStudentAsync(institutionId, studentId));
 
             Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
         }

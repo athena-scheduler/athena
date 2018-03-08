@@ -69,71 +69,7 @@ namespace Athena.Tests.Controllers.Api
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.DeleteOffering(id));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
-        }
-
-        [Theory, AutoData]
-        public async Task GetOfferingsForCourse(Course course)
-        {
-            await _controller.GetOfferingsForCourseAsync(course);
-
-            Offerings.Verify(o => o.GetOfferingsForCourseAsync(course));
-        }
-
-        [Fact]
-        public async Task GetOfferingsForCourse_ThrowsforNullCourse()
-        {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetOfferingsForCourseAsync(null));
-
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
-        }
-
-        [Theory, AutoData]
-        public async Task AddMeeting_Valid(Offering offering, Meeting meeting)
-        {
-            await _controller.AddMeetingAsync(offering, meeting);
-
-            Offerings.Verify(o => o.AddMeetingAsync(offering, meeting));
-        }
-
-        [Theory, AutoData]
-        public async Task AddMeeting_ThrowsforNullMeeting(Offering offering)
-        {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.AddMeetingAsync(offering, null));
-
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
-        }
-
-        [Theory, AutoData]
-        public async Task RemoveMeeting_Valid(Offering offering, Meeting meeting)
-        {
-            await _controller.RemoveMeetingAsync(offering, meeting);
-
-            Offerings.Verify(o => o.RemoveMeetingAsync(offering, meeting));
-        }
-
-        [Theory, AutoData]
-        public async Task RemoveMeeting_ThrowsforNullMeeting(Offering offering)
-        {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RemoveMeetingAsync(offering, null));
-
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
-        }
-
-        [Theory, AutoData]
-        public async Task GetMeetingsForOffering(Offering offering)
-        {
-            await _controller.GetMeetingsForOfferingAsync(offering);
-
-            Meetings.Verify(o => o.GetMeetingsForOfferingAsync(offering));
-        }
-
-        [Fact]
-        public async Task GetMeetingsForOffering_ThrowsforNullCourse()
-        {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetMeetingsForOfferingAsync(null));
-
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
@@ -149,7 +85,7 @@ namespace Athena.Tests.Controllers.Api
         {
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.AddOfferingAsync(course, null));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
@@ -165,7 +101,7 @@ namespace Athena.Tests.Controllers.Api
         {
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RemoveOfferingAsync(course, null));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
     }
 }
