@@ -52,24 +52,6 @@ namespace Athena.Controllers.api
             await _offerings.DeleteAsync(offering);
         }
 
-        [HttpPost("api/v1/course/{id}/offering/{offeringId}")]
-        public async Task AddOfferingAsync(Course course, Offering offering)
-        {
-            if (offering == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to add offering {offering} to course {course} that doesn't exist");
-            }
-            await _courses.AddOfferingAsync(course, offering);
-        }
-
-        [HttpDelete("api/v1/course/{id}/offering/{offeringId}")]
-        public async Task RemoveOfferingAsync(Course course, Offering offering)
-        {
-            if (offering == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to remove offering {offering} to course {course} that doesn't exist");
-            }
-            await _courses.RemoveOfferingAsync(course, offering);
-        }
+        
     }
 }

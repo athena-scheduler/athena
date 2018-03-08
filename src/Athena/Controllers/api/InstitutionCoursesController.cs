@@ -22,7 +22,7 @@ namespace Athena.Controllers.api
             _courses = courseRepository ?? throw new ArgumentNullException(nameof(courseRepository));
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<IEnumerable<Course>> GetCoursesForInstitutionAsync(Guid institutionId)
         {
             var institution = await _institutions.GetAsync(institutionId);

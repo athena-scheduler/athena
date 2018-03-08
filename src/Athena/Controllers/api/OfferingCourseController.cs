@@ -11,7 +11,7 @@ using System.Net;
 
 namespace Athena.Controllers.api
 {
-   [Route("api/v1/course/{id}/offering/{offeringId}")]
+   [Route("api/v1/course/{id}/offering")]
 
     public class OfferingCourseController : Controller
     {
@@ -24,7 +24,7 @@ namespace Athena.Controllers.api
             _courses = coursesRepository ?? throw new ArgumentNullException(nameof(coursesRepository));
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<IEnumerable<Offering>> GetOfferingsForCourseAsync(Course course)
         {
             if (course == null)
@@ -34,5 +34,24 @@ namespace Athena.Controllers.api
             return await _offerings.GetOfferingsForCourseAsync(course);
         }
 
+        [HttpPost("{offeringId}")]
+        public async Task AddOfferingAsync(Course course, Offering offering)
+        {
+            if (offering == null)
+            {
+                throw new ApiException(HttpStatusCode.NotFound, $"Tried to add offering {offering} to course {course} that doesn't exist");
+            }
+            await _courses.AddOfferingAsync(course, offering);
+        }
+
+        [HttpDelete("{offeringId}")]
+        public async Task RemoveOfferingAsync(Course course, Offering offering)
+        {
+            if (offering == null)
+            {
+                throw new ApiException(HttpStatusCode.NotFound, $"Tried to remove offering {offering} to course {course} that doesn't exist");
+            }
+            await _courses.RemoveOfferingAsync(course, offering);
+        }
     }
 }

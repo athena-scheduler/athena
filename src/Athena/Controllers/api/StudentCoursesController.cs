@@ -10,7 +10,7 @@ using System.Net;
 
 namespace Athena.Controllers.api
 {
-    [Route("api/v1/student/{id}")]
+    [Route("api/v1/student/{id}/courses")]
     public class StudentCoursesController : Controller
     {
         private readonly ICourseRepository _courses;
@@ -22,7 +22,7 @@ namespace Athena.Controllers.api
             _students = studentRepository ?? throw new ArgumentNullException(nameof(studentRepository));
         }
 
-        [HttpGet("courses/completed")]
+        [HttpGet("completed")]
         public async Task<IEnumerable<Course>> GetCompletedCoursesForStudentAsync(Student student)
         {
             if (student == null)
@@ -32,7 +32,7 @@ namespace Athena.Controllers.api
             return await _courses.GetCompletedCoursesForStudentAsync(student);
         }
 
-        [HttpPost("api/v1/student/{id}/courses/completed/{courseId}")]
+        [HttpPost("completed/{courseId}")]
         public async Task MarkCourseAsCompletedForStudentAsync(Course course, Student student)
         {
             if (student == null)
@@ -42,7 +42,7 @@ namespace Athena.Controllers.api
             await _courses.MarkCourseAsCompletedForStudentAsync(course, student);
         }
 
-        [HttpDelete("api/v1/student/{id}/courses/completed/{courseId}")]
+        [HttpDelete("completed/{courseId}")]
         public async Task MarkCourseAsUncompletedForStudentAsync(Course course, Student student)
         {
             if (student == null)
@@ -52,7 +52,7 @@ namespace Athena.Controllers.api
             await _courses.MarkCourseAsUncompletedForStudentAsync(course, student);
         }
 
-        [HttpGet("api/v1/student/{id}/courses/in-progress")]
+        [HttpGet("in-progress")]
         public async Task<IEnumerable<Course>> GetInProgressCoursesForStudentAsync(Student student)
         {
             if (student == null)
@@ -62,7 +62,7 @@ namespace Athena.Controllers.api
             return await _courses.GetInProgressCoursesForStudentAsync(student);
         }
 
-        [HttpPost("api/v1/student/{id}/courses/in-progress/{courseId}")]
+        [HttpPost("in-progress/{courseId}")]
         public async Task MarkCourseInProgressForStudentAsync(Course course, Student student)
         {
             if (student == null)
@@ -72,7 +72,7 @@ namespace Athena.Controllers.api
             await _courses.MarkCourseInProgressForStudentAsync(course, student);
         }
 
-        [HttpDelete("api/v1/student/{id}/courses/in-progress/{courseId}")]
+        [HttpDelete("in-progress/{courseId}")]
         public async Task MarkCourseNotInProgressForStudentAsync(Course course, Student student)
         {
             if (student == null)

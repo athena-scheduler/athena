@@ -11,7 +11,7 @@ using System.Net;
 
 namespace Athena.Controllers.api
 {
-    [Route("api/v1/course/{id}/requirement/satisfies/{reqId}")]
+    [Route("api/v1/course/{id}/requirement")]
     public class RequirementCourseController : Controller
     {
         private readonly IRequirementRepository _requirements;
@@ -23,7 +23,7 @@ namespace Athena.Controllers.api
             _courses = coursesRepository ?? throw new ArgumentNullException(nameof(coursesRepository));
         }
 
-        [HttpPost("api/v1/course/{id}/requirement/prereq/{reqId}")]
+        [HttpPost("prereq/{reqId}")]
         public async Task AddPrerequisiteAsync(Course course, Requirement prereq)
         {
             if (prereq == null)
@@ -33,7 +33,7 @@ namespace Athena.Controllers.api
             await _courses.AddPrerequisiteAsync(course, prereq);
         }
 
-        [HttpDelete("api/v1/course/{id}/requirement/prereq/{reqId}")]
+        [HttpDelete("prereq/{reqId}")]
         public async Task RemovePrerequisiteAsync(Course course, Requirement prereq)
         {
             if (prereq == null)
@@ -43,7 +43,7 @@ namespace Athena.Controllers.api
             await _courses.RemovePrerequisiteAsync(course, prereq);
         }
 
-        [HttpPost("api/v1/course/{id}/requirement/prereq/concurrent/{reqId}")]
+        [HttpPost("prereq/concurrent/{reqId}")]
         public async Task AddConcurrentPrerequisiteAsync(Course course, Requirement prereq)
         {
             if (prereq == null)
@@ -53,7 +53,7 @@ namespace Athena.Controllers.api
             await _courses.AddConcurrentPrerequisiteAsync(course, prereq);
         }
 
-        [HttpDelete("api/v1/course/{id}/requirement/prereq/concurrent/{reqId}")]
+        [HttpDelete("prereq/concurrent/{reqId}")]
         public async Task RemoveConcurrentPrerequisiteAsync(Course course, Requirement prereq)
         {
             if (prereq == null)
@@ -63,8 +63,7 @@ namespace Athena.Controllers.api
             await _courses.RemoveConcurrentPrerequisiteAsync(course, prereq);
         }
 
-        [HttpDelete("api/v1/course/{id}/requirement/prereq/{reqId}")]
-[HttpPost()]
+        [HttpPost("satisfies/{reqId}")]
         public async Task AddSatisfiedRequirementAsync(Course course, Requirement requirement)
         {
             if (requirement == null)
@@ -74,7 +73,7 @@ namespace Athena.Controllers.api
             await _courses.AddSatisfiedRequirementAsync(course, requirement);
         }
 
-        [HttpDelete()]
+        [HttpDelete("satisfies/{reqId}")]
         public async Task RemoveSatisfiedRequirementAsync(Course course, Requirement requirement)
         {
             if (requirement == null)

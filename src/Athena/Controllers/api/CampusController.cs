@@ -49,15 +49,5 @@ namespace Athena.Controllers.api
             }
             await _campuses.DeleteAsync(campus);
         }
-
-        [HttpGet("api/v1/campus/{id}/institutions")]
-        public async Task<IEnumerable<Institution>> GetInstitutionsOnCampusAsync(Campus campus)
-        {
-            if (campus == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to get Institutions for {campus} that does not exist");
-            }
-            return await _institutions.GetInstitutionsOnCampusAsync(campus);
-        }
     }
 }

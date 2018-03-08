@@ -50,6 +50,5 @@ namespace Athena.Tests.Controllers.Api
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
-
     }
 }

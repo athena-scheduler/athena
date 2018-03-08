@@ -51,8 +51,5 @@ namespace Athena.Controllers.api
             }
             await _requirements.DeleteAsync(requirement);
         }
-
-        
-
     }
 }

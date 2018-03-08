@@ -10,7 +10,7 @@ using Athena.Exceptions;
 using System.Net;
 namespace Athena.Controllers.api
 {
-    [Route ("api/v1/course/{id}/offering/{offeringId}/meeting")]
+    [Route("api/v1/offering/{offeringId}/meeting")]
     public class OfferingMeetingController : Controller
     {
         private readonly IOfferingReository _offerings;
@@ -22,7 +22,7 @@ namespace Athena.Controllers.api
             _meetings = meetingsRepository ?? throw new ArgumentNullException(nameof(meetingsRepository));
         }
 
-        [HttpPost()]
+        [HttpPost("{meetingId}")]
         public async Task AddMeetingAsync(Offering offering, Meeting meeting)
         {
             if (meeting == null)
@@ -32,7 +32,7 @@ namespace Athena.Controllers.api
             await _offerings.AddMeetingAsync(offering, meeting);
         }
 
-        [HttpDelete()]
+        [HttpDelete("{meetingId}")]
         public async Task RemoveMeetingAsync(Offering offering, Meeting meeting)
         {
             if (meeting == null)
@@ -42,7 +42,7 @@ namespace Athena.Controllers.api
             await _offerings.RemoveMeetingAsync(offering, meeting);
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<IEnumerable<Meeting>> GetMeetingsForOfferingAsync(Offering offering)
         {
             if (offering == null)

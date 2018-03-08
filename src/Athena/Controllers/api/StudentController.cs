@@ -12,7 +12,6 @@ using Athena.Exceptions;
 namespace Athena.Controllers.api
 {
     [Route("api/v1/[Controller]")]
-
     public class StudentController : Controller
     {
         private readonly IStudentRepository _students;

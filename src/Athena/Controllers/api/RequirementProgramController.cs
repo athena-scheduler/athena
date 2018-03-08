@@ -35,7 +35,7 @@ namespace Athena.Controllers.api
             await _programs.AddRequirementAsync(program, requirement);
         }
 
-        [HttpDelete()]
+        [HttpDelete("{reqId}")]
         public async Task RemoveRequirementAsync(Program program, Requirement requirement)
         {
             if (program == null)
