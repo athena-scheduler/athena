@@ -154,3 +154,25 @@ user-tabs {
 .striped {
     border: .15em solid black
 }
+
+.classUnordered{
+    height:300px;
+    overflow-y:scroll;
+    background-color:gray
+}
+
+.courseCard {
+    background-color: #0d47a1;
+    margin-left:.25em;
+    margin-right:.25em;
+}
+.courseCardTitle {
+    margin-left:1em;
+    color: white;
+}
+.courseCardContent {
+    background-color: white;
+}
+.addclass_dropdowns {
+    margin-top: 4em;
+}
