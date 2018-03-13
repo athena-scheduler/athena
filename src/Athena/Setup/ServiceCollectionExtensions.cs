@@ -37,7 +37,8 @@ namespace Athena.Setup
             services.AddTransient<ApiKeyHandler>();
             
             var auth = services.AddAuthentication();
-            
+            auth.AddScheme<ApiKeyHandler._, ApiKeyHandler>(ApiKeyHandler.SCHEME, ApiKeyHandler.SCHEME, null);
+
             if (!auth.TryAddGoogle())
             {
                 Serilog.Log.Fatal($"Failed to add google authentication. Did you set {AUTH_GOOGLE_CLIENT_KEY} and {AUTH_GOOGLE_CLIENT_SECRET}?");
@@ -62,8 +63,6 @@ namespace Athena.Setup
                 g.ClientId = clientKey;
                 g.ClientSecret = clientSecret;
             });
-
-            auth.AddScheme<ApiKeyHandler._, ApiKeyHandler>("api-key", "api-key", null);
 
             Serilog.Log.Information("Added google authentication with client id {clientId}", clientKey);
             return true;

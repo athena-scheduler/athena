@@ -20,7 +20,7 @@
 </div>
 <div class="row">
 @{
-    var providers = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+    var providers = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Where(a => a.HandlerType != typeof(ApiKeyHandler)).ToList();
     if (providers.Count == 0)
     {
         <div class="col s12">
@@ -32,10 +32,6 @@
     {
         foreach (var provider in providers)
         {
-            if (provider.HandlerType == typeof(ApiKeyHandler))
-            {
-                continue;
-            }
             <div class="col s3">
                 <div class="card">
                     <div class="card-content">

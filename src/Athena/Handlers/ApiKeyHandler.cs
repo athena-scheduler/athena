@@ -15,7 +15,8 @@ namespace Athena.Handlers
         public class _ : AuthenticationSchemeOptions
         {
         }
-        
+
+        public const string SCHEME = "api-key";
         private const string ATHENA_API_HEADER_KEY = "X-ATHENA-API-KEY";
 
         private readonly IUserApiKeyStore _apiKeys;
@@ -45,7 +46,7 @@ namespace Athena.Handlers
                             new GenericPrincipal(new GenericIdentity(user.UserName), null),
                             user
                         ), 
-                        "api-key"
+                        SCHEME
                     )
                 );
             }
