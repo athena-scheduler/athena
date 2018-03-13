@@ -33,7 +33,7 @@ namespace Athena.Core.Repositories
         Task EnrollStudentAsync(Institution institution, Student student);
         
         /// <summary>
-        /// Mark the provided student as enrolled with the specified institution
+        /// Mark the provided student as unenrolled with the specified institution
         /// </summary>
         /// <param name="institution">The institution to unenroll the student with</param>
         /// <param name="student">The student to unenroll</param>
