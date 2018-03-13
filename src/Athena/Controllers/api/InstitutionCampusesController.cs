@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Athena.Core.Repositories;
 using Athena.Core.Models;
-using Athena.Exceptions;
-using System.Net;
 using Athena.Extensions;
 
 namespace Athena.Controllers.api
@@ -30,8 +27,6 @@ namespace Athena.Controllers.api
 
             return await _campuses.GetCampusesForInstitutionAsync(institution);
         }
-
-       
 
         [HttpPut("{campusId}")]
         public async Task AssociateCampusWithInstitutionAsync(Guid campusId, Guid id)

@@ -9,7 +9,7 @@ namespace Athena.Tests
     public class ControllerTest
     {
         protected readonly Mock<ICampusRepository> Campuses = new Mock<ICampusRepository>();
-        protected readonly Mock<ICourseRepository> Coureses = new Mock<ICourseRepository>();
+        protected readonly Mock<ICourseRepository> Courses = new Mock<ICourseRepository>();
         protected readonly Mock<IInstitutionRepository> Institutions = new Mock<IInstitutionRepository>();
         protected readonly Mock<IMeetingRepository> Meetings = new Mock<IMeetingRepository>();
         protected readonly Mock<IOfferingReository> Offerings = new Mock<IOfferingReository>();

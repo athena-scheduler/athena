@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Athena.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using Athena.Core.Repositories;
-using Athena.Core.Models;
-using Athena.Exceptions;
-using System.Net;
 using Athena.Extensions;
 
 namespace Athena.Controllers.api
 {
-    [Route("api/v1/course/{id}/requirement")]
+    [Route("api/v1/course/{id}/requirements")]
     public class RequirementCourseController : Controller
     {
         private readonly IRequirementRepository _requirements;
@@ -22,6 +18,14 @@ namespace Athena.Controllers.api
         {
             _requirements = requirementsRepository ?? throw new ArgumentNullException(nameof(requirementsRepository));
             _courses = coursesRepository ?? throw new ArgumentNullException(nameof(coursesRepository));
+        }
+        
+        [HttpGet("prereq")]
+        public async Task<IEnumerable<Requirement>> GetPrereqsForCourseAsync(Guid id)
+        {
+            var course = (await _courses.GetAsync(id)).NotFoundIfNull();
+            
+            return await _requirements.GetPrereqsForCourseAsync(course);
         }
 
         [HttpPost("prereq/{reqId}")]
@@ -41,6 +45,14 @@ namespace Athena.Controllers.api
 
             await _courses.RemovePrerequisiteAsync(course, prereq);
         }
+        
+        [HttpGet("concurrent")]
+        public async Task<IEnumerable<Requirement>> GetConcurrentPrereqsAsync(Guid id)
+        {
+            var course = (await _courses.GetAsync(id)).NotFoundIfNull();
+            
+            return await _requirements.GetConcurrentPrereqsAsync(course);
+        }
 
         [HttpPost("prereq/concurrent/{reqId}")]
         public async Task AddConcurrentPrerequisiteAsync(Guid id, Guid reqId)
@@ -58,6 +70,14 @@ namespace Athena.Controllers.api
             var prereq = (await _requirements.GetAsync(reqId)).NotFoundIfNull();
 
             await _courses.RemoveConcurrentPrerequisiteAsync(course, prereq);
+        }
+        
+        [HttpGet("satisfies")]
+        public async Task<IEnumerable<Requirement>> GetRequirementsCourseSatisfiesAsync(Guid id)
+        {
+            var course =  (await _courses.GetAsync(id)).NotFoundIfNull();
+
+            return await _requirements.GetRequirementsCourseSatisfiesAsync(course);
         }
 
         [HttpPost("satisfies/{reqId}")]

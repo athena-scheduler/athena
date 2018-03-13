@@ -1,7 +1,5 @@
 ﻿using Athena.Controllers.api;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using AutoFixture.Xunit2;
@@ -18,6 +16,26 @@ namespace Athena.Tests.Controllers.Api
         private readonly StudentProgramController _controller;
 
         public StudentProgramControllerTests() => _controller = new StudentProgramController(Students.Object, Programs.Object);
+        
+        [Theory, AutoData]
+        public async Task GetProgramsForStudent_Valid(Guid studentId , Student student)
+        {
+            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(student);
+
+            await _controller.GetProgramsForStudentAsync(studentId);
+
+            Programs.Verify(i => i.GetProgramsForStudentAsync(student));
+        }
+
+        [Theory, AutoData]
+        public async Task GetProgramsforStudent_ThrowsforNullStudent(Guid studentId)
+        {
+            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetProgramsForStudentAsync(studentId));
+
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
+        }
 
         [Theory, AutoData]
         public async Task RegisterStudentForProgram_Valid(Guid studentId, Guid programId , Program program, Student student)

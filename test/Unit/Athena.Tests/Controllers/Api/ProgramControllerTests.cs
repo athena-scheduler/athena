@@ -1,7 +1,5 @@
 ﻿using Athena.Controllers.api;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using AutoFixture.Xunit2;
@@ -17,7 +15,7 @@ namespace Athena.Tests.Controllers.Api
     {
         private readonly ProgramController _controller;
 
-        public ProgramControllerTests() => _controller = new ProgramController(Programs.Object, Institutions.Object, Students.Object, Requirements.Object);
+        public ProgramControllerTests() => _controller = new ProgramController(Programs.Object);
 
         [Theory, AutoData]
         public async Task Add_valid(Program program)
@@ -69,26 +67,6 @@ namespace Athena.Tests.Controllers.Api
             Programs.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(default(Program));
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.DeleteProgram(id));
-
-            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
-        }
-
-        [Theory, AutoData]
-        public async Task GetRequirementsForProgram_valid(Program program)
-        {
-            Programs.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(program);
-
-            await _controller.GetRequirementsForProgramAsync(program.Id);
-
-            Requirements.Verify(p => p.GetRequirementsForProgramAsync(program), Times.Once);
-        }
-
-        [Theory, AutoData]
-        public async Task GetRequirementsForProgram_ThrowsforNullProgram(Guid id)
-        {
-            Programs.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
-
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetRequirementsForProgramAsync(id));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }

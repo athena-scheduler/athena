@@ -15,7 +15,7 @@ namespace Athena.Tests.Controllers.Api
     {
         private readonly CampusController _controller;
 
-        public CampusControllerTests() => _controller = new CampusController(Campuses.Object, Institutions.Object);
+        public CampusControllerTests() => _controller = new CampusController(Campuses.Object);
 
         [Theory, AutoData]
         public async Task Add_valid(Campus campus)
@@ -33,6 +33,16 @@ namespace Athena.Tests.Controllers.Api
             var result = await _controller.GetCampus(campus.Id);
 
             Assert.Equal(campus, result);
+        }
+
+        [Theory, AutoData]
+        public async Task Get_NotFoundForNull(Guid id)
+        {
+            Campuses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetCampus(id));
+            
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
@@ -67,26 +77,6 @@ namespace Athena.Tests.Controllers.Api
             Campuses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.DeleteCampus(id));
-
-            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
-        }
-
-        [Theory, AutoData]
-        public async Task GetInstitutionOnCampus_Valid(Guid campusId, Campus campus)
-        {
-            Campuses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(campus);
-
-            await _controller.GetInstitutionsOnCampusAsync(campusId);
-
-            Institutions.Verify(c => c.GetInstitutionsOnCampusAsync(campus), Times.Once);
-        }
-
-        [Theory, AutoData]
-        public async Task GetInstitutionOnCampus_ThrowsforNullCampus(Guid campusId)
-        {
-            Campuses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
-
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetInstitutionsOnCampusAsync(campusId));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }

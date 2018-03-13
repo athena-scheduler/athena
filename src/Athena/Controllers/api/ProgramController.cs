@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Athena.Core.Repositories;
 using Athena.Core.Models;
@@ -16,23 +13,16 @@ namespace Athena.Controllers.api
     public class ProgramController : Controller
     {
         private readonly IProgramRepository _programs;
-        private readonly IInstitutionRepository _institutions;
-        private readonly IStudentRepository _students;
-        private readonly IRequirementRepository _requirements;
         
-        public ProgramController(IProgramRepository programsRepository, IInstitutionRepository institutionRepository, IStudentRepository studentRepository, IRequirementRepository requirementRepository)
-        {
+        public ProgramController(IProgramRepository programsRepository) =>
             _programs = programsRepository ?? throw new ArgumentNullException(nameof(programsRepository));
-            _institutions = institutionRepository ?? throw new ArgumentNullException(nameof(institutionRepository));
-            _students = studentRepository ?? throw new ArgumentNullException(nameof(studentRepository));
-            _requirements = requirementRepository ?? throw new ArgumentNullException(nameof(requirementRepository));
-        }
 
         [HttpPost]
         public async Task AddProgram([FromBody] Program program) => await _programs.AddAsync(program);
 
         [HttpGet("{id}")]
-        public async Task<Program> GetProgram(Guid id) => await _programs.GetAsync(id) ?? throw new ApiException(HttpStatusCode.NotFound, "program not found");
+        public async Task<Program> GetProgram(Guid id) =>
+            await _programs.GetAsync(id) ?? throw new ApiException(HttpStatusCode.NotFound, "program not found");
 
         [HttpPut("{id}")]
         public async Task EditProgram (Guid id, [FromBody] Program program)
@@ -50,14 +40,6 @@ namespace Athena.Controllers.api
             var program = (await _programs.GetAsync(id)).NotFoundIfNull();
 
             await _programs.DeleteAsync(program);
-        }
-
-        [HttpGet("{id}/requirements")]
-        public async Task<IEnumerable<Requirement>> GetRequirementsForProgramAsync(Guid id)
-        {
-            var program = (await _programs.GetAsync(id)).NotFoundIfNull();
-           
-            return await _requirements.GetRequirementsForProgramAsync(program);
         }
     }
 }

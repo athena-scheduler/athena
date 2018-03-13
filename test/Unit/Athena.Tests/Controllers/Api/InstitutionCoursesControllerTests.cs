@@ -1,7 +1,5 @@
 ﻿using Athena.Controllers.api;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using AutoFixture.Xunit2;
@@ -17,7 +15,7 @@ namespace Athena.Tests.Controllers.Api
     {
         private readonly InstitutionCoursesController _controller;
 
-        public InstitutionCoursesControllerTests() => _controller = new InstitutionCoursesController(Institutions.Object, Coureses.Object);
+        public InstitutionCoursesControllerTests() => _controller = new InstitutionCoursesController(Institutions.Object, Courses.Object);
 
         [Theory, AutoData]
         public async Task GetCoursesForInstitution_Valid(Guid institutionId, Institution institution)
@@ -26,7 +24,7 @@ namespace Athena.Tests.Controllers.Api
 
             await _controller.GetCoursesForInstitutionAsync(institutionId);
 
-            Coureses.Verify(c => c.GetCoursesForInstitutionAsync(institution));
+            Courses.Verify(c => c.GetCoursesForInstitutionAsync(institution));
         }
 
         [Theory, AutoData]

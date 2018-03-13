@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Athena.Core.Repositories;
 using Athena.Core.Models;
-using Athena.Exceptions;
-using System.Net;
 using Athena.Extensions;
 
 namespace Athena.Controllers.api
@@ -24,11 +20,20 @@ namespace Athena.Controllers.api
             _programs = programRepository ?? throw new ArgumentNullException(nameof(programRepository));
 
         }
-
-        [HttpPost()]
-        public async Task AddRequirementAsync(Guid id, Requirement requirement)
+        
+        [HttpGet("requirements")]
+        public async Task<IEnumerable<Requirement>> GetRequirementsForProgramAsync(Guid id)
         {
             var program = (await _programs.GetAsync(id)).NotFoundIfNull();
+           
+            return await _requirements.GetRequirementsForProgramAsync(program);
+        }
+
+        [HttpPost("{reqId}")]
+        public async Task AddRequirementAsync(Guid id, Guid reqId)
+        {
+            var program = (await _programs.GetAsync(id)).NotFoundIfNull();
+            var requirement = (await _requirements.GetAsync(reqId)).NotFoundIfNull();
 
             await _programs.AddRequirementAsync(program, requirement);
         }

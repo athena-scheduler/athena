@@ -5,9 +5,7 @@ using Athena.Tests.Extensions;
 using AutoFixture.Xunit2;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 

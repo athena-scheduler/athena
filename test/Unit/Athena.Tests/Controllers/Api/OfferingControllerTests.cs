@@ -1,7 +1,5 @@
 ﻿using Athena.Controllers.api;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using AutoFixture.Xunit2;
@@ -17,7 +15,7 @@ namespace Athena.Tests.Controllers.Api
     {
         private readonly OfferingController _controller;
 
-        public OfferingControllerTests() => _controller = new OfferingController(Offerings.Object, Meetings.Object, Coureses.Object);
+        public OfferingControllerTests() => _controller = new OfferingController(Offerings.Object);
 
         [Theory, AutoData]
         public async Task Add_valid(Offering offering)

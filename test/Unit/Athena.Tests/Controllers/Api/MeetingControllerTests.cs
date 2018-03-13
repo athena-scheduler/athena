@@ -5,9 +5,7 @@ using Athena.Tests.Extensions;
 using AutoFixture.Xunit2;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -17,7 +15,7 @@ namespace Athena.Tests.Controllers.Api
     {
         private readonly MeetingController _controller;
 
-        public MeetingControllerTests() => _controller = new MeetingController(Meetings.Object, Offerings.Object);
+        public MeetingControllerTests() => _controller = new MeetingController(Meetings.Object);
 
         [Theory, AutoData]
         public async Task Add_valid(Meeting meeting)

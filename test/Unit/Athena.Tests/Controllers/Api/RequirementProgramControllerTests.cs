@@ -5,9 +5,7 @@ using Athena.Tests.Extensions;
 using AutoFixture.Xunit2;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -19,34 +17,34 @@ namespace Athena.Tests.Controllers.Api
 
         public RequirementProgramControllerTests() => _controller = new RequirementProgramController(Requirements.Object, Programs.Object);
         [Theory, AutoData]
-        public async Task AddRequirement_Valid(Guid programId, Program program, Requirement requirement)
+        public async Task AddRequirement_Valid(Program program, Requirement requirement)
         {
             Programs.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(program);
             Requirements.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(requirement);
 
-            await _controller.AddRequirementAsync(programId, requirement);
+            await _controller.AddRequirementAsync(program.Id, requirement.Id);
 
             Programs.Verify(c => c.AddRequirementAsync(program, requirement));
         }
 
         [Theory, AutoData]
-        public async Task AddRequirement_ThrowsforNullProgram(Guid programId, Program program, Requirement requirement)
+        public async Task AddRequirement_ThrowsforNullProgram(Program program, Requirement requirement)
         {
             Programs.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
             Requirements.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(requirement);
 
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.AddRequirementAsync(programId, requirement));
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.AddRequirementAsync(program.Id, requirement.Id));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task RemoveRequirement_Valid(Guid programId , Guid requirementId, Program program, Requirement requirement)
+        public async Task RemoveRequirement_Valid(Program program, Requirement requirement)
         {
             Programs.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(program);
             Requirements.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(requirement);
 
-            await _controller.RemoveRequirementAsync(programId, requirementId);
+            await _controller.RemoveRequirementAsync(program.Id, requirement.Id);
 
             Programs.Verify(c => c.RemoveRequirementAsync(program, requirement));
         }
@@ -62,5 +60,24 @@ namespace Athena.Tests.Controllers.Api
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
+        [Theory, AutoData]
+        public async Task GetRequirementsForProgram_valid(Program program)
+        {
+            Programs.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(program);
+
+            await _controller.GetRequirementsForProgramAsync(program.Id);
+
+            Requirements.Verify(p => p.GetRequirementsForProgramAsync(program), Times.Once);
+        }
+
+        [Theory, AutoData]
+        public async Task GetRequirementsForProgram_ThrowsforNullProgram(Guid id)
+        {
+            Programs.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetRequirementsForProgramAsync(id));
+
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
+        }
     }
 }

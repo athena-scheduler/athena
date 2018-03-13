@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Athena.Core.Repositories;
 using Athena.Core.Models;
@@ -16,21 +13,16 @@ namespace Athena.Controllers.api
     public class OfferingController : Controller
     {
         private readonly IOfferingReository _offerings;
-        private readonly IMeetingRepository _meetings;
-        private readonly ICourseRepository _courses;
 
-        public OfferingController(IOfferingReository offeringsRepository, IMeetingRepository meetingsRepository, ICourseRepository coursesRepository)
-        {
+        public OfferingController(IOfferingReository offeringsRepository) =>
             _offerings = offeringsRepository ?? throw new ArgumentNullException(nameof(offeringsRepository));
-            _meetings = meetingsRepository ?? throw new ArgumentNullException(nameof(meetingsRepository));
-            _courses = coursesRepository ?? throw new ArgumentNullException(nameof(coursesRepository));
-        }
 
         [HttpPost]
         public async Task AddOffering([FromBody] Offering offering) => await _offerings.AddAsync(offering);
         
         [HttpGet("{id}")]
-        public async Task<Offering> GetOffering(Guid id) => await _offerings.GetAsync(id) ?? throw new ApiException(HttpStatusCode.NotFound, "offering not found");
+        public async Task<Offering> GetOffering(Guid id) =>
+            await _offerings.GetAsync(id) ?? throw new ApiException(HttpStatusCode.NotFound, "offering not found");
 
         [HttpPut("{id}")]
         public async Task EditOffering(Guid id, [FromBody] Offering offering)
@@ -49,7 +41,5 @@ namespace Athena.Controllers.api
             
             await _offerings.DeleteAsync(offering);
         }
-
-        
     }
 }

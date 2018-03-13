@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Athena.Core.Repositories;
 using Athena.Core.Models;
-using Athena.Exceptions;
-using System.Net;
 using Athena.Extensions;
 
 namespace Athena.Controllers.api
 {
-   [Route("api/v1/course/{id}/offering")]
-
+    [Route("api/v1/course/{id}/offering")]
     public class OfferingCourseController : Controller
     {
         private readonly IOfferingReository _offerings;

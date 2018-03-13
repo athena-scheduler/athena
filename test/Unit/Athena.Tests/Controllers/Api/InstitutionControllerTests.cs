@@ -5,9 +5,7 @@ using Athena.Tests.Extensions;
 using AutoFixture.Xunit2;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -17,7 +15,7 @@ namespace Athena.Tests.Controllers.Api
     {
         private readonly InstitutionController _controller;
 
-        public InstitutionControllerTests() => _controller = new InstitutionController(Institutions.Object, Campuses.Object, Students.Object, Programs.Object);
+        public InstitutionControllerTests() => _controller = new InstitutionController(Institutions.Object);
 
         [Theory, AutoData]
         public async Task Add_valid(Institution institution)
@@ -69,26 +67,6 @@ namespace Athena.Tests.Controllers.Api
             Institutions.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.DeleteInstitution(id));
-
-            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
-        }
-
-        [Theory, AutoData]
-        public async Task GetProgramsOfferedByInstitution(Guid institutionId, Institution institution)
-        {
-            Institutions.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(institution);
-
-            await _controller.GetProgramsOfferedByInstitutionAsync(institutionId);
-
-            Programs.Verify(p => p.GetProgramsOfferedByInstitutionAsync(institution), Times.Once);
-        }
-
-        [Theory, AutoData]
-        public async Task GetProgramsOfferedByInstitution_ThrowsforNullInstitution(Guid institionId)
-        {
-            Institutions.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
-
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetProgramsOfferedByInstitutionAsync(institionId));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }

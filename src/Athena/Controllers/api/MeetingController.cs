@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Athena.Core.Repositories;
 using Athena.Core.Models;
@@ -16,19 +13,16 @@ namespace Athena.Controllers.api
     public class MeetingController : Controller
     {
         private readonly IMeetingRepository _meetings;
-        private readonly IOfferingReository _offerings;
 
-        public MeetingController (IMeetingRepository meetingsRepository, IOfferingReository offeringsRepository)
-        {
+        public MeetingController (IMeetingRepository meetingsRepository) =>
             _meetings = meetingsRepository ?? throw new ArgumentNullException(nameof(meetingsRepository));
-            _offerings = offeringsRepository ?? throw new ArgumentNullException(nameof(offeringsRepository));
-        }
 
         [HttpPost]
         public async Task AddMeeting([FromBody] Meeting meeting) => await _meetings.AddAsync(meeting);
 
         [HttpGet("{id}")]
-        public async Task<Meeting> GetMeeting(Guid id) => await _meetings.GetAsync(id) ?? throw new ApiException(HttpStatusCode.NotFound, "meeting not found");
+        public async Task<Meeting> GetMeeting(Guid id) =>
+            await _meetings.GetAsync(id) ?? throw new ApiException(HttpStatusCode.NotFound, "meeting not found");
 
         [HttpPut("{id}")]
         public async Task EditMeeting(Guid id, [FromBody] Meeting meeting)

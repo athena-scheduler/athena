@@ -1,7 +1,5 @@
 ﻿using Athena.Controllers.api;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using AutoFixture.Xunit2;
@@ -16,7 +14,7 @@ namespace Athena.Tests.Controllers.Api
     {
         private readonly RequirementController _controller;
 
-        public RequirementsControllerTests() => _controller = new RequirementController(Requirements.Object, Programs.Object, Coureses.Object);
+        public RequirementsControllerTests() => _controller = new RequirementController(Requirements.Object);
 
         [Theory, AutoData]
         public async Task Get_Valid(Requirement requirement)
@@ -63,7 +61,5 @@ namespace Athena.Tests.Controllers.Api
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
-
-        
     }
 }
