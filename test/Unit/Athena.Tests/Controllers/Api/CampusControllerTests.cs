@@ -5,9 +5,7 @@ using Athena.Tests.Extensions;
 using AutoFixture.Xunit2;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -76,7 +74,7 @@ namespace Athena.Tests.Controllers.Api
         [Theory, AutoData]
         public async Task GetInstitutionOnCampus_Valid(Guid campusId, Campus campus)
         {
-            Campuses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Campuses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(campus);
 
             await _controller.GetInstitutionsOnCampusAsync(campusId);
 
