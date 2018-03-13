@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Athena.Controllers.api
 {
     [Route("api/v1/campus/{campusId}/institution")]
-    public class CampusInstitutionController : Controller
+    public class CampusInstitutionController : AthenaApiController
     {
         private readonly ICampusRepository _campuses;
         private readonly IInstitutionRepository _institutions;

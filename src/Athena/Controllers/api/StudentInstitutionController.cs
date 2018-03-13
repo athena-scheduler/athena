@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Athena.Controllers.api
 {
-    public class StudentInstitutionController : Controller
+    public class StudentInstitutionController : AthenaApiController
     {
         private readonly IStudentRepository _students;
         private readonly IInstitutionRepository _institutions;

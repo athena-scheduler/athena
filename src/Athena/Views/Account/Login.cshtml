@@ -1,4 +1,5 @@
 ﻿@using Athena.Core.Models.Identity
+@using Athena.Handlers
 @using Microsoft.AspNetCore.Identity
 @model Athena.Models.Login.LoginViewModel
 
@@ -31,6 +32,10 @@
     {
         foreach (var provider in providers)
         {
+            if (provider.HandlerType == typeof(ApiKeyHandler))
+            {
+                continue;
+            }
             <div class="col s3">
                 <div class="card">
                     <div class="card-content">

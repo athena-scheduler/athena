@@ -39,11 +39,6 @@ namespace Athena.Setup
             app.UseMiddleware<CustomErrorHandlerMiddleware>();
             app.UseStaticFiles();
             app.UseAuthentication();
-
-            app.UseWhen(ctx => ctx.Request.Path.HasValue && ctx.Request.Path.StartsWithSegments("/api"), builder =>
-            {
-                builder.UseMiddleware<ApiKeyPrincipalMiddleware>();
-            });
         
             app.UseWhen(ctx => !ctx.Request.Path.HasValue || !ctx.Request.Path.StartsWithSegments("/api/v"), builder =>
             {
@@ -57,11 +52,13 @@ namespace Athena.Setup
                 using (var scope = app.ApplicationServices.CreateScope())
                 using (var userRoles = scope.ServiceProvider.GetRequiredService<IUserRoleStore<AthenaUser>>())
                 {
-                    if ((await userRoles.GetUsersInRoleAsync(AthenaRole.AdminRole.ToString(), CancellationToken.None)).Count == 0)
+                    if ((await userRoles.GetUsersInRoleAsync(AthenaRole.AdminRoleName.ToUpperInvariant(), CancellationToken.None)).Count == 0)
                     {
                         var id = Guid.NewGuid();
                         var key = Environment.GetEnvironmentVariable("ATHENA_ADMIN_API_KEY") ?? Guid.NewGuid().ToString();
 
+                        Log.Debug("Attempting to create default admin user");
+                        
                         var user = new AthenaUser()
                         {
                             Id = id,
@@ -71,14 +68,18 @@ namespace Athena.Setup
                                 Name = "Athena Administrator",
                                 Email = "athena@localhost"
                             },
-                            ApiKey = key
+                            ApiKey = key,
+                            UserName = "athena",
+                            NormalizedUserName = "ATHENA",
+                            Email = "athena@localhost",
+                            NormalizedEmail = "ATHENA@LOCALHOST"
                         };
 
                         var students = scope.ServiceProvider.GetRequiredService<IStudentRepository>();
                         await students.AddAsync(user.Student);
 
                         await userRoles.CreateAsync(user, CancellationToken.None);
-                        await userRoles.AddToRoleAsync(user, AthenaRole.AdminRoleName, CancellationToken.None);
+                        await userRoles.AddToRoleAsync(user, AthenaRole.AdminRoleName.ToUpperInvariant(), CancellationToken.None);
                         
                         Log.Information("Created default admin API Key {key}", key);
                     }

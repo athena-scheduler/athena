@@ -2,15 +2,12 @@
 using Athena.Core.Models.Identity;
 using Athena.Core.Validation;
 using Athena.Data.Extensions;
-using Athena.Middleware;
+using Athena.Handlers;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
 
 namespace Athena.Setup
 {
@@ -28,6 +25,7 @@ namespace Athena.Setup
             services.AddAthenaRepositoriesUsingPostgres()
                 .AddAthenaIdentityServices()
                 .AddAuthenticationProviders()
+                .AddAuthorization()
                 .AddMvc()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<StudentValidator>());
             
@@ -36,6 +34,8 @@ namespace Athena.Setup
 
         private static IServiceCollection AddAuthenticationProviders(this IServiceCollection services)
         {
+            services.AddTransient<ApiKeyHandler>();
+            
             var auth = services.AddAuthentication();
             
             if (!auth.TryAddGoogle())
@@ -62,6 +62,8 @@ namespace Athena.Setup
                 g.ClientId = clientKey;
                 g.ClientSecret = clientSecret;
             });
+
+            auth.AddScheme<ApiKeyHandler._, ApiKeyHandler>("api-key", "api-key", null);
 
             Serilog.Log.Information("Added google authentication with client id {clientId}", clientKey);
             return true;

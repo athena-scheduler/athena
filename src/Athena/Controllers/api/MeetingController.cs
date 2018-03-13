@@ -10,7 +10,7 @@ using Athena.Extensions;
 namespace Athena.Controllers.api
 {
     [Route("api/v1/[Controller]")]
-    public class MeetingController : Controller
+    public class MeetingController : AthenaApiController
     {
         private readonly IMeetingRepository _meetings;
 
