@@ -17,6 +17,14 @@ namespace Athena.Tests.Controllers.Api
         public RequirementsControllerTests() => _controller = new RequirementController(Requirements.Object);
 
         [Theory, AutoData]
+        public async Task Add_Valid(Requirement requirement)
+        {
+            await _controller.AddRequirement(requirement);
+            
+            Requirements.Verify(r => r.AddAsync(requirement), Times.Once);
+        }
+        
+        [Theory, AutoData]
         public async Task Get_Valid(Requirement requirement)
         {
             Requirements.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(requirement);
