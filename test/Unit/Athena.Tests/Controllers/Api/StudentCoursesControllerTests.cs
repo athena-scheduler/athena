@@ -20,113 +20,131 @@ namespace Athena.Tests.Controllers.Api
         public StudentCoursesControllerTests() => _controller = new StudentCoursesController(Coureses.Object, Students.Object);
 
         [Theory, AutoData]
-        public async Task GetCompletedCoursesForStudent_Valid (Student student)
+        public async Task GetCompletedCoursesForStudent_Valid (Guid studentId,Student student)
         {
             Students.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(student);
-
-            await _controller.GetCompletedCoursesForStudentAsync(student);
+            
+            await _controller.GetCompletedCoursesForStudentAsync(studentId);
 
             Coureses.Verify(c => c.GetCompletedCoursesForStudentAsync(student), Times.Once);
         }
 
         [Theory, AutoData]
-        public async Task GetCompletedCoursesForStudent_ThrowsforNullStudent(Student student)
+        public async Task GetCompletedCoursesForStudent_ThrowsforNullStudent(Guid studentId)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetCompletedCoursesForStudentAsync(null));
+            Students.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetCompletedCoursesForStudentAsync(studentId));
+
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task MarkCourseAsCompletedForStudent_Valid(Course course , Student student)
+        public async Task MarkCourseAsCompletedForStudent_Valid(Guid studentId, Guid courseId, Course course , Student student)
         {
-           
-            await _controller.MarkCourseAsCompletedForStudentAsync(course, student);
+            Students.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(student);
+            Coureses.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(course);
+
+            await _controller.MarkCourseAsCompletedForStudentAsync(courseId, studentId);
 
             Coureses.Verify(c => c.MarkCourseAsCompletedForStudentAsync(course , student), Times.Once);
         }
 
         [Theory, AutoData]
-        public async Task MarkCourseAsCompletedForStudent_ThrowsforNullStudent(Course course)
+        public async Task MarkCourseAsCompletedForStudent_ThrowsforNullStudent(Guid studentId, Guid courseId)
         {
-    
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.MarkCourseAsCompletedForStudentAsync(course , null));
+            Students.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Coureses.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.MarkCourseAsCompletedForStudentAsync(courseId , studentId));
+
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task MarkCourseAsUncompletedForStudentAsync_Valid(Course course, Student student)
+        public async Task MarkCourseAsUncompletedForStudentAsync_Valid(Guid courseId , Guid studentId ,Course course, Student student)
         {
+            Students.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(student);
+            Coureses.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(course);
 
-            await _controller.MarkCourseAsUncompletedForStudentAsync(course, student);
+            await _controller.MarkCourseAsUncompletedForStudentAsync(courseId, studentId);
 
             Coureses.Verify(c => c.MarkCourseAsUncompletedForStudentAsync(course, student), Times.Once);
         }
 
         [Theory, AutoData]
-        public async Task MarkCourseAsUncompletedForStudentAsync_ThrowsforNullStudent(Course course)
+        public async Task MarkCourseAsUncompletedForStudentAsync_ThrowsforNullStudent(Guid studentId, Guid courseId)
         {
+            Students.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Coureses.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.MarkCourseAsUncompletedForStudentAsync(course, null));
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.MarkCourseAsUncompletedForStudentAsync(courseId, studentId));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task GetInProgressCoursesForStudent_Valid(Student student)
+        public async Task GetInProgressCoursesForStudent_Valid(Guid studentId, Student student)
         {
             Students.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(student);
 
-            await _controller.GetInProgressCoursesForStudentAsync(student);
+            await _controller.GetInProgressCoursesForStudentAsync(studentId);
 
             Coureses.Verify(c => c.GetInProgressCoursesForStudentAsync(student), Times.Once);
         }
 
-        [Fact]
-        public async Task GetInProgressCoursesForStudent_ThrowsforNullStudent()
+        [Theory, AutoData]
+        public async Task GetInProgressCoursesForStudent_ThrowsforNullStudent(Guid studentId)
         {
-            
+            Students.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetInProgressCoursesForStudentAsync(null));
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetInProgressCoursesForStudentAsync(studentId));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task MarkCourseInProgressForStudentAsync_Valid(Course course, Student student)
+        public async Task MarkCourseInProgressForStudentAsync_Valid(Guid courseId, Guid studentId, Course course, Student student)
         {
+            Students.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(student);
+            Coureses.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(course);
 
-            await _controller.MarkCourseInProgressForStudentAsync(course, student);
+            await _controller.MarkCourseInProgressForStudentAsync(courseId, studentId);
 
             Coureses.Verify(c => c.MarkCourseInProgressForStudentAsync(course, student), Times.Once);
         }
 
         [Theory, AutoData]
-        public async Task MarkCourseInProgressForStudentAsync_ThrowsforNullStudent(Course course)
+        public async Task MarkCourseInProgressForStudentAsync_ThrowsforNullStudent(Guid courseId, Guid studentId)
         {
+            Students.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Coureses.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.MarkCourseInProgressForStudentAsync(course, null));
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.MarkCourseInProgressForStudentAsync(courseId, studentId));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task MarkCourseNotInProgressForStudentAsync_Valid(Course course, Student student)
+        public async Task MarkCourseNotInProgressForStudentAsync_Valid(Guid courseId, Guid studentId, Course course, Student student)
         {
+            Students.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(student);
+            Coureses.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(course);
 
-            await _controller.MarkCourseNotInProgressForStudentAsync(course, student);
+            await _controller.MarkCourseNotInProgressForStudentAsync(courseId, studentId);
 
             Coureses.Verify(c => c.MarkCourseNotInProgressForStudentAsync(course, student), Times.Once);
         }
 
         [Theory, AutoData]
-        public async Task MarkCourseNotInProgressForStudentAsync_ThrowsforNullStudent(Course course)
+        public async Task MarkCourseNotInProgressForStudentAsync_ThrowsforNullStudent(Guid courseId , Guid studentId)
         {
+            Students.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Coureses.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.MarkCourseNotInProgressForStudentAsync(course, null));
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.MarkCourseNotInProgressForStudentAsync(courseId, studentId));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
     }
 }

@@ -22,17 +22,65 @@ namespace Athena.Tests.Controllers.Api
 
 
         [Theory, AutoData]
-        public async Task GetOfferingsForCourse(Course course)
+        public async Task GetOfferingsForCourse(Guid courseId , Course course)
         {
-            await _controller.GetOfferingsForCourseAsync(course);
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(course);
+
+            await _controller.GetOfferingsForCourseAsync(courseId);
 
             Offerings.Verify(o => o.GetOfferingsForCourseAsync(course));
         }
 
-        [Fact]
-        public async Task GetOfferingsForCourse_ThrowsforNullCourse()
+        [Theory, AutoData]
+        public async Task GetOfferingsForCourse_ThrowsforNullCourse(Guid id)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetOfferingsForCourseAsync(null));
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetOfferingsForCourseAsync(id));
+
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
+        }
+
+        [Theory, AutoData]
+        public async Task AddOffering_Valid(Guid courseId, Guid offeringId, Course course, Offering offering)
+        {
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(course);
+            Offerings.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(offering);
+
+            await _controller.AddOfferingAsync(courseId, offeringId);
+
+            Coureses.Verify(o => o.AddOfferingAsync(course, offering));
+        }
+
+        [Theory, AutoData]
+        public async Task AddOffering_ThrowsforNullOffeirng(Guid courseId, Guid offeringId)
+        {
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Offerings.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.AddOfferingAsync(courseId, offeringId));
+
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
+        }
+
+        [Theory, AutoData]
+        public async Task RemoveOffering_Valid(Guid courseId, Guid offeringId , Course course, Offering offering)
+        {
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(course);
+            Offerings.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(offering);
+
+            await _controller.RemoveOfferingAsync(courseId, offeringId);
+
+            Coureses.Verify(o => o.RemoveOfferingAsync(course, offering));
+        }
+
+        [Theory, AutoData]
+        public async Task RemoveOffering_ThrowsforNullMeeting(Guid courseId, Guid offeringId)
+        {
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Offerings.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RemoveOfferingAsync(courseId, offeringId));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }

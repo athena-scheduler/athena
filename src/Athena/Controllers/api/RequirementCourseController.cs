@@ -8,6 +8,7 @@ using Athena.Core.Repositories;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using System.Net;
+using Athena.Extensions;
 
 namespace Athena.Controllers.api
 {
@@ -24,62 +25,56 @@ namespace Athena.Controllers.api
         }
 
         [HttpPost("prereq/{reqId}")]
-        public async Task AddPrerequisiteAsync(Course course, Requirement prereq)
+        public async Task AddPrerequisiteAsync(Guid id, Guid reqId)
         {
-            if (prereq == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to add prereq {prereq} to course {course} that doesn't exist");
-            }
+            var course = (await _courses.GetAsync(id)).NotFoundIfNull();
+            var prereq = (await _requirements.GetAsync(reqId)).NotFoundIfNull();
+
             await _courses.AddPrerequisiteAsync(course, prereq);
         }
 
         [HttpDelete("prereq/{reqId}")]
-        public async Task RemovePrerequisiteAsync(Course course, Requirement prereq)
+        public async Task RemovePrerequisiteAsync(Guid id, Guid reqId)
         {
-            if (prereq == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to remove prereq {prereq} to course {course} that doesn't exist");
-            }
+            var course = (await _courses.GetAsync(id)).NotFoundIfNull();
+            var prereq = (await _requirements.GetAsync(reqId)).NotFoundIfNull();
+
             await _courses.RemovePrerequisiteAsync(course, prereq);
         }
 
         [HttpPost("prereq/concurrent/{reqId}")]
-        public async Task AddConcurrentPrerequisiteAsync(Course course, Requirement prereq)
+        public async Task AddConcurrentPrerequisiteAsync(Guid id, Guid reqId)
         {
-            if (prereq == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to add concurrent prereq {prereq} to course {course} that doesn't exist");
-            }
+            var course = (await _courses.GetAsync(id)).NotFoundIfNull();
+            var prereq = (await _requirements.GetAsync(reqId)).NotFoundIfNull();
+          
             await _courses.AddConcurrentPrerequisiteAsync(course, prereq);
         }
 
         [HttpDelete("prereq/concurrent/{reqId}")]
-        public async Task RemoveConcurrentPrerequisiteAsync(Course course, Requirement prereq)
+        public async Task RemoveConcurrentPrerequisiteAsync(Guid id, Guid reqId)
         {
-            if (prereq == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to remove concurrent prereq {prereq} to course {course} that doesn't exist");
-            }
+            var course = (await _courses.GetAsync(id)).NotFoundIfNull();
+            var prereq = (await _requirements.GetAsync(reqId)).NotFoundIfNull();
+
             await _courses.RemoveConcurrentPrerequisiteAsync(course, prereq);
         }
 
         [HttpPost("satisfies/{reqId}")]
-        public async Task AddSatisfiedRequirementAsync(Course course, Requirement requirement)
+        public async Task AddSatisfiedRequirementAsync(Guid id, Guid reqId)
         {
-            if (requirement == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to add satisfied requirements {requirement} to course {course} that doesn't exist");
-            }
+            var course = (await _courses.GetAsync(id)).NotFoundIfNull();
+            var requirement = (await _requirements.GetAsync(reqId)).NotFoundIfNull();
+
             await _courses.AddSatisfiedRequirementAsync(course, requirement);
         }
 
         [HttpDelete("satisfies/{reqId}")]
-        public async Task RemoveSatisfiedRequirementAsync(Course course, Requirement requirement)
+        public async Task RemoveSatisfiedRequirementAsync(Guid id, Guid reqId)
         {
-            if (requirement == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to remove satisfied requirements {requirement} to course {course} that doesn't exist");
-            }
+            var course = (await _courses.GetAsync(id)).NotFoundIfNull();
+            var requirement = (await _requirements.GetAsync(reqId)).NotFoundIfNull();
+
             await _courses.RemoveSatisfiedRequirementAsync(course, requirement);
         }
     }

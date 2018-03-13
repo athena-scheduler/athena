@@ -8,6 +8,7 @@ using Athena.Core.Repositories;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using System.Net;
+using Athena.Extensions;
 
 namespace Athena.Controllers.api
 {
@@ -42,12 +43,17 @@ namespace Athena.Controllers.api
         [HttpDelete("{id}")]
         public async Task DeleteCampus(Guid id)
         {
-            var campus = await _campuses.GetAsync(id);
-            if (campus == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to delete {campus} that does not exist");
-            }
+            var campus = (await _campuses.GetAsync(id)).NotFoundIfNull();
+            
             await _campuses.DeleteAsync(campus);
+        }
+
+        [HttpGet("{id}/institutions")]
+        public async Task<IEnumerable<Institution>> GetInstitutionsOnCampusAsync(Guid id)
+        {
+            var campus = (await _campuses.GetAsync(id)).NotFoundIfNull();
+
+            return await _institutions.GetInstitutionsOnCampusAsync(campus);
         }
     }
 }

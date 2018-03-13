@@ -20,97 +20,133 @@ namespace Athena.Tests.Controllers.Api
         public RequirementCourseControllerTests() => _controller = new RequirementCourseController(Requirements.Object, Coureses.Object);
 
         [Theory, AutoData]
-        public async Task AddPrerequisite_Valid(Course course, Requirement requirement)
+        public async Task AddPrerequisite_Valid(Guid courseId , Guid requirementId , Course course, Requirement requirement)
         {
-            await _controller.AddPrerequisiteAsync(course, requirement);
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(course);
+            Requirements.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(requirement);
+
+            await _controller.AddPrerequisiteAsync(courseId, requirementId);
 
             Coureses.Verify(c => c.AddPrerequisiteAsync(course, requirement));
         }
 
         [Theory, AutoData]
-        public async Task AddPrerequisite_ThrowsforNullRequirement(Course course)
+        public async Task AddPrerequisite_ThrowsforNullRequirement(Guid courseId, Guid requirementId)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.AddPrerequisiteAsync(course, null));
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Requirements.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.AddPrerequisiteAsync(courseId, requirementId));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task RemovePrerequisite_Valid(Course course, Requirement requirement)
+        public async Task RemovePrerequisite_Valid(Guid courseId, Guid requirementId, Course course, Requirement requirement)
         {
-            await _controller.RemovePrerequisiteAsync(course, requirement);
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(course);
+            Requirements.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(requirement);
+
+            await _controller.RemovePrerequisiteAsync(courseId, requirementId);
 
             Coureses.Verify(c => c.RemovePrerequisiteAsync(course, requirement));
         }
 
         [Theory, AutoData]
-        public async Task RemovePrerequisite_ThrowsforNullRequirement(Course course)
+        public async Task RemovePrerequisite_ThrowsforNullRequirement(Guid courseId, Guid requirementId)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RemovePrerequisiteAsync(course, null));
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Requirements.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RemovePrerequisiteAsync(courseId, requirementId));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task AddConcurrentPrerequisiteAsync_Valid(Course course, Requirement requirement)
+        public async Task AddConcurrentPrerequisiteAsync_Valid(Guid courseId, Guid requirementId, Course course, Requirement requirement)
         {
-            await _controller.AddConcurrentPrerequisiteAsync(course, requirement);
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(course);
+            Requirements.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(requirement);
+
+            await _controller.AddConcurrentPrerequisiteAsync(courseId, requirementId);
 
             Coureses.Verify(c => c.AddConcurrentPrerequisiteAsync(course, requirement));
         }
 
         [Theory, AutoData]
-        public async Task AddConcurrentPrerequisiteAsync_ThrowsforNullPrereq(Course course)
+        public async Task AddConcurrentPrerequisiteAsync_ThrowsforNullPrereq(Guid courseId, Guid requirementId)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.AddConcurrentPrerequisiteAsync(course, null));
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Requirements.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.AddConcurrentPrerequisiteAsync(courseId, requirementId));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task RemoveConcurrentPrerequisiteAsync_Valid(Course course, Requirement requirement)
+        public async Task RemoveConcurrentPrerequisiteAsync_Valid(Guid courseId, Guid requirementId, Course course, Requirement requirement)
         {
-            await _controller.RemoveConcurrentPrerequisiteAsync(course, requirement);
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(course);
+            Requirements.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(requirement);
+
+            await _controller.RemoveConcurrentPrerequisiteAsync(courseId, requirementId);
 
             Coureses.Verify(c => c.RemoveConcurrentPrerequisiteAsync(course, requirement));
         }
 
         [Theory, AutoData]
-        public async Task RemoveConcurrentPrerequisiteAsync_ThrowsforNullPrereq(Course course)
+        public async Task RemoveConcurrentPrerequisiteAsync_ThrowsforNullPrereq(Guid courseId, Guid requirementId)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RemoveConcurrentPrerequisiteAsync(course, null));
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Requirements.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RemoveConcurrentPrerequisiteAsync(courseId, requirementId));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task AddSatisfiedRequirement_Valid(Course course, Requirement requirement)
+        public async Task AddSatisfiedRequirement_Valid(Guid courseId, Guid requirementId, Course course, Requirement requirement)
         {
-            await _controller.AddSatisfiedRequirementAsync(course, requirement);
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(course);
+            Requirements.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(requirement);
+
+            await _controller.AddSatisfiedRequirementAsync(courseId, requirementId);
 
             Coureses.Verify(c => c.AddSatisfiedRequirementAsync(course, requirement));
         }
 
         [Theory, AutoData]
-        public async Task AddSatisfiedRequirement_ThrowsforNullRequirement(Course course)
+        public async Task AddSatisfiedRequirement_ThrowsforNullRequirement(Guid courseId, Guid requirementId)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.AddSatisfiedRequirementAsync(course, null));
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Requirements.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.AddSatisfiedRequirementAsync(courseId, requirementId));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task RemoveSatisfiedRequirement_Valid(Course course, Requirement requirement)
+        public async Task RemoveSatisfiedRequirement_Valid(Guid courseId, Guid requirementId, Course course, Requirement requirement)
         {
-            await _controller.RemoveSatisfiedRequirementAsync(course, requirement);
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(course);
+            Requirements.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(requirement);
+
+            await _controller.RemoveSatisfiedRequirementAsync(courseId, requirementId);
 
             Coureses.Verify(c => c.RemoveSatisfiedRequirementAsync(course, requirement));
         }
 
         [Theory, AutoData]
-        public async Task RemoveSatisfiedRequirement_ThrowsforNullRequirement(Course course)
+        public async Task RemoveSatisfiedRequirement_ThrowsforNullRequirement(Guid courseId, Guid requirementId)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RemoveSatisfiedRequirementAsync(course, null));
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Requirements.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RemoveSatisfiedRequirementAsync(courseId, requirementId));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }

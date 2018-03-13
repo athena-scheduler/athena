@@ -8,6 +8,7 @@ using Athena.Core.Repositories;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using System.Net;
+using Athena.Extensions;
 
 namespace Athena.Controllers.api
 {
@@ -15,15 +16,12 @@ namespace Athena.Controllers.api
     public class InstitutionController : Controller
     {
         private readonly IInstitutionRepository _institutions;
-        private readonly ICampusRepository _campuses;
-        private readonly IStudentRepository _students;
         private readonly IProgramRepository _programs;
 
         public InstitutionController(IInstitutionRepository institutionRepository, ICampusRepository campusRepository, IStudentRepository studentRepository, IProgramRepository programsRepository)
         {
             _institutions = institutionRepository ?? throw new ArgumentNullException(nameof(institutionRepository));
-            _campuses = campusRepository ?? throw new ArgumentNullException(nameof(campusRepository));
-            _students = studentRepository ?? throw new ArgumentNullException(nameof(studentRepository));
+            
             _programs = programsRepository ?? throw new ArgumentNullException(nameof(programsRepository));
         }
 
@@ -46,23 +44,16 @@ namespace Athena.Controllers.api
         [HttpDelete("{id}")]
         public async Task DeleteInstitution(Guid id)
         {
-            var institution = await _institutions.GetAsync(id);
-            if (institution == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to delete {institution} that does not exist");
-            }
+            var institution = (await _institutions.GetAsync(id)).NotFoundIfNull();
+           
             await _institutions.DeleteAsync(institution);
         }
 
         [HttpGet("{id}/programs")]
-        public async Task<IEnumerable<Program>> GetProgramsOfferedByInstitutionAsync(Guid institutionId)
+        public async Task<IEnumerable<Program>> GetProgramsOfferedByInstitutionAsync(Guid id)
         {
-            var institution = await _institutions.GetAsync(institutionId);
+            var institution = (await _institutions.GetAsync(id)).NotFoundIfNull();
 
-            if (institution == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to get Programs from {institution}, where {institution} does not exist");
-            }
             return await _programs.GetProgramsOfferedByInstitutionAsync(institution);
         }
     }

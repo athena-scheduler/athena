@@ -7,6 +7,7 @@ using Athena.Core.Repositories;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using System.Net;
+using Athena.Extensions;
 
 namespace Athena.Controllers.api
 {
@@ -23,62 +24,54 @@ namespace Athena.Controllers.api
         }
 
         [HttpGet("completed")]
-        public async Task<IEnumerable<Course>> GetCompletedCoursesForStudentAsync(Student student)
+        public async Task<IEnumerable<Course>> GetCompletedCoursesForStudentAsync(Guid id)
         {
-            if (student == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get course for {student} that does not exist");
-            }
+            var student = (await _students.GetAsync(id)).NotFoundIfNull();
+
             return await _courses.GetCompletedCoursesForStudentAsync(student);
         }
 
         [HttpPost("completed/{courseId}")]
-        public async Task MarkCourseAsCompletedForStudentAsync(Course course, Student student)
+        public async Task MarkCourseAsCompletedForStudentAsync(Guid id, Guid courseId)
         {
-            if (student == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to mark course as completed for {student} that does not exist");
-            }
+            var student = (await _students.GetAsync(id)).NotFoundIfNull();
+            var course = (await _courses.GetAsync(courseId)).NotFoundIfNull();
+
             await _courses.MarkCourseAsCompletedForStudentAsync(course, student);
         }
 
         [HttpDelete("completed/{courseId}")]
-        public async Task MarkCourseAsUncompletedForStudentAsync(Course course, Student student)
+        public async Task MarkCourseAsUncompletedForStudentAsync(Guid id, Guid courseId)
         {
-            if (student == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to mark course as uncompleted for {student} that does not exist");
-            }
+            var student = (await _students.GetAsync(id)).NotFoundIfNull();
+            var course = (await _courses.GetAsync(courseId)).NotFoundIfNull();
+
             await _courses.MarkCourseAsUncompletedForStudentAsync(course, student);
         }
 
         [HttpGet("in-progress")]
-        public async Task<IEnumerable<Course>> GetInProgressCoursesForStudentAsync(Student student)
+        public async Task<IEnumerable<Course>> GetInProgressCoursesForStudentAsync(Guid id)
         {
-            if (student == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to get in-progress for {student} that does not exist");
-            }
+            var student = (await _students.GetAsync(id)).NotFoundIfNull();
+
             return await _courses.GetInProgressCoursesForStudentAsync(student);
         }
 
         [HttpPost("in-progress/{courseId}")]
-        public async Task MarkCourseInProgressForStudentAsync(Course course, Student student)
+        public async Task MarkCourseInProgressForStudentAsync(Guid id, Guid courseId)
         {
-            if (student == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to mark in-progress courses for {student} that does not exist");
-            }
+            var student = (await _students.GetAsync(id)).NotFoundIfNull();
+            var course = (await _courses.GetAsync(courseId)).NotFoundIfNull();
+
             await _courses.MarkCourseInProgressForStudentAsync(course, student);
         }
 
         [HttpDelete("in-progress/{courseId}")]
-        public async Task MarkCourseNotInProgressForStudentAsync(Course course, Student student)
+        public async Task MarkCourseNotInProgressForStudentAsync(Guid id, Guid courseId)
         {
-            if (student == null)
-            {
-                throw new ApiException(HttpStatusCode.BadRequest, $"Tried to mark not in-progress courses for {student} that does not exist");
-            }
+            var student = (await _students.GetAsync(id)).NotFoundIfNull();
+            var course = (await _courses.GetAsync(courseId)).NotFoundIfNull();
+
             await _courses.MarkCourseNotInProgressForStudentAsync(course, student);
         }
     }

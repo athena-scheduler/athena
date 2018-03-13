@@ -1,6 +1,7 @@
 ﻿using Athena.Controllers.api;
 using Athena.Core.Models;
 using Athena.Exceptions;
+using Athena.Tests.Extensions;
 using AutoFixture.Xunit2;
 using Moq;
 using System;
@@ -65,7 +66,7 @@ namespace Athena.Tests.Controllers.Api
         [Theory, AutoData]
         public async Task Delete_ThrowsforNullMeeting(Guid id)
         {
-            Meetings.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(default(Meeting));
+            Meetings.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.DeleteMeeting(id));
 

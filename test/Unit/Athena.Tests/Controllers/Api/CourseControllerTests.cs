@@ -66,7 +66,7 @@ namespace Athena.Tests.Controllers.Api
         [Theory, AutoData]
         public async Task Delete_ThrowsforNullCourse(Guid id)
         {
-            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(default(Course));
+            Coureses.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.DeleteCourse(id));
 

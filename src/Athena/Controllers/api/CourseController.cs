@@ -8,6 +8,7 @@ using Athena.Core.Repositories;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using System.Net;
+using Athena.Extensions;
 
 namespace Athena.Controllers.api
 {
@@ -46,44 +47,32 @@ namespace Athena.Controllers.api
         [HttpDelete("{id}")]
         public async Task DeleteCourse(Guid id)
         {
-            var course = await _courses.GetAsync(id);
-            if (course == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to delete {course} that does not exist");
-            }
+            var course = (await _courses.GetAsync(id)).NotFoundIfNull();
+            
             await _courses.DeleteAsync(course);
         }
 
         [HttpGet("{id}/requirements")]
         public async Task<IEnumerable<Requirement>> GetRequirementsCourseSatisfiesAsync(Guid id)
         {
-            var course =  await _courses.GetAsync(id);
-            if (course == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"course with id {id} not found");
-            }
+            var course =  (await _courses.GetAsync(id)).NotFoundIfNull();
+
             return await _requirements.GetRequirementsCourseSatisfiesAsync(course);
         }
 
         [HttpGet("{id}/requirements/prereq")]
         public async Task<IEnumerable<Requirement>> GetPrereqsForCourseAsync(Guid id)
         {
-            var course = await _courses.GetAsync(id);
-            if (course == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"course with id {id} not found");
-            }
+            var course = (await _courses.GetAsync(id)).NotFoundIfNull();
+            
             return await _requirements.GetPrereqsForCourseAsync(course);
         }
 
         [HttpGet("{id}/requirements/concurrent")]
         public async Task<IEnumerable<Requirement>> GetConcurrentPrereqsAsync(Guid id)
         {
-            var course = await _courses.GetAsync(id);
-            if (course == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"course with id {id} not found");
-            }
+            var course = (await _courses.GetAsync(id)).NotFoundIfNull();
+            
             return await _requirements.GetConcurrentPrereqsAsync(course);
         }
     }

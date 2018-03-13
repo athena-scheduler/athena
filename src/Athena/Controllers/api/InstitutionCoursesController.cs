@@ -7,6 +7,7 @@ using Athena.Core.Repositories;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using System.Net;
+using Athena.Extensions;
 
 namespace Athena.Controllers.api
 {
@@ -23,13 +24,10 @@ namespace Athena.Controllers.api
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Course>> GetCoursesForInstitutionAsync(Guid institutionId)
+        public async Task<IEnumerable<Course>> GetCoursesForInstitutionAsync(Guid id)
         {
-            var institution = await _institutions.GetAsync(institutionId);
-            if (institution == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to get course for {institution} that does not exist");
-            }
+            var institution = (await _institutions.GetAsync(id)).NotFoundIfNull();
+ 
             return await _courses.GetCoursesForInstitutionAsync(institution);
         }
     }

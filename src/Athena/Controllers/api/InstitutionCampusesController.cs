@@ -7,6 +7,7 @@ using Athena.Core.Repositories;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using System.Net;
+using Athena.Extensions;
 
 namespace Athena.Controllers.api
 {
@@ -25,38 +26,28 @@ namespace Athena.Controllers.api
         [HttpGet]
         public async Task<IEnumerable<Campus>> GetCampusesForInstitutionAsync(Guid id)
         {
-            var institution = await _institutions.GetAsync(id);
+            var institution = (await _institutions.GetAsync(id)).NotFoundIfNull();
 
-            if (institution == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to get campus for {institution} that does not exist");
-            }
             return await _campuses.GetCampusesForInstitutionAsync(institution);
         }
 
-        [HttpPut("{campusId}")]
-        public async Task AssociateCampusWithInstitutionAsync(Guid campusId, Guid institutionId)
-        {
-            var campus = await _campuses.GetAsync(campusId);
-            var institution = await _institutions.GetAsync(institutionId);
+       
 
-            if (institution == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to assciate {campus} with {institution} that does not exist");
-            }
+        [HttpPut("{campusId}")]
+        public async Task AssociateCampusWithInstitutionAsync(Guid campusId, Guid id)
+        {
+            var campus = (await _campuses.GetAsync(campusId)).NotFoundIfNull();
+            var institution = (await _institutions.GetAsync(id)).NotFoundIfNull();
+
             await _campuses.AssociateCampusWithInstitutionAsync(campus, institution);
         }
 
         [HttpDelete("{campusId}")]
-        public async Task DissassociateCampusWithInstitutionAsync(Guid campusId, Guid institutionId)
+        public async Task DissassociateCampusWithInstitutionAsync(Guid campusId, Guid id)
         {
-            var campus = await _campuses.GetAsync(campusId);
-            var institution = await _institutions.GetAsync(institutionId);
+            var campus = (await _campuses.GetAsync(campusId)).NotFoundIfNull();
+            var institution = (await _institutions.GetAsync(id)).NotFoundIfNull();
 
-            if (institution == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to dissassciate {campus} with {institution} that does not exist");
-            }
             await _campuses.DissassociateCampusWithInstitutionAsync(campus, institution);
         }
     }

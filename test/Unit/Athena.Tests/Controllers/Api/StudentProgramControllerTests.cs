@@ -20,51 +20,67 @@ namespace Athena.Tests.Controllers.Api
         public StudentProgramControllerTests() => _controller = new StudentProgramController(Students.Object, Programs.Object);
 
         [Theory, AutoData]
-        public async Task RegisterStudentForProgram_Valid(Program program, Student student)
+        public async Task RegisterStudentForProgram_Valid(Guid studentId, Guid programId , Program program, Student student)
         {
-            await _controller.RegisterStudentForProgram(student, program);
+            Programs.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(program);
+            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(student);
+
+            await _controller.RegisterStudentForProgram(studentId, programId);
 
             Students.Verify(s => s.RegisterForProgramAsync(student, program), Times.Once);
         }
 
         [Theory, AutoData]
-        public async Task RegisterStudentForProgram_ThrowsforNullProgram(Student student)
+        public async Task RegisterStudentForProgram_ThrowsforNullProgram(Guid studentId , Guid programId)
         {
+            Programs.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RegisterStudentForProgram(student, null));
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RegisterStudentForProgram(studentId, programId));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task RegisterStudentForProgram_ThrowsforNullStudent(Program program)
+        public async Task RegisterStudentForProgram_ThrowsforNullStudent(Guid studentId, Guid programId)
         {
+            Programs.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RegisterStudentForProgram(null, program));
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RegisterStudentForProgram(studentId, programId));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task UnRegisterForProgram_Valid(Program program, Student student)
+        public async Task UnRegisterForProgram_Valid(Guid studentId, Guid programId, Program program, Student student)
         {
-            await _controller.UnregisterForProgram(student, program);
+            Programs.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(program);
+            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(student);
+
+            await _controller.UnregisterForProgram(studentId, programId);
 
             Students.Verify(s => s.UnregisterForProgramAsync(student, program), Times.Once);
         }
 
         [Theory, AutoData]
-        public async Task UnRegisterForProgram_ThrowsforNullProgram(Student student)
+        public async Task UnRegisterForProgram_ThrowsforNullProgram(Guid studentId, Guid programId)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.UnregisterForProgram(student, null));
+            Programs.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.UnregisterForProgram(studentId, programId));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task UnRegisterForProgram_ThrowsforNullStudent(Program program)
+        public async Task UnRegisterForProgram_ThrowsforNullStudent(Guid studentId, Guid programId)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.UnregisterForProgram(null, program));
+            Programs.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.UnregisterForProgram(studentId, programId));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }

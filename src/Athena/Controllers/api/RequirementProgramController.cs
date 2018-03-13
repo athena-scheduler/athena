@@ -8,7 +8,7 @@ using Athena.Core.Repositories;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using System.Net;
-
+using Athena.Extensions;
 
 namespace Athena.Controllers.api
 {
@@ -26,22 +26,19 @@ namespace Athena.Controllers.api
         }
 
         [HttpPost()]
-        public async Task AddRequirementAsync(Program program, Requirement requirement)
+        public async Task AddRequirementAsync(Guid id, Requirement requirement)
         {
-            if (program == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to add Requirements for {program}, where {program} does not exist");
-            }
+            var program = (await _programs.GetAsync(id)).NotFoundIfNull();
+
             await _programs.AddRequirementAsync(program, requirement);
         }
 
         [HttpDelete("{reqId}")]
-        public async Task RemoveRequirementAsync(Program program, Requirement requirement)
+        public async Task RemoveRequirementAsync(Guid id, Guid reqId)
         {
-            if (program == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to remove Requirements for {program}, where {program} does not exist");
-            }
+            var program = (await _programs.GetAsync(id)).NotFoundIfNull();
+            var requirement = (await _requirements.GetAsync(reqId)).NotFoundIfNull();
+
             await _programs.RemoveRequirementAsync(program, requirement);
         }
     }

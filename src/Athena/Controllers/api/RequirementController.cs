@@ -8,6 +8,7 @@ using Athena.Core.Repositories;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using System.Net;
+using Athena.Extensions;
 
 namespace Athena.Controllers.api
 {
@@ -44,11 +45,8 @@ namespace Athena.Controllers.api
         [HttpDelete("{id}")]
         public async Task DeleteRequirement(Guid id)
         {
-            var requirement = await _requirements.GetAsync(id);
-            if (requirement == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to delete {requirement} that does not exist");
-            }
+            var requirement = (await _requirements.GetAsync(id)).NotFoundIfNull();
+            
             await _requirements.DeleteAsync(requirement);
         }
     }

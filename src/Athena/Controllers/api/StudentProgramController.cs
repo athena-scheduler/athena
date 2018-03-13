@@ -8,6 +8,7 @@ using Athena.Core.Repositories;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using System.Net;
+using Athena.Extensions;
 
 namespace Athena.Controllers.api
 {
@@ -24,22 +25,20 @@ namespace Athena.Controllers.api
         }
 
         [HttpPost()]
-        public async Task RegisterStudentForProgram(Student student, Program program)
+        public async Task RegisterStudentForProgram(Guid id, Guid programId)
         {
-            if (student == null || program == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to register for program {program}, where the student {student} or program {program} does not exist");
-            }
+            var student = (await _students.GetAsync(id)).NotFoundIfNull();
+            var program = (await _programs.GetAsync(programId)).NotFoundIfNull();
+
             await _students.RegisterForProgramAsync(student, program);
         }
 
         [HttpDelete()]
-        public async Task UnregisterForProgram(Student student, Program program)
+        public async Task UnregisterForProgram(Guid id, Guid programId)
         {
-            if (student == null || program == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to register for program {program}, where the student {student} or program {program} does not exist");
-            }
+            var student = (await _students.GetAsync(id)).NotFoundIfNull();
+            var program = (await _programs.GetAsync(programId)).NotFoundIfNull();
+
             await _students.UnregisterForProgramAsync(student, program);
         }
     }

@@ -66,7 +66,7 @@ namespace Athena.Tests.Controllers.Api
         [Theory, AutoData]
         public async Task Delete_ThrowsforNullInstitution(Guid id)
         {
-            Institutions.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(default(Institution));
+            Institutions.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.DeleteInstitution(id));
 

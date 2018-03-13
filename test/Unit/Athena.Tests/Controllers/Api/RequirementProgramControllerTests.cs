@@ -19,33 +19,45 @@ namespace Athena.Tests.Controllers.Api
 
         public RequirementProgramControllerTests() => _controller = new RequirementProgramController(Requirements.Object, Programs.Object);
         [Theory, AutoData]
-        public async Task AddRequirement_Valid(Program program, Requirement requirement)
+        public async Task AddRequirement_Valid(Guid programId, Program program, Requirement requirement)
         {
-            await _controller.AddRequirementAsync(program, requirement);
+            Programs.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(program);
+            Requirements.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(requirement);
+
+            await _controller.AddRequirementAsync(programId, requirement);
 
             Programs.Verify(c => c.AddRequirementAsync(program, requirement));
         }
 
         [Theory, AutoData]
-        public async Task AddRequirement_ThrowsforNullProgram(Requirement requirement)
+        public async Task AddRequirement_ThrowsforNullProgram(Guid programId, Program program, Requirement requirement)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.AddRequirementAsync(null, requirement));
+            Programs.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Requirements.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(requirement);
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.AddRequirementAsync(programId, requirement));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task RemoveRequirement_Valid(Program program, Requirement requirement)
+        public async Task RemoveRequirement_Valid(Guid programId , Guid requirementId, Program program, Requirement requirement)
         {
-            await _controller.RemoveRequirementAsync(program, requirement);
+            Programs.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(program);
+            Requirements.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsAsync(requirement);
+
+            await _controller.RemoveRequirementAsync(programId, requirementId);
 
             Programs.Verify(c => c.RemoveRequirementAsync(program, requirement));
         }
 
         [Theory, AutoData]
-        public async Task RemoveRequirement_ThrowsforNullProgram(Requirement requirement)
+        public async Task RemoveRequirement_ThrowsforNullProgram(Guid programId, Guid requirementId)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RemoveRequirementAsync(null, requirement));
+            Programs.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Requirements.Setup(p => p.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RemoveRequirementAsync(programId, requirementId));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }

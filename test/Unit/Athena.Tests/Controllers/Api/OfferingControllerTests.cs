@@ -9,6 +9,7 @@ using Moq;
 using System.Threading.Tasks;
 using Xunit;
 using System.Net;
+using Athena.Tests.Extensions;
 
 namespace Athena.Tests.Controllers.Api
 {
@@ -65,43 +66,12 @@ namespace Athena.Tests.Controllers.Api
         [Theory, AutoData]
         public async Task Delete_ThrowsforNullOffering(Guid id)
         {
-            Offerings.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(default(Offering));
+            Offerings.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.DeleteOffering(id));
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
-        [Theory, AutoData]
-        public async Task AddOffering_Valid(Course course, Offering offering)
-        {
-            await _controller.AddOfferingAsync(course, offering);
-
-            Coureses.Verify(o => o.AddOfferingAsync(course, offering));
-        }
-
-        [Theory, AutoData]
-        public async Task AddOffering_ThrowsforNullOffeirng(Course course)
-        {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.AddOfferingAsync(course, null));
-
-            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
-        }
-
-        [Theory, AutoData]
-        public async Task RemoveOffering_Valid(Course course, Offering offering)
-        {
-            await _controller.RemoveOfferingAsync(course, offering);
-
-            Coureses.Verify(o => o.RemoveOfferingAsync(course, offering));
-        }
-
-        [Theory, AutoData]
-        public async Task RemoveOffering_ThrowsforNullMeeting(Course course)
-        {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.RemoveOfferingAsync(course, null));
-
-            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
-        }
     }
 }

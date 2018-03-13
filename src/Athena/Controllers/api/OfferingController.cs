@@ -8,6 +8,7 @@ using Athena.Core.Repositories;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using System.Net;
+using Athena.Extensions;
 
 namespace Athena.Controllers.api
 {
@@ -44,11 +45,8 @@ namespace Athena.Controllers.api
         [HttpDelete("{id}")]
         public async Task DeleteOffering(Guid id)
         {
-            var offering = await _offerings.GetAsync(id);
-            if (offering == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to delete {offering} that does not exist");
-            }
+            var offering = (await _offerings.GetAsync(id)).NotFoundIfNull();
+            
             await _offerings.DeleteAsync(offering);
         }
 

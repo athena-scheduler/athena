@@ -66,7 +66,7 @@ namespace Athena.Tests.Controllers.Api
         [Theory, AutoData]
         public async Task Delete_ThrowsforNullStudent(Guid id)
         {
-            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(default(Student));
+            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.DeleteStudent(id));
 
@@ -74,19 +74,23 @@ namespace Athena.Tests.Controllers.Api
         }
 
         [Theory, AutoData]
-        public async Task GetInstitutionsforStudent_Valid(Student student)
+        public async Task GetInstitutionsforStudent_Valid(Guid studentId, Student student)
         {
-            await _controller.GetInstitutionsForStudentAsync(student);
+            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(student);
+
+            await _controller.GetInstitutionsForStudentAsync(studentId);
 
             Institutions.Verify(i => i.GetInstitutionsForStudentAsync(student));
         }
 
-        [Fact]
-        public async Task GetInstitutionsforStudent_ThrowsforNullStudent()
+        [Theory, AutoData]
+        public async Task GetInstitutionsforStudent_ThrowsforNullStudent(Guid studentId)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetInstitutionsForStudentAsync(null));
+            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetInstitutionsForStudentAsync(studentId));
+
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
@@ -104,10 +108,12 @@ namespace Athena.Tests.Controllers.Api
         public async Task EnrollStudent_ThrowsforNullStudent(Guid institutionId, Guid studentId)
         {
             Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+            Institutions.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
+
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.EnrollStudentAsync(institutionId, studentId));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
@@ -117,7 +123,7 @@ namespace Athena.Tests.Controllers.Api
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.EnrollStudentAsync(institutionId, studentId));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
@@ -138,7 +144,7 @@ namespace Athena.Tests.Controllers.Api
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.UnenrollStudentAsync(institutionId, studentId));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
@@ -148,23 +154,27 @@ namespace Athena.Tests.Controllers.Api
 
             var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.UnenrollStudentAsync(institutionId, studentId));
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
-        public async Task GetProgramsForStudent_Valid(Student student)
+        public async Task GetProgramsForStudent_Valid(Guid studentId , Student student)
         {
-            await _controller.GetProgramsForStudentAsync(student);
+            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsAsync(student);
+
+            await _controller.GetProgramsForStudentAsync(studentId);
 
             Programs.Verify(i => i.GetProgramsForStudentAsync(student));
         }
 
-        [Fact]
-        public async Task GetProgramsforStudent_ThrowsforNullStudent()
+        [Theory, AutoData]
+        public async Task GetProgramsforStudent_ThrowsforNullStudent(Guid studentId)
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetProgramsForStudentAsync(null));
+            Students.Setup(c => c.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
 
-            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetProgramsForStudentAsync(studentId));
+
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
     }

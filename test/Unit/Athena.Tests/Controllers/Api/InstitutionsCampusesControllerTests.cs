@@ -80,22 +80,5 @@ namespace Athena.Tests.Controllers.Api
 
             Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
-
-        [Theory, AutoData]
-        public async Task GetInstitutionOnCampus_Valid(Campus campus)
-        {
-            await _controller.GetInstitutionsOnCampusAsync(campus);
-
-            Institutions.Verify(c => c.GetInstitutionsOnCampusAsync(campus), Times.Once);
-        }
-
-        [Fact]
-        public async Task GetInstitutionOnCampus_ThrowsforNullCampus()
-        {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.GetInstitutionsOnCampusAsync(null));
-
-            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
-        }
-
     }
 }

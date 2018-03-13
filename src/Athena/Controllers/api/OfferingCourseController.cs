@@ -8,6 +8,7 @@ using Athena.Core.Repositories;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using System.Net;
+using Athena.Extensions;
 
 namespace Athena.Controllers.api
 {
@@ -25,32 +26,28 @@ namespace Athena.Controllers.api
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Offering>> GetOfferingsForCourseAsync(Course course)
+        public async Task<IEnumerable<Offering>> GetOfferingsForCourseAsync(Guid id)
         {
-            if (course == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to get offering for {course} that doesn't exist");
-            }
+            var course = (await _courses.GetAsync(id)).NotFoundIfNull();
+            
             return await _offerings.GetOfferingsForCourseAsync(course);
         }
 
         [HttpPost("{offeringId}")]
-        public async Task AddOfferingAsync(Course course, Offering offering)
+        public async Task AddOfferingAsync(Guid id, Guid offeringId)
         {
-            if (offering == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to add offering {offering} to course {course} that doesn't exist");
-            }
+            var course = (await _courses.GetAsync(id)).NotFoundIfNull();
+            var offering = (await _offerings.GetAsync(offeringId)).NotFoundIfNull();
+
             await _courses.AddOfferingAsync(course, offering);
         }
 
         [HttpDelete("{offeringId}")]
-        public async Task RemoveOfferingAsync(Course course, Offering offering)
+        public async Task RemoveOfferingAsync(Guid id, Guid offeringId)
         {
-            if (offering == null)
-            {
-                throw new ApiException(HttpStatusCode.NotFound, $"Tried to remove offering {offering} to course {course} that doesn't exist");
-            }
+            var course = (await _courses.GetAsync(id)).NotFoundIfNull();
+            var offering = (await _offerings.GetAsync(offeringId)).NotFoundIfNull();
+
             await _courses.RemoveOfferingAsync(course, offering);
         }
     }
