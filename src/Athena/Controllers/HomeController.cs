@@ -7,7 +7,7 @@ namespace Athena.Controllers
 {
     [Route("")]
     [AllowAnonymous]
-    public class HomeController : Controller
+    public class HomeController : AthenaControllerBase
     {
         [HttpGet("Home")]
         [HttpGet]

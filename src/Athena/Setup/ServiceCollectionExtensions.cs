@@ -28,11 +28,7 @@ namespace Athena.Setup
             services.AddAthenaRepositoriesUsingPostgres()
                 .AddAthenaIdentityServices()
                 .AddAuthenticationProviders()
-                .AddMvc(options =>
-                {
-                    // Users must be logged in by default. Add [AllowAnonymous] to override
-                    options.Filters.Add(new AuthorizeFilter(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()));
-                })
+                .AddMvc()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<StudentValidator>());
             
             return services;

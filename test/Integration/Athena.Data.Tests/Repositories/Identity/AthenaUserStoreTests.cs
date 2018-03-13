@@ -14,11 +14,13 @@ namespace Athena.Data.Tests.Repositories.Identity
     {
         private readonly StudentRepository _students;
         private readonly AthenaUserStore _sut;
+        private readonly AthenaRoleStore _roles;
 
         public AthenaUserStoreTests()
         {
             _students = new StudentRepository(_db);
             _sut = new AthenaUserStore(_db);
+            _roles = new AthenaRoleStore(_db);
         }
 
         [Theory, AutoData]

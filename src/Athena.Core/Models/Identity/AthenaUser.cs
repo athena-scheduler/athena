@@ -6,6 +6,7 @@ namespace Athena.Core.Models.Identity
     public class AthenaUser : IdentityUser<Guid>, IEquatable<AthenaUser>
     {
         public Student Student { get; set; }
+        public string ApiKey { get; set; }
         
         public bool Equals(AthenaUser other)
         {
@@ -17,6 +18,7 @@ namespace Athena.Core.Models.Identity
                    string.Equals(NormalizedUserName, other.NormalizedUserName) &&
                    string.Equals(Email, other.Email) &&
                    string.Equals(NormalizedEmail, other.NormalizedEmail) &&
+                   string.Equals(ApiKey, other.ApiKey) &&
                    EmailConfirmed == other.EmailConfirmed;
         }
 
@@ -37,6 +39,7 @@ namespace Athena.Core.Models.Identity
                 hashCode = (hashCode * 397) ^ (NormalizedUserName?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (Email?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (NormalizedEmail?.GetHashCode() ?? 0);
+                hashCode = (hashCode * 397) ^ (ApiKey?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (EmailConfirmed.GetHashCode());
                 return hashCode;
             }
