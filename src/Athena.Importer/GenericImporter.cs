@@ -11,7 +11,7 @@ namespace Athena.Importer
     {
         private readonly IDataProvider<T> _data;
 
-        public GenericImporter(Uri apiEndpoint, IDataProvider<T> data) : base(apiEndpoint) =>
+        public GenericImporter(Uri apiEndpoint, string apiKey, IDataProvider<T> data) : base(apiEndpoint, apiKey) =>
             _data = data ?? throw new ArgumentNullException(nameof(data));
 
         public override async Task Import()

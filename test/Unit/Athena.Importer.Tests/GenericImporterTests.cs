@@ -26,7 +26,7 @@ namespace Athena.Importer.Tests
             _http = new HttpTest();
             
             _data = new Mock<IDataProvider<Campus>>();
-            _sut = new GenericImporter<Campus>(DummyApiEndpoint, _data.Object);
+            _sut = new GenericImporter<Campus>(DummyApiEndpoint, null, _data.Object);
         }
 
         [Fact]
@@ -59,11 +59,30 @@ namespace Athena.Importer.Tests
 
         [Fact]
         public void ThrowsForNullProvider() =>
-            Assert.Throws<ArgumentNullException>(() => new GenericImporter<Campus>(DummyApiEndpoint, null));
+            Assert.Throws<ArgumentNullException>(() => new GenericImporter<Campus>(DummyApiEndpoint, null, null));
 
         [Fact]
         public void ThrowsForNullEndpoint() =>
-            Assert.Throws<ArgumentNullException>(() => new GenericImporter<Campus>(null, _data.Object));
+            Assert.Throws<ArgumentNullException>(() => new GenericImporter<Campus>(null, null, _data.Object));
+
+        [Theory, AutoData]
+        public async Task IncludesApiKeyHeaderIfSpecified(List<Campus> campuses, string apiKey)
+        {
+            _data.Setup(d => d.GetData()).Returns(campuses);
+
+            var sut = new GenericImporter<Campus>(DummyApiEndpoint, apiKey, _data.Object);
+
+            await sut.Import();
+            
+            foreach (var c in campuses)
+            {
+                _http.ShouldHaveCalled(DummyApiEndpoint.ToString().TrimEnd('/') + "/v1/campus")
+                    .WithVerb(HttpMethod.Post)
+                    .WithRequestJson(c)
+                    .WithHeader("X-ATHENA-API-KEY", apiKey)
+                    .Times(1);
+            }
+        }
 
         public void Dispose()
         {

@@ -17,7 +17,7 @@ namespace Athena.Importer.Tests
         public ObjectMapImporterTests()
         {
             _data = new Mock<IObjectMapProvider>();
-            _sut = new ObjectMapImporter(new Uri(ApiEndpoint), _data.Object);
+            _sut = new ObjectMapImporter(new Uri(ApiEndpoint), null, _data.Object);
             
             _http = new HttpTest();
         }

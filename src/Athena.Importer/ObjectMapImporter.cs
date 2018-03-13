@@ -11,7 +11,8 @@ namespace Athena.Importer
     {
         private readonly IObjectMapProvider _provider;
 
-        public ObjectMapImporter(Uri apiEndpoint, IObjectMapProvider provider) : base(apiEndpoint) =>
+        public ObjectMapImporter(Uri apiEndpoint, string apiKey, IObjectMapProvider provider) :
+            base(apiEndpoint, apiKey) =>
             _provider = provider ?? throw new ArgumentNullException(nameof(provider));
         
         public override async Task Import()

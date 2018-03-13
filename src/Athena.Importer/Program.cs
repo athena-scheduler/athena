@@ -17,6 +17,9 @@ namespace Athena.Importer
         [Option(Description = "Path to sample data", LongName = "data-path", ShortName = "d")]
         public string DataPath { get; } = "/athena/importer/data";
 
+        [Option(Description = "API Key to authenticate with", LongName = "api-key", ShortName = "k")]
+        public string ApiKey { get; set; } = null;
+
         public static async Task<int> Main(string[] args) => await CommandLineApplication.ExecuteAsync<Program>(args);
         
         private async Task<int> OnExecuteAsync(CommandLineApplication app)
@@ -46,15 +49,15 @@ namespace Athena.Importer
 
             try
             {
-                await new GenericImporter<Campus>(uri, new JsonFilesystemDataProvider<Campus>(DataPath)).Import();
-                await new GenericImporter<Institution>(uri, new JsonFilesystemDataProvider<Institution>(DataPath)).Import();
-                await new GenericImporter<Course>(uri, new JsonFilesystemDataProvider<Course>(DataPath)).Import();
-                await new GenericImporter<Offering>(uri, new JsonFilesystemDataProvider<Offering>(DataPath)).Import();
-                await new GenericImporter<Meeting>(uri, new JsonFilesystemDataProvider<Meeting>(DataPath)).Import();
-                await new GenericImporter<Core.Models.Program>(uri, new JsonFilesystemDataProvider<Core.Models.Program>(DataPath)).Import();
-                await new GenericImporter<Requirement>(uri, new JsonFilesystemDataProvider<Requirement>(DataPath)).Import();
+                await new GenericImporter<Campus>(uri, ApiKey, new JsonFilesystemDataProvider<Campus>(DataPath)).Import();
+                await new GenericImporter<Institution>(uri, ApiKey, new JsonFilesystemDataProvider<Institution>(DataPath)).Import();
+                await new GenericImporter<Course>(uri, ApiKey, new JsonFilesystemDataProvider<Course>(DataPath)).Import();
+                await new GenericImporter<Offering>(uri, ApiKey, new JsonFilesystemDataProvider<Offering>(DataPath)).Import();
+                await new GenericImporter<Meeting>(uri, ApiKey, new JsonFilesystemDataProvider<Meeting>(DataPath)).Import();
+                await new GenericImporter<Core.Models.Program>(uri, ApiKey, new JsonFilesystemDataProvider<Core.Models.Program>(DataPath)).Import();
+                await new GenericImporter<Requirement>(uri, ApiKey, new JsonFilesystemDataProvider<Requirement>(DataPath)).Import();
 
-                await new ObjectMapImporter(uri, new JsonFilesystemObjectMapProvider(DataPath)).Import();
+                await new ObjectMapImporter(uri, ApiKey, new JsonFilesystemObjectMapProvider(DataPath)).Import();
             }
             catch (Exception e)
             {
