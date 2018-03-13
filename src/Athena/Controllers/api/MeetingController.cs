@@ -22,7 +22,7 @@ namespace Athena.Controllers.api
 
         [HttpGet("{id}")]
         public async Task<Meeting> GetMeeting(Guid id) =>
-            await _meetings.GetAsync(id) ?? throw new ApiException(HttpStatusCode.NotFound, "meeting not found");
+            (await _meetings.GetAsync(id)).NotFoundIfNull();
 
         [HttpPut("{id}")]
         public async Task EditMeeting(Guid id, [FromBody] Meeting meeting)

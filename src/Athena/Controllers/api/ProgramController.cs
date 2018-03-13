@@ -22,7 +22,7 @@ namespace Athena.Controllers.api
 
         [HttpGet("{id}")]
         public async Task<Program> GetProgram(Guid id) =>
-            await _programs.GetAsync(id) ?? throw new ApiException(HttpStatusCode.NotFound, "program not found");
+            (await _programs.GetAsync(id)).NotFoundIfNull();
 
         [HttpPut("{id}")]
         public async Task EditProgram (Guid id, [FromBody] Program program)

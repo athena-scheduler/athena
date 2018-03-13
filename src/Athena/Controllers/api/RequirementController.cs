@@ -22,7 +22,7 @@ namespace Athena.Controllers.api
 
         [HttpGet("{id}")]
         public async Task<Requirement> GetRequirement(Guid id) =>
-            await _requirements.GetAsync(id) ?? throw new ApiException(HttpStatusCode.NotFound, "requirement not found");
+            (await _requirements.GetAsync(id)).NotFoundIfNull();
 
         [HttpPut("{id}")]
         public async Task EditRequirement(Guid id, [FromBody] Requirement requirement)

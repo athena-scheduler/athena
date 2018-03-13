@@ -22,7 +22,7 @@ namespace Athena.Controllers.api
 
         [HttpGet("{id}")]
         public async Task<Student> GetStudent(Guid id) =>
-            await _students.GetAsync(id) ?? throw new ApiException(HttpStatusCode.NotFound, "student not found");
+            (await _students.GetAsync(id)).NotFoundIfNull();
 
         [HttpPut("{id}")]
         public async Task EditStudent(Guid id, [FromBody] Student student)

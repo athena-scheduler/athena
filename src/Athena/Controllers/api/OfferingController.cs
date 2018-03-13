@@ -22,7 +22,7 @@ namespace Athena.Controllers.api
         
         [HttpGet("{id}")]
         public async Task<Offering> GetOffering(Guid id) =>
-            await _offerings.GetAsync(id) ?? throw new ApiException(HttpStatusCode.NotFound, "offering not found");
+            (await _offerings.GetAsync(id)).NotFoundIfNull();
 
         [HttpPut("{id}")]
         public async Task EditOffering(Guid id, [FromBody] Offering offering)

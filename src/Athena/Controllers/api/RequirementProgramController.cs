@@ -18,7 +18,6 @@ namespace Athena.Controllers.api
         {
             _requirements = requirementRepository ?? throw new ArgumentNullException(nameof(requirementRepository));
             _programs = programRepository ?? throw new ArgumentNullException(nameof(programRepository));
-
         }
         
         [HttpGet("requirements")]
