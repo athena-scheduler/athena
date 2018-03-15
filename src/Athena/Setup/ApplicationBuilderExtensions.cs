@@ -42,7 +42,7 @@ namespace Athena.Setup
             
             app.UseWhen(ctx => ctx.Request.Path.HasValue && ctx.Request.Path.StartsWithSegments("/api"), builder =>
             {
-                builder.UseMiddleware<ApiKeyAuthenticationMiddleware>();
+                builder.UseMiddleware<ApiAuthenticationMiddleware>();
             });
         
             app.UseWhen(ctx => !ctx.Request.Path.HasValue || !ctx.Request.Path.StartsWithSegments("/api"), builder =>

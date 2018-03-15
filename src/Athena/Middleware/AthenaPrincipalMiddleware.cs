@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Athena.Core.Models.Identity;
-using Athena.Handlers;
-using Athena.Models.Identity;
-using Microsoft.AspNetCore.Authentication;
+using Athena.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
@@ -18,13 +16,7 @@ namespace Athena.Middleware
         
         public async Task InvokeAsync(HttpContext ctx, UserManager<AthenaUser> userManager)
         {
-            var athenaUser = await (userManager ?? throw new ArgumentNullException(nameof(userManager)))
-                .GetUserAsync(ctx.User);
-
-            if (athenaUser != null)
-            {
-                ctx.User = new AthenaPrincipal(ctx.User, athenaUser);
-            }
+            ctx.User = await ctx.User.TryGetAthenaPrincipal(userManager);
             
             await _next(ctx);
         }
