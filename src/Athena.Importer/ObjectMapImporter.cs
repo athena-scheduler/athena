@@ -32,14 +32,14 @@ namespace Athena.Importer
 
         private async Task LinkInstitutionsToCampuses(ObjectMap map)
         {
-            foreach (var campus in map.CampusInstitutions.Keys)
+            foreach (var institution in map.CampusInstitutions.Keys)
             {
-                foreach (var institution in map.CampusInstitutions[campus])
+                foreach (var campus in map.CampusInstitutions[institution])
                 {
                     Log.Debug("Linking campus {campus} to institution {institution}", campus, institution);
                     await CreateRequest()
                         .AppendPathSegments("institution", institution, "campuses", campus)
-                        .SendAsync(HttpMethod.Post);
+                        .SendAsync(HttpMethod.Put);
                 }
             }
         }
@@ -53,7 +53,7 @@ namespace Athena.Importer
                     Log.Debug("Linking offering {offering} to course {course}", offering, course);
                     await CreateRequest()
                         .AppendPathSegments("course", course, "offering", offering)
-                        .SendAsync(HttpMethod.Post);
+                        .SendAsync(HttpMethod.Put);
                 }
             }
         }
@@ -66,8 +66,8 @@ namespace Athena.Importer
                 {
                     Log.Debug("Linking reqirement {req} to course {course}", req, course);
                     await CreateRequest()
-                        .AppendPathSegments("course", course, "reqirement", "satisfies", req)
-                        .SendAsync(HttpMethod.Post);
+                        .AppendPathSegments("course", course, "requirements", "satisfies", req)
+                        .SendAsync(HttpMethod.Put);
                 }
             }
         }
@@ -80,8 +80,8 @@ namespace Athena.Importer
                 {
                     Log.Debug("Linking requirement {req} as a prereq of course {course}", req, course);
                     await CreateRequest()
-                        .AppendPathSegments("course", course, "requirement", "prereq", req)
-                        .SendAsync(HttpMethod.Post);
+                        .AppendPathSegments("course", course, "requirements", "prereq", req)
+                        .SendAsync(HttpMethod.Put);
                 }
             }
         }
@@ -94,8 +94,8 @@ namespace Athena.Importer
                 {
                     Log.Debug("Linking requirement {req} as a prereq of course {course}", req, course);
                     await CreateRequest()
-                        .AppendPathSegments("course", course, "requirement", "prereq", "concurrent", req)
-                        .SendAsync(HttpMethod.Post);
+                        .AppendPathSegments("course", course, "requirements", "prereq", "concurrent", req)
+                        .SendAsync(HttpMethod.Put);
                 }
             }
         }
@@ -109,7 +109,7 @@ namespace Athena.Importer
                     Log.Debug("Linking meeting {meeting} to offering {offering}", meeting, offering);
                     await CreateRequest()
                         .AppendPathSegments("offering", offering, "meeting", meeting)
-                        .SendAsync(HttpMethod.Post);
+                        .SendAsync(HttpMethod.Put);
                 }
             }
         }
@@ -123,7 +123,7 @@ namespace Athena.Importer
                     Log.Debug("Linking requirement {req} to program {program}", req, program);
                     await CreateRequest()
                         .AppendPathSegments("program", program, "requirement", req)
-                        .SendAsync(HttpMethod.Post);
+                        .SendAsync(HttpMethod.Put);
                 }
             }
         }

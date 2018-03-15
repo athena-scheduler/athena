@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Athena.Controllers.api
 {
+    [Route("api/v1/student/{id}/institutions")]
     public class StudentInstitutionController : AthenaApiController
     {
         private readonly IStudentRepository _students;
@@ -19,7 +20,7 @@ namespace Athena.Controllers.api
             _institutions = institutionsRepository ?? throw new ArgumentNullException(nameof(institutionsRepository));
         }
         
-        [HttpGet("{id}/institutions")]
+        [HttpGet]
         public async Task<IEnumerable<Institution>> GetInstitutionsForStudentAsync(Guid id)
         {
             var student = (await _students.GetAsync(id)).NotFoundIfNull();
@@ -27,7 +28,7 @@ namespace Athena.Controllers.api
             return await _institutions.GetInstitutionsForStudentAsync(student);
         }
 
-        [HttpPost("{id}/institutions/{institutionId}")]
+        [HttpPut("{institutionId}")]
         public async Task EnrollStudentAsync(Guid institutionId, Guid studentId)
         {
             var institution = (await _institutions.GetAsync(institutionId)).NotFoundIfNull();
@@ -36,7 +37,7 @@ namespace Athena.Controllers.api
             await _institutions.EnrollStudentAsync(institution, student);
         }
 
-        [HttpDelete("{id}/institutions/{institutionId}")]
+        [HttpDelete("{institutionId}")]
         public async Task UnenrollStudentAsync(Guid institutionId, Guid studentId)
         {
             var institution = (await _institutions.GetAsync(institutionId)).NotFoundIfNull();

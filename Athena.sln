@@ -1,4 +1,4 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 15.0.26124.0
@@ -23,6 +23,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{A98C96CD-B3CE-459F-862D-C22A3CE77A3C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Athena.Tests", "test\Unit\Athena.Tests\Athena.Tests.csproj", "{867A12E9-B244-40A2-8BC5-3A2ADD372B32}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Athena.Importer", "src\Athena.Importer\Athena.Importer.csproj", "{A9438191-CD4D-4039-A385-1F20EBBC0B95}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Athena.Importer.Tests", "test\Unit\Athena.Importer.Tests\Athena.Importer.Tests.csproj", "{EEC0AA08-58EE-40FE-969C-922BCFB568D7}"
@@ -159,6 +160,8 @@ Global
 		{A57DC43A-3F1F-41A9-8517-4F25B6B38CFE} = {A98C96CD-B3CE-459F-862D-C22A3CE77A3C}
 		{A98C96CD-B3CE-459F-862D-C22A3CE77A3C} = {F008A1CF-47EE-47BF-ADF2-A7957BEC6160}
 		{867A12E9-B244-40A2-8BC5-3A2ADD372B32} = {A98C96CD-B3CE-459F-862D-C22A3CE77A3C}
+		{A9438191-CD4D-4039-A385-1F20EBBC0B95} = {139DE08A-4592-4C92-9ECB-3EB59A3FBCF1}
+		{EEC0AA08-58EE-40FE-969C-922BCFB568D7} = {A98C96CD-B3CE-459F-862D-C22A3CE77A3C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E05F4FC3-ACE1-4111-BD4E-DCF041236CC7}

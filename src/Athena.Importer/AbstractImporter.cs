@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using Flurl;
 using Flurl.Http;
@@ -22,6 +23,7 @@ namespace Athena.Importer
         {
             var req = _apiEndpoint
                 .AppendPathSegment("v1")
+                .AllowHttpStatus(HttpStatusCode.Conflict, HttpStatusCode.OK)
                 .WithTimeout(TimeSpan.FromSeconds(30));
 
             return string.IsNullOrEmpty(_apiKey) ? req : req.WithHeader("X-ATHENA-API-KEY", _apiKey);

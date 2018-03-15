@@ -28,7 +28,7 @@ namespace Athena.Controllers.api
             return await _courses.GetCompletedCoursesForStudentAsync(student);
         }
 
-        [HttpPost("completed/{courseId}")]
+        [HttpPut("completed/{courseId}")]
         public async Task MarkCourseAsCompletedForStudentAsync(Guid id, Guid courseId)
         {
             var student = (await _students.GetAsync(id)).NotFoundIfNull();
@@ -54,7 +54,7 @@ namespace Athena.Controllers.api
             return await _courses.GetInProgressCoursesForStudentAsync(student);
         }
 
-        [HttpPost("in-progress/{courseId}")]
+        [HttpPut("in-progress/{courseId}")]
         public async Task MarkCourseInProgressForStudentAsync(Guid id, Guid courseId)
         {
             var student = (await _students.GetAsync(id)).NotFoundIfNull();

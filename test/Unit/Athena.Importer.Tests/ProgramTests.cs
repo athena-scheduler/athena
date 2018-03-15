@@ -77,8 +77,9 @@ namespace Athena.Importer.Tests
             
             Assert.Equal(0, result);
             _http.ShouldHaveCalled($"{ApiTestEndpoint}/v1/course")
-                .WithVerb(HttpMethod.Post)
-                .WithContentType("application/json");
+                .WithVerb(HttpMethod.Post);
+            //.WithContentType("application/json");
+            // https://github.com/tmenier/Flurl/issues/285
         }
         
         [Fact]
@@ -88,8 +89,9 @@ namespace Athena.Importer.Tests
             
             Assert.Equal(0, result);
             _http.ShouldHaveCalled($"{ApiTestEndpoint}/v1/institution")
-                .WithVerb(HttpMethod.Post)
-                .WithContentType("application/json");
+                .WithVerb(HttpMethod.Post);
+            //.WithContentType("application/json");
+            // https://github.com/tmenier/Flurl/issues/285
         }
         
         [Fact]
@@ -110,8 +112,9 @@ namespace Athena.Importer.Tests
             
             Assert.Equal(0, result);
             _http.ShouldHaveCalled($"{ApiTestEndpoint}/v1/offering")
-                .WithVerb(HttpMethod.Post)
-                .WithContentType("application/json");
+                .WithVerb(HttpMethod.Post);
+            //.WithContentType("application/json");
+            // https://github.com/tmenier/Flurl/issues/285
         }
         
         [Fact]
@@ -121,8 +124,9 @@ namespace Athena.Importer.Tests
             
             Assert.Equal(0, result);
             _http.ShouldHaveCalled($"{ApiTestEndpoint}/v1/program")
-                .WithVerb(HttpMethod.Post)
-                .WithContentType("application/json");
+                .WithVerb(HttpMethod.Post);
+            //.WithContentType("application/json");
+            // https://github.com/tmenier/Flurl/issues/285
         }
         
         [Fact]

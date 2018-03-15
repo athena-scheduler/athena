@@ -28,7 +28,7 @@ namespace Athena.Controllers.api
             return await _programs.GetProgramsForStudentAsync(student);
         }
 
-        [HttpPost("{programId}")]
+        [HttpPut("{programId}")]
         public async Task RegisterStudentForProgram(Guid id, Guid programId)
         {
             var student = (await _students.GetAsync(id)).NotFoundIfNull();

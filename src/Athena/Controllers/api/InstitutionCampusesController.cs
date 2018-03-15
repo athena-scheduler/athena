@@ -29,7 +29,7 @@ namespace Athena.Controllers.api
         }
 
         [HttpPut("{campusId}")]
-        public async Task AssociateCampusWithInstitutionAsync(Guid campusId, Guid id)
+        public async Task AssociateCampusWithInstitutionAsync(Guid id, Guid campusId)
         {
             var campus = (await _campuses.GetAsync(campusId)).NotFoundIfNull();
             var institution = (await _institutions.GetAsync(id)).NotFoundIfNull();
