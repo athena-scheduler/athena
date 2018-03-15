@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Athena.Controllers.api
 {
     [ApiModelValidation]
-    [Authorize(AuthenticationSchemes = ApiKeyHandler.SCHEME)]
+    [Authorize]
     public class AthenaApiController : Controller
     {
     }

@@ -15,7 +15,7 @@ namespace Athena.Handlers
         public class _ : AuthenticationSchemeOptions
         {
         }
-
+        
         public const string SCHEME = "api-key";
         private const string ATHENA_API_HEADER_KEY = "X-ATHENA-API-KEY";
 
@@ -32,7 +32,6 @@ namespace Athena.Handlers
         {
             if (Request.Headers.TryGetValue(ATHENA_API_HEADER_KEY, out var apiKey))
             {
-                Log.Verbose("Looking up api key {key}", apiKey);
                 var user = await _apiKeys.GetUserForApiKey(apiKey);
 
                 if (user == null)

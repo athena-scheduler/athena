@@ -20,6 +20,9 @@ namespace Athena.Controllers.api
         [HttpPost]
         public async Task AddStudent([FromBody] Student student) => await _students.AddAsync(student);
 
+        [HttpGet]
+        public Student GetCurrentStudent() => (User?.ToAthenaUser()?.Student).NotFoundIfNull();
+        
         [HttpGet("{id}")]
         public async Task<Student> GetStudent(Guid id) =>
             (await _students.GetAsync(id)).NotFoundIfNull();

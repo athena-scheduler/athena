@@ -39,8 +39,13 @@ namespace Athena.Setup
             app.UseMiddleware<CustomErrorHandlerMiddleware>();
             app.UseStaticFiles();
             app.UseAuthentication();
+            
+            app.UseWhen(ctx => ctx.Request.Path.HasValue && ctx.Request.Path.StartsWithSegments("/api"), builder =>
+            {
+                builder.UseMiddleware<ApiKeyAuthenticationMiddleware>();
+            });
         
-            app.UseWhen(ctx => !ctx.Request.Path.HasValue || !ctx.Request.Path.StartsWithSegments("/api/v"), builder =>
+            app.UseWhen(ctx => !ctx.Request.Path.HasValue || !ctx.Request.Path.StartsWithSegments("/api"), builder =>
             {
                 builder.UseMiddleware<AthenaPrincipalMiddleware>();
             });

@@ -6,7 +6,12 @@ using AutoFixture.Xunit2;
 using Moq;
 using System;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Athena.Core.Models.Identity;
+using Athena.Models.Identity;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
 namespace Athena.Tests.Controllers.Api
@@ -23,6 +28,30 @@ namespace Athena.Tests.Controllers.Api
             await _controller.AddStudent(student);
 
             Students.Verify(c => c.AddAsync(student), Times.Once);
+        }
+
+        [Theory, AutoData]
+        public void GetCurrentStudent_Valid(ClaimsPrincipal principal, AthenaUser user)
+        {
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = new AthenaPrincipal(principal, user)
+                }
+            };
+
+            var result = _controller.GetCurrentStudent();
+            
+            Assert.Equal(user.Student, result);
+        }
+
+        [Theory, AutoData]
+        public void GetCurrentStudent_NotFoundIfNull()
+        {
+            var ex = Assert.Throws<ApiException>(() => _controller.GetCurrentStudent());
+            
+            Assert.Equal(HttpStatusCode.NotFound, ex.ResponseCode);
         }
 
         [Theory, AutoData]
