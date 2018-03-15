@@ -4,6 +4,7 @@ using Athena.Core.Models.Identity;
 using Athena.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using StackExchange.Profiling;
 
 namespace Athena.Middleware
 {
@@ -16,7 +17,10 @@ namespace Athena.Middleware
         
         public async Task InvokeAsync(HttpContext ctx, UserManager<AthenaUser> userManager)
         {
-            ctx.User = await ctx.User.TryGetAthenaPrincipal(userManager);
+            using (var step = MiniProfiler.Current.Step("GetAthenaPrincipal"))
+            {
+                ctx.User = await ctx.User.TryGetAthenaPrincipal(userManager);
+            }
             
             await _next(ctx);
         }

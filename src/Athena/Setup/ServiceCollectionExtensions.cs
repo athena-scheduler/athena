@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Claims;
 using Athena.Core.Models.Identity;
 using Athena.Core.Validation;
 using Athena.Data.Extensions;
@@ -27,6 +28,8 @@ namespace Athena.Setup
             {
                 options.RouteBasePath = "/_profile";
 
+                options.ResultsAuthorize = r => r.IsLocal() || r.HttpContext.User.IsInRole(AthenaRole.NormalizedAdminRoleName);
+                
                 options.UserIdProvider = r =>
                     r.HttpContext.User?.ToAthenaUser()?.Id.ToString() ?? Guid.NewGuid().ToString();
             });
