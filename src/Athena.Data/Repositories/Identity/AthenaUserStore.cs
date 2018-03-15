@@ -12,7 +12,7 @@ using Serilog;
 
 namespace Athena.Data.Repositories.Identity
 {
-    public partial class AthenaUserStore : IUserLoginStore<AthenaUser>, IUserEmailStore<AthenaUser>
+    public partial class AthenaUserStore : IUserLoginStore<AthenaUser>, IUserEmailStore<AthenaUser>, IUserRoleStore<AthenaUser>, IUserApiKeyStore
     {
         private readonly IDbConnection _db;
         private readonly ILogger _log = Log.ForContext<AthenaUserStore>();
@@ -70,9 +70,10 @@ namespace Athena.Data.Repositories.Identity
                         @normalizedUsername,
                         @email,
                         @normalizedEmail,
-                        @emailConfirmed
+                        @emailConfirmed,
+                        @apiKey
                     )",
-                    new { user.Id, user.UserName, user.NormalizedUserName, user.Email, user.NormalizedEmail, user.EmailConfirmed }
+                    new { user.Id, user.UserName, user.NormalizedUserName, user.Email, user.NormalizedEmail, user.EmailConfirmed, user.ApiKey }
                 );
 
                 return count == 1 ? IdentityResult.Success : IdentityResult.Failed();
@@ -96,9 +97,10 @@ namespace Athena.Data.Repositories.Identity
                                      normalized_username = @normalizedUsername,
                                      email = @email,
                                      normalized_email = @normalizedEmail,
-                                     email_confirmed = @emailConfirmed
+                                     email_confirmed = @emailConfirmed,
+                                     api_key = @apiKey
                     WHERE id = @id",
-                    new {user.UserName, user.NormalizedUserName, user.Email, user.NormalizedEmail, user.EmailConfirmed, user.Id}
+                    new {user.UserName, user.NormalizedUserName, user.Email, user.NormalizedEmail, user.EmailConfirmed, user.Id, user.ApiKey}
                 );
                 
                 return count == 1 ? IdentityResult.Success : IdentityResult.Failed();
@@ -138,6 +140,7 @@ namespace Athena.Data.Repositories.Identity
                        u.email,
                        u.normalized_email,
                        u.email_confirmed,
+                       u.api_key,
                        s.id,
                        s.name,
                        s.email
@@ -147,7 +150,7 @@ namespace Athena.Data.Repositories.Identity
                 MapUser,
                 new {id = new Guid(userId)}
             )).FirstOrDefault();
-
+        
         public async Task<AthenaUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken) =>
             (await _db.QueryAsync<AthenaUser, Student, AthenaUser>(@"
                 SELECT u.id,
@@ -156,6 +159,7 @@ namespace Athena.Data.Repositories.Identity
                        u.email,
                        u.normalized_email,
                        u.email_confirmed,
+                       u.api_key,
                        s.id,
                        s.name,
                        s.email

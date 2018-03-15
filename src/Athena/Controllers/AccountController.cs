@@ -14,7 +14,7 @@ using Serilog;
 namespace Athena.Controllers
 {
     [Route("[controller]")]
-    public class AccountController : Controller
+    public class AccountController : AthenaControllerBase
     {
         private readonly IStudentRepository _students;
         private readonly UserManager<AthenaUser> _userManager;

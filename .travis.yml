@@ -1,13 +1,19 @@
 language: csharp
+sudo: required
 mono: latest
 dotnet: 2.0.0
 dist: trusty
 
 services:
   - postgresql
+  - docker
 
 addons:
   postgresql: "9.6"
 
+cache:
+  directories:
+    - src/Athena/node_modules
+
 script:
-  - ./build.sh
+  - ./build/travis.sh

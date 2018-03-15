@@ -1,8 +1,8 @@
 #addin "nuget:?package=Cake.Docker&version=0.8.2"
 #addin "nuget:?package=Cake.NPM&version=0.12.1"
 #addin "nuget:?package=Cake.Codecov&version=0.3.0"
+
 #tool "nuget:?package=Codecov&version=1.0.3"
-#tool "nuget:?package=OpenCover&version=4.6.519"
 
 #l "./build/AddMigration.cake"
 #l "./build/util.cake"
@@ -12,9 +12,12 @@
 //////////////////////////////////////////////////////////////////////
 
 const string SOLUTION = "./Athena.sln";
+const string MINICOVER = "./minicover/minicover.csproj";
 
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
+var imageTag = Argument("imageTag", "latest");
+var coverageThreshold = Argument("coverageThreshold", 60.0f);
 
 //////////////////////////////////////////////////////////////////////
 // TASKS
@@ -65,6 +68,7 @@ Task("Restore::Nuget")
     .Does(() =>
 {
     DotNetCoreRestore(SOLUTION);
+    DotNetCoreRestore(MINICOVER);
 });
 
 Task("Restore")
@@ -88,24 +92,39 @@ Task("Build")
     .Does(() =>
 {
     DotNetCoreBuild(SOLUTION, new DotNetCoreBuildSettings {
-        Configuration = configuration
+        Configuration = configuration,
+        NoRestore = true
     });
 });
 
-Task("Test::Unit")
+Task("Test::Prepare")
     .IsDependentOn("Clean::Test")
     .IsDependentOn("Build")
+    .Does(() => 
+{
+    EnsureDirectoryExists("./_tests");
+
+    DotNetCoreTool(MINICOVER, "minicover", "instrument --workdir ../ --assemblies test/**/bin/**/*.dll --exclude-assemblies test/**/bin/**/*Test*.dll --sources src/**/*.cs");
+    DotNetCoreTool(MINICOVER, "minicover", "reset");
+});
+
+Task("Test::Unit")
+    .IsDependentOn("Test::Prepare")
     .Does(() =>
 {
     foreach(var project in GetFiles("./test/Unit/**/*.csproj"))
     {
-        TestProject(project);
+        DotNetCoreTest(project.FullPath, new DotNetCoreTestSettings
+        {
+            Configuration = configuration,
+            NoRestore = true,
+            NoBuild = true
+        });
     }
 });
 
 Task("Test::Integration")
-    .IsDependentOn("Clean::Test")
-    .IsDependentOn("Build")
+    .IsDependentOn("Test::Prepare")
     .Does(() => 
 {
     var container = Guid.Empty;
@@ -126,7 +145,12 @@ Task("Test::Integration")
     {
         foreach(var project in GetFiles("./test/Integration/**/*.csproj"))
         {
-            TestProject(project);
+            DotNetCoreTest(project.FullPath, new DotNetCoreTestSettings
+            {
+                Configuration = configuration,
+                NoRestore = true,
+                NoBuild = true
+            });
         }
     }
     finally
@@ -140,19 +164,46 @@ Task("Test::Integration")
 
 Task("Test")
     .IsDependentOn("Test::Unit")
-    .IsDependentOn("Test::Integration");
+    .IsDependentOn("Test::Integration")
+    .Does(() =>
+{
+    DotNetCoreTool(MINICOVER, "minicover", "uninstrument --workdir ../");
+
+    Information("Coverage Results: ");
+    AllowFailure(() => DotNetCoreTool(MINICOVER, "minicover", $"report --workdir ../ --threshold {coverageThreshold.ToString("0.00")}"));
+    AllowFailure(() => DotNetCoreTool(MINICOVER, "minicover", $"opencoverreport --workdir ../ --output ./_tests/coverage.xml --threshold {coverageThreshold.ToString("0.00")}"));
+});
 
 Task("Dist")
     .IsDependentOn("Clean::Dist")
     .IsDependentOn("Test")
     .Does(() => 
 {
+    EnsureDirectoryExists("./_dist");
+
+    DotNetCorePublish("./src/Athena/Athena.csproj", new DotNetCorePublishSettings
+    {
+        Configuration = configuration,
+        NoRestore = true,
+        OutputDirectory = MakeAbsolute(Directory("./_dist/Athena")).FullPath
+    });
 });
 
-Task("Docker")
+Task("Docker::Build")
     .IsDependentOn("Dist")
     .Does(() =>
 {
+    DockerBuild(new DockerImageBuildSettings
+    {
+        Tag = new []{$"athenascheduler/athena:{imageTag}"}
+    }, ".");
+});
+
+Task("Docker::Push")
+    .IsDependentOn("Docker::Build")
+    .Does(() =>
+{
+    DockerPush($"athenascheduler/athena:{imageTag}");
 });
 
 Task("CodeCov::Publish")
