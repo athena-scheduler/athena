@@ -25,10 +25,8 @@ namespace Athena.Middleware
                 ctx.Response.ContentType = "application/json";
                 
                 await ctx.Response.WriteAsync(JsonConvert.SerializeObject(
-                    e.ModelState.Keys.SelectMany(
-                        k => e.ModelState[k].Errors.Select(
-                            er => new {Key = k, Error = er.ErrorMessage}
-                        )
+                    e.ModelState.Keys.Select(
+                        k => new { Key = k, Error = e.ModelState[k].Errors.Select(er => er.ErrorMessage)}
                     ).ToDictionary(k => k.Key, v => v.Error)
                 ));
             }

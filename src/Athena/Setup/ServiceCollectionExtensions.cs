@@ -2,15 +2,12 @@
 using Athena.Core.Models.Identity;
 using Athena.Core.Validation;
 using Athena.Data.Extensions;
-using Athena.Middleware;
+using Athena.Handlers;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
 
 namespace Athena.Setup
 {
@@ -28,11 +25,8 @@ namespace Athena.Setup
             services.AddAthenaRepositoriesUsingPostgres()
                 .AddAthenaIdentityServices()
                 .AddAuthenticationProviders()
-                .AddMvc(options =>
-                {
-                    // Users must be logged in by default. Add [AllowAnonymous] to override
-                    options.Filters.Add(new AuthorizeFilter(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()));
-                })
+                .AddAuthorization()
+                .AddMvc()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<StudentValidator>());
             
             return services;
@@ -40,8 +34,11 @@ namespace Athena.Setup
 
         private static IServiceCollection AddAuthenticationProviders(this IServiceCollection services)
         {
-            var auth = services.AddAuthentication();
+            services.AddTransient<ApiKeyHandler>();
             
+            var auth = services.AddAuthentication();
+            auth.AddScheme<ApiKeyHandler._, ApiKeyHandler>(ApiKeyHandler.SCHEME, ApiKeyHandler.SCHEME, null);
+
             if (!auth.TryAddGoogle())
             {
                 Serilog.Log.Fatal($"Failed to add google authentication. Did you set {AUTH_GOOGLE_CLIENT_KEY} and {AUTH_GOOGLE_CLIENT_SECRET}?");

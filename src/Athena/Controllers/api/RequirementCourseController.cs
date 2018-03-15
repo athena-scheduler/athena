@@ -9,7 +9,7 @@ using Athena.Extensions;
 namespace Athena.Controllers.api
 {
     [Route("api/v1/course/{id}/requirements")]
-    public class RequirementCourseController : Controller
+    public class RequirementCourseController : AthenaApiController
     {
         private readonly IRequirementRepository _requirements;
         private readonly ICourseRepository _courses;

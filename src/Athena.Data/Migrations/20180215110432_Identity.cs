@@ -24,8 +24,8 @@ namespace Athena.Data.Migrations
 
                 var role = new AthenaRole
                 {
-                    Id = new Guid("f839e0f0-e29d-4c89-b406-51a52dbb08b5"),
-                    Name = "Administrator"
+                    Id = AthenaRole.AdminRole,
+                    Name = AthenaRole.AdminRoleName
                 };
 
                 role.NormalizedName = normalizer.Normalize(role.Name);

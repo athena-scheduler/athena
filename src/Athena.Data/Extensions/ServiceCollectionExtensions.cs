@@ -45,6 +45,8 @@ namespace Athena.Data.Extensions
         public static IServiceCollection AddAthenaIdentityServices(this IServiceCollection services)
         {
             services.AddTransient<IUserStore<AthenaUser>, AthenaUserStore>();
+            services.AddTransient<IUserRoleStore<AthenaUser>, AthenaUserStore>();
+            services.AddTransient<IUserApiKeyStore, AthenaUserStore>();
             services.AddTransient<IRoleStore<AthenaRole>, AthenaRoleStore>();
 
             return services;

@@ -1,4 +1,5 @@
 ﻿@using Athena.Core.Models.Identity
+@using Athena.Handlers
 @using Microsoft.AspNetCore.Identity
 @model Athena.Models.Login.LoginViewModel
 
@@ -19,7 +20,7 @@
 </div>
 <div class="row">
 @{
-    var providers = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+    var providers = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Where(a => a.HandlerType != typeof(ApiKeyHandler)).ToList();
     if (providers.Count == 0)
     {
         <div class="col s12">

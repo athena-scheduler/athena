@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Athena.Data.Repositories.Identity
 {
-    public partial class AthenaUserStore : IUserLoginStore<AthenaUser>, IUserEmailStore<AthenaUser>
+    public partial class AthenaUserStore : IUserLoginStore<AthenaUser>, IUserEmailStore<AthenaUser>, IUserRoleStore<AthenaUser>, IUserApiKeyStore
     {
         private class UserLoginInfoEx
         {
@@ -81,6 +81,7 @@ namespace Athena.Data.Repositories.Identity
                        u.email,
                        u.normalized_email,
                        u.email_confirmed,
+                       u.api_key,
                        s.id,
                        s.name,
                        s.email

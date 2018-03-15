@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Athena.Core.Models.Identity;
+using Athena.Handlers;
 using Athena.Models.Identity;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
