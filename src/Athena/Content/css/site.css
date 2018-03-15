@@ -46,6 +46,9 @@ html, body {
     height: 100%;
 }
 
+html {
+    overflow-y: scroll;
+}
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -113,6 +116,10 @@ main {
     background-color: #1a237e;
 }
 
+.btn:focus {
+    background-color: #1a237e;
+}
+
 .progress{
     height:2em;
     background-color:darkgrey;
@@ -175,4 +182,8 @@ user-tabs {
 }
 .addclass_dropdowns {
     margin-top: 4em;
+}
+.courseTable {
+    height:300px;
+    overflow-y:auto
 }
