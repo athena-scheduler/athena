@@ -17,7 +17,7 @@ namespace Athena.Handlers
         }
         
         public const string SCHEME = "api-key";
-        private const string ATHENA_API_HEADER_KEY = "X-ATHENA-API-KEY";
+        public const string ATHENA_API_HEADER_KEY = "X-ATHENA-API-KEY";
 
         private readonly IUserApiKeyStore _apiKeys;
 
