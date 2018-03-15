@@ -20,7 +20,7 @@ namespace Athena.Controllers.api
             _programs = programRepository ?? throw new ArgumentNullException(nameof(programRepository));
         }
         
-        [HttpGet("requirements")]
+        [HttpGet]
         public async Task<IEnumerable<Requirement>> GetRequirementsForProgramAsync(Guid id)
         {
             var program = (await _programs.GetAsync(id)).NotFoundIfNull();
@@ -28,7 +28,7 @@ namespace Athena.Controllers.api
             return await _requirements.GetRequirementsForProgramAsync(program);
         }
 
-        [HttpPost("{reqId}")]
+        [HttpPut("{reqId}")]
         public async Task AddRequirementAsync(Guid id, Guid reqId)
         {
             var program = (await _programs.GetAsync(id)).NotFoundIfNull();

@@ -28,7 +28,7 @@ namespace Athena.Controllers.api
             return await _offerings.GetOfferingsForCourseAsync(course);
         }
 
-        [HttpPost("{offeringId}")]
+        [HttpPut("{offeringId}")]
         public async Task AddOfferingAsync(Guid id, Guid offeringId)
         {
             var course = (await _courses.GetAsync(id)).NotFoundIfNull();
