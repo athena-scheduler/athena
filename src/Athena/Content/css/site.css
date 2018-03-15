@@ -183,7 +183,27 @@ user-tabs {
 .addclass_dropdowns {
     margin-top: 4em;
 }
-.courseTable {
-    height:300px;
-    overflow-y:auto
+
+.complete_course_btn{
+    margin-right:80px;
+}
+
+.courseTable tbody {
+    display: block;
+    height: 200px;
+    overflow: auto;
+}
+
+    .courseTable thead, .courseTable tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+.courseTable thead {
+    width: calc( 100% - 1em )
+}
+
+.courseTable table {
+    width: 100%;
 }
