@@ -28,7 +28,7 @@ namespace Athena.Setup
             {
                 options.RouteBasePath = "/_profile";
 
-                options.ResultsAuthorize = r => r.IsLocal() || r.HttpContext.User.IsInRole(AthenaRole.NormalizedAdminRoleName);
+                options.ResultsAuthorize = r => r.IsLocal();
                 
                 options.UserIdProvider = r =>
                     r.HttpContext.User?.ToAthenaUser()?.Id.ToString() ?? Guid.NewGuid().ToString();
