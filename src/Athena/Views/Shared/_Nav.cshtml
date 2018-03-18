@@ -9,21 +9,25 @@
             
             <ul class="right">
                 @if (Model == null)
-                {
-                    <li><a href="@Url.Action(nameof(AccountController.Login), "Account")">Sign Up / Log In<i class="material-icons right">person_outline</i></a></li>
-                }
-                else
-                {
-                    <li>
-                        <div class="chip">
-                            <img gravatar-email="@Model.Student.Email" gravatar-size="80" gravatar-default-image="retro" gravatar-force-https="true" gravatar-rating="@GravatarRating.PG" alt="" />
-                            @Model.Student.Name
-                        </div>
-                    </li>
-                    <li>
-                        <a href="@Url.Action(nameof(AccountController.Logout), "Account")" tooltip="Log Out"><i class="material-icons right">exit_to_app</i></a>
-                    </li>
-                }
+    {
+            <li><a href="@Url.Action(nameof(AccountController.Login), "Account")">Sign Up / Log In<i class="material-icons right">person_outline</i></a></li>
+}
+else
+{
+
+            <li>
+                <a class="chip" href="@Url.Action(nameof(HomeController.User_Page), "Home")" tooltip="Student Page">
+                    <img gravatar-email="@Model.Student.Email" gravatar-size="80" gravatar-default-image="retro" gravatar-force-https="true" gravatar-rating="@GravatarRating.PG" alt="" />
+                    @Model.Student.Name
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action(nameof(HomeController.Schedule_Page), "Home")" tooltip="Schedule"><i class="material-icons right">schedule</i></a>
+            </li>
+            <li>
+                <a href="@Url.Action(nameof(AccountController.Logout), "Account")" tooltip="Log Out"><i class="material-icons right">exit_to_app</i></a>
+            </li>
+}
             </ul>
             
         </div>

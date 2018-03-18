@@ -1,22 +1,16 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Schedule_Page";
 }
 <br /><br /><br />
 <h2>Schedule</h2>
 
-
-
-
 <div class="row">
     <div class="col s9">
-
         <div class="card">
             <div class="card-content cal-card-content">
                 <div id='calendar' class="user-tabs"></div>
             </div>
         </div>
-
         <div class="row">
             <a href="User_Page" class="btn col s2 offset-s1">Submit</a>
             <a href="User_Page" class="btn col s2 offset-s1">Cancel</a>
@@ -37,6 +31,7 @@
         </div>
     </div>
 
+
     <div class="col s3">
         <div id="first">
             <div class="row">
@@ -46,14 +41,12 @@
                 <div class="input-field">
                     <input placeholder="Keywords" id="Keywords" type="text" class="validate">
                 </div>
-
                 <ul class="classUnordered">
                     <li>
                         <div class="card courseCard">
                             <span class="card-title courseCardTitle">Math</span>
                             <a class="btn-floating halfway-fab waves-effect waves-light blue darken-4" onclick="changesymbol(this, this.id, 'Math', '12:30', '14:30', [1, 3, 5])" id="1520"><i class="material-icons">add</i></a>
                             <div class="card-content courseCardContent">
-                                <!--<p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>-->
                                 <p>Math</p><p>1520</p><p>12:30-2:30</p><p>Mon,Wed,Fri</p>
                             </div>
                         </div>
@@ -63,7 +56,6 @@
                             <span class="card-title courseCardTitle">Physics</span>
                             <a class="btn-floating halfway-fab waves-effect waves-light blue darken-4" onclick="changesymbol(this, this.id, 'Physics', '8:00', '10:00', [1, 3, 5])" id="1234"><i class="material-icons">add</i></a>
                             <div class="card-content courseCardContent">
-                                <!--<p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>-->
                                 <p>Physics</p><p>1234</p><p>8:00-10:00</p><p>Mon,Wed,Fri</p>
                             </div>
                         </div>
@@ -93,7 +85,6 @@
                             <span class="card-title courseCardTitle">Math</span>
                             <a class="btn-floating halfway-fab waves-effect waves-light blue darken-4" onclick="changesymbol(this, this.id, 'Math', '12:30', '14:30', [1, 3, 5])" id="9999"><i class="material-icons">add</i></a>
                             <div class="card-content courseCardContent">
-                                <!--<p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>-->
                                 <p>Math</p><p>1520</p><p>12:30-2:30</p><p>Mon,Wed,Fri</p>
                             </div>
                         </div>
@@ -103,7 +94,6 @@
                             <span class="card-title courseCardTitle">Physics</span>
                             <a class="btn-floating halfway-fab waves-effect waves-light blue darken-4" onclick="changesymbol(this, this.id, 'Physics', '8:00', '10:00', [1, 3, 5])" id="8888"><i class="material-icons">add</i></a>
                             <div class="card-content courseCardContent">
-                                <!--<p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>-->
                                 <p>Physics</p><p>1234</p><p>8:00-10:00</p><p>Mon,Wed,Fri</p>
                             </div>
                         </div>
@@ -119,8 +109,6 @@
                     </li>
                 </ul>
             </div>
-
-
         </div>
     </div>
 </div>
@@ -134,14 +122,7 @@
         }
     </script>
 
-    <script>
-        $(document).ready(function () {
-            $('select').material_select();
-        });
-    </script>
-
     <script type="text/javascript">
-
         function changesymbol(elmnt, crsID, crsTitle, startTime, endTime, days) {
             var event = { id: crsID, title: crsTitle, start: startTime, end: endTime, dow: days };
             $('#calendar').fullCalendar('renderEvent', event, false);
@@ -162,23 +143,6 @@
             arrowDclass: 'arrow-d',
             animate: true
         });
-    </script>
-
-
-
-    <script type="text/javascript">
-        var names = [];
-
-        function displayUserName() {
-            var newterm = false;
-            var theName = document.getElementById("enter").value;
-            if (theName == "" || theName.length == 0) {
-                return false; //stop the function since the value is empty.
-            }
-            names.push(theName);
-
-            document.getElementById("name").children[0].innerHTML += "<li>" + names[names.length - 1] + "</li>";
-        }
     </script>
 
     <script type="text/javascript">
@@ -206,19 +170,13 @@
                     if (length == 12) eventElement.find(".fc-time").children().html(test + "<span style=\"color:red\">&emsp;&emsp;X</span>");
                     else if (length == 11) eventElement.find(".fc-time").children().html(test + "<span style=\"color:red\">&emsp;&emsp;&nbsp;X</span>");
                     else if (length == 13) eventElement.find(".fc-time").children().html(test + "<span style=\"color:red\">&emsp;&emsp;&emsp;&nbsp;X</span>");
-
                 }
             });
             $('#calendar').fullCalendar('next');
-        });
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
             $('.modal').modal();
         });
     </script>
+
 }
 
 
