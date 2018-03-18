@@ -8,6 +8,7 @@ using Athena.Handlers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using StackExchange.Profiling;
 
 namespace Athena.Middleware
 {
@@ -20,17 +21,20 @@ namespace Athena.Middleware
 
         public async Task Invoke(HttpContext ctx, UserManager<AthenaUser> userManager)
         {
-            var result = await ctx.AuthenticateAsync(
-                ctx.Request.Headers.ContainsKey(ApiKeyHandler.ATHENA_API_HEADER_KEY) ? ApiKeyHandler.SCHEME : null
-            );
-                             
-            if (result.Succeeded)
+            using (var step = MiniProfiler.Current.Step("ApiAuthentication"))
             {
-                ctx.User = await result.Principal.TryGetAthenaPrincipal(userManager);
-            }
-            else
-            {
-                throw new ApiException(HttpStatusCode.Forbidden, result.Failure?.Message ?? "Not Authenticated");
+                var result = await ctx.AuthenticateAsync(
+                    ctx.Request.Headers.ContainsKey(ApiKeyHandler.ATHENA_API_HEADER_KEY) ? ApiKeyHandler.SCHEME : null
+                );
+                                 
+                if (result.Succeeded)
+                {
+                    ctx.User = await result.Principal.TryGetAthenaPrincipal(userManager);
+                }
+                else
+                {
+                    throw new ApiException(HttpStatusCode.Forbidden, result.Failure?.Message ?? "Not Authenticated");
+                }
             }
 
             await _next(ctx);

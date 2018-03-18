@@ -6,6 +6,7 @@ namespace Athena.Core.Models.Identity
     {
         public static readonly Guid AdminRole = new Guid("f839e0f0-e29d-4c89-b406-51a52dbb08b5");
         public const string AdminRoleName = "Administrator";
+        public const string NormalizedAdminRoleName = "ADMINISTRATOR";
         
         public Guid Id { get; set; }
         public string Name { get; set; }
