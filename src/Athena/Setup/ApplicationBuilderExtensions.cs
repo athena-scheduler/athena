@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Serilog;
 
 namespace Athena.Setup
@@ -38,11 +39,13 @@ namespace Athena.Setup
             app.UseMiddleware<SerilogHttpMiddleware>();
             app.UseMiddleware<CustomErrorHandlerMiddleware>();
             app.UseStaticFiles();
+
+            app.UseMiniProfiler();
             app.UseAuthentication();
             
             app.UseWhen(ctx => ctx.Request.Path.HasValue && ctx.Request.Path.StartsWithSegments("/api"), builder =>
             {
-                builder.UseMiddleware<ApiKeyAuthenticationMiddleware>();
+                builder.UseMiddleware<ApiAuthenticationMiddleware>();
             });
         
             app.UseWhen(ctx => !ctx.Request.Path.HasValue || !ctx.Request.Path.StartsWithSegments("/api"), builder =>
@@ -57,7 +60,7 @@ namespace Athena.Setup
                 using (var scope = app.ApplicationServices.CreateScope())
                 using (var userRoles = scope.ServiceProvider.GetRequiredService<IUserRoleStore<AthenaUser>>())
                 {
-                    if ((await userRoles.GetUsersInRoleAsync(AthenaRole.AdminRoleName.ToUpperInvariant(), CancellationToken.None)).Count == 0)
+                    if ((await userRoles.GetUsersInRoleAsync(AthenaRole.NormalizedAdminRoleName, CancellationToken.None)).Count == 0)
                     {
                         var id = Guid.NewGuid();
                         var key = Environment.GetEnvironmentVariable("ATHENA_ADMIN_API_KEY") ?? Guid.NewGuid().ToString();
@@ -84,7 +87,7 @@ namespace Athena.Setup
                         await students.AddAsync(user.Student);
 
                         await userRoles.CreateAsync(user, CancellationToken.None);
-                        await userRoles.AddToRoleAsync(user, AthenaRole.AdminRoleName.ToUpperInvariant(), CancellationToken.None);
+                        await userRoles.AddToRoleAsync(user, AthenaRole.NormalizedAdminRoleName, CancellationToken.None);
                         
                         Log.Information("Created default admin API Key {key}", key);
                     }

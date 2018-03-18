@@ -20,7 +20,7 @@ namespace Athena.Controllers.api
             _meetings = meetingsRepository ?? throw new ArgumentNullException(nameof(meetingsRepository));
         }
 
-        [HttpPost("{meetingId}")]
+        [HttpPut("{meetingId}")]
         public async Task AddMeetingAsync(Guid offeringId, Guid meetingId)
         {
             var offering = (await _offerings.GetAsync(offeringId)).NotFoundIfNull();

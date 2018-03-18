@@ -7,6 +7,8 @@ using Athena.Data.Repositories.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
+using StackExchange.Profiling;
+using StackExchange.Profiling.Data;
 
 namespace Athena.Data.Extensions
 {
@@ -28,7 +30,7 @@ namespace Athena.Data.Extensions
                 throw new ArgumentException("Connection string required", nameof(ConnectionString));
             }
             
-            services.AddScoped<IDbConnection>(s => new NpgsqlConnection(ConnectionString));
+            services.AddScoped<IDbConnection>(s => new ProfiledDbConnection(new NpgsqlConnection(ConnectionString), MiniProfiler.Current));
             
             services.AddScoped<ICampusRepository, CampusRepository>();
             services.AddScoped<ICourseRepository, CourseRepository>();

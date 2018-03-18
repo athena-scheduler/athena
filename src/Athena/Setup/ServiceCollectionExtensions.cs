@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Security.Claims;
 using Athena.Core.Models.Identity;
 using Athena.Core.Validation;
 using Athena.Data.Extensions;
 using Athena.Handlers;
+using Athena.Extensions;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -22,6 +24,16 @@ namespace Athena.Setup
             services.AddIdentity<AthenaUser, AthenaRole>()
                 .AddDefaultTokenProviders();
 
+            services.AddMiniProfiler(options =>
+            {
+                options.RouteBasePath = "/_profile";
+
+                options.ResultsAuthorize = r => r.IsLocal();
+                
+                options.UserIdProvider = r =>
+                    r.HttpContext.User?.ToAthenaUser()?.Id.ToString() ?? Guid.NewGuid().ToString();
+            });
+            
             services.AddAthenaRepositoriesUsingPostgres()
                 .AddAthenaIdentityServices()
                 .AddAuthenticationProviders()

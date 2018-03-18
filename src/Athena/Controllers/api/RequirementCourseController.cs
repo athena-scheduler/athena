@@ -28,7 +28,7 @@ namespace Athena.Controllers.api
             return await _requirements.GetPrereqsForCourseAsync(course);
         }
 
-        [HttpPost("prereq/{reqId}")]
+        [HttpPut("prereq/{reqId}")]
         public async Task AddPrerequisiteAsync(Guid id, Guid reqId)
         {
             var course = (await _courses.GetAsync(id)).NotFoundIfNull();
@@ -54,7 +54,7 @@ namespace Athena.Controllers.api
             return await _requirements.GetConcurrentPrereqsAsync(course);
         }
 
-        [HttpPost("prereq/concurrent/{reqId}")]
+        [HttpPut("prereq/concurrent/{reqId}")]
         public async Task AddConcurrentPrerequisiteAsync(Guid id, Guid reqId)
         {
             var course = (await _courses.GetAsync(id)).NotFoundIfNull();
@@ -80,7 +80,7 @@ namespace Athena.Controllers.api
             return await _requirements.GetRequirementsCourseSatisfiesAsync(course);
         }
 
-        [HttpPost("satisfies/{reqId}")]
+        [HttpPut("satisfies/{reqId}")]
         public async Task AddSatisfiedRequirementAsync(Guid id, Guid reqId)
         {
             var course = (await _courses.GetAsync(id)).NotFoundIfNull();
