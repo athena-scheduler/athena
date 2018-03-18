@@ -12,8 +12,8 @@
             </div>
         </div>
         <div class="row">
-            <a href="User_Page" class="btn col s2 offset-s1">Submit</a>
-            <a href="User_Page" class="btn col s2 offset-s1">Cancel</a>
+            <a href="@Url.Action(nameof(HomeController.User_Page), "Home")" class="btn col s2 offset-s1">Submit</a>
+            <a href="@Url.Action(nameof(HomeController.User_Page), "Home")" class="btn col s2 offset-s1">Cancel</a>
             <!-- Modal Trigger -->
             <a class="btn modal-trigger col s4 offset-s1" href="#modal1">Mark Classes as Complete</a>
             <!-- Modal Structure -->
@@ -23,7 +23,7 @@
                     <p>Are you sure you would like to mark all of the currently scheduled courses as complete?</p>
                 </div>
                 <div class="modal-footer">
-                    <a href="User_Page" class="modal-action modal-close waves-effect waves-blue btn-flat" onclick="completeClasses()">Agree</a>
+                    <a href="@Url.Action(nameof(HomeController.User_Page), "Home")" class="modal-action modal-close waves-effect waves-blue btn-flat" onclick="completeClasses()">Agree</a>
                     <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Cancel</a>
                 </div>
             </div>

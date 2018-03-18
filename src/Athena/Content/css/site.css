@@ -138,7 +138,7 @@ main {
     background-color:lightgray;
 }
 
-user-tabs {
+.user-tabs {
     padding-bottom:1.5em
 }
 
@@ -194,11 +194,11 @@ user-tabs {
     overflow: auto;
 }
 
-    .courseTable thead, .courseTable tbody tr {
+.courseTable thead, .courseTable tbody tr {
         display: table;
         width: 100%;
         table-layout: fixed;
-    }
+}
 
 .courseTable thead {
     width: calc( 100% - 1em )
