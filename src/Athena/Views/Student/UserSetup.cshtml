@@ -1,0 +1,216 @@
+﻿@model string
+
+@{
+    ViewBag.Title = "Welcome";
+    Layout = "_Layout";
+
+    var student = User.ToAthenaUser().Student;
+}
+
+<h2>Tell us about yourself!</h2>
+<p class="flow-text">
+    Before you can schedule for classes, we need to know what institutions you
+    attend and what programs you're enrolled with.
+</p>
+
+<div class="row">
+    <div class="col s12">
+        <div class="card grey darken-3 white-text">
+            <div class="card-content">
+                <span class="card-title">What institutions do you attend?<i class="medium material-icons right">school</i></span>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">search</i>
+                        <input type="text" class="flow-text" id="institution-search"/>
+                        <label for="institution-search">Search</label>
+                    </div>
+                </div>
+                <div class="row" id="institution-results">
+                    <div class="col s12">
+                        <div class="progress"><div class="indeterminate"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col s12">
+        <div class="card grey darken-3 white-text">
+            <div class="card-content">
+                <span class="card-title">What programs are you enrolled in?<i class="medium material-icons right">book</i></span>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">search</i>
+                        <input type="text" class="flow-text" id="program-search"/>
+                        <label for="institution-search">Search</label>
+                    </div>
+                </div>
+                <div class="row" id="program-results">
+                    <div class="col s12">
+                        <div class="progress"><div class="indeterminate"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+        let institutionSearchTimeout = null;
+        let programSearchTimeout = null;
+
+        function makeCard(id, title, description) {
+            const wrapper = $(`
+                    <div class="col xl4 s6">
+                        <div class="card grey darken-2 white-text">
+                            <div class="card-content">
+                                <span class="card-title"></span>
+                                <p class="truncate"></p>
+                            </div>
+                            <div class="card-action">
+                                <a href="#" class="unenroll">Unenroll</a>
+                                <a href="#" class="enroll">Enroll</a>
+                            </div>
+                        </div>
+                    </div>
+                `);
+
+            wrapper.find('.card').parent().prop('id', id);
+            wrapper.find('.card-title').text(title);
+            wrapper.find('p').text(description);
+
+            return wrapper;
+        }
+
+        function setInstitutionResults(data) {
+            const results = $("#institution-results");
+
+            results.html("");
+            for (let i of data) {
+                const card = makeCard(i.id, i.name, i.description);
+
+                card.find('.enroll').click(function() {
+                    $.ajax({
+                        url: apiRoot + '/student/@(student.Id.ToString())/institutions/' + i.id,
+                        type: 'PUT'
+                    });
+                });
+                card.find('.unenroll').click(function() {
+                    $.ajax({
+                        url: apiRoot + '/student/@(student.Id.ToString())/institutions/' + i.id,
+                        type: 'DELETE'
+                    });
+                });
+
+                results.append(card);
+            }
+        }
+
+        function setProgramResults(data) {
+            const results = $("#program-results");
+
+            results.html("");
+            for (let p of data) {
+                const card = makeCard(p.id, p.name, p.description);
+
+                card.find('.enroll').click(function() {
+                    $.ajax({
+                        url: apiRoot + '/student/@(student.Id.ToString())/programs/' + p.id,
+                        type: 'PUT'
+                    });
+                });
+                card.find('.unenroll').click(function() {
+                    $.ajax({
+                        url: apiRoot + '/student/@(student.Id.ToString())/programs/' + p.id,
+                        type: 'DELETE'
+                    });
+                });
+
+                results.append(card);
+            }
+        }
+
+        $(function() {
+            $.get(apiRoot + "/student/@(student.Id.ToString())/institutions")
+                .done(function(data) {
+                    setInstitutionResults(data);
+                })
+                .fail(function(err) {
+                    setInstitutionResults([]);
+                    console.error("Failed to get institutions");
+                });
+
+            $.get(apiRoot + "/student/@(student.Id.ToString())/programs")
+                .done(function(data) {
+                    setProgramResults(data);
+                })
+                .fail(function(err) {
+                    setProgramResults([]);
+                    console.error("Failed to get institutions");
+                });
+
+            $("#institution-search").on("change paste keyup",
+                function() {
+                    const q = $(this).val();
+
+                    if (institutionSearchTimeout) {
+                        clearTimeout(institutionSearchTimeout);
+                    }
+
+                    institutionSearchTimeout = setTimeout(
+                        function() {
+                            if (q.length < 3) {
+                                setInstitutionResults([]);
+                                return;
+                            }
+
+                            $.get({
+                                    url: apiRoot + "/institution",
+                                    data: { q: q }
+                                }).done(setInstitutionResults)
+                                .fail(function(data) {
+                                    setInstitutionResults([]);
+                                    console.error("Failed to search institutions");
+                                });
+                        },
+                        250
+                    );
+                }
+            );
+
+            $("#program-search").on("change paste keyup",
+                function() {
+                    const q = $(this).val();
+
+                    if (programSearchTimeout) {
+                        clearTimeout(programSearchTimeout);
+                    }
+
+                    programSearchTimeout = setTimeout(
+                        function() {
+                            if (q.length < 3) {
+                                setProgramResults([]);
+                                return;
+                            }
+
+                            $.get({
+                                    url: apiRoot + "/program",
+                                    data: { q: q }
+                                }).done(setProgramResults)
+                                .fail(function(data) {
+                                    setProgramResults([]);
+                                    console.error("Failed to search programs");
+                                });
+                        },
+                        250
+                    );
+                }
+            );
+        });
+    </script>
+}

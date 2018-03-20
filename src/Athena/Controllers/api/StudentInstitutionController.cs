@@ -29,19 +29,19 @@ namespace Athena.Controllers.api
         }
 
         [HttpPut("{institutionId}")]
-        public async Task EnrollStudentAsync(Guid institutionId, Guid studentId)
+        public async Task EnrollStudentAsync(Guid institutionId, Guid id)
         {
             var institution = (await _institutions.GetAsync(institutionId)).NotFoundIfNull();
-            var student = (await _students.GetAsync(studentId)).NotFoundIfNull();
+            var student = (await _students.GetAsync(id)).NotFoundIfNull();
 
             await _institutions.EnrollStudentAsync(institution, student);
         }
 
         [HttpDelete("{institutionId}")]
-        public async Task UnenrollStudentAsync(Guid institutionId, Guid studentId)
+        public async Task UnenrollStudentAsync(Guid institutionId, Guid id)
         {
             var institution = (await _institutions.GetAsync(institutionId)).NotFoundIfNull();
-            var student = (await _students.GetAsync(studentId)).NotFoundIfNull();
+            var student = (await _students.GetAsync(id)).NotFoundIfNull();
 
             await _institutions.UnenrollStudentAsync(institution, student);
         }

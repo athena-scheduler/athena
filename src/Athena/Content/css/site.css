@@ -114,11 +114,6 @@ main {
     background-color: #1a237e;
 }
 
-.progress{
-    height:2em;
-    background-color:darkgrey;
-}
-
 .determinate {
     color: white;
     background-color: #0d47a1;

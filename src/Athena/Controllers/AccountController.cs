@@ -155,7 +155,7 @@ namespace Athena.Controllers
                         
                         _log.Information("{user} created an account via {provider}", info.Principal.Identity.Name, info.ProviderDisplayName);
 
-                        return RedirectToLocal(returnUrl);
+                        return RedirectToAction(nameof(StudentController.UserSetup), "Student", new {returnUrl});
                     }
                 }
 
@@ -166,18 +166,6 @@ namespace Athena.Controllers
             }
 
             return View("Create", model);
-        }
-
-        private IActionResult RedirectToLocal(string returnUrl)
-        {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction(nameof(HomeController.Home), "Home");
-            }
         }
     }
 }

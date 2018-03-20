@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Athena.Core.Models
+@{
     ViewData["Title"] = "Add Classes";
 }
 
@@ -91,7 +92,7 @@
     </div>
     <br />
     <div class="row">
-        <a href="@Url.Action(nameof(HomeController.User_Page), "Home")" class="btn col s6 offset-s3">Finish</a>
+        <a href="@Url.Action(nameof(StudentController.Profile), "Student")" class="btn col s6 offset-s3">Finish</a>
     </div>
 </div>
 
