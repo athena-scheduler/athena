@@ -5,6 +5,8 @@ using Athena.Tests.Extensions;
 using AutoFixture.Xunit2;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
@@ -23,6 +25,27 @@ namespace Athena.Tests.Controllers.Api
             await _controller.AddInstitution(institution);
 
             Institutions.Verify(c => c.AddAsync(institution), Times.Once);
+        }
+
+        [Theory, AutoData]
+        public async Task Search_Valid(string q, List<Institution> institutions)
+        {
+            Institutions.Setup(i => i.SearchAsync(It.IsAny<string>())).ReturnsAsync(institutions);
+
+            var result = (await _controller.Search(q)).ToList();
+            
+            Assert.Equal(institutions.Count, result.Count);
+            Assert.All(institutions, i => Assert.Contains(i, result));
+            
+            Institutions.Verify(i => i.SearchAsync(q), Times.Once);
+        }
+
+        [Fact]
+        public async Task Search_BadRequestForShortQuery()
+        {
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.Search("a"));
+            
+            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
         }
 
         [Theory, AutoData]
