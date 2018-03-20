@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Athena.Core.Repositories;
@@ -19,6 +20,17 @@ namespace Athena.Controllers.api
 
         [HttpPost]
         public async Task AddInstitution([FromBody] Institution institution) => await _institutions.AddAsync(institution);
+
+        [HttpGet]
+        public async Task<IEnumerable<Institution>> Search(string q)
+        {
+            if ((q?.Length ?? 0) < 3)
+            {
+                throw new ApiException(HttpStatusCode.BadRequest, "Search term must be at least 3 characters long");
+            }
+            
+            return await _institutions.SearchAsync(q);
+        }
 
         [HttpGet("{id}")]
         public async Task<Institution> GetInstitution(Guid id) =>
