@@ -53,6 +53,35 @@ namespace Athena.Data.Tests.Repositories
             await _sut.DeleteAsync(institution);
             Assert.Null(await _sut.GetAsync(institution.Id));
         }
+        
+        [Theory, AutoData]
+        public async Task Search_Empty(List<Institution> institutions)
+        {
+            foreach (var p in institutions)
+            {
+                await _sut.AddAsync(p);
+            }
+
+            var result = await _sut.SearchAsync("bAr");
+
+            Assert.Empty(result);
+        }
+        
+        [Theory, AutoData]
+        public async Task Search_Valid(List<Institution> institutions, Institution target)
+        {
+            target.Name = "foo bar baz";
+
+            foreach (var p in institutions.Union(new []{target}))
+            {
+                await _sut.AddAsync(p);
+            }
+
+            var result = (await _sut.SearchAsync("bAr")).ToList();
+
+            Assert.Single(result);
+            Assert.Equal(target, result[0]);
+        }
 
         [Theory, AutoData]
         public async Task TracksCampuses(Campus campus, List<Institution> institutions)
