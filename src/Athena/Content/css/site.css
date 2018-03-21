@@ -207,3 +207,11 @@ main {
 .courseTable table {
     width: 100%;
 }
+
+.navChip {
+    background-color: lightgray;
+}
+
+.navChip:hover {
+    background-color: #448aff;
+}
