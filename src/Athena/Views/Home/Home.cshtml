@@ -2,69 +2,13 @@
     ViewData["Title"] = "Home";
 }
 
-@model Athena.Core.Models.Identity.AthenaUser
+<div style="padding-top:5em">
+    <h1>
+        Welcome to the Athena Scheduling Assitant!
+    </h1>
+    <p>
+        This tool was designed by students for students, to allow for a more streamlined approach to allow students to schedule their course work for each semester and allow them to track thier progression through their degree.
+    </p>
+</div>
 
-
-@if (Model == null)
-{
-    <div class="notLoggedIn" style="padding-top:5em">
-        <h1>
-            Welcome to the Athena Scheduling Assitant!
-        </h1>
-        <p>
-            This tool was designed by students for students, to allow for a more streamlined approach to allow students to schedule their course work for each semester and allow them to track thier progression through their degree.
-        </p>
-    </div>
-}
-else
-{
-    <div class="loggedIn">
-        <p>it worked</p>
-    </div>
-}
-
-    <div class="nicecolor">howdy</div>
-
-@section scripts {
-    <script type="text/javascript">
-            $(document).ready(function () {
-                // page is now ready, initialize the calendar...
-                $('#calendar').fullCalendar({
-                    // put your options and callbacks here
-                    defaultView: "agendaWeek",
-                    minTime: "07:00:00",
-                    maxTime: "22:00:00",
-                    allDaySlot: false,
-                    slotDuration: "1:00",
-                    slotWidth: 2,
-                    height: "auto",
-                    header: false,
-                    columnFormat: 'ddd',
-                });
-                $('#calendar').fullCalendar('next');
-                $('.modal').modal();
-                $('ul.tabs').tabs({
-                    swipeable: true,
-                    responsiveThreshold: 1920
-                });
-
-
-                var auth2 = gapi.auth2.init();
-
-                auth2.then(function () {
-                    if (!auth2.isSignedIn.get()) {
-                        document.getElementById(loggedIn).style.visibility = 'hidden';
-                        document.getElementById(notLoggedIn).style.visibility = 'visible';
-                    }
-                    else {
-                        document.getElementById(notLoggedIn).style.visibility = 'hidden';
-                        document.getElementById(loggedIn).style.visibility = 'visible';
-                    }
-                });
-                if (Model == null) {
-                }
-                else {
-                }
-            });
-    </script>
-    }
+<div class="table-responsive"></div>

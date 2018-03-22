@@ -212,6 +212,33 @@ main {
     background-color: lightgray;
 }
 
-.navChip:hover {
-    background-color: #448aff;
+    .navChip:hover {
+        color: white;
+        background-color: #2962ff;
+    }
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 70px;
+        height: 35px;
+        line-height: 39px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        top: 100%;
+        left: 0px;
+        right: 0px;
+    }
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }
