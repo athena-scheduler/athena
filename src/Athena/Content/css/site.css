@@ -42,10 +42,6 @@
     height: 550px;
 }
 
-html, body {
-    height: 100%;
-}
-
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
