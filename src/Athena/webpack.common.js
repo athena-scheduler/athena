@@ -6,10 +6,15 @@ const CopyPlugin = require("copy-webpack-plugin");
 const wwwroot = path.resolve(__dirname, "wwwroot");
 
 module.exports = {
-    entry: "./bundle.js",
+    entry: {
+        athena: './bundle.js',
+        studentSetup: './Content/js/studentSetup.js'
+    },
     output: {
-        filename: "athena.js",
-        path: wwwroot
+        filename: "[name].js",
+        path: wwwroot,
+        libraryTarget: 'var',
+        library: ['athena', '[name]']
     },
     module: {
         rules: [
