@@ -37,18 +37,11 @@
     overflow-y: hidden;
 }
 
-    .tabs-content.carousel .carousel-item {
-        width: 100%;
-        height: 550px;
-    }
-
-html, body {
-    height: 100%;
+.tabs-content.carousel .carousel-item {
+    width: 100%;
+    height: 550px;
 }
 
-html {
-    overflow-y: scroll;
-}
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -97,7 +90,8 @@ main {
 
 #calendar {
     margin: 0 auto;
-    background-color:white
+    background-color:white;
+    padding:0px;  
 }
 
 .overlay {
