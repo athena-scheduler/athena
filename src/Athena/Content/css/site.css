@@ -207,3 +207,36 @@ main {
 .courseTable table {
     width: 100%;
 }
+
+nav .chip {
+    background-color: lightgray;
+}
+
+nav .chip:hover {
+    color: white;
+    background-color: #2962ff;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    line-height: 39px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 110%;
+    left: 0px;
+    right: 0px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
