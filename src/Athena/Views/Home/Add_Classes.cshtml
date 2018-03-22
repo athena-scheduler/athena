@@ -86,7 +86,17 @@
     </div>
 </div>
 
+
+
 @section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("body").css("overflow-y", "scroll");
+    });
+    </script>
+
+
+
     <script type="text/javascript">
         $('#first').collapsible('accordion-open', {
             /* Speeds for opening */
@@ -100,7 +110,7 @@
             arrowDclass: 'arrow-d',
             animate: true
         });
-    </script>
+</script>
 
     <script type="text/javascript">
         var names = [];
