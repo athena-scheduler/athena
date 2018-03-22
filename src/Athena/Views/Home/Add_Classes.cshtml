@@ -2,6 +2,15 @@
     ViewData["Title"] = "Add Classes";
 }
 
+@section styles
+{
+    <style>
+        body {
+            overflow-y: scroll;
+        }
+    </style>
+}
+
 <div class="addclass_dropdowns">
     <div id="first">
         <div class="row">
@@ -86,17 +95,7 @@
     </div>
 </div>
 
-
-
 @section scripts {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("body").css("overflow-y", "scroll");
-    });
-    </script>
-
-
-
     <script type="text/javascript">
         $('#first').collapsible('accordion-open', {
             /* Speeds for opening */
