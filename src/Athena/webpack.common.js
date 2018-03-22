@@ -38,6 +38,6 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin([wwwroot]),
         new CopyPlugin([{context: "./Content/images", from: "**/*", to: path.join(wwwroot, "images")}]),
-        new ExtractTextPlugin("athena.css"),
+        new ExtractTextPlugin({ filename: '[name].css', allChunks: true }),
     ]
 };
