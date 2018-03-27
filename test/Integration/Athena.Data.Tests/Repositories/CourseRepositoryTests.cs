@@ -111,6 +111,20 @@ namespace Athena.Data.Tests.Repositories
         }
 
         [Theory, AutoData]
+        public async Task Requirement_ThrowsForDuplicate(Requirement req, Course course)
+        {
+            var requirementRepository = new RequirementRepository(_db);
+
+            await _institutions.AddAsync(course.Institution);
+            await _sut.AddAsync(course);
+            await requirementRepository.AddAsync(req);
+
+            await _sut.AddSatisfiedRequirementAsync(course, req);
+            await Assert.ThrowsAsync<DuplicateObjectException>(async () =>
+                await _sut.AddSatisfiedRequirementAsync(course, req));
+        }
+
+        [Theory, AutoData]
         public async Task TracksPrereqs(List<Requirement> prereqs, Course course)
         {
             var requirementRepository = new RequirementRepository(_db);
@@ -135,6 +149,20 @@ namespace Athena.Data.Tests.Repositories
             }
             
             Assert.Empty(await requirementRepository.GetPrereqsForCourseAsync(course));
+        }
+
+        [Theory, AutoData]
+        public async Task Prereq_ThrowsForDuplicate(Requirement prereq, Course course)
+        {
+            var requirementRepository = new RequirementRepository(_db);
+
+            await _institutions.AddAsync(course.Institution);
+            await _sut.AddAsync(course);
+            await requirementRepository.AddAsync(prereq);
+
+            await _sut.AddPrerequisiteAsync(course, prereq);
+            await Assert.ThrowsAsync<DuplicateObjectException>(async () =>
+                await _sut.AddPrerequisiteAsync(course, prereq));
         }
         
         [Theory, AutoData]
@@ -165,6 +193,20 @@ namespace Athena.Data.Tests.Repositories
         }
 
         [Theory, AutoData]
+        public async Task ConcurrentPrereq_ThrowsForDuplicate(Requirement prereq, Course course)
+        {
+            var requirementRepository = new RequirementRepository(_db);
+
+            await _institutions.AddAsync(course.Institution);
+            await _sut.AddAsync(course);
+            await requirementRepository.AddAsync(prereq);
+
+            await _sut.AddConcurrentPrerequisiteAsync(course, prereq);
+            await Assert.ThrowsAsync<DuplicateObjectException>(async () =>
+                await _sut.AddConcurrentPrerequisiteAsync(course, prereq));
+        }
+
+        [Theory, AutoData]
         public async Task TracksCompletedCoursesForStudent(List<Course> courses, Student student)
         {
             var studentRepo = new StudentRepository(_db);
@@ -188,6 +230,19 @@ namespace Athena.Data.Tests.Repositories
             }
             
             Assert.Empty(await _sut.GetCompletedCoursesForStudentAsync(student));
+        }
+
+        [Theory, AutoData]
+        public async Task CompletedCourses_ThrowsForDuplicate(Course course, Student student)
+        {
+            var studentRepo = new StudentRepository(_db);
+            await studentRepo.AddAsync(student);
+            await _institutions.AddAsync(course.Institution);
+            await _sut.AddAsync(course);
+            
+            await _sut.MarkCourseAsCompletedForStudentAsync(course, student);
+            await Assert.ThrowsAsync<DuplicateObjectException>(async () =>
+                await _sut.MarkCourseAsCompletedForStudentAsync(course, student));
         }
         
         [Theory, AutoData]
@@ -217,6 +272,19 @@ namespace Athena.Data.Tests.Repositories
         }
 
         [Theory, AutoData]
+        public async Task InProgressCourse_ThrowsForDuplicate(Course course, Student student)
+        {
+            var studentRepo = new StudentRepository(_db);
+            await studentRepo.AddAsync(student);
+            await _institutions.AddAsync(course.Institution);
+            await _sut.AddAsync(course);
+
+            await _sut.MarkCourseInProgressForStudentAsync(course, student);
+            await Assert.ThrowsAsync<DuplicateObjectException>(async () =>
+                await _sut.MarkCourseInProgressForStudentAsync(course, student));
+        }
+
+        [Theory, AutoData]
         public async Task TracksOfferings(List<Offering> offerings, Course course, Campus common)
         {
             var campusRepo = new CampusRepository(_db);
@@ -243,6 +311,22 @@ namespace Athena.Data.Tests.Repositories
             }
             
             Assert.Empty(await offeringRepo.GetOfferingsForCourseAsync(course));
+        }
+
+        [Theory, AutoData]
+        public async Task Offering_ThrowsForDuplicate(Offering offering, Course course)
+        {
+            var campusRepo = new CampusRepository(_db);
+            var offeringRepo = new OfferingRepository(_db);
+
+            await _institutions.AddAsync(course.Institution);
+            await _sut.AddAsync(course);
+            await campusRepo.AddAsync(offering.Campus);
+            await offeringRepo.AddAsync(offering);
+
+            await _sut.AddOfferingAsync(course, offering);
+            await Assert.ThrowsAsync<DuplicateObjectException>(
+                async () => await _sut.AddOfferingAsync(course, offering));
         }
     }
 }

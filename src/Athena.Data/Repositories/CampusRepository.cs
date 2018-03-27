@@ -53,7 +53,7 @@ namespace Athena.Data.Repositories
             );
 
         public async Task AssociateCampusWithInstitutionAsync(Campus campus, Institution institution) =>
-            await _db.ExecuteAsync(
+            await _db.InsertUniqueAsync(
                 "INSERT INTO campus_x_institution VALUES (@campus, @institution)",
                 new {campus = campus.Id, institution = institution.Id}
             );

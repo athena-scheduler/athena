@@ -38,7 +38,7 @@ namespace Athena.Data.Repositories
             );
 
         public async Task RegisterForProgramAsync(Student student, Program program) =>
-            await _db.ExecuteAsync(
+            await _db.InsertUniqueAsync(
                 "INSERT INTO student_x_program VALUES (@student, @program)",
                 new {student = student.Id, program = program.Id}
             );

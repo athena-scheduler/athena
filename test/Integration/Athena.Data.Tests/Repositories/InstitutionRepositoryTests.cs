@@ -132,5 +132,18 @@ namespace Athena.Data.Tests.Repositories
             
             Assert.Empty(await _sut.GetInstitutionsForStudentAsync(student));
         }
+
+        [Theory, AutoData]
+        public async Task Students_ThrowsForDuplicate(Institution institution, Student student)
+        {
+            var studentRepo = new StudentRepository(_db);
+
+            await studentRepo.AddAsync(student);
+            await _sut.AddAsync(institution);
+
+            await _sut.EnrollStudentAsync(institution, student);
+            await Assert.ThrowsAsync<DuplicateObjectException>(async () =>
+                await _sut.EnrollStudentAsync(institution, student));
+        }
     }
 }
