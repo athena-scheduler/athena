@@ -17,6 +17,9 @@ namespace Athena.Setup
     {
         public const string AUTH_GOOGLE_CLIENT_KEY = nameof(AUTH_GOOGLE_CLIENT_KEY);
         public const string AUTH_GOOGLE_CLIENT_SECRET = nameof(AUTH_GOOGLE_CLIENT_SECRET);
+
+        public const string AUTH_MICROSOFT_CLIENT_KEY = nameof(AUTH_MICROSOFT_CLIENT_KEY);
+        public const string AUTH_MICROSOFT_CLIENT_SECRET = nameof(AUTH_MICROSOFT_CLIENT_SECRET);
         
         public static IServiceCollection AddAthenaServices(this IServiceCollection services,
             IConfiguration conf)
@@ -55,6 +58,11 @@ namespace Athena.Setup
             {
                 Serilog.Log.Fatal($"Failed to add google authentication. Did you set {AUTH_GOOGLE_CLIENT_KEY} and {AUTH_GOOGLE_CLIENT_SECRET}?");
             }
+
+            if (!auth.TryAddMicrosoft())
+            {
+                Serilog.Log.Fatal($"Failed to add microsoft authentication. Did you set {AUTH_MICROSOFT_CLIENT_KEY} and {AUTH_MICROSOFT_CLIENT_SECRET}?");
+            }
             
             return services;
         }
@@ -77,6 +85,27 @@ namespace Athena.Setup
             });
 
             Serilog.Log.Information("Added google authentication with client id {clientId}", clientKey);
+            return true;
+        }
+
+        private static bool TryAddMicrosoft(this AuthenticationBuilder auth)
+        {
+            var clientKey = Environment.GetEnvironmentVariable(AUTH_MICROSOFT_CLIENT_KEY);
+            var clientSecret = Environment.GetEnvironmentVariable(AUTH_MICROSOFT_CLIENT_SECRET);
+
+            if (string.IsNullOrEmpty(clientKey) || string.IsNullOrEmpty(clientSecret))
+            {
+                return false;
+            }
+
+            auth.AddMicrosoftAccount(m =>
+            {
+                m.CallbackPath = "/account/oauth/microsoft";
+                m.ClientId = clientKey;
+                m.ClientSecret = clientSecret;
+            });
+
+            Serilog.Log.Information("Added microsoft authentication with client id {clientId}", clientKey);
             return true;
         }
     }

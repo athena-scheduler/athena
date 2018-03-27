@@ -236,4 +236,11 @@ nav .chip:hover {
 
 .login-provider-list {
     margin-top: 2.5rem;
+    text-align: center;
+}
+
+.login-provider {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    width: min-content;
 }

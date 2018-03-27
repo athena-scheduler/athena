@@ -22,31 +22,27 @@
         </div>
         <div class="col s12">
             <div class="row login-provider-list">
-                @{
-                    var providers = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Where(a => a.HandlerType != typeof(ApiKeyHandler)).ToList();
-                    if (providers.Count == 0)
-                    {
-                        <div class="col s4">
-                            Your administrator did not setup any authentication providers so we can't log you in. Ask them to fix
-                            the setup!
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="col s4">
-                            <div class="row">
-                                @foreach (var provider in providers)
-                                {
-                                    <div class="col s12">
-                                        <a href="@Url.Action(nameof(AccountController.LoginWithExternalProvider), "Account", new {provider = provider.Name, returnUrl = Model.ReturnUrl})">
-                                            <login-provider-logo provider="@provider.Name"/>
-                                        </a>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    }
-                }
+              @{
+                  var providers = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Where(a => a.HandlerType != typeof(ApiKeyHandler)).ToList();
+                  if (providers.Count == 0)
+                  {
+                      <div class="col s12 flow-text">
+                          Your administrator did not setup any authentication providers so we can't log you in. Ask them to fix
+                          the setup!
+                      </div>
+                  }
+                  else
+                  {
+                      foreach (var provider in providers)
+                      {
+                          <span class="login-provider">
+                              <a href="@Url.Action(nameof(AccountController.LoginWithExternalProvider), "Account", new {provider = provider.Name, returnUrl = Model.ReturnUrl})">
+                                  <login-provider-logo provider="@provider.Name"/>
+                              </a>
+                          </span>
+                      }
+                  }
+              }  
             </div>
         </div>
         
