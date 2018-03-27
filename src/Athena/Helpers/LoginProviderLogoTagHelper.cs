@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -13,7 +14,8 @@ namespace Athena.Helpers
     {
         private static readonly Dictionary<string, string> ProviderMap = new Dictionary<string, string>
         {
-            {GoogleDefaults.AuthenticationScheme, "~/images/signin_google.png"}
+            {GoogleDefaults.AuthenticationScheme, "~/images/signin_google.png"},
+            {MicrosoftAccountDefaults.AuthenticationScheme, "~/images/signin_microsoft.png"}
         };
 
         private readonly IUrlHelperFactory _urlHelper;
@@ -35,13 +37,11 @@ namespace Athena.Helpers
                 var path = _urlHelper.GetUrlHelper(ViewContext).Content(img);
                 output.TagName = "img";
                 output.Attributes.SetAttribute("src", path);
-                output.Attributes.SetAttribute("class", "center-align center-block");
                 output.TagMode = TagMode.SelfClosing;
             }
             else
             {
                 output.TagName = "span";
-                output.Attributes.SetAttribute("class", "center-align center-block");
                 output.Content.SetHtmlContent($"<i class='material-icons'>account_box</i> Login With {Provider ?? "Unknown Provider"}");
                 output.TagMode = TagMode.StartTagAndEndTag;
             }
