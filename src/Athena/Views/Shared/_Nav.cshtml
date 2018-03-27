@@ -15,7 +15,7 @@
 else
 {
             <li>
-                <a class="chip" href="@Url.Action(nameof(HomeController.User_Page), "Home")" tooltip="Student Page">
+                <a class="chip" href="@Url.Action(nameof(StudentController.Profile), "Student")" tooltip="Student Page">
                     <img gravatar-email="@Model.Student.Email" gravatar-size="80" gravatar-default-image="retro" gravatar-force-https="true" gravatar-rating="@GravatarRating.PG" alt="" />
                     @Model.Student.Name
                 </a>

@@ -38,6 +38,11 @@ namespace Athena.Data.Repositories
             new {obj.Id}
         );
 
+        public async Task<IEnumerable<Institution>> SearchAsync(string query) => await _db.QueryAsync<Institution>(
+            "SELECT * FROM institutions WHERE name ILIKE ('%' || @query || '%') OR description ILIKE ('%' || @query || '%')",
+            new {query = query.Trim('%')}
+        );
+
         public async Task<IEnumerable<Institution>> GetInstitutionsOnCampusAsync(Campus campus) =>
             await _db.QueryAsync<Institution>(@"
                 SELECT i.id,

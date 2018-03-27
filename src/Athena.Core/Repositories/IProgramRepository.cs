@@ -5,7 +5,7 @@ using Athena.Core.Models;
 
 namespace Athena.Core.Repositories
 {
-    public interface IProgramRepository : IRepository<Program, Guid>
+    public interface IProgramRepository : ISearchableRepository<Program, Guid, ProgramSearchOptions>
     {
         /// <summary>
         /// Get the programs that the specified institution offers

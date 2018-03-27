@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.Transactions;
+using AutoFixture;
 using Npgsql;
 
 namespace Athena.Data.Tests
@@ -13,6 +14,7 @@ namespace Athena.Data.Tests
                                                           ?? DEFAULT_CONNECTION_STRING;
 
         protected readonly IDbConnection _db;
+        protected readonly Fixture _fixture;
 
         private readonly TransactionScope _scope;
 
@@ -26,6 +28,7 @@ namespace Athena.Data.Tests
                 _db.Open();
             }
 
+            _fixture = new Fixture();
             _scope = _db.CreateAsyncTransactionScope();
         }
         

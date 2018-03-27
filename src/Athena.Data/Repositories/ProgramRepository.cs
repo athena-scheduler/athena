@@ -47,6 +47,36 @@ namespace Athena.Data.Repositories
             new {obj.Id}
         );
 
+        public async Task<IEnumerable<Program>> SearchAsync(ProgramSearchOptions query)
+        {
+            var sql = @"
+                SELECT p.id,
+                       p.name,
+                       p.description,
+                       i.id,
+                       i.name,
+                       i.description
+                FROM programs p
+                    LEFT JOIN institutions i
+                        ON p.institution = i.id
+                WHERE (p.name ILIKE ('%' || @query || '%') or p.description ILIKE ('%' || @query || '%'))";
+
+            object opts = new {query = query.Query};
+
+            var iid = query.InstitutionIds?.ToList();
+            if (iid?.Any() ?? false)
+            {
+                sql += " AND i.id = ANY (@iid)";
+                opts = new {query = query.Query, iid};
+            }
+            
+            return await _db.QueryAsync<Program, Institution, Program>(
+                sql,
+                _mapProgram,
+                opts
+            );
+        }
+
         public async Task<IEnumerable<Program>> GetProgramsOfferedByInstitutionAsync(Institution institution) =>
             await _db.QueryAsync<Program, Institution, Program>(@"
                 SELECT p.id,

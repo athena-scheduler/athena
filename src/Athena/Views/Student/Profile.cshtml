@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Profile";
+}
+
+
+<h2>Profile</h2>
+
+<div class="row">
+    <div class="col s6">
+        <a class="btn btn-block btn-large" href="@Url.Action(nameof(StudentController.UserSetup), "Student", new { returnUrl = Context.Request.Path.ToString() })">
+            Manage Institutions & Programs
+        </a>
+    </div>
+    <div class="col s6">
+        <a class="btn btn-block btn-large" href="#">Add / Drop Classes</a>
+    </div>
+</div>

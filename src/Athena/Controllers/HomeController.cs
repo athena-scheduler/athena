@@ -28,12 +28,6 @@ namespace Athena.Controllers
             return View();
         }
 
-        [HttpGet("User_Page")]
-        public IActionResult User_Page()
-        {
-            return View();
-        }
-
         [HttpGet("Error")]
         public IActionResult Error()
         {

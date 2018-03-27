@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Athena.Core.Exceptions;
 using Athena.Core.Models;
+using Athena.Core.Repositories;
 using Athena.Data.Repositories;
 using AutoFixture.Xunit2;
 using Xunit;
@@ -65,6 +66,60 @@ namespace Athena.Data.Tests.Repositories
 
             await _sut.DeleteAsync(program);
             Assert.Null(await _sut.GetAsync(program.Id));
+        }
+        
+        [Theory, AutoData]
+        public async Task Search_Empty(List<Program> programs)
+        {
+            foreach (var p in programs)
+            {
+                await _instutitons.AddAsync(p.Institution);
+                await _sut.AddAsync(p);
+            }
+
+            var result = await _sut.SearchAsync(new ProgramSearchOptions{ Query = "bAr" });
+
+            Assert.Empty(result);
+        }
+
+        [Theory, AutoData]
+        public async Task Search_QueryOnly_Valid(List<Program> programs, Program target)
+        {
+            target.Name = "foo bar baz";
+
+            foreach (var p in programs.Union(new []{target}))
+            {
+                await _instutitons.AddAsync(p.Institution);
+                await _sut.AddAsync(p);
+            }
+
+            var result = (await _sut.SearchAsync(new ProgramSearchOptions{ Query = "bAr" })).ToList();
+
+            Assert.Single(result);
+            Assert.Equal(target, result[0]);
+        }
+        
+        [Theory, AutoData]
+        public async Task Search_Valid(List<Program> programs, Program target)
+        {
+            target.Name = "foo bar baz";
+
+            foreach (var p in programs.Union(new []{target}))
+            {
+                p.Name = target.Name;
+
+                await _instutitons.AddAsync(p.Institution);
+                await _sut.AddAsync(p);
+            }
+
+            var result = (await _sut.SearchAsync(new ProgramSearchOptions
+            {
+                Query = "bAr",
+                InstitutionIds = new [] {target.Institution.Id}
+            })).ToList();
+
+            Assert.Single(result);
+            Assert.Equal(target, result[0]);
         }
 
         [Theory, AutoData]

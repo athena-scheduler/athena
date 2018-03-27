@@ -1,13 +1,15 @@
 ﻿using Athena.Controllers.api;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using AutoFixture.Xunit2;
 using Moq;
 using System.Net;
 using System.Threading.Tasks;
+using Athena.Core.Repositories;
 using Xunit;
-using Athena.Tests.Extensions;
 
 namespace Athena.Tests.Controllers.Api
 {
@@ -25,6 +27,40 @@ namespace Athena.Tests.Controllers.Api
             Programs.Verify(p => p.AddAsync(program), Times.Once);
         }
 
+        [Theory, AutoData]
+        public async Task Search_Valid(string q, List<Program> programs)
+        {
+            Programs.Setup(p => p.SearchAsync(It.IsAny<ProgramSearchOptions>())).ReturnsAsync(programs);
+
+            var result = (await _controller.Search(q)).ToList();
+            
+            Assert.Equal(programs.Count, result.Count);
+            Assert.All(programs, p => Assert.Contains(p, result));
+            
+            Programs.Verify(p => p.SearchAsync(new ProgramSearchOptions{Query = q, InstitutionIds = null}), Times.Once);
+        }
+
+        [Theory, AutoData]
+        public async Task Search_IncludesInstitutionids(string q, List<Guid> institutions, List<Program> programs)
+        {
+            Programs.Setup(p => p.SearchAsync(It.IsAny<ProgramSearchOptions>())).ReturnsAsync(programs);
+
+            var result = (await _controller.Search(q, institutions)).ToList();
+            
+            Assert.Equal(programs.Count, result.Count);
+            Assert.All(programs, p => Assert.Contains(p, result));
+            
+            Programs.Verify(p => p.SearchAsync(new ProgramSearchOptions{Query = q, InstitutionIds = institutions}), Times.Once);
+        }
+
+        [Fact]
+        public async Task Search_BadRequestForShortQuery()
+        {
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.Search("a"));
+
+            Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
+        }
+        
         [Theory, AutoData]
         public async Task Get_Valid(Program program)
         {
