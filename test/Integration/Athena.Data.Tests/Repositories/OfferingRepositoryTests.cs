@@ -90,5 +90,19 @@ namespace Athena.Data.Tests.Repositories
             
             Assert.Empty(await meetingRepo.GetMeetingsForOfferingAsync(offering));
         }
+
+        [Theory, AutoData]
+        public async Task Meeting_ThrowsForDuplicate(Meeting meeting, Offering offering)
+        {
+            var meetingRepo = new MeetingRepository(_db);
+
+            await _campuses.AddAsync(offering.Campus);
+            await _sut.AddAsync(offering);
+            await meetingRepo.AddAsync(meeting);
+
+            await _sut.AddMeetingAsync(offering, meeting);
+            await Assert.ThrowsAsync<DuplicateObjectException>(
+                async () => await _sut.AddMeetingAsync(offering, meeting));
+        }
     }
 }

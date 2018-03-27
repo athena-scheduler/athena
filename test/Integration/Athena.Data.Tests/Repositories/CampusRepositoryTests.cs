@@ -71,6 +71,20 @@ namespace Athena.Data.Tests.Repositories
             Assert.Equal(campuses.Count, results.Count);
             Assert.All(campuses, c => Assert.Contains(c, results));
         }
+
+        [Theory, AutoData]
+        public async Task AssociateCampusWithInstitution_ThrowsForDuplicate(Campus campus, Institution institution)
+        {
+            var institutionRepo = new InstitutionRepository(_db);
+
+            await institutionRepo.AddAsync(institution);
+            await _sut.AddAsync(campus);
+
+            await _sut.AssociateCampusWithInstitutionAsync(campus, institution);
+
+            await Assert.ThrowsAnyAsync<DuplicateObjectException>(async () =>
+                await _sut.AssociateCampusWithInstitutionAsync(campus, institution));
+        }
         
         [Theory, AutoData]
         public async Task CanDisassociateCampusWithInstitution(Campus extra, List<Campus> campuses, Institution institution)

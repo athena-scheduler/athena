@@ -113,5 +113,19 @@ namespace Athena.Data.Tests.Repositories
 
             Assert.Empty(await requirementRepository.GetRequirementsForProgramAsync(program));
         }
+
+        [Theory, AutoData]
+        public async Task Requirement_ThrowsForDuplicate(Requirement req, Program program)
+        {
+            var requirementRepository = new RequirementRepository(_db);
+            
+            await _instutitons.AddAsync(program.Institution);
+            await _sut.AddAsync(program);
+            await requirementRepository.AddAsync(req);
+
+            await _sut.AddRequirementAsync(program, req);
+            await Assert.ThrowsAsync<DuplicateObjectException>(async () =>
+                await _sut.AddRequirementAsync(program, req));
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Athena.Core.Exceptions;
 using Athena.Core.Models;
 using Athena.Data.Repositories;
