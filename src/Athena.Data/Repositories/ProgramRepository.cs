@@ -82,7 +82,7 @@ namespace Athena.Data.Repositories
             );
 
         public async Task AddRequirementAsync(Program program, Requirement requirement) =>
-            await _db.ExecuteAsync(
+            await _db.InsertUniqueAsync(
                 "INSERT INTO program_requirements VALUES (@program, @req)",
                 new {program = program.Id, req = requirement.Id}
             );

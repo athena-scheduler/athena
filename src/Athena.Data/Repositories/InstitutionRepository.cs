@@ -63,7 +63,7 @@ namespace Athena.Data.Repositories
             );
 
         public async Task EnrollStudentAsync(Institution institution, Student student) =>
-            await _db.ExecuteAsync(
+            await _db.InsertUniqueAsync(
                 "INSERT INTO institution_x_student VALUES (@institution, @student)",
                 new { institution = institution.Id, student = student.Id }
             );

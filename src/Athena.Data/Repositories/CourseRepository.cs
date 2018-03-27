@@ -123,7 +123,7 @@ namespace Athena.Data.Repositories
             );
 
         public async Task AddOfferingAsync(Course course, Offering offering) =>
-            await _db.ExecuteAsync(
+            await _db.InsertUniqueAsync(
                 "INSERT INTO course_x_offering VALUES (@course, @offering)",
                 new {course = course.Id, offering = offering.Id}
             );
@@ -135,7 +135,7 @@ namespace Athena.Data.Repositories
             );
 
         public async Task AddSatisfiedRequirementAsync(Course course, Requirement requirement) =>
-            await _db.ExecuteAsync(
+            await _db.InsertUniqueAsync(
                 "INSERT INTO course_requirements VALUES (@course, @requirement)",
                 new {course = course.Id, requirement = requirement.Id}
             );
@@ -147,7 +147,7 @@ namespace Athena.Data.Repositories
             );
 
         public async Task AddPrerequisiteAsync(Course course, Requirement prereq) =>
-            await _db.ExecuteAsync(
+            await _db.InsertUniqueAsync(
                 "INSERT INTO course_prereqs VALUES (@course, @prereq)",
                 new {course = course.Id, prereq = prereq.Id}
             );
@@ -159,7 +159,7 @@ namespace Athena.Data.Repositories
             );
         
         public async Task AddConcurrentPrerequisiteAsync(Course course, Requirement prereq) =>
-            await _db.ExecuteAsync(
+            await _db.InsertUniqueAsync(
                 "INSERT INTO course_concurrent_prereqs VALUES (@course, @prereq)",
                 new {course = course.Id, prereq = prereq.Id}
             );
