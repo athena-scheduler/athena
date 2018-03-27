@@ -31,6 +31,10 @@ else
 @section scripts {
     <script type="text/javascript">
         $(document).ready(function () {
+            $('ul.tabs').tabs({
+                swipeable: true,
+                responsiveThreshold: 1920
+            });
             // page is now ready, initialize the calendar...
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
@@ -46,10 +50,6 @@ else
             });
             $('#calendar').fullCalendar('next');
             $('.modal').modal();
-            $('ul.tabs').tabs({
-                swipeable: true,
-                responsiveThreshold: 1920
-            });
         });
     </script>
 
