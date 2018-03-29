@@ -244,44 +244,34 @@ namespace Athena.Data.Tests.Repositories
             await Assert.ThrowsAsync<DuplicateObjectException>(async () =>
                 await _sut.MarkCourseAsCompletedForStudentAsync(course, student));
         }
-        
-        [Theory, AutoData]
-        public async Task TracksInProgressCoursesForStudent(List<Course> courses, Student student)
-        {
-            var studentRepo = new StudentRepository(_db);
-            await studentRepo.AddAsync(student);
-
-            foreach (var c in courses)
-            {
-                await _institutions.AddAsync(c.Institution);
-                await _sut.AddAsync(c);
-                await _sut.MarkCourseInProgressForStudentAsync(c, student);
-            }
-
-            var results = (await _sut.GetInProgressCoursesForStudentAsync(student)).ToList();
-            
-            Assert.Equal(courses.Count, results.Count);
-            Assert.All(courses, c => Assert.Contains(c, results));
-
-            foreach (var c in courses)
-            {
-                await _sut.MarkCourseNotInProgressForStudentAsync(c, student);
-            }
-            
-            Assert.Empty(await _sut.GetInProgressCoursesForStudentAsync(student));
-        }
 
         [Theory, AutoData]
-        public async Task InProgressCourse_ThrowsForDuplicate(Course course, Student student)
+        public async Task TracksOfferings(List<Offering> offerings, Course common)
         {
-            var studentRepo = new StudentRepository(_db);
-            await studentRepo.AddAsync(student);
-            await _institutions.AddAsync(course.Institution);
-            await _sut.AddAsync(course);
+            var campusRepo = new CampusRepository(_db);
+            var meetingRepo = new MeetingRepository(_db);
+            var offeringRepo = new OfferingRepository(_db, meetingRepo);
 
-            await _sut.MarkCourseInProgressForStudentAsync(course, student);
-            await Assert.ThrowsAsync<DuplicateObjectException>(async () =>
-                await _sut.MarkCourseInProgressForStudentAsync(course, student));
+            await _institutions.AddAsync(common.Institution);
+            await _sut.AddAsync(common);
+
+            foreach (var o in offerings)
+            {
+                o.Course = common;
+                await campusRepo.AddAsync(o.Campus);
+
+                foreach (var m in o.Meetings)
+                {
+                    await meetingRepo.AddAsync(m);
+                }
+
+                await offeringRepo.AddAsync(o);
+            }
+
+            var results = (await offeringRepo.GetOfferingsForCourseAsync(common)).ToList();
+            
+            Assert.Equal(offerings.Count, results.Count);
+            Assert.All(offerings, o => Assert.Contains(o, results));
         }
     }
 }

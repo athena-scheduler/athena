@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Athena.Core.Exceptions;
 using Athena.Core.Models;
+using Athena.Core.Models.Identity;
 using Athena.Data.Repositories;
+using Athena.Data.Repositories.Identity;
 using AutoFixture.Xunit2;
 using Xunit;
 
@@ -37,7 +40,6 @@ namespace Athena.Data.Tests.Repositories
                 await _meetings.AddAsync(m);
             }
             await _sut.AddAsync(offering);
-            
 
             var result = await _sut.GetAsync(offering.Id);
             Assert.Equal(offering, result);
@@ -139,6 +141,68 @@ namespace Athena.Data.Tests.Repositories
             await _sut.AddMeetingAsync(offering, meeting);
             await Assert.ThrowsAsync<DuplicateObjectException>(
                 async () => await _sut.AddMeetingAsync(offering, meeting));
+        }
+
+        [Theory, AutoData]
+        public async Task TracksInProgressOfferings(List<Offering> offerings, AthenaUser user)
+        {
+            var userRepo = new AthenaUserStore(_db);
+            var studentRepo = new StudentRepository(_db);
+
+            user.Student.Id = user.Id;
+            await studentRepo.AddAsync(user.Student);
+            await userRepo.CreateAsync(user, CancellationToken.None);
+
+            foreach (var offering in offerings)
+            {
+                await _campuses.AddAsync(offering.Campus);
+                await _institutions.AddAsync(offering.Course.Institution);
+                await _courses.AddAsync(offering.Course);
+                foreach (var m in offering.Meetings)
+                {
+                    await _meetings.AddAsync(m);
+                }
+                
+                await _sut.AddAsync(offering);
+                await _sut.EnrollStudentInOffering(user.Student, offering);
+            }
+
+            var results = (await _sut.GetInProgressOfferingsForStudent(user.Student)).ToList();
+            
+            Assert.Equal(offerings.Count, results.Count);
+            Assert.All(offerings, o => Assert.Contains(o, results));
+
+            foreach (var offering in offerings)
+            {
+                await _sut.UnenrollStudentInOffering(user.Student, offering);
+            }
+            
+            Assert.Empty(await _sut.GetInProgressOfferingsForStudent(user.Student));
+        }
+
+        [Theory, AutoData]
+        public async Task EnrollInOffering_ThrowsForDuplicate(Offering offering, AthenaUser user)
+        {
+            var userRepo = new AthenaUserStore(_db);
+            var studentRepo = new StudentRepository(_db);
+
+            user.Student.Id = user.Id;
+            await studentRepo.AddAsync(user.Student);
+            await userRepo.CreateAsync(user, CancellationToken.None);
+            
+            await _campuses.AddAsync(offering.Campus);
+            await _institutions.AddAsync(offering.Course.Institution);
+            await _courses.AddAsync(offering.Course);
+            foreach (var m in offering.Meetings)
+            {
+                await _meetings.AddAsync(m);
+            }
+            await _sut.AddAsync(offering);
+
+            await _sut.EnrollStudentInOffering(user.Student, offering);
+
+            await Assert.ThrowsAsync<DuplicateObjectException>(async () =>
+                await _sut.EnrollStudentInOffering(user.Student, offering));
         }
     }
 }

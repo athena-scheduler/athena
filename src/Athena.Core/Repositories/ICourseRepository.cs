@@ -34,27 +34,6 @@ namespace Athena.Core.Repositories
         /// <param name="course">The course to mark as not completed</param>
         /// <param name="student">The student to modify</param>
         Task MarkCourseAsUncompletedForStudentAsync(Course course, Student student);
-        
-        /// <summary>
-        /// Get all in-progress courses for the specified students
-        /// </summary>
-        /// <param name="student">The student to get courses for</param>
-        /// <returns>An IEnumerable of Courses</returns>
-        Task<IEnumerable<Course>> GetInProgressCoursesForStudentAsync(Student student);
-
-        /// <summary>
-        /// Mark the specified course as in-progress for the specified student
-        /// </summary>
-        /// <param name="course">The course to mark as in-progress</param>
-        /// <param name="student">The student who is taking the course</param>
-        Task MarkCourseInProgressForStudentAsync(Course course, Student student);
-        
-        /// <summary>
-        /// Mark the specified course as not in-progress for the specified student
-        /// </summary>
-        /// <param name="course">The course to mark as not in-progress</param>
-        /// <param name="student">The student who is taking the course</param>
-        Task MarkCourseNotInProgressForStudentAsync(Course course, Student student);
 
         /// <summary>
         /// Add a requirement that this course satisfies
