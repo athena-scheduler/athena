@@ -38,28 +38,15 @@
     </div>
 </footer>
 
-<script type="text/javascript" src="~/athena.js"></script>
+<script type="text/javascript" src="@Url.Content("~/athena.js")"></script>
 <script type="text/javascript">
     const apiRoot = "@Url.Content("~/api/v1")";
+    $('.modal').modal();
 </script>
 
 <profile name="RenderScripts">
     @RenderSection("Scripts", required: false)
 </profile>
-
-<script> $(".button-collapse").sideNav();</script>
-
-<script>
-    $('.button-collapse').sideNav({
-            menuWidth: 300, // Default is 300
-            edge: 'right', // Choose the horizontal origin
-            closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-            draggable: true, // Choose whether you can drag to open on touch screens,
-            onOpen: function(el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
-            onClose: function(el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
-        }
-    );
-</script>
 
 <mini-profiler position="@RenderPosition.BottomRight" />
 </body>
