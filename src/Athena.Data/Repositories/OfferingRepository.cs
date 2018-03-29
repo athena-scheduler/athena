@@ -113,18 +113,6 @@ namespace Athena.Data.Repositories
             }
         }
 
-        public async Task AddMeetingAsync(Offering offering, Meeting meeting) =>
-            await _db.InsertUniqueAsync(
-                "INSERT INTO offering_x_meeting VALUES (@offering, @meeting)",
-                new { offering = offering.Id, meeting = meeting.Id }
-            );
-
-        public async Task RemoveMeetingAsync(Offering offering, Meeting meeting) =>
-            await _db.ExecuteAsync(
-                "DELETE FROM offering_x_meeting WHERE offering = @offering AND meeting = @meeting",
-                new { offering = offering.Id, meeting = meeting.Id }
-            );
-
         public async Task<IEnumerable<Offering>> GetInProgressOfferingsForStudentAsync(Student student)
         {
             using (var scope = _db.CreateAsyncTransactionScope())

@@ -35,11 +35,12 @@ namespace Athena.Data.Tests.Repositories
             await _campuses.AddAsync(offering.Campus);
             await _institutions.AddAsync(offering.Course.Institution);
             await _courses.AddAsync(offering.Course);
+            await _sut.AddAsync(offering);
             foreach (var m in offering.Meetings)
             {
+                m.Offering = offering.Id;
                 await _meetings.AddAsync(m);
             }
-            await _sut.AddAsync(offering);
 
             var result = await _sut.GetAsync(offering.Id);
             Assert.Equal(offering, result);
@@ -51,11 +52,12 @@ namespace Athena.Data.Tests.Repositories
             await _campuses.AddAsync(offering.Campus);
             await _institutions.AddAsync(offering.Course.Institution);
             await _courses.AddAsync(offering.Course);
+            await _sut.AddAsync(offering);
             foreach (var m in offering.Meetings)
             {
+                m.Offering = offering.Id;
                 await _meetings.AddAsync(m);
             }
-            await _sut.AddAsync(offering);
 
             await Assert.ThrowsAsync<DuplicateObjectException>(async () => await _sut.AddAsync(offering));
         }
@@ -69,11 +71,13 @@ namespace Athena.Data.Tests.Repositories
             await _institutions.AddAsync(changes.Course.Institution);
             await _courses.AddAsync(changes.Course);
             await _campuses.AddAsync(changes.Campus);
+            await _sut.AddAsync(offering);
+            await _sut.AddAsync(changes);
             foreach (var m in offering.Meetings.Union(changes.Meetings))
             {
+                m.Offering = offering.Id;
                 await _meetings.AddAsync(m);
             }
-            await _sut.AddAsync(offering);
 
             changes.Id = offering.Id;
             await _sut.EditAsync(changes);
@@ -88,59 +92,17 @@ namespace Athena.Data.Tests.Repositories
             await _campuses.AddAsync(offering.Campus);
             await _institutions.AddAsync(offering.Course.Institution);
             await _courses.AddAsync(offering.Course);
+            await _sut.AddAsync(offering);
             foreach (var m in offering.Meetings)
             {
+                m.Offering = offering.Id;
                 await _meetings.AddAsync(m);
             }
-            await _sut.AddAsync(offering);
             
             Assert.NotNull(await _sut.GetAsync(offering.Id));
 
             await _sut.DeleteAsync(offering);
             Assert.Null(await _sut.GetAsync(offering.Id));
-        }
-
-        [Theory, AutoData]
-        public async Task TracksMeetings(List<Meeting> meetings, Offering offering)
-        {
-            offering.Meetings = Enumerable.Empty<Meeting>();
-            await _campuses.AddAsync(offering.Campus);
-            await _institutions.AddAsync(offering.Course.Institution);
-            await _courses.AddAsync(offering.Course);
-            await _sut.AddAsync(offering);
-            foreach (var m in meetings)
-            {
-                await _meetings.AddAsync(m);
-                await _sut.AddMeetingAsync(offering, m);
-            }
-
-            var results = (await _meetings.GetMeetingsForOfferingAsync(offering)).ToList();
-            
-            Assert.Equal(meetings.Count, results.Count);
-            Assert.All(meetings, m => Assert.Contains(m, results));
-
-            foreach (var m in meetings)
-            {
-                await _sut.RemoveMeetingAsync(offering, m);
-            }
-            
-            Assert.Empty(await _meetings.GetMeetingsForOfferingAsync(offering));
-        }
-
-        [Theory, AutoData]
-        public async Task Meeting_ThrowsForDuplicate(Meeting meeting, Offering offering)
-        {
-            offering.Meetings = Enumerable.Empty<Meeting>();
-            
-            await _campuses.AddAsync(offering.Campus);
-            await _institutions.AddAsync(offering.Course.Institution);
-            await _courses.AddAsync(offering.Course);
-            await _sut.AddAsync(offering);
-            await _meetings.AddAsync(meeting);
-
-            await _sut.AddMeetingAsync(offering, meeting);
-            await Assert.ThrowsAsync<DuplicateObjectException>(
-                async () => await _sut.AddMeetingAsync(offering, meeting));
         }
 
         [Theory, AutoData]
@@ -158,12 +120,13 @@ namespace Athena.Data.Tests.Repositories
                 await _campuses.AddAsync(offering.Campus);
                 await _institutions.AddAsync(offering.Course.Institution);
                 await _courses.AddAsync(offering.Course);
+                await _sut.AddAsync(offering);
                 foreach (var m in offering.Meetings)
                 {
+                    m.Offering = offering.Id;
                     await _meetings.AddAsync(m);
                 }
                 
-                await _sut.AddAsync(offering);
                 await _sut.EnrollStudentInOfferingAsync(user.Student, offering);
             }
 
@@ -193,11 +156,12 @@ namespace Athena.Data.Tests.Repositories
             await _campuses.AddAsync(offering.Campus);
             await _institutions.AddAsync(offering.Course.Institution);
             await _courses.AddAsync(offering.Course);
+            await _sut.AddAsync(offering);
             foreach (var m in offering.Meetings)
             {
+                m.Offering = offering.Id;
                 await _meetings.AddAsync(m);
             }
-            await _sut.AddAsync(offering);
 
             await _sut.EnrollStudentInOfferingAsync(user.Student, offering);
 

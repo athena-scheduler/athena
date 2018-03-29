@@ -15,20 +15,6 @@ namespace Athena.Core.Repositories
         Task<IEnumerable<Offering>> GetOfferingsForCourseAsync(Course course);
 
         /// <summary>
-        /// Adds a meeting to the specified offering
-        /// </summary>
-        /// <param name="offering">The offering to add the meeting to</param>
-        /// <param name="meeting">The meeting to add</param>
-        Task AddMeetingAsync(Offering offering, Meeting meeting);
-        
-        /// <summary>
-        /// Removes a meeting from the specified offering
-        /// </summary>
-        /// <param name="offering">The offering to remove a meeting from</param>
-        /// <param name="meeting">The meeting to remove</param>
-        Task RemoveMeetingAsync(Offering offering, Meeting meeting);
-
-        /// <summary>
         /// Get all courses being taken by a student
         /// </summary>
         /// <param name="student"></param>

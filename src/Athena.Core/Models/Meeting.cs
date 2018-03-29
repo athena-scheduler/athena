@@ -6,6 +6,11 @@ namespace Athena.Core.Models
     {
         /// <inheritdoc />
         public Guid Id { get; set; }
+        
+        /// <summary>
+        /// The ID of the offering this meeting is associated with
+        /// </summary>
+        public Guid Offering { get; set; }
 
         /// <summary>
         /// The day of the week the meeting is on
@@ -30,6 +35,7 @@ namespace Athena.Core.Models
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return Id.Equals(other.Id) &&
+                   Offering.Equals(other.Offering) &&
                    Day == other.Day &&
                    Math.Floor(Time.TotalMilliseconds).Equals(Math.Floor(other.Time.TotalMilliseconds)) &&
                    Math.Floor(Duration.TotalMilliseconds).Equals(Math.Floor(other.Duration.TotalMilliseconds)) &&
@@ -48,6 +54,7 @@ namespace Athena.Core.Models
             unchecked
             {
                 var hashCode = Id.GetHashCode();
+                hashCode = (hashCode * 397) ^ Offering.GetHashCode();
                 hashCode = (hashCode * 397) ^ (int) Day;
                 hashCode = (hashCode * 397) ^ Time.GetHashCode();
                 hashCode = (hashCode * 397) ^ Duration.GetHashCode();

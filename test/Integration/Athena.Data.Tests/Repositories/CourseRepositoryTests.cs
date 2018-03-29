@@ -260,12 +260,12 @@ namespace Athena.Data.Tests.Repositories
                 o.Course = common;
                 await campusRepo.AddAsync(o.Campus);
 
+                await offeringRepo.AddAsync(o);
                 foreach (var m in o.Meetings)
                 {
+                    m.Offering = o.Id;
                     await meetingRepo.AddAsync(m);
                 }
-
-                await offeringRepo.AddAsync(o);
             }
 
             var results = (await offeringRepo.GetOfferingsForCourseAsync(common)).ToList();
