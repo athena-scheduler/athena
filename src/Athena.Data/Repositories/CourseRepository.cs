@@ -93,47 +93,6 @@ namespace Athena.Data.Repositories
                 new {student = student.Id, course = course.Id}
             );
 
-        public async Task<IEnumerable<Course>> GetInProgressCoursesForStudentAsync(Student student) =>
-            await _db.QueryAsync<Course, Institution, Course>(@"
-                SELECT c.id,
-                       c.name,
-                       i.id,
-                       i.name,
-                       i.description
-                FROM courses c
-                    LEFT JOIN institutions i
-                        ON c.institution = i.id
-                    LEFT JOIN student_x_in_progress_course link
-                        ON c.id = link.course
-                WHERE link.student = @student",
-                _mapInstitution,
-                new { student = student.Id }
-            );
-
-        public async Task MarkCourseInProgressForStudentAsync(Course course, Student student) =>
-            await _db.InsertUniqueAsync(
-                "INSERT INTO student_x_in_progress_course VALUES (@student, @course)",
-                new {student = student.Id, course = course.Id}
-            );
-
-        public async Task MarkCourseNotInProgressForStudentAsync(Course course, Student student) =>
-            await _db.ExecuteAsync(
-                "DELETE FROM student_x_in_progress_course WHERE student = @student AND course = @course",
-                new {student = student.Id, course = course.Id}
-            );
-
-        public async Task AddOfferingAsync(Course course, Offering offering) =>
-            await _db.InsertUniqueAsync(
-                "INSERT INTO course_x_offering VALUES (@course, @offering)",
-                new {course = course.Id, offering = offering.Id}
-            );
-
-        public async Task RemoveOfferingAsync(Course course, Offering offering) =>
-            await _db.ExecuteAsync(
-                "DELETE FROM course_x_offering WHERE course = @course AND offering = @offering",
-                new {course = course.Id, offering = offering.Id}
-            );
-
         public async Task AddSatisfiedRequirementAsync(Course course, Requirement requirement) =>
             await _db.InsertUniqueAsync(
                 "INSERT INTO course_requirements VALUES (@course, @requirement)",

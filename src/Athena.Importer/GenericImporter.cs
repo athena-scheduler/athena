@@ -9,7 +9,7 @@ namespace Athena.Importer
 {
     public class GenericImporter<T> : AbstractImporter where T : IUniqueObject<Guid>
     {
-        private readonly IDataProvider<T> _data;
+        protected readonly IDataProvider<T> _data;
 
         public GenericImporter(Uri apiEndpoint, string apiKey, IDataProvider<T> data) : base(apiEndpoint, apiKey) =>
             _data = data ?? throw new ArgumentNullException(nameof(data));

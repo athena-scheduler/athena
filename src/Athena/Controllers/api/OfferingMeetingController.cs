@@ -20,24 +20,6 @@ namespace Athena.Controllers.api
             _meetings = meetingsRepository ?? throw new ArgumentNullException(nameof(meetingsRepository));
         }
 
-        [HttpPut("{meetingId}")]
-        public async Task AddMeetingAsync(Guid offeringId, Guid meetingId)
-        {
-            var offering = (await _offerings.GetAsync(offeringId)).NotFoundIfNull();
-            var meeting = (await _meetings.GetAsync(meetingId)).NotFoundIfNull();
-
-            await _offerings.AddMeetingAsync(offering, meeting);
-        }
-
-        [HttpDelete("{meetingId}")]
-        public async Task RemoveMeetingAsync(Guid offeringId, Guid meetingId)
-        {
-            var offering = (await _offerings.GetAsync(offeringId)).NotFoundIfNull();
-            var meeting = (await _meetings.GetAsync(meetingId)).NotFoundIfNull();
-
-            await _offerings.RemoveMeetingAsync(offering, meeting);
-        }
-
         [HttpGet]
         public async Task<IEnumerable<Meeting>> GetMeetingsForOfferingAsync(Guid offeringId)
         {

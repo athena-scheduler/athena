@@ -12,24 +12,27 @@ namespace Athena.Core.Repositories
         /// </summary>
         /// <param name="course">The course to get offerings for</param>
         /// <returns>An IEnumerable of offerings</returns>
-        /// <remarks>
-        /// Modify this collection with <see cref="ICourseRepository.AddOfferingAsync"/>
-        /// and <see cref="ICourseRepository.RemoveOfferingAsync"/>
-        /// </remarks>
         Task<IEnumerable<Offering>> GetOfferingsForCourseAsync(Course course);
 
         /// <summary>
-        /// Adds a meeting to the specified offering
+        /// Get all courses being taken by a student
         /// </summary>
-        /// <param name="offering">The offering to add the meeting to</param>
-        /// <param name="meeting">The meeting to add</param>
-        Task AddMeetingAsync(Offering offering, Meeting meeting);
+        /// <param name="student"></param>
+        /// <returns></returns>
+        Task<IEnumerable<Offering>> GetInProgressOfferingsForStudentAsync(Student student);
+
+        /// <summary>
+        /// Enroll the student in the specified offering
+        /// </summary>
+        /// <param name="student">The student to enroll</param>
+        /// <param name="offering">The offering to enroll in</param>
+        Task EnrollStudentInOfferingAsync(Student student, Offering offering);
         
         /// <summary>
-        /// Removes a meeting from the specified offering
+        /// Unenroll the student in the specified offering
         /// </summary>
-        /// <param name="offering">The offering to remove a meeting from</param>
-        /// <param name="meeting">The meeting to remove</param>
-        Task RemoveMeetingAsync(Offering offering, Meeting meeting);
+        /// <param name="student">The student to enroll</param>
+        /// <param name="offering">The offering to unenroll from</param>
+        Task UnenrollStudentInOfferingAsync(Student student, Offering offering);
     }
 }

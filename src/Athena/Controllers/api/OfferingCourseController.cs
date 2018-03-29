@@ -27,23 +27,5 @@ namespace Athena.Controllers.api
             
             return await _offerings.GetOfferingsForCourseAsync(course);
         }
-
-        [HttpPut("{offeringId}")]
-        public async Task AddOfferingAsync(Guid id, Guid offeringId)
-        {
-            var course = (await _courses.GetAsync(id)).NotFoundIfNull();
-            var offering = (await _offerings.GetAsync(offeringId)).NotFoundIfNull();
-
-            await _courses.AddOfferingAsync(course, offering);
-        }
-
-        [HttpDelete("{offeringId}")]
-        public async Task RemoveOfferingAsync(Guid id, Guid offeringId)
-        {
-            var course = (await _courses.GetAsync(id)).NotFoundIfNull();
-            var offering = (await _offerings.GetAsync(offeringId)).NotFoundIfNull();
-
-            await _courses.RemoveOfferingAsync(course, offering);
-        }
     }
 }

@@ -1,5 +1,16 @@
 {
     "id": "a8551c08-6b20-4c0f-8555-322000ee08ba",
+    "course":
+    {
+        "id": "3de7c8f5-1551-46a7-8dce-5968949aac45",
+        "name": "_",
+        "institution":
+        {
+            "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+            "name": "_",
+            "description": ""
+        }
+    },
     "campus": 
     {
         "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
@@ -8,5 +19,39 @@
         "location": "_"
     },
     "start": "2018-01-16",
-    "end": "2018-05-04"
+    "end": "2018-05-04",
+    "meetings": [
+        {
+            "id": "648b17b9-f8fe-488f-816a-61cbe95e4f65",
+            "offering": "a8551c08-6b20-4c0f-8555-322000ee08ba",
+            "day": "FRIDAY",
+            "time": "10:00:00",
+            "duration": "00:55:00",
+            "room": "Rocket Hall 1555"
+        },
+        {
+            "id": "7559febb-d12c-4098-8994-3e05848c7d01",
+            "offering": "a8551c08-6b20-4c0f-8555-322000ee08ba",
+            "day": "MONDAY",
+            "time": "10:00:00",
+            "duration": "00:55:00",
+            "room": "Rocket Hall 1555"
+        },
+        {
+            "id": "61a1c41e-f82b-44fa-80d9-509894e19321",
+            "offering": "a8551c08-6b20-4c0f-8555-322000ee08ba",
+            "day": "THURSDAY",
+            "time": "10:00:00",
+            "duration": "00:55:00",
+            "room": "Rocket Hall 1555"
+        },
+        {
+            "id": "b895d23d-9ef1-4ece-8917-42258e7c2be5",
+            "offering": "a8551c08-6b20-4c0f-8555-322000ee08ba",
+            "day": "TUESDAY",
+            "time": "10:00:00",
+            "duration": "00:55:00",
+            "room": "Rocket Hall 1555"
+        }
+    ]
 }

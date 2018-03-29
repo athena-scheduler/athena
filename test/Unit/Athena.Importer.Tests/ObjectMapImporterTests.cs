@@ -44,23 +44,6 @@ namespace Athena.Importer.Tests
         }
 
         [Theory, AutoData]
-        public async Task LinksOfferingsToCoursese(ObjectMap map)
-        {
-            _data.Setup(d => d.GetMap()).Returns(map);
-
-            await _sut.Import();
-
-            foreach (var course in map.CourseOfferings.Keys)
-            {
-                foreach (var offering in map.CourseOfferings[course])
-                {
-                    _http.ShouldHaveCalled($"{ApiEndpoint}/v1/course/{course}/offering/{offering}")
-                        .WithVerb(HttpMethod.Put);
-                }
-            }
-        }
-
-        [Theory, AutoData]
         public async Task LinksRequirementsToCourses(ObjectMap map)
         {
             _data.Setup(d => d.GetMap()).Returns(map);
@@ -106,23 +89,6 @@ namespace Athena.Importer.Tests
                 foreach (var req in map.CourseConcurrentPrereqs[course])
                 {
                     _http.ShouldHaveCalled($"{ApiEndpoint}/v1/course/{course}/requirements/prereq/concurrent/{req}")
-                        .WithVerb(HttpMethod.Put);
-                }
-            }
-        }
-
-        [Theory, AutoData]
-        public async Task LinksMeetingsToOfferings(ObjectMap map)
-        {
-            _data.Setup(d => d.GetMap()).Returns(map);
-
-            await _sut.Import();
-
-            foreach (var offering in map.OfferingMeetings.Keys)
-            {
-                foreach (var meeting in map.OfferingMeetings[offering])
-                {
-                    _http.ShouldHaveCalled($"{ApiEndpoint}/v1/offering/{offering}/meeting/{meeting}")
                         .WithVerb(HttpMethod.Put);
                 }
             }

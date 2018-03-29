@@ -45,31 +45,5 @@ namespace Athena.Controllers.api
 
             await _courses.MarkCourseAsUncompletedForStudentAsync(course, student);
         }
-
-        [HttpGet("in-progress")]
-        public async Task<IEnumerable<Course>> GetInProgressCoursesForStudentAsync(Guid id)
-        {
-            var student = (await _students.GetAsync(id)).NotFoundIfNull();
-
-            return await _courses.GetInProgressCoursesForStudentAsync(student);
-        }
-
-        [HttpPut("in-progress/{courseId}")]
-        public async Task MarkCourseInProgressForStudentAsync(Guid id, Guid courseId)
-        {
-            var student = (await _students.GetAsync(id)).NotFoundIfNull();
-            var course = (await _courses.GetAsync(courseId)).NotFoundIfNull();
-
-            await _courses.MarkCourseInProgressForStudentAsync(course, student);
-        }
-
-        [HttpDelete("in-progress/{courseId}")]
-        public async Task MarkCourseNotInProgressForStudentAsync(Guid id, Guid courseId)
-        {
-            var student = (await _students.GetAsync(id)).NotFoundIfNull();
-            var course = (await _courses.GetAsync(courseId)).NotFoundIfNull();
-
-            await _courses.MarkCourseNotInProgressForStudentAsync(course, student);
-        }
     }
 }
