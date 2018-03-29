@@ -33,20 +33,20 @@ namespace Athena.Core.Repositories
         /// </summary>
         /// <param name="student"></param>
         /// <returns></returns>
-        Task<IEnumerable<Offering>> GetInProgressOfferingsForStudent(Student student);
+        Task<IEnumerable<Offering>> GetInProgressOfferingsForStudentAsync(Student student);
 
         /// <summary>
         /// Enroll the student in the specified offering
         /// </summary>
         /// <param name="student">The student to enroll</param>
         /// <param name="offering">The offering to enroll in</param>
-        Task EnrollStudentInOffering(Student student, Offering offering);
+        Task EnrollStudentInOfferingAsync(Student student, Offering offering);
         
         /// <summary>
         /// Unenroll the student in the specified offering
         /// </summary>
         /// <param name="student">The student to enroll</param>
         /// <param name="offering">The offering to unenroll from</param>
-        Task UnenrollStudentInOffering(Student student, Offering offering);
+        Task UnenrollStudentInOfferingAsync(Student student, Offering offering);
     }
 }

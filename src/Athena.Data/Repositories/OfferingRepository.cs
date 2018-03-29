@@ -125,7 +125,7 @@ namespace Athena.Data.Repositories
                 new { offering = offering.Id, meeting = meeting.Id }
             );
 
-        public async Task<IEnumerable<Offering>> GetInProgressOfferingsForStudent(Student student)
+        public async Task<IEnumerable<Offering>> GetInProgressOfferingsForStudentAsync(Student student)
         {
             using (var scope = _db.CreateAsyncTransactionScope())
             {
@@ -166,13 +166,13 @@ namespace Athena.Data.Repositories
             }
         }
 
-        public async Task EnrollStudentInOffering(Student student, Offering offering) =>
+        public async Task EnrollStudentInOfferingAsync(Student student, Offering offering) =>
             await _db.InsertUniqueAsync(
                 "INSERT INTO student_x_in_progress_course VALUES (@student, @course, @offering)", 
                 new { student = student.Id, course = offering.Course.Id, offering = offering.Id }
             );
 
-        public async Task UnenrollStudentInOffering(Student student, Offering offering) =>
+        public async Task UnenrollStudentInOfferingAsync(Student student, Offering offering) =>
             await _db.InsertUniqueAsync(
                 "DELETE FROM student_x_in_progress_course WHERE student = @student AND course = @course AND offering = @offering", 
                 new { student = student.Id, course = offering.Course.Id, offering = offering.Id }

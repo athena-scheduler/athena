@@ -164,20 +164,20 @@ namespace Athena.Data.Tests.Repositories
                 }
                 
                 await _sut.AddAsync(offering);
-                await _sut.EnrollStudentInOffering(user.Student, offering);
+                await _sut.EnrollStudentInOfferingAsync(user.Student, offering);
             }
 
-            var results = (await _sut.GetInProgressOfferingsForStudent(user.Student)).ToList();
+            var results = (await _sut.GetInProgressOfferingsForStudentAsync(user.Student)).ToList();
             
             Assert.Equal(offerings.Count, results.Count);
             Assert.All(offerings, o => Assert.Contains(o, results));
 
             foreach (var offering in offerings)
             {
-                await _sut.UnenrollStudentInOffering(user.Student, offering);
+                await _sut.UnenrollStudentInOfferingAsync(user.Student, offering);
             }
             
-            Assert.Empty(await _sut.GetInProgressOfferingsForStudent(user.Student));
+            Assert.Empty(await _sut.GetInProgressOfferingsForStudentAsync(user.Student));
         }
 
         [Theory, AutoData]
@@ -199,10 +199,10 @@ namespace Athena.Data.Tests.Repositories
             }
             await _sut.AddAsync(offering);
 
-            await _sut.EnrollStudentInOffering(user.Student, offering);
+            await _sut.EnrollStudentInOfferingAsync(user.Student, offering);
 
             await Assert.ThrowsAsync<DuplicateObjectException>(async () =>
-                await _sut.EnrollStudentInOffering(user.Student, offering));
+                await _sut.EnrollStudentInOfferingAsync(user.Student, offering));
         }
     }
 }
