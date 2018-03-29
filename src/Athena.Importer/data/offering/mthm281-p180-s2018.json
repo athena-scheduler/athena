@@ -1,5 +1,16 @@
 {
     "id": "b85cc773-1068-42b5-9ff3-27d337c13adb",
+    "course":
+    {
+        "id": "c1235912-b892-49cf-a950-89a6481a9306",
+        "name": "_",
+        "institution":
+        {
+            "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+            "name": "_",
+            "description": ""
+        }
+    },
     "campus": 
     {
         "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
@@ -8,5 +19,23 @@
         "location": "_"
     },
     "start": "2018-01-16",
-    "end": "2018-05-11"
+    "end": "2018-05-11",
+    "meetings": [
+        {
+            "id": "79d3e2d5-f970-4996-90f2-5896e52a8bff",
+            "offering": "b85cc773-1068-42b5-9ff3-27d337c13adb",
+            "day": "THURSDAY",
+            "time": "10:00:00",
+            "duration": "01:55:00",
+            "room": "UPRC 202"
+        },
+        {
+            "id": "84ba867f-e18b-4808-ae84-0c94629666e3",
+            "offering": "b85cc773-1068-42b5-9ff3-27d337c13adb",
+            "day": "TUESDAY",
+            "time": "10:00:00",
+            "duration": "01:55:00",
+            "room": "UPRC 202"
+        }
+    ]
 }

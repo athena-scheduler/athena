@@ -1,5 +1,16 @@
 {
     "id": "0dc05f99-cb88-4cb6-b4fd-1533b45ae41f",
+    "course":
+    {
+        "id": "09e65c13-1b51-4c9d-973b-a90d51089e6a",
+        "name": "_",
+        "institution":
+        {
+            "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+            "name": "_",
+            "Description": ""
+        }
+    },
     "campus": 
     {
         "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
@@ -8,5 +19,23 @@
         "location": "_"
     },
     "start": "2018-01-16",
-    "end": "2018-05-04"
+    "end": "2018-05-04",
+    "meetings": [
+        {
+            "id": "b7d9470e-7dc6-4b20-a4ae-ab822c86ee4e",
+            "offering": "0dc05f99-cb88-4cb6-b4fd-1533b45ae41f",
+            "day": "THURSDAY",
+            "time": "12:55:00",
+            "duration": "01:20:00",
+            "room": "Palmer Hall 2700"
+        },
+        {
+            "id": "5e7c4f0d-9e26-4cff-9e65-7b6838c4b6f0",
+            "offering": "0dc05f99-cb88-4cb6-b4fd-1533b45ae41f",
+            "day": "TUESDAY",
+            "time": "12:55:00",
+            "duration": "01:20:00",
+            "room": "Palmer Hall 2700"
+        }
+    ]
 }
