@@ -11,20 +11,33 @@ namespace Athena.Data.Tests.Repositories
 {
     public class OfferingRepositoryTests : DataTest
     {
+        private readonly InstitutionRepository _institutions;
         private readonly CampusRepository _campuses;
+        private readonly CourseRepository _courses;
         private readonly OfferingRepository _sut;
+        private readonly MeetingRepository _meetings;
 
         public OfferingRepositoryTests()
         {
             _campuses = new CampusRepository(_db);
-            _sut = new OfferingRepository(_db);
+            _courses = new CourseRepository(_db);
+            _institutions = new InstitutionRepository(_db);
+            _meetings = new MeetingRepository(_db);
+            _sut = new OfferingRepository(_db, _meetings);
         }
 
         [Theory, AutoData]
         public async Task AddValid(Offering offering)
         {
             await _campuses.AddAsync(offering.Campus);
+            await _institutions.AddAsync(offering.Course.Institution);
+            await _courses.AddAsync(offering.Course);
+            foreach (var m in offering.Meetings)
+            {
+                await _meetings.AddAsync(m);
+            }
             await _sut.AddAsync(offering);
+            
 
             var result = await _sut.GetAsync(offering.Id);
             Assert.Equal(offering, result);
@@ -34,6 +47,12 @@ namespace Athena.Data.Tests.Repositories
         public async Task Add_ThrowsForDuplicate(Offering offering)
         {
             await _campuses.AddAsync(offering.Campus);
+            await _institutions.AddAsync(offering.Course.Institution);
+            await _courses.AddAsync(offering.Course);
+            foreach (var m in offering.Meetings)
+            {
+                await _meetings.AddAsync(m);
+            }
             await _sut.AddAsync(offering);
 
             await Assert.ThrowsAsync<DuplicateObjectException>(async () => await _sut.AddAsync(offering));
@@ -43,7 +62,15 @@ namespace Athena.Data.Tests.Repositories
         public async Task EditValid(Offering offering, Offering changes)
         {
             await _campuses.AddAsync(offering.Campus);
+            await _institutions.AddAsync(offering.Course.Institution);
+            await _courses.AddAsync(offering.Course);
+            await _institutions.AddAsync(changes.Course.Institution);
+            await _courses.AddAsync(changes.Course);
             await _campuses.AddAsync(changes.Campus);
+            foreach (var m in offering.Meetings.Union(changes.Meetings))
+            {
+                await _meetings.AddAsync(m);
+            }
             await _sut.AddAsync(offering);
 
             changes.Id = offering.Id;
@@ -57,6 +84,12 @@ namespace Athena.Data.Tests.Repositories
         public async Task DeleteValid(Offering offering)
         {
             await _campuses.AddAsync(offering.Campus);
+            await _institutions.AddAsync(offering.Course.Institution);
+            await _courses.AddAsync(offering.Course);
+            foreach (var m in offering.Meetings)
+            {
+                await _meetings.AddAsync(m);
+            }
             await _sut.AddAsync(offering);
             
             Assert.NotNull(await _sut.GetAsync(offering.Id));
@@ -68,17 +101,18 @@ namespace Athena.Data.Tests.Repositories
         [Theory, AutoData]
         public async Task TracksMeetings(List<Meeting> meetings, Offering offering)
         {
-            var meetingRepo = new MeetingRepository(_db);
-
+            offering.Meetings = Enumerable.Empty<Meeting>();
             await _campuses.AddAsync(offering.Campus);
+            await _institutions.AddAsync(offering.Course.Institution);
+            await _courses.AddAsync(offering.Course);
             await _sut.AddAsync(offering);
             foreach (var m in meetings)
             {
-                await meetingRepo.AddAsync(m);
+                await _meetings.AddAsync(m);
                 await _sut.AddMeetingAsync(offering, m);
             }
 
-            var results = (await meetingRepo.GetMeetingsForOfferingAsync(offering)).ToList();
+            var results = (await _meetings.GetMeetingsForOfferingAsync(offering)).ToList();
             
             Assert.Equal(meetings.Count, results.Count);
             Assert.All(meetings, m => Assert.Contains(m, results));
@@ -88,17 +122,19 @@ namespace Athena.Data.Tests.Repositories
                 await _sut.RemoveMeetingAsync(offering, m);
             }
             
-            Assert.Empty(await meetingRepo.GetMeetingsForOfferingAsync(offering));
+            Assert.Empty(await _meetings.GetMeetingsForOfferingAsync(offering));
         }
 
         [Theory, AutoData]
         public async Task Meeting_ThrowsForDuplicate(Meeting meeting, Offering offering)
         {
-            var meetingRepo = new MeetingRepository(_db);
-
+            offering.Meetings = Enumerable.Empty<Meeting>();
+            
             await _campuses.AddAsync(offering.Campus);
+            await _institutions.AddAsync(offering.Course.Institution);
+            await _courses.AddAsync(offering.Course);
             await _sut.AddAsync(offering);
-            await meetingRepo.AddAsync(meeting);
+            await _meetings.AddAsync(meeting);
 
             await _sut.AddMeetingAsync(offering, meeting);
             await Assert.ThrowsAsync<DuplicateObjectException>(

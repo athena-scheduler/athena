@@ -283,50 +283,5 @@ namespace Athena.Data.Tests.Repositories
             await Assert.ThrowsAsync<DuplicateObjectException>(async () =>
                 await _sut.MarkCourseInProgressForStudentAsync(course, student));
         }
-
-        [Theory, AutoData]
-        public async Task TracksOfferings(List<Offering> offerings, Course course, Campus common)
-        {
-            var campusRepo = new CampusRepository(_db);
-            var offeringRepo = new OfferingRepository(_db);
-
-            await _institutions.AddAsync(course.Institution);
-            await _sut.AddAsync(course);
-            await campusRepo.AddAsync(common);
-            foreach (var o in offerings)
-            {
-                o.Campus = common;
-                await offeringRepo.AddAsync(o);
-                await _sut.AddOfferingAsync(course, o);
-            }
-
-            var results = (await offeringRepo.GetOfferingsForCourseAsync(course)).ToList();
-            
-            Assert.Equal(offerings.Count, results.Count);
-            Assert.All(offerings, o => Assert.Contains(o, results));
-
-            foreach (var o in offerings)
-            {
-                await _sut.RemoveOfferingAsync(course, o);
-            }
-            
-            Assert.Empty(await offeringRepo.GetOfferingsForCourseAsync(course));
-        }
-
-        [Theory, AutoData]
-        public async Task Offering_ThrowsForDuplicate(Offering offering, Course course)
-        {
-            var campusRepo = new CampusRepository(_db);
-            var offeringRepo = new OfferingRepository(_db);
-
-            await _institutions.AddAsync(course.Institution);
-            await _sut.AddAsync(course);
-            await campusRepo.AddAsync(offering.Campus);
-            await offeringRepo.AddAsync(offering);
-
-            await _sut.AddOfferingAsync(course, offering);
-            await Assert.ThrowsAsync<DuplicateObjectException>(
-                async () => await _sut.AddOfferingAsync(course, offering));
-        }
     }
 }

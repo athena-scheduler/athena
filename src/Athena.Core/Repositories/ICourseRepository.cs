@@ -57,20 +57,6 @@ namespace Athena.Core.Repositories
         Task MarkCourseNotInProgressForStudentAsync(Course course, Student student);
 
         /// <summary>
-        /// Add an offering to the specified course
-        /// </summary>
-        /// <param name="course">The course to add the offering to</param>
-        /// <param name="offering">The offering to add</param>
-        Task AddOfferingAsync(Course course, Offering offering);
-        
-        /// <summary>
-        /// Remove an offering from the specified course
-        /// </summary>
-        /// <param name="course">The course to remove the offering from</param>
-        /// <param name="offering">The offering to remove</param>
-        Task RemoveOfferingAsync(Course course, Offering offering);
-
-        /// <summary>
         /// Add a requirement that this course satisfies
         /// </summary>
         /// <param name="course">The course to modify</param>

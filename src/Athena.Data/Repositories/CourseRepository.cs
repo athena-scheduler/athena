@@ -122,18 +122,6 @@ namespace Athena.Data.Repositories
                 new {student = student.Id, course = course.Id}
             );
 
-        public async Task AddOfferingAsync(Course course, Offering offering) =>
-            await _db.InsertUniqueAsync(
-                "INSERT INTO course_x_offering VALUES (@course, @offering)",
-                new {course = course.Id, offering = offering.Id}
-            );
-
-        public async Task RemoveOfferingAsync(Course course, Offering offering) =>
-            await _db.ExecuteAsync(
-                "DELETE FROM course_x_offering WHERE course = @course AND offering = @offering",
-                new {course = course.Id, offering = offering.Id}
-            );
-
         public async Task AddSatisfiedRequirementAsync(Course course, Requirement requirement) =>
             await _db.InsertUniqueAsync(
                 "INSERT INTO course_requirements VALUES (@course, @requirement)",
