@@ -47,7 +47,8 @@ namespace Athena.Data.Repositories
                        m.day,
                        m.time,
                        m.duration,
-                       m.room
+                       m.room,
+                       m.offering
                 FROM meetings m
                 WHERE m.offering = @id",
                 new {offering.Id}
