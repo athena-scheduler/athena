@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Athena.Core.Exceptions;
 using Athena.Core.Models;
 using Athena.Data.Repositories;
@@ -85,6 +87,26 @@ namespace Athena.Data.Tests.Repositories
 
             await _sut.DeleteAsync(meeting);
             Assert.Null(await _sut.GetAsync(meeting.Id));
+        }
+
+        [Theory, AutoData]
+        public async Task GetForOfferings_Valid(Offering offering, List<Meeting> meetings)
+        {
+            await _campuses.AddAsync(offering.Campus);
+            await _institutions.AddAsync(offering.Course.Institution);
+            await _courses.AddAsync(offering.Course);
+            await _offerings.AddAsync(offering);
+
+            foreach (var m in meetings)
+            {
+                m.Offering = offering.Id;
+                await _sut.AddAsync(m);
+            }
+
+            var results = (await _sut.GetMeetingsForOfferingAsync(offering)).ToList();
+            
+            Assert.Equal(results.Count, meetings.Count);
+            Assert.All(meetings, m => Assert.Contains(m, results));
         }
     }
 }
