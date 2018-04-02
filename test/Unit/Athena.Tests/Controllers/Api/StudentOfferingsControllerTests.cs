@@ -18,7 +18,7 @@ namespace Athena.Tests.Controllers.Api
         private readonly StudentOfferingsController _sut;
 
         public StudentOfferingsControllerTests() =>
-            _sut = new StudentOfferingsController(Students.Object, Offerings.Object);
+            _sut = new StudentOfferingsController(Students.Object, Offerings.Object, Institutions.Object, Courses.Object);
 
         [Theory, AutoData]
         public async Task GetEnrolledOfferingsValid(List<Offering> offerings, Student student)
