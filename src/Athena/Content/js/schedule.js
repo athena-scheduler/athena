@@ -7,20 +7,6 @@ let calendar = null;
 let studentId = null;
 let isReadOnly = false;
 
-function fetchAvailableCourses() {
-    $.get(apiRoot + '/student/' + self.studentId + '/offerings/available')
-        .done(function (data) {
-            for (let course of data)
-            {
-                console.log(course);
-            }
-        })
-        .fail(function (err) {
-            console.error(err);
-            window.Materialize.toast('Failed to load available courses', 3000, 'red darken-4');
-        })
-}
-
 function reloadSchedule() {
     $.get(apiRoot + '/student/' + self.studentId + '/schedule')
         .done(function (data) {
@@ -59,6 +45,6 @@ export function init(studentId, readOnly) {
     
     if (!self.isReadOnly)
     {
-        fetchAvailableCourses();
+        // TODO: Fetch available courses
     }
 }

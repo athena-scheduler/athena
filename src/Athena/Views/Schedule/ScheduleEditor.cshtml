@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Edit Schedule";
+    Layout = "_Layout";
+    var student = User.ToAthenaUser();
+}
+
+<div id="schedule">
+    @Html.Partial("_CurrentSchedule")
+</div>
+@Html.Partial("_CurrentScheduleModal")
+
+@section Scripts
+{
+    <script type="text/javascript" src="@Url.Content("~/schedule.js")"></script>
+    <script type="text/javascript">
+        $(function () {
+            athena.schedule.init('@(student.Id)', false);
+        });
+    </script>
+}
