@@ -244,3 +244,20 @@ nav .chip:hover {
     margin-right: 1rem;
     width: min-content;
 }
+
+.pagination-dark li a {
+    color: inherit;
+}
+
+.pagination li.active {
+    background-color: #448aff;
+}
+
+.color-inherit {
+    color: inherit;
+}
+
+.pagination-slim {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
