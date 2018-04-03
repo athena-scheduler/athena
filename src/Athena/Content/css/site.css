@@ -229,3 +229,18 @@ nav .chip:hover {
 .tooltip:hover .tooltiptext {
     visibility: visible;
 }
+
+.vh-80 {
+    height: 80vh;
+}
+
+.login-provider-list {
+    margin-top: 2.5rem;
+    text-align: center;
+}
+
+.login-provider {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    width: min-content;
+}

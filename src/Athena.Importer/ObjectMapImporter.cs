@@ -22,11 +22,9 @@ namespace Athena.Importer
             var map = _provider.GetMap();
 
             await LinkInstitutionsToCampuses(map);
-            await LinkOfferingsToCourses(map);
             await LinkRequirementsToCourses(map);
             await LinkPrereqsToCourses(map);
             await LinkConcurrentPrereqsToCourses(map);
-            await LinkMeetingsToOfferings(map);
             await LinkRequirementsToProgram(map);
         }
 
@@ -39,20 +37,6 @@ namespace Athena.Importer
                     Log.Debug("Linking campus {campus} to institution {institution}", campus, institution);
                     await CreateRequest()
                         .AppendPathSegments("institution", institution, "campuses", campus)
-                        .SendAsync(HttpMethod.Put);
-                }
-            }
-        }
-
-        private async Task LinkOfferingsToCourses(ObjectMap map)
-        {
-            foreach (var course in map.CourseOfferings.Keys)
-            {
-                foreach (var offering in map.CourseOfferings[course])
-                {
-                    Log.Debug("Linking offering {offering} to course {course}", offering, course);
-                    await CreateRequest()
-                        .AppendPathSegments("course", course, "offering", offering)
                         .SendAsync(HttpMethod.Put);
                 }
             }
@@ -95,20 +79,6 @@ namespace Athena.Importer
                     Log.Debug("Linking requirement {req} as a prereq of course {course}", req, course);
                     await CreateRequest()
                         .AppendPathSegments("course", course, "requirements", "prereq", "concurrent", req)
-                        .SendAsync(HttpMethod.Put);
-                }
-            }
-        }
-
-        private async Task LinkMeetingsToOfferings(ObjectMap map)
-        {
-            foreach (var offering in map.OfferingMeetings.Keys)
-            {
-                foreach (var meeting in map.OfferingMeetings[offering])
-                {
-                    Log.Debug("Linking meeting {meeting} to offering {offering}", meeting, offering);
-                    await CreateRequest()
-                        .AppendPathSegments("offering", offering, "meeting", meeting)
                         .SendAsync(HttpMethod.Put);
                 }
             }

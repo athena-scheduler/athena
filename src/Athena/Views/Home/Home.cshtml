@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home";
+    var student = User.ToAthenaUser();
 }
 
 @if (!User.Identity.IsAuthenticated)
@@ -29,39 +30,22 @@ else
 }
 
 @section scripts {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('ul.tabs').tabs({
-                swipeable: true,
-                responsiveThreshold: 1920
-            });
-            // page is now ready, initialize the calendar...
-            $('#calendar').fullCalendar({
-                // put your options and callbacks here
-                defaultView: "agendaWeek",
-                minTime: "07:00:00",
-                maxTime: "22:00:00",
-                allDaySlot: false,
-                slotDuration: "1:00",
-                slotWidth: 2,
-                height: "auto",
-                header: false,
-                columnFormat: 'ddd',
-            });
-            $('#calendar').fullCalendar('next');
-            $('.modal').modal();
-        });
-    </script>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <script type="text/javascript" src="@Url.Content("~/schedule.js")"></script>
+        <script type="text/javascript">
+            $(function () {
+                $('ul.tabs').tabs({
+                    swipeable: true,
+                    responsiveThreshold: 1920
+                });
 
-    <script type="text/javascript">
-        $('.printBtn').on('click', function () {
-            window.print();
-        });
-    </script>
+                athena.schedule.init('@(student.Id)', true);
+            });
 
-    <script type="text/javascript">
-        function completeClasses() {
-            $('#calendar').fullCalendar('removeEvents');
-        }
-    </script>
+            $('.printBtn').on('click', function () {
+                window.print();
+            });
+        </script>
+    }
 }

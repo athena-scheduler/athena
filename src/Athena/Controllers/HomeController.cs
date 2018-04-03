@@ -22,12 +22,6 @@ namespace Athena.Controllers
             return View();
         }
 
-        [HttpGet("Schedule_Page")]
-        public IActionResult Schedule_Page()
-        {
-            return View();
-        }
-
         [HttpGet("Error")]
         public IActionResult Error()
         {

@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.Transactions;
+using Athena.Data.Extensions;
 using AutoFixture;
 using Npgsql;
 

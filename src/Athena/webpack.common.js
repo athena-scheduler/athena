@@ -8,7 +8,8 @@ const wwwroot = path.resolve(__dirname, "wwwroot");
 module.exports = {
     entry: {
         athena: './bundle.js',
-        studentSetup: './Content/js/studentSetup.js'
+        studentSetup: './Content/js/studentSetup.js',
+        schedule: './Content/js/schedule.js'
     },
     output: {
         filename: "[name].js",

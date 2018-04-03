@@ -46,7 +46,7 @@ namespace Athena.Tests.Controllers.Api
             Assert.Equal(user.Student, result);
         }
 
-        [Theory, AutoData]
+        [Fact]
         public void GetCurrentStudent_NotFoundIfNull()
         {
             var ex = Assert.Throws<ApiException>(() => _controller.GetCurrentStudent());
