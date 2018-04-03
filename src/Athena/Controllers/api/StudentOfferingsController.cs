@@ -14,7 +14,10 @@ namespace Athena.Controllers.api
         private readonly IStudentRepository _students;
         private readonly IOfferingReository _offerings;
 
-        public StudentOfferingsController(IStudentRepository students, IOfferingReository offerings)
+        public StudentOfferingsController(
+            IStudentRepository students,
+            IOfferingReository offerings
+        )
         {
             _students = students ?? throw new ArgumentNullException(nameof(students));
             _offerings = offerings ?? throw new ArgumentNullException(nameof(offerings));
