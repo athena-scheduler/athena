@@ -129,6 +129,50 @@ namespace Athena.Data.Repositories
                 new {course = course.Id, prereq = prereq.Id}
             );
 
+        public async Task<IEnumerable<Course>> SearchAsync(CourseSearchOptions query)
+        {
+            if (query.StudentId == Guid.Empty)
+            {
+                throw new ArgumentException("Student Id required", nameof(query.StudentId));
+            }
+
+            return await (query.Completed ? searchCompletedAsync(query) : searchNonCompletedAsync(query));
+        }
+
+        private async Task<IEnumerable<Course>> searchNonCompletedAsync(CourseSearchOptions query) =>
+            await _db.QueryAsync<Course, Institution, Course>(@"
+                SELECT c.id,
+                       c.name,
+                       i.id,
+                       i.name,
+                       i.description
+                FROM courses c
+                    LEFT JOIN institutions i
+                        ON c.institution = i.id
+                WHERE c.id NOT IN (SELECT course FROM student_x_completed_course WHERE student = @student)
+                      AND c.name ILIKE ('%' || @q || '%')
+                      AND i.id IN (SELECT institution FROM institution_x_student WHERE student = @student)",
+                _mapInstitution,
+                new { student = query.StudentId, q = query.Query }
+            );
+
+        private async Task<IEnumerable<Course>> searchCompletedAsync(CourseSearchOptions query) =>
+            await _db.QueryAsync<Course, Institution, Course>(@"
+                SELECT c.id,
+                       c.name,
+                       i.id,
+                       i.name,
+                       i.description
+                FROM courses c
+                    LEFT JOIN institutions i
+                        ON c.institution = i.id
+                    LEFT JOIN student_x_completed_course link
+                        ON c.id = link.course
+                WHERE link.student = @student AND c.name ILIKE ('%' || @q || '%')",
+                _mapInstitution,
+                new { student = query.StudentId, q = query.Query }
+            );
+
         private static Course _mapInstitution(Course c, Institution i)
         {
             c.Institution = i;
