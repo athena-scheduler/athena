@@ -1,12 +1,43 @@
 {
-    "id": "8c89840a-40e6-45b1-8a74-1ff231dfa64c",
-    "campus": 
+  "id": "8c89840a-40e6-45b1-8a74-1ff231dfa64c",
+  "course": {
+    "id": "3c574272-174d-4d19-ae85-89b505f7c285",
+    "name": "MTHM 282 - CALCULUS II",
+    "institution": {
+      "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+      "name": "_",
+      "description": ""
+    }
+  },
+  "campus": {
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-20",
+  "end": "2018-12-09",
+  "meetings": [
     {
-        "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
-        "name": "_",
-        "description": "",
-        "location": "_"
+      "id": "a895dc37-efe5-482b-836c-e7191608f782",
+      "day": "MONDAY",
+      "time": "10:00:00",
+      "duration": "01:50:00",
+      "room": "UPRC 201"
     },
-    "start": "2018-08-20",
-    "end": "2018-12-09"
+    {
+      "id": "702bd19d-3d63-40b9-8aa3-1be40ef49789",
+      "day": "WEDNESDAY",
+      "time": "10:00:00",
+      "duration": "01:50:00",
+      "room": "UPRC 201"
+    },
+    {
+      "id": "63deb30d-f694-4c5b-b1ca-4dbec4c63628",
+      "day": "FRIDAY",
+      "time": "10:00:00",
+      "duration": "00:50:00",
+      "room": "UPRC 201"
+    }
+  ]
 }

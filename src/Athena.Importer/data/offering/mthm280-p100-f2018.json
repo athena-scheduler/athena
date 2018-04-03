@@ -1,12 +1,23 @@
 {
-    "id": "c22cd6a4-b7f2-437e-bf45-09e774ae97cd",
-    "campus": 
-    {
-        "id": "aa9d5895-dfd1-4926-91b9-c37938ff2067",
-        "name": "_",
-        "description": "",
-        "location": "_"
-    },
-    "start": "2018-08-20",
-    "end": "2018-12-09"
+  "id": "c22cd6a4-b7f2-437e-bf45-09e774ae97cd",
+  "course": {
+    "id": "8588ca76-eaa0-43d0-bead-ad1c3374a881",
+    "name": "MTHM  280 - LINEAR ALGEBRA",
+    "institution": {
+      "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+      "name": "_",
+      "description": ""
+    }
+  },
+  "campus": {
+    "id": "aa9d5895-dfd1-4926-91b9-c37938ff2067",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-20",
+  "end": "2018-12-09",
+  "meetings": [
+
+  ]
 }

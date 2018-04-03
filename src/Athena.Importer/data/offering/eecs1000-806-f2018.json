@@ -1,5 +1,14 @@
 {
   "id": "55c6f2a1-6ee1-46d6-b304-fce6ec335acd",
+  "course": {
+    "id": "8559dee7-4a17-4aae-9a24-21957ad503f7",
+    "name": "EECS 1000 - EECS First Year Design",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
   "campus": {
     "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
     "name": "_",
@@ -7,5 +16,14 @@
     "location": "_"
   },
   "start": "2018-08-27",
-  "end": "2018-12-14"
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "642b6543-7d1c-4de9-bd95-71eafdfa24b9",
+      "day": "WEDNESDAY",
+      "time": "13:00:00",
+      "duration": "02:20:00",
+      "room": "UPRC 301"
+    }
+  ]
 }

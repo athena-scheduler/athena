@@ -1,5 +1,14 @@
 {
   "id": "f843abe6-298c-4a57-b855-f7b30d1363ce",
+  "course": {
+    "id": "bea905a7-c924-485d-af67-6e356c22ea74",
+    "name": "EECS 2300 - Electric Circuits I",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "description": ""
+    }
+  },
   "campus": {
     "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
     "name": "_",
@@ -7,5 +16,14 @@
     "location": "_"
   },
   "start": "2018-08-27",
-  "end": "2018-12-14"
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "ef08e84b-66bc-4cc6-ad6a-250d0b801038",
+      "day": "TUESDAY",
+      "time": "11:00:00",
+      "duration": "02:20:00",
+      "room": "NE 2076"
+    }
+  ]
 }

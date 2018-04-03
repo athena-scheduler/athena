@@ -1,12 +1,36 @@
 {
-    "id": "6f55d6c5-8692-4404-b00c-9f5161031fd1",
-    "campus": 
+  "id": "6f55d6c5-8692-4404-b00c-9f5161031fd1",
+  "course": {
+    "id": "9dc68c84-69fa-4ace-b8da-d08b44f0cc82",
+    "name": " ECNM 152 - MICROECONOMICS",
+    "institution": {
+      "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+      "name": "_",
+      "description": ""
+    }
+  },
+  "campus": {
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-20",
+  "end": "2018-12-09",
+  "meetings": [
     {
-        "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
-        "name": "_",
-        "description": "",
-        "location": "_"
+      "id": "f93b46a9-6ef8-4fbe-9030-604d85c0d0d2",
+      "day": "THURSDAY",
+      "time": "17:30:00",
+      "duration": "01:15:00",
+      "room": "UPRC 210"
     },
-    "start": "2018-08-20",
-    "end": "2018-12-09"
+    {
+      "id": "c5f2d2c1-c179-4c6d-8eaf-b03b6a913ca0",
+      "day": "TUESDAY",
+      "time": "17:30:00",
+      "duration": "01:15:00",
+      "room": "UPRC 210"
+    }
+  ]
 }

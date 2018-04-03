@@ -1,5 +1,14 @@
 {
   "id": "dcd20187-75eb-44ae-81d7-94a472051d88",
+  "course": {
+    "id": "7d59a968-c343-4800-8d45-a21eabfe5705",
+    "name": "ENGL 162 - COLLEGE COMPOSITION II ",
+    "institution": {
+      "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+      "name": "_",
+      "description": ""
+    }
+  },
   "campus": {
     "id": "aa9d5895-dfd1-4926-91b9-c37938ff2067",
     "name": "_",
@@ -7,5 +16,14 @@
     "location": "_"
   },
   "start": "2018-08-20",
-  "end": "2018-12-09"
+  "end": "2018-12-09",
+  "meetings": [
+    {
+      "id": "69e7db9c-a025-421c-9a09-5573515e25f3",
+      "day": "THURSDAY",
+      "time": "13:00:00",
+      "duration": "01:15:00",
+      "room": "SC 110"
+    }
+  ]
 }

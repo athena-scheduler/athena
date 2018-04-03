@@ -1,5 +1,14 @@
 {
   "id": "3deba7f4-c5d7-44f3-92b4-987d1e35a0d0",
+  "course": {
+    "id": "9aa204cf-34ad-4b8d-8a41-661bb84b0d51",
+    "name": "EECS 3400 - Electronics I",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "description": ""
+    }
+  },
   "campus": {
     "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
     "name": "_",
@@ -7,5 +16,14 @@
     "location": "_"
   },
   "start": "2018-08-27",
-  "end": "2018-12-14"
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "8500e03e-84ba-46c2-b53f-10fcf111736a",
+      "day": "TUESDAY",
+      "time": "15:30:00",
+      "duration": "02:20:00",
+      "room": "NE 1018"
+    }
+  ]
 }

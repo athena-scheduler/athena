@@ -1,5 +1,14 @@
 {
-  "id": "dc026c4b-6d1e-4c5f-a121-eaa5a507a04c",
+  "id": "134d97ad-65f2-4b83-af51-2dbbfb6fee07",
+  "course": {
+    "id": "db2bf8da-ccc5-46be-8060-8290055224ca",
+    "name": "EECS 3210 - Signals and Systems",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "description": ""
+    }
+  },
   "campus": {
     "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
     "name": "_",
@@ -7,5 +16,21 @@
     "location": "_"
   },
   "start": "2018-08-27",
-  "end": "2018-12-14"
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "19f65398-0d33-4f01-821c-ec165742898e",
+      "day": "THURSDAY",
+      "time": "12:55:00",
+      "duration": "01:20:00",
+      "room": "UPRC 301"
+    },
+    {
+      "id": "75c17cdd-4ed8-4529-8fd9-62a676e48023",
+      "day": "TUESDAY",
+      "time": "12:55:00",
+      "duration": "01:20:00",
+      "room": "UPRC 301"
+    }
+  ]
 }

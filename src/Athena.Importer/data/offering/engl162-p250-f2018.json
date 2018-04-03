@@ -1,5 +1,14 @@
 {
   "id": "16bc8e4e-d9a2-4eed-8de0-f2b83aa64d7f",
+  "course": {
+    "id": "7d59a968-c343-4800-8d45-a21eabfe5705",
+    "name": "ENGL 162 - COLLEGE COMPOSITION II ",
+    "institution": {
+      "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+      "name": "_",
+      "description": ""
+    }
+  },
   "campus": {
     "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
     "name": "_",
@@ -7,5 +16,21 @@
     "location": "_"
   },
   "start": "2018-08-20",
-  "end": "2018-12-09"
+  "end": "2018-12-09",
+  "meetings": [
+    {
+      "id": "32ebd525-3296-4cce-be62-ec96e801ce59",
+      "day": "MONDAY",
+      "time": "09:30:00",
+      "duration": "01:15:00",
+      "room": "UPRC 210"
+    },
+    {
+      "id": "a22c7417-11aa-4860-b10b-49de6aee85f0",
+      "day": "WEDNESDAY",
+      "time": "09:30:00",
+      "duration": "01:15:00",
+      "room": "UPRC 210"
+    }
+  ]
 }

@@ -1,5 +1,14 @@
 {
   "id": "5fce5259-b79d-4909-8a9e-aa6dd0a14dc4",
+  "course": {
+    "id": "7c92dab2-3c24-4dfe-8cc1-850fd4c05561",
+    "name": "PHYC 252 - COLLEGE PHYSICS II",
+    "institution": {
+      "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+      "name": "_",
+      "description": ""
+    }
+  },
   "campus": {
     "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
     "name": "_",
@@ -7,5 +16,28 @@
     "location": "_"
   },
   "start": "2018-08-20",
-  "end": "2018-12-09"
+  "end": "2018-12-09",
+  "meetings": [
+    {
+      "id": "758e08e4-c8fc-4f6c-bf96-600b7f8cf007",
+      "day": "MONDAY",
+      "time": "08:00:00",
+      "duration": "01:15:00",
+      "room": "UPRC 210"
+    },
+    {
+      "id": "62526512-a4e8-438d-bf86-6a84ac4e62c2",
+      "day": "WEDNESDAY",
+      "time": "08:00:00",
+      "duration": "01:15:00",
+      "room": "UPRC 210"
+    },
+    {
+      "id": "2b0ff1c9-5809-42c8-b495-9e6bdc2f30d1",
+      "day": "TUESDAY",
+      "time": "11:00:00",
+      "duration": "00:50:00",
+      "room": "LS 112"
+    }
+  ]
 }

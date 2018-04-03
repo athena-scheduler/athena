@@ -1,5 +1,5 @@
 {
-  "id": "26aaf3a2-6cb5-4c9c-9ed5-a37c6f8a6fab",
+  "id": "7c3fa8f2-347d-48e8-a48e-e28365fe7e83",
   "name": "EECS Signals and Systems",
-  "description": "An introduction to electrical circuit components and laws, including ideal op-amps, DC circuit analysis, AC circuit analysis, transient analysis of RL and RC circuits and computer-aided circuit analysis."
+  "description": "Analog and digital data transmission, transmission media, Modulation techniques. Data encoding, asynchronous and synchronous transmissions, USART, RS232-C, RS-449 standards. Data link configuration and control, error control, multiplexing and demultiplexing."
 }

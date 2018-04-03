@@ -1,12 +1,36 @@
 {
-    "id": "c22cd6a4-b7f2-437e-bf45-09e774ae97cd",
-    "campus": 
+  "id": "c22cd6a4-b7f2-437e-bf45-09e774ae97cd",
+  "course": {
+    "id": "9dc68c84-69fa-4ace-b8da-d08b44f0cc82",
+    "name": " ECNM 152 - MICROECONOMICS",
+    "institution": {
+      "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+      "name": "_",
+      "description": ""
+    }
+  },
+  "campus": {
+    "id": "aa9d5895-dfd1-4926-91b9-c37938ff2067",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-20",
+  "end": "2018-12-09",
+  "meetings": [
     {
-        "id": "aa9d5895-dfd1-4926-91b9-c37938ff2067",
-        "name": "_",
-        "description": "",
-        "location": "_"
+      "id": "6e2d1cdf-4653-4e96-aead-c209035c756e",
+      "day": "MONDAY",
+      "time": "10:00:00",
+      "duration": "01:15:00",
+      "room": "IL 213"
     },
-    "start": "2018-08-20",
-    "end": "2018-12-09"
+    {
+      "id": "dc7afcf0-30f6-49d4-a90b-ceecd60b7e6f",
+      "day": "WEDNESDAY",
+      "time": "10:00:00",
+      "duration": "01:15:00",
+      "room": "IL 213"
+    }
+  ]
 }
