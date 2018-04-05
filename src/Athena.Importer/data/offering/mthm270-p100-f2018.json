@@ -1,0 +1,46 @@
+{
+  "id": "6428b464-7edc-427a-b64b-94ae7c3bbbe6",
+  "course": {
+    "id": "ca874843-d2dc-404d-aab1-f284032417e9",
+    "name": "MTHM  270 - DISCRETE MATHEMATICS",
+    "institution": {
+      "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+      "name": "_",
+      "description": ""
+    }
+  },
+  "campus": {
+    "id": "aa9d5895-dfd1-4926-91b9-c37938ff2067",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-20",
+  "end": "2018-12-09",
+  "meetings": [
+    {
+      "id": "6b0859c4-07ef-467d-b264-7a38cffa0c58",
+      "offering": "6428b464-7edc-427a-b64b-94ae7c3bbbe6",
+      "day": "MONDAY",
+      "time": "10:00:00",
+      "duration": "00:50:00",
+      "room": "PS 201"
+    },
+    {
+      "id": "0697884e-345a-419b-8116-7d33e5bf5530",
+      "offering": "6428b464-7edc-427a-b64b-94ae7c3bbbe6",
+      "day": "WEDNESDAY",
+      "time": "10:00:00",
+      "duration": "00:50:00",
+      "room": "PS 201"
+    },
+    {
+      "id": "2b708b3b-4af5-4faa-bf31-fc7825970e47",
+      "offering": "6428b464-7edc-427a-b64b-94ae7c3bbbe6",
+      "day": "FRIDAY",
+      "time": "10:00:00",
+      "duration": "00:50:00",
+      "room": "PS 201"
+    }
+  ]
+}

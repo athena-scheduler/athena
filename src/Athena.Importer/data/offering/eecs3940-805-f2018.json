@@ -1,0 +1,30 @@
+{
+  "id": "98fe46ec-6a16-41c6-ada1-8f830ef63c11",
+  "course": {
+    "id": "f587f43c-6136-4d06-a592-ab20aa6f30ec",
+    "name": "EECS 3940 - EECS Co-Op Experience",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
+  "campus": {
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "UPRC",
+    "description": "University Partnership Ridge Campus",
+    "location": "32121 Lorain Rd, North Ridgeville, OH 44039"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "30fe07dd-3dbf-4427-958b-3ffa3cfbb90c",
+      "offering": "98fe46ec-6a16-41c6-ada1-8f830ef63c11",
+      "day": "MONDAY",
+      "time": "08:00:00",
+      "duration": "01:10:00",
+      "room": "NA"
+    }
+  ]
+}

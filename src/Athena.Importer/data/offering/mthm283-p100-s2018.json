@@ -1,0 +1,46 @@
+{
+  "id": "64587955-ce1e-4362-a473-6f11e0dbb73e",
+  "course": {
+    "id": "848063ac-34fa-48bd-a27a-896e440a8ab8",
+    "name": "MTHM 283 - Differential Equations",
+    "institution": {
+      "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+      "name": "_",
+      "description": ""
+    }
+  },
+  "campus": {
+    "id": "aa9d5895-dfd1-4926-91b9-c37938ff2067",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-20",
+  "end": "2018-12-09",
+  "meetings": [
+    {
+      "id": "a895dc37-efe5-482b-836c-e7191608f782",
+      "offering": "64587955-ce1e-4362-a473-6f11e0dbb73e",
+      "day": "MONDAY",
+      "time": "10:00:00",
+      "duration": "00:50:00",
+      "room": "UPRC 201"
+    },
+    {
+      "id": "702bd19d-3d63-40b9-8aa3-1be40ef49789",
+      "offering": "64587955-ce1e-4362-a473-6f11e0dbb73e",
+      "day": "WEDNESDAY",
+      "time": "10:00:00",
+      "duration": "00:50:00",
+      "room": "UPRC 201"
+    },
+    {
+      "id": "63deb30d-f694-4c5b-b1ca-4dbec4c63628",
+      "offering": "64587955-ce1e-4362-a473-6f11e0dbb73e",
+      "day": "FRIDAY",
+      "time": "10:00:00",
+      "duration": "00:50:00",
+      "room": "UPRC 201"
+    }
+  ]
+}

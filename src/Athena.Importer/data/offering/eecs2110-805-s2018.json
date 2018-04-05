@@ -1,0 +1,38 @@
+{
+  "id": "8c87eff9-f5fa-40ed-bb5b-c243f0a1073e",
+  "course": {
+    "id": "115c1fb4-ec40-4a7b-a639-f1c5fe00cd4a",
+    "name": "EECS 2110 - Computer Architecture and Organization",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "description": ""
+    }
+  },
+  "campus": {
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "UPRC",
+    "description": "University Partnership Ridge Campus",
+    "location": "32121 Lorain Rd, North Ridgeville, OH 44039"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "2a152b9a-2247-44e7-8b6a-3c76f17ed468",
+      "offering": "8c87eff9-f5fa-40ed-bb5b-c243f0a1073e",
+      "day": "TUESDAY",
+      "time": "17:30:00",
+      "duration": "01:20:00",
+      "room": "UPRC 301"
+    },
+    {
+      "id": "1efafb6e-a5de-4805-8e1e-ba60ab8ad02c",
+      "offering": "8c87eff9-f5fa-40ed-bb5b-c243f0a1073e",
+      "day": "THURSDAY",
+      "time": "17:30:00",
+      "duration": "01:20:00",
+      "room": "UPRC 301"
+    }
+  ]
+}

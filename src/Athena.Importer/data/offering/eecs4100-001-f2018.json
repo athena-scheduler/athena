@@ -1,0 +1,38 @@
+{
+  "id": "c0287c5b-8703-415c-8a04-6783c5ededcf",
+  "course": {
+    "id": "dfb63db3-09a5-4e0d-8ceb-d3c2b417c960",
+    "name": "EECS 4100 - EECS Theory of Computation",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "8d2e5a9a-5625-47a3-b310-b3a281ad88c3",
+      "offering": "c0287c5b-8703-415c-8a04-6783c5ededcf",
+      "day": "TUESDAY",
+      "time": "09:35:00",
+      "duration": "01:20:00",
+      "room": "PL 2650"
+    },
+    {
+      "id": "dee81758-55f5-473c-b9ae-89a5d27b134d",
+      "offering": "c0287c5b-8703-415c-8a04-6783c5ededcf",
+      "day": "THURSDAY",
+      "time": "09:35:00",
+      "duration": "01:20:00",
+      "room": "PL 2650"
+    }
+  ]
+}

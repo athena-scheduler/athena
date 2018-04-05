@@ -1,0 +1,30 @@
+{
+  "id": "42a7ac2a-57b9-4bb8-bb32-1c8dd17f9e2b",
+  "course": {
+    "id": "f587f43c-6136-4d06-a592-ab20aa6f30ec",
+    "name": "EECS 3940 - EECS Co-Op Experience",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "c857999b-90c7-441b-adb2-c8c261538afd",
+      "offering": "42a7ac2a-57b9-4bb8-bb32-1c8dd17f9e2b",
+      "day": "MONDAY",
+      "time": "08:00:00",
+      "duration": "01:10:00",
+      "room": "NA"
+    }
+  ]
+}

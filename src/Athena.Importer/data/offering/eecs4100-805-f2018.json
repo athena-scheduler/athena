@@ -1,0 +1,38 @@
+{
+  "id": "c97fa1e7-2cd3-470b-ac0f-97418eb36650",
+  "course": {
+    "id": "dfb63db3-09a5-4e0d-8ceb-d3c2b417c960",
+    "name": "EECS 4100 - EECS Theory of Computation",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
+  "campus": {
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "UPRC",
+    "description": "University Partnership Ridge Campus",
+    "location": "32121 Lorain Rd, North Ridgeville, OH 44039"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "ab02df60-703f-42b1-b814-46ad4851db8c",
+      "offering": "c97fa1e7-2cd3-470b-ac0f-97418eb36650",
+      "day": "TUESDAY",
+      "time": "09:35:00",
+      "duration": "01:20:00",
+      "room": "UPRC 213"
+    },
+    {
+      "id": "d5ecd7d0-c338-4d6d-8185-72190967e565",
+      "offering": "c97fa1e7-2cd3-470b-ac0f-97418eb36650",
+      "day": "THURSDAY",
+      "time": "09:35:00",
+      "duration": "01:20:00",
+      "room": "UPRC 213"
+    }
+  ]
+}
