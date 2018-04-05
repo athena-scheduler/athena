@@ -1,0 +1,46 @@
+{
+  "id": "43807e92-6fe6-4b9b-897d-443cfe9d92d0",
+  "course": {
+    "id": "4428cdb6-f318-4929-bba7-683f929abd87",
+    "name": "EECS 1100 - EECS Digital Logic Design",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "64810d46-5f08-4e0b-baa3-fd99af2ffbf7",
+      "offering": "43807e92-6fe6-4b9b-897d-443cfe9d92d0",
+      "day": "MONDAY",
+      "time": "08:30:00",
+      "duration": "00:55:00",
+      "room": "RH 1554"
+    },
+    {
+      "id": "b898e444-c5f4-4370-9b0f-54606d7fe3d6",
+      "offering": "43807e92-6fe6-4b9b-897d-443cfe9d92d0",
+      "day": "WEDNESDAY",
+      "time": "08:30:00",
+      "duration": "00:55:00",
+      "room": "RH 1554"
+    },
+    {
+      "id": "a3e4137c-b92b-42b4-a6e8-b99541b2b874",
+      "offering": "43807e92-6fe6-4b9b-897d-443cfe9d92d0",
+      "day": "FRIDAY",
+      "time": "08:30:00",
+      "duration": "00:55:00",
+      "room": "RH 1554"
+    }
+  ]
+}

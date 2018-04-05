@@ -1,0 +1,38 @@
+{
+  "id": "6bd6ccbc-5811-4a3a-a4fd-9ad473c7fe22",
+  "course": {
+    "id": "b4e7f5b1-1fa3-419c-9701-0d87253861a4",
+    "name": "EECS 2510 - EECS Non-Linear Data Structures",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
+  "campus": {
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "UPRC",
+    "description": "University Partnership Ridge Campus",
+    "location": "32121 Lorain Rd, North Ridgeville, OH 44039"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "e08083fd-e614-4aa9-94c4-d6f567358088",
+      "offering": "6bd6ccbc-5811-4a3a-a4fd-9ad473c7fe22",
+      "day": "MONDAY",
+      "time": "11:10:00",
+      "duration": "01:20:00",
+      "room": "UPRC 303"
+    },
+    {
+      "id": "691eee76-64af-4695-b1e0-e4ac8c8cf5ad",
+      "offering": "6bd6ccbc-5811-4a3a-a4fd-9ad473c7fe22",
+      "day": "WEDNESDAY",
+      "time": "11:10:00",
+      "duration": "01:20:00",
+      "room": "UPRC 303"
+    }
+  ]
+}

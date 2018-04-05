@@ -1,0 +1,38 @@
+{
+  "id": "d661d99c-8b66-4f29-bcee-e9ae6f930e8b",
+  "course": {
+    "id": "4428cdb6-f318-4929-bba7-683f929abd87",
+    "name": "EECS 1100 - EECS Digital Logic Design",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
+  "campus": {
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "UPRC",
+    "description": "University Partnership Ridge Campus",
+    "location": "32121 Lorain Rd, North Ridgeville, OH 44039"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "a6ad507b-e0e1-4331-ace5-7452f929ce38",
+      "offering": "d661d99c-8b66-4f29-bcee-e9ae6f930e8b",
+      "day": "MONDAY",
+      "time": "16:00:00",
+      "duration": "01:20:00",
+      "room": "UPRC 302"
+    },
+    {
+      "id": "b90e1f76-8ee3-4f86-8b7c-10178df48eec",
+      "offering": "d661d99c-8b66-4f29-bcee-e9ae6f930e8b",
+      "day": "WEDNESDAY",
+      "time": "16:00:00",
+      "duration": "01:20:00",
+      "room": "UPRC 302"
+    }
+  ]
+}

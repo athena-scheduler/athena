@@ -1,12 +1,12 @@
 {
-  "id": "134d97ad-65f2-4b83-af51-2dbbfb6fee07",
+  "id": "f1055e93-5f2d-4989-9aba-6f29933f75d0",
   "course": {
-    "id": "db2bf8da-ccc5-46be-8060-8290055224ca",
-    "name": "EECS 3210 - Signals and Systems",
+    "id": "b41a4fbd-02a6-49bc-997d-80f708d73401",
+    "name": "EECS 2500 - EECS Linear Data Structures",
     "institution": {
       "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
       "name": "_",
-      "description": ""
+      "Description": ""
     }
   },
   "campus": {
@@ -19,16 +19,18 @@
   "end": "2018-12-14",
   "meetings": [
     {
-      "id": "19f65398-0d33-4f01-821c-ec165742898e",
-      "day": "THURSDAY",
-      "time": "12:55:00",
+      "id": "86e7f0e7-f0d8-497f-95fc-2078ee2d214e",
+      "offering": "f1055e93-5f2d-4989-9aba-6f29933f75d0",
+      "day": "TUESDAY",
+      "time": "14:30:00",
       "duration": "01:20:00",
       "room": "UPRC 301"
     },
     {
-      "id": "75c17cdd-4ed8-4529-8fd9-62a676e48023",
-      "day": "TUESDAY",
-      "time": "12:55:00",
+      "id": "6835c90d-137c-43aa-ba68-0f45c90cbc2b",
+      "offering": "f1055e93-5f2d-4989-9aba-6f29933f75d0",
+      "day": "THURSDAY",
+      "time": "14:30:00",
       "duration": "01:20:00",
       "room": "UPRC 301"
     }

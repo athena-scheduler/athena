@@ -1,12 +1,12 @@
 {
-  "id": "134d97ad-65f2-4b83-af51-2dbbfb6fee07",
+  "id": "e8643c3b-f56e-4259-9dc5-efa224a6957f",
   "course": {
-    "id": "db2bf8da-ccc5-46be-8060-8290055224ca",
-    "name": "EECS 3210 - Signals and Systems",
+    "id": "4ba40865-6b62-4503-92f3-fb7a3d0a0a2d",
+    "name": "EECS 3540 - EECS Systems And Systems Programming",
     "institution": {
       "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
       "name": "_",
-      "description": ""
+      "Description": ""
     }
   },
   "campus": {
@@ -19,18 +19,20 @@
   "end": "2018-12-14",
   "meetings": [
     {
-      "id": "19f65398-0d33-4f01-821c-ec165742898e",
-      "day": "THURSDAY",
-      "time": "12:55:00",
-      "duration": "01:20:00",
-      "room": "UPRC 301"
-    },
-    {
-      "id": "75c17cdd-4ed8-4529-8fd9-62a676e48023",
+      "id": "82a80a99-63b3-4d0d-ad2b-5a60970da5a4",
+      "offering": "e8643c3b-f56e-4259-9dc5-efa224a6957f",
       "day": "TUESDAY",
       "time": "12:55:00",
       "duration": "01:20:00",
-      "room": "UPRC 301"
+      "room": "UPRC 213"
+    },
+    {
+      "id": "4b88a093-3260-4de1-ad24-9c56dc97b62d",
+      "offering": "e8643c3b-f56e-4259-9dc5-efa224a6957f",
+      "day": "THURSDAY",
+      "time": "12:55:00",
+      "duration": "01:20:00",
+      "room": "UPRC 213"
     }
   ]
 }

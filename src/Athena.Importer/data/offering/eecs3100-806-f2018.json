@@ -1,0 +1,30 @@
+{
+  "id": "cd0e1b4b-139a-4c49-8c8b-16be6c937916",
+  "course": {
+    "id": "3aa30b78-47ba-46a4-9e7e-591c18dea252",
+    "name": "EECS 3100 - EECS Embedded Systems",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
+  "campus": {
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "d7666e93-5677-4815-a39b-27c981f3393e",
+      "offering": "cd0e1b4b-139a-4c49-8c8b-16be6c937916",
+      "day": "MONDAY",
+      "time": "18:00:00",
+      "duration": "02:30:00",
+      "room": "UPRC 303"
+    }
+  ]
+}

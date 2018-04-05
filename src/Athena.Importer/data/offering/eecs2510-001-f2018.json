@@ -1,0 +1,38 @@
+{
+  "id": "95467b0f-da79-4232-8fcd-366ab25888f7",
+  "course": {
+    "id": "b4e7f5b1-1fa3-419c-9701-0d87253861a4",
+    "name": "EECS 2510 - EECS Non-Linear Data Structures",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "d04dd4ff-448b-4721-9ed7-acfd29236c19",
+      "offering": "95467b0f-da79-4232-8fcd-366ab25888f7",
+      "day": "TUESDAY",
+      "time": "11:10:00",
+      "duration": "01:20:00",
+      "room": "PL 3110"
+    },
+    {
+      "id": "cc889bdc-d5b6-48db-ab5a-b013bc9c3323",
+      "offering": "95467b0f-da79-4232-8fcd-366ab25888f7",
+      "day": "THURSDAY",
+      "time": "11:10:00",
+      "duration": "01:20:00",
+      "room": "PL 3110"
+    }
+  ]
+}
