@@ -21,6 +21,10 @@ function reloadSchedule() {
         });
 }
 
+export function render() {
+    self.calendar.fullCalendar('render');
+}
+
 export function init(studentId, readOnly) {
     self.studentId = studentId;
     self.isReadOnly = readOnly;
@@ -35,6 +39,7 @@ export function init(studentId, readOnly) {
         slotDuration: "01:00",
         slotWidth: 2,
         height: "auto",
+        width: "auto",
         header: false,
         columnFormat: 'ddd',
     });

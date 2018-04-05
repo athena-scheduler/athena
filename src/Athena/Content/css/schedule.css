@@ -1,0 +1,23 @@
+#calendar {
+  margin: 0 auto;
+  background-color: white;
+  padding: 0;
+}
+
+.cal-card-content {
+  background-color: lightgray;
+}
+
+@media (min-width: 1170px) {
+    div.fc-view.fc-agendaDay-view.fc-agenda-view table {
+        max-width: 100%;
+    }
+}
+@media (max-width: 1170px) {
+    div.fc-view-container {
+        overflow-x: scroll;
+    }
+    div.fc-view.fc-agendaDay-view.fc-agenda-view table {
+        min-width: 1170px;
+    }
+}
