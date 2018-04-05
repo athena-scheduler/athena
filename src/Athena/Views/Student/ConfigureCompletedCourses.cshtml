@@ -15,36 +15,17 @@
                 <div class="row">
                     <div class="input-field col s11">
                         <i class="material-icons prefix">search</i>
-                        <input type="text" class="flow-text" id="institution-search" />
-                        <label for="institution-search">Search</label>
+                        <input type="text" class="flow-text" id="completed-search" />
+                        <label for="completed-search">Search</label>
                     </div>
                     <div class="input-field col s1 center">
                         <a class="modal-trigger color-inherit" href="#add-completed-courses-dialog"><i class="material-icons small">playlist_add</i></a> 
                     </div>
                 </div>
-                <div class="row" id="institution-results">
-                    @*<div class="col s12">
-            <div class="progress"><div class="indeterminate"></div></div>
-        </div>*@
-                    @for (var i = 0; i < 6; i++)
-                     {
-                        <div class="col s4">
-                            <div class="card grey darken-2">
-                                <div class="card-content white-text">
-                                    <span class="card-title">Card Title</span>
-                                    <p>
-                                        I am a very simple card. I am good at containing small bits of information.
-                                        I am convenient because I require little markup to use effectively.
-                                    </p>
-                                </div>
-                                <div class="card-action">
-                                    <a href="#">This is a link</a>
-                                    <a href="#">This is a link</a>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    
+                <div class="row" id="completed-courses">
+                    <div class="col s12">
+                        <div class="progress"><div class="indeterminate"></div></div>
+                    </div>        
                 </div>
                 <div class="row">
                     <div class=" col s12">
@@ -65,39 +46,21 @@
 </div>
 <div id="add-completed-courses-dialog" class="modal modal-fixed-footer">
     <div class="modal-content">
-        <h4>What you done took</h4>
+        <h4>What courses did you take ?</h4>
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">search</i>
-                <input type="text" class="flow-text" id="institution-search" />
-                <label for="institution-search">Search</label>
+                <input type="text" class="flow-text" id="incomplete-search" />
+                <label for="incomplete-search">Search</label>
             </div>
-
         </div>
-        <div class="row" id="institution-results">
-            @*<div class="col s12">
-            <div class="progress"><div class="indeterminate"></div></div>
-        </div>*@
-            @for (var i = 0; i < 6; i++)
-            {
-                <div class="col s4">
-                    <div class="card grey darken-2">
-                        <div class="card-content white-text">
-                            <span class="card-title">Card Title</span>
-                            <p>
-                                I am a very simple card. I am good at containing small bits of information.
-                                I am convenient because I require little markup to use effectively.
-                            </p>
-                        </div>
-                        <div class="card-action">
-                            <a href="#">This is a link</a>
-                            <a href="#">This is a link</a>
-                        </div>
-                    </div>
-                </div>
-            }
-
-
+        <div class="input-field col s1 center">
+            <a class="modal-trigger color-inherit" href="#add-incomplete-courses-dialog"><i class="material-icons small">playlist_add</i></a>
+        </div>
+        <div class="row" id="incomplete-courses">
+            <div class="col s12">
+                <div class="progress"><div class="indeterminate"></div></div>
+            </div>
         </div>
     </div>
     <div class="modal-footer">
@@ -112,4 +75,14 @@
         </ul>
     </div>
 </div>
+
+@section scripts
+{
+    <script type="text/javascript" src="@Url.Content("~/completedCourses.js")"></script>
+    <script type="text/javascript">
+        athena.completedCourses.init("@(student.Id)");
+    </script>
+
+
+}
 

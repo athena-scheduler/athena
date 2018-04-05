@@ -9,7 +9,8 @@ module.exports = {
     entry: {
         athena: './bundle.js',
         studentSetup: './Content/js/studentSetup.js',
-        schedule: './Content/js/schedule.js'
+        schedule: './Content/js/schedule.js',
+        completedCourses: './Content/js/ConfigureCompletedCourses.js'
     },
     output: {
         filename: "[name].js",
