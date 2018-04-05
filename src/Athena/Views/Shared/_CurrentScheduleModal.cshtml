@@ -8,3 +8,34 @@
         <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Cancel</a>
     </div>
 </div>
+<div id="add-courses" class="modal bottom-sheet">
+    <div class="modal-content">
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">search</i>
+                <input type="text" class="flow-text" id="course-search" />
+                <label for="course-search">Search</label>
+            </div>
+        </div>
+        <div class="row">
+            @for (var i = 0; i < 6; i++)
+            {
+                <div class="col s4">
+                    <div class="card grey darken-2">
+                        <div class="card-content white-text">
+                            <span class="card-title">Card Title</span>
+                            <p>
+                                I am a very simple card. I am good at containing small bits of information.
+                                I am convenient because I require little markup to use effectively.
+                            </p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

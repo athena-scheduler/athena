@@ -36,7 +36,7 @@ export function init(studentId, readOnly) {
         minTime: "07:00:00",
         maxTime: "22:00:00",
         allDaySlot: false,
-        slotDuration: "01:00",
+        slotDuration: "00:20",
         slotWidth: 2,
         height: "auto",
         width: "auto",

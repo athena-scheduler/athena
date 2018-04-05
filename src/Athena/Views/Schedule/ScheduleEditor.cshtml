@@ -12,15 +12,15 @@
 </p>
 
 <div id="schedule">
-    @Html.Partial("_CurrentSchedule")
+    @Html.Partial("_CurrentSchedule", false)
 </div>
+@Html.Partial("_CurrentScheduleModal")
 
 @section Scripts
 {
     <script type="text/javascript" src="@Url.Content("~/schedule.js")"></script>
     <script type="text/javascript">
         $(function () {
-            $("ul.tabs").tabs();
             athena.schedule.init('@(student.Id)', false);
         });
     </script>
