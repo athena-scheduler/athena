@@ -99,6 +99,11 @@ namespace Athena.Setup
                 }
             }, CancellationToken.None).GetAwaiter().GetResult();
             
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ATHENA_INIT_ONLY")))
+            {
+                Environment.Exit(0);
+            }
+
             return app;
         }
 

@@ -210,6 +210,12 @@ Task("Docker::Build")
         Tag = new []{$"athenascheduler/importer:{imageTag}"},
         File = "./src/Athena.Importer/Dockerfile"
     }, ".");
+
+    DockerBuild(new DockerImageBuildSettings
+    {
+        Tag = new []{$"athenascheduler/db:{imageTag}"},
+        File = "./src/Athena.Importer/contrib/docker/Dockerfile"
+    }, ".");
 });
 
 Task("Docker::Push")
