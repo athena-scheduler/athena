@@ -1,8 +1,8 @@
 {
-  "id": "c22cd6a4-b7f2-437e-bf45-09e774ae97cd",
+  "id": "6de4ef9f-4cf6-48d1-822f-9c3806353ed9",
   "course": {
     "id": "9dc68c84-69fa-4ace-b8da-d08b44f0cc82",
-    "name": " ECNM 152 - MICROECONOMICS",
+    "name": "ECNM 152 - MICROECONOMICS",
     "institution": {
       "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
       "name": "_",
@@ -20,6 +20,7 @@
   "meetings": [
     {
       "id": "6e2d1cdf-4653-4e96-aead-c209035c756e",
+      "offering": "6de4ef9f-4cf6-48d1-822f-9c3806353ed9",
       "day": "MONDAY",
       "time": "10:00:00",
       "duration": "01:15:00",
@@ -27,6 +28,7 @@
     },
     {
       "id": "dc7afcf0-30f6-49d4-a90b-ceecd60b7e6f",
+      "offering": "6de4ef9f-4cf6-48d1-822f-9c3806353ed9",
       "day": "WEDNESDAY",
       "time": "10:00:00",
       "duration": "01:15:00",
