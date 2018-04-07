@@ -6,11 +6,9 @@ using AutoFixture.Xunit2;
 using Flurl.Http.Testing;
 using Xunit;
 
-[assembly: CollectionBehavior(CollectionBehavior.CollectionPerAssembly)]
-
 namespace Athena.Importer.Tests
 {
-    public class ProgramTests : IDisposable
+    public class ProgramTests : NoOutputTest
     {
         private static readonly string DataDir = GetDataDir();
         private const int MaxSearchDepth = 10;
@@ -127,6 +125,10 @@ namespace Athena.Importer.Tests
                 .WithContentType("application/json");
         }
 
-        public void Dispose() => _http.Dispose();
+        public override void Dispose()
+        {
+            base.Dispose();;
+            _http.Dispose();
+        }
     }
 }
