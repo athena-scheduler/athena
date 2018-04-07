@@ -35,7 +35,7 @@ function markNotComplete(courseId) {
     $.ajax({
         url: apiRoot + '/student/' + self.StudentId + '/courses/completed/' + courseId,
         type: 'DELETE',
-        complete: fetchCompletedCourses()
+        complete: fetchCompletedCourses
     });
 }
 
@@ -43,7 +43,7 @@ function markCourseComplete(courseId) {
     $.ajax({
         url: apiRoot + '/student/' + self.StudentId + '/courses/completed/' + courseId,
         type: 'PUT',
-        complete: fetchIncompleteCourses()
+        complete: fetchCompletedCourses
     })
 }
 
@@ -56,7 +56,8 @@ function setIncompleteCourses(data) {
         const link = $('<a href="#")">Mark As Complete</a>')
 
         link.click(function () {
-            markCourseComplete(course.id)
+            markCourseComplete(course.id);
+            card.remove();
         });
 
         card.find('.card-action').append(link);
