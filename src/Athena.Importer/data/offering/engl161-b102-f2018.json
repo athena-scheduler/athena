@@ -18,6 +18,13 @@
   "start": "2018-08-20",
   "end": "2018-12-09",
   "meetings": [
-
+    {
+      "id": "f2f9205c-e177-4cd8-b5a2-24bc4c138deb",
+      "offering": "cfd82093-56a0-4ef5-800f-5a0b35c501d8",
+      "day": "THURSDAY",
+      "time": "9:30:00",
+      "duration": "01:15:00",
+      "room": "CU 227"
+    }
   ]
 }

@@ -20,6 +20,7 @@
   "meetings": [
     {
       "id": "f93b46a9-6ef8-4fbe-9030-604d85c0d0d2",
+      "offering": "6f55d6c5-8692-4404-b00c-9f5161031fd1",
       "day": "THURSDAY",
       "time": "17:30:00",
       "duration": "01:15:00",
@@ -27,6 +28,7 @@
     },
     {
       "id": "c5f2d2c1-c179-4c6d-8eaf-b03b6a913ca0",
+      "offering": "6f55d6c5-8692-4404-b00c-9f5161031fd1",
       "day": "TUESDAY",
       "time": "17:30:00",
       "duration": "01:15:00",

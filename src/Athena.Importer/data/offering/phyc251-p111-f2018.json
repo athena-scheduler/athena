@@ -20,6 +20,7 @@
   "meetings": [
     {
       "id": "0530e0ab-cd6a-4cbb-9752-a9067efed984",
+      "offering": "c0fd3371-6b37-48be-bf7a-588fbcc2ffcd",
       "day": "MONDAY",
       "time": "10:30:00",
       "duration": "01:15:00",
@@ -27,6 +28,7 @@
     },
     {
       "id": "afbd0a71-8bd8-477f-a679-fe5fa01087ca",
+      "offering": "c0fd3371-6b37-48be-bf7a-588fbcc2ffcd",
       "day": "WEDNESDAY",
       "time": "10:30:00",
       "duration": "01:15:00",
@@ -34,6 +36,7 @@
     },
     {
       "id": "952f0844-efca-4977-a0a8-a909fd6da163",
+      "offering": "c0fd3371-6b37-48be-bf7a-588fbcc2ffcd",
       "day": "THURSDAY",
       "time": "11:00:00",
       "duration": "00:50:00",

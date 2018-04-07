@@ -53,7 +53,6 @@ namespace Athena.Importer
                 await new GenericImporter<Institution>(uri, ApiKey, new JsonFilesystemDataProvider<Institution>(DataPath)).Import();
                 await new GenericImporter<Course>(uri, ApiKey, new JsonFilesystemDataProvider<Course>(DataPath)).Import();
                 await new GenericImporter<Offering>(uri, ApiKey, new JsonFilesystemDataProvider<Offering>(DataPath)).Import();
-                await new GenericImporter<Meeting>(uri, ApiKey, new JsonFilesystemDataProvider<Meeting>(DataPath)).Import();
                 await new GenericImporter<Core.Models.Program>(uri, ApiKey, new JsonFilesystemDataProvider<Core.Models.Program>(DataPath)).Import();
                 await new GenericImporter<Requirement>(uri, ApiKey, new JsonFilesystemDataProvider<Requirement>(DataPath)).Import();
 

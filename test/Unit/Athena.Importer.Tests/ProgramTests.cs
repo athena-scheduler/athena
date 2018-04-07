@@ -93,17 +93,6 @@ namespace Athena.Importer.Tests
         }
         
         [Fact]
-        public async Task ImportsMeetings()
-        {
-            var result = await Program.Main(new[] {"--api-endpoint", ApiTestEndpoint, "--data-path", DataDir});
-            
-            Assert.Equal(0, result);
-            _http.ShouldHaveCalled($"{ApiTestEndpoint}/v1/meeting")
-                .WithVerb(HttpMethod.Post)
-                .WithContentType("application/json");
-        }
-        
-        [Fact]
         public async Task ImportsOfferings()
         {
             var result = await Program.Main(new[] {"--api-endpoint", ApiTestEndpoint, "--data-path", DataDir});
