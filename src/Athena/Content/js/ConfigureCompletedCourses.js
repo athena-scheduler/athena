@@ -106,7 +106,6 @@ function fetchIncompleteCourses() {
 
 export function init(studentId) {
     this.StudentId = studentId;
-    console.log("Init for student: ", studentId);
     fetchCompletedCourses();
     fetchIncompleteCourses();
 
