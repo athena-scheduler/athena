@@ -16,7 +16,6 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content" />
     <ProjectReference Include="..\Athena.Core.Validation\Athena.Core.Validation.csproj">
       <Project>{F244C821-37F1-402E-9F29-1EEBD81031A4}</Project>
       <Name>Athena.Core.Validation</Name>

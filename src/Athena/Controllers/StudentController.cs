@@ -13,5 +13,8 @@ namespace Athena.Controllers
 
         [HttpPost("welcome")]
         public IActionResult UserSetupComplete(string returnUrl = null) => RedirectToLocal(returnUrl);
+
+        [HttpGet("completed-courses")]
+        public IActionResult ConfigureCompletedCourses() => View();
     }
 }

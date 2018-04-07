@@ -21,11 +21,23 @@ namespace Athena.Controllers.api
         }
 
         [HttpGet("completed")]
-        public async Task<IEnumerable<Course>> GetCompletedCoursesForStudentAsync(Guid id)
+        public async Task<IEnumerable<Course>> GetCompletedCoursesForStudentAsync(Guid id, string query = null)
         {
             var student = (await _students.GetAsync(id)).NotFoundIfNull();
 
-            return await _courses.GetCompletedCoursesForStudentAsync(student);
+            if (string.IsNullOrEmpty(query))
+            {
+                return await _courses.GetCompletedCoursesForStudentAsync(student);
+            }
+            else
+            {
+                return await _courses.SearchAsync(new CourseSearchOptions
+                {
+                    StudentId = id,
+                    Completed = true,
+                    Query = query
+                });
+            }
         }
 
         [HttpPut("completed/{courseId}")]
@@ -44,6 +56,19 @@ namespace Athena.Controllers.api
             var course = (await _courses.GetAsync(courseId)).NotFoundIfNull();
 
             await _courses.MarkCourseAsUncompletedForStudentAsync(course, student);
+        }
+
+        [HttpGet("incomplete")]
+        public async Task<IEnumerable<Course>> GetIncompleteCourses(Guid id, string query)
+        {
+            (await _students.GetAsync(id)).NotFoundIfNull();
+
+            return await _courses.SearchAsync(new CourseSearchOptions
+            {
+                StudentId = id,
+                Completed = false,
+                Query = query
+            });
         }
     }
 }
