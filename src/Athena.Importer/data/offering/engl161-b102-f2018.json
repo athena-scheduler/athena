@@ -1,0 +1,30 @@
+{
+  "id": "cfd82093-56a0-4ef5-800f-5a0b35c501d8",
+  "course": {
+    "id": "204beeb1-4d93-4ec8-a0fd-2616e75f872b",
+    "name": "ENGL 161 - COLLEGE COMPOSITION I ",
+    "institution": {
+      "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+      "name": "_",
+      "description": ""
+    }
+  },
+  "campus": {
+    "id": "aa9d5895-dfd1-4926-91b9-c37938ff2067",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-20",
+  "end": "2018-12-09",
+  "meetings": [
+    {
+      "id": "f2f9205c-e177-4cd8-b5a2-24bc4c138deb",
+      "offering": "cfd82093-56a0-4ef5-800f-5a0b35c501d8",
+      "day": "THURSDAY",
+      "time": "9:30:00",
+      "duration": "01:15:00",
+      "room": "CU 227"
+    }
+  ]
+}

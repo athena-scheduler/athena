@@ -1,0 +1,38 @@
+{
+  "id": "96562971-f11d-476c-94d8-e73df18a3045",
+  "course": {
+    "id": "9aa204cf-34ad-4b8d-8a41-661bb84b0d51",
+    "name": "EECS 3400 - Electronics I",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "description": ""
+    }
+  },
+  "campus": {
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "3814968b-6f45-4121-9e5f-a83b792d3706",
+      "offering": "96562971-f11d-476c-94d8-e73df18a3045",
+      "day": "THURSDAY",
+      "time": "09:35:00",
+      "duration": "01:20:00",
+      "room": "UPRC 303"
+    },
+    {
+      "id": "1826dd7a-2aeb-4d94-8835-8b7c77d7aaae",
+      "offering": "96562971-f11d-476c-94d8-e73df18a3045",
+      "day": "TUESDAY",
+      "time": "09:35:00",
+      "duration": "01:20:00",
+      "room": "UPRC 303"
+    }
+  ]
+}

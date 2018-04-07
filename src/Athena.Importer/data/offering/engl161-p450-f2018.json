@@ -1,0 +1,38 @@
+{
+  "id": "56c36901-6bae-46b1-9b01-a7fa3fd164ff",
+  "course": {
+    "id": "204beeb1-4d93-4ec8-a0fd-2616e75f872b",
+    "name": "ENGL 161 - COLLEGE COMPOSITION I ",
+    "institution": {
+      "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+      "name": "_",
+      "description": ""
+    }
+  },
+  "campus": {
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-20",
+  "end": "2018-12-09",
+  "meetings": [
+    {
+      "id": "09b51ea2-65a4-4482-9001-78ea65d23667",
+      "offering": "56c36901-6bae-46b1-9b01-a7fa3fd164ff",
+      "day": "MONDAY",
+      "time": "17:30:00",
+      "duration": "01:15:00",
+      "room": "UPRC 301"
+    },
+    {
+      "id": "2566d72b-9cbf-4936-a616-a9db876936c1",
+      "offering": "56c36901-6bae-46b1-9b01-a7fa3fd164ff",
+      "day": "WEDNESDAY",
+      "time": "17:30:00",
+      "duration": "01:15:00",
+      "room": "UPRC 301"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "2b64e33a-4e8b-4b00-9dd0-31805b5fabd0",
+  "course": {
+    "id": "976ae4a5-0020-41e7-9672-40045c84f3eb",
+    "name": "PHLY 171 - Introduction to Logic",
+    "institution": {
+      "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+      "name": "_",
+      "description": ""
+    }
+  },
+  "campus": {
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-20",
+  "end": "2018-12-09",
+  "meetings": [
+    {
+      "id": "66d0d7c9-d1d5-42b5-9e25-f72cded967d0",
+      "offering": "2b64e33a-4e8b-4b00-9dd0-31805b5fabd0",
+      "day": "THURSDAY",
+      "time": "09:30:00",
+      "duration": "01:15:00",
+      "room": "UPRC 302"
+    },
+    {
+      "id": "e4536f9d-1fdf-42cf-ba54-e28c60d50235",
+      "offering": "2b64e33a-4e8b-4b00-9dd0-31805b5fabd0",
+      "day": "TUESDAY",
+      "time": "09:30:00",
+      "duration": "01:15:00",
+      "room": "UPRC 302"
+    }
+  ]
+}

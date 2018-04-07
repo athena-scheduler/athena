@@ -1,0 +1,38 @@
+{
+  "id": "bea166cd-b88f-41f0-9fe9-6055f55828a8",
+  "course": {
+    "id": "3aa30b78-47ba-46a4-9e7e-591c18dea252",
+    "name": "EECS 3100 - EECS Embedded Systems",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "0443cb03-5b50-4309-bfdb-f233aa8802f6",
+      "offering": "bea166cd-b88f-41f0-9fe9-6055f55828a8",
+      "day": "TUESDAY",
+      "time": "16:30:00",
+      "duration": "01:20:00",
+      "room": "PL 3050"
+    },
+    {
+      "id": "419e2c92-5636-4a26-a9ea-ce0d57e99b58",
+      "offering": "bea166cd-b88f-41f0-9fe9-6055f55828a8",
+      "day": "MONDAY",
+      "time": "16:30:00",
+      "duration": "01:20:00",
+      "room": "PL 3050"
+    }
+  ]
+}

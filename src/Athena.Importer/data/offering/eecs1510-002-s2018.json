@@ -1,0 +1,30 @@
+{
+  "id": "ffaad270-7f56-4069-bbe2-cfd78f845a7b",
+  "course": {
+    "id": "d6acb497-6f13-4535-864c-33a1db6f4879",
+    "name": "EECS 1510 - EECS Object Oriented Programming",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+  },
+  "start": "2018-01-16",
+  "end": "2018-05-04",
+  "meetings": [
+    {
+      "id": "4d339f5f-dd78-4ac8-b0bb-e6b93a94068b",
+      "offering": "ffaad270-7f56-4069-bbe2-cfd78f845a7b",
+      "day": "TUESDAY",
+      "time": "16:00:00",
+      "duration": "00:55:00",
+      "room": "NE 1039"
+    }
+  ]
+}

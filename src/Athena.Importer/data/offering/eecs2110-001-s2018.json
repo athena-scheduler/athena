@@ -1,0 +1,38 @@
+{
+  "id": "cdffb855-9b1b-44ba-896a-d8ea4d712a3b",
+  "course": {
+    "id": "115c1fb4-ec40-4a7b-a639-f1c5fe00cd4a",
+    "name": "EECS 2110 - Computer Architecture and Organization",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "description": ""
+    }
+  },
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "0ed61963-8b43-4f53-bff0-099acbd2c0c2",
+      "offering": "cdffb855-9b1b-44ba-896a-d8ea4d712a3b",
+      "day": "TUESDAY",
+      "time": "11:10:00",
+      "duration": "01:20:00",
+      "room": "PL 3020"
+    },
+    {
+      "id": "6b89aa6a-c2d3-4b46-a15d-85a6a1baae9a",
+      "offering": "cdffb855-9b1b-44ba-896a-d8ea4d712a3b",
+      "day": "THURSDAY",
+      "time": "11:10:00",
+      "duration": "01:20:00",
+      "room": "PL 3020"
+    }
+  ]
+}

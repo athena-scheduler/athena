@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Athena.Importer.Tests
 {
-    public class ProgramTests : IDisposable
+    public class ProgramTests : NoOutputTest
     {
         private static readonly string DataDir = GetDataDir();
         private const int MaxSearchDepth = 10;
@@ -93,17 +93,6 @@ namespace Athena.Importer.Tests
         }
         
         [Fact]
-        public async Task ImportsMeetings()
-        {
-            var result = await Program.Main(new[] {"--api-endpoint", ApiTestEndpoint, "--data-path", DataDir});
-            
-            Assert.Equal(0, result);
-            _http.ShouldHaveCalled($"{ApiTestEndpoint}/v1/meeting")
-                .WithVerb(HttpMethod.Post)
-                .WithContentType("application/json");
-        }
-        
-        [Fact]
         public async Task ImportsOfferings()
         {
             var result = await Program.Main(new[] {"--api-endpoint", ApiTestEndpoint, "--data-path", DataDir});
@@ -136,6 +125,10 @@ namespace Athena.Importer.Tests
                 .WithContentType("application/json");
         }
 
-        public void Dispose() => _http.Dispose();
+        public override void Dispose()
+        {
+            base.Dispose();;
+            _http.Dispose();
+        }
     }
 }

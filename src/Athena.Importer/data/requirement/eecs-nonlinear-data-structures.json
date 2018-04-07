@@ -1,0 +1,5 @@
+{
+  "id": "687588c0-d6b2-41da-9d6c-28d64aa5d54e",
+  "name": "EECS Nonlinear Data Structures",
+  "description": "The data structures introduced in EECS 1570 are extended to include trees (binary, balanced, and n-ary), graphs, and advanced sorting techniques. In addition, the C++ language is used as the main vehicle and is introduced in the couse. Students are expected to have a strong background in Java prior to this course."
+}

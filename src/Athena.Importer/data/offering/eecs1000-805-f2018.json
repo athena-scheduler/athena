@@ -1,0 +1,38 @@
+{
+  "id": "050cdd48-7240-4dc8-a702-60d19f45fc51",
+  "course": {
+    "id": "8559dee7-4a17-4aae-9a24-21957ad503f7",
+    "name": "EECS 1000 - EECS First Year Design",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
+  "campus": {
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "UPRC",
+    "description": "University Partnership Ridge Campus",
+    "location": "32121 Lorain Rd, North Ridgeville, OH 44039"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "dc780f13-5b19-4072-b7e9-cc010c8739b0",
+      "offering": "050cdd48-7240-4dc8-a702-60d19f45fc51",
+      "day": "THURSDAY",
+      "time": "11:30:00",
+      "duration": "00:55:00",
+      "room": "UPRC 301"
+    },
+    {
+      "id": "e0f8c252-f599-416a-9362-93bd66dc6b96",
+      "offering": "050cdd48-7240-4dc8-a702-60d19f45fc51",
+      "day": "TUESDAY",
+      "time": "11:30:00",
+      "duration": "00:55:00",
+      "room": "UPRC 301"
+    }
+  ]
+}

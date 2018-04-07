@@ -1,0 +1,46 @@
+{
+  "id": "df91622a-4325-4a07-992e-cc6a940f43b0",
+  "course": {
+    "id": "536b08eb-737b-44f5-b9f8-9387a7630237",
+    "name": "EECS 4020 - EECS Senior Design Project II",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "5c178fdc-1a25-43dc-b64a-3db5ebe31a8f",
+      "offering": "df91622a-4325-4a07-992e-cc6a940f43b0",
+      "day": "MONDAY",
+      "time": "10:00:00",
+      "duration": "00:55:00",
+      "room": "PL 2470"
+    },
+    {
+      "id": "0b032725-57a1-4cac-9fa1-a3559de5ee5e",
+      "offering": "df91622a-4325-4a07-992e-cc6a940f43b0",
+      "day": "WEDNESDAY",
+      "time": "10:00:00",
+      "duration": "00:55:00",
+      "room": "PL 2470"
+    },
+    {
+      "id": "399c7396-dd35-4872-a80f-427b8fecd0c3",
+      "offering": "df91622a-4325-4a07-992e-cc6a940f43b0",
+      "day": "FRIDAY",
+      "time": "10:00:00",
+      "duration": "00:55:00",
+      "room": "PL 2470"
+    }
+  ]
+}

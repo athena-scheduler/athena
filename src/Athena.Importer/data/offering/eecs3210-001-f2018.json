@@ -1,0 +1,38 @@
+{
+  "id": "b07d6523-1400-4a01-9bf9-e2aa96e5d9e0",
+  "course": {
+    "id": "915febff-dc51-4a43-8c5c-e8975b0db356",
+    "name": "EECS 3210 - Signals and Systems",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "description": ""
+    }
+  },
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "fc54246b-c6b3-4beb-a31c-87eefcb7ba6d",
+      "offering": "b07d6523-1400-4a01-9bf9-e2aa96e5d9e0",
+      "day": "THURSDAY",
+      "time": "09:35:00",
+      "duration": "01:20:00",
+      "room": "NA 1000"
+    },
+    {
+      "id": "bfb730e9-82b0-4788-a89b-baef9c044faf",
+      "offering": "b07d6523-1400-4a01-9bf9-e2aa96e5d9e0",
+      "day": "TUESDAY",
+      "time": "09:35:00",
+      "duration": "01:20:00",
+      "room": "NA 1000"
+    }
+  ]
+}

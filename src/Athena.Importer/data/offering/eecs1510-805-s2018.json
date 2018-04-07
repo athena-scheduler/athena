@@ -1,0 +1,38 @@
+{
+  "id": "d191081b-ccd8-4136-9b76-64e78ff674ea",
+  "course": {
+    "id": "d6acb497-6f13-4535-864c-33a1db6f4879",
+    "name": "EECS 1510 - EECS Object Oriented Programming",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
+  "campus": {
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "UPRC",
+    "description": "University Partnership Ridge Campus",
+    "location": "32121 Lorain Rd, North Ridgeville, OH 44039"
+  },
+  "start": "2018-01-16",
+  "end": "2018-05-04",
+  "meetings": [
+    {
+      "id": "fb027292-ddee-47e7-abb6-71f63dc8cc34",
+      "offering": "d191081b-ccd8-4136-9b76-64e78ff674ea",
+      "day": "TUESDAY",
+      "time": "12:55:00",
+      "duration": "01:20:00",
+      "room": "UPRC 302"
+    },
+    {
+      "id": "6217f427-dbc3-4c59-9ad5-e057b0d0c53b",
+      "offering": "d191081b-ccd8-4136-9b76-64e78ff674ea",
+      "day": "THURSDAY",
+      "time": "12:55:00",
+      "duration": "01:20:00",
+      "room": "UPRC 302"
+    }
+  ]
+}

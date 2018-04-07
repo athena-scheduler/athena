@@ -1,0 +1,38 @@
+{
+  "id": "3c5b2c26-b8e7-4592-a80f-fe1a87a8c058",
+  "course": {
+    "id": "7a48079e-eef8-4774-a52c-397ef9be0863",
+    "name": "CHMY 171 - General Chemistry I",
+    "institution": {
+      "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+      "name": "_",
+      "description": ""
+    }
+  },
+  "campus": {
+    "id": "aa9d5895-dfd1-4926-91b9-c37938ff2067",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-20",
+  "end": "2018-12-09",
+  "meetings": [
+    {
+      "id": "1f0abde2-e848-4f2b-b0ab-c35fde8e334a",
+      "offering": "3c5b2c26-b8e7-4592-a80f-fe1a87a8c058",
+      "day": "MONDAY",
+      "time": "09:00:00",
+      "duration": "01:15:00",
+      "room": "LS 122"
+    },
+    {
+      "id": "abc35fd8-c9dd-4792-8633-4b8bee49f79c",
+      "offering": "3c5b2c26-b8e7-4592-a80f-fe1a87a8c058",
+      "day": "WEDNESDAY",
+      "time": "09:00:00",
+      "duration": "01:15:00",
+      "room": "LS 122"
+    }
+  ]
+}

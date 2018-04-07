@@ -1,0 +1,38 @@
+{
+  "id": "e8643c3b-f56e-4259-9dc5-efa224a6957f",
+  "course": {
+    "id": "4ba40865-6b62-4503-92f3-fb7a3d0a0a2d",
+    "name": "EECS 3540 - EECS Systems And Systems Programming",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
+  "campus": {
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "UPRC",
+    "description": "University Partnership Ridge Campus",
+    "location": "32121 Lorain Rd, North Ridgeville, OH 44039"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "82a80a99-63b3-4d0d-ad2b-5a60970da5a4",
+      "offering": "e8643c3b-f56e-4259-9dc5-efa224a6957f",
+      "day": "TUESDAY",
+      "time": "12:55:00",
+      "duration": "01:20:00",
+      "room": "UPRC 213"
+    },
+    {
+      "id": "4b88a093-3260-4de1-ad24-9c56dc97b62d",
+      "offering": "e8643c3b-f56e-4259-9dc5-efa224a6957f",
+      "day": "THURSDAY",
+      "time": "12:55:00",
+      "duration": "01:20:00",
+      "room": "UPRC 213"
+    }
+  ]
+}

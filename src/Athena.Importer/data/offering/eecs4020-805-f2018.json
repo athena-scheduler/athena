@@ -1,0 +1,38 @@
+{
+  "id": "f90dd755-3ff6-4125-9865-82c6739a5585",
+  "course": {
+    "id": "536b08eb-737b-44f5-b9f8-9387a7630237",
+    "name": "EECS 4020 - EECS Senior Design Project II",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
+  "campus": {
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "UPRC",
+    "description": "University Partnership Ridge Campus",
+    "location": "32121 Lorain Rd, North Ridgeville, OH 44039"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "3169c467-d4e5-418f-8f96-45c647a7c68b",
+      "offering": "f90dd755-3ff6-4125-9865-82c6739a5585",
+      "day": "TUESDAY",
+      "time": "11:10:00",
+      "duration": "01:20:00",
+      "room": "UPRC 303"
+    },
+    {
+      "id": "b1abb994-4f6c-4e99-b34a-3853d7e3f2c8",
+      "offering": "f90dd755-3ff6-4125-9865-82c6739a5585",
+      "day": "THURSDAY",
+      "time": "11:10:00",
+      "duration": "01:20:00",
+      "room": "UPRC 303"
+    }
+  ]
+}

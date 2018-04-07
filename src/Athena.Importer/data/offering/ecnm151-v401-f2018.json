@@ -1,0 +1,38 @@
+{
+  "id": "8cf6d7ea-1e8a-49f9-9b62-0bc5255274e9",
+  "course": { 
+      "id": "91db8c65-c6e5-4a9d-8738-0d865f22c364",
+      "name": "ECNM 151 - MACROECONOMICS",
+      "institution": {
+        "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+        "name": "_",
+        "description": ""
+      }
+  },
+  "campus": {
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-20",
+  "end": "2018-12-09",
+  "meetings": [
+    {
+      "id": "b9f61d7a-393a-4437-9208-765c64fabe3c",
+      "offering": "8cf6d7ea-1e8a-49f9-9b62-0bc5255274e9",
+      "day": "MONDAY",
+      "time": "17:30:00",
+      "duration": "01:15:00",
+      "room": "UPRC 210"
+    },
+    {
+      "id": "97fe975b-313e-466f-b86b-fd70581965d3",
+      "offering": "8cf6d7ea-1e8a-49f9-9b62-0bc5255274e9",
+      "day": "WEDNESDAY",
+      "time": "17:30:00",
+      "duration": "01:15:00",
+      "room": "UPRC 210"
+    }
+  ]
+}

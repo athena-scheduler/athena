@@ -1,0 +1,46 @@
+{
+  "id": "fee4c616-1a20-4a0e-8d9a-f911351dab1e",
+  "course": {
+    "id": "9aa204cf-34ad-4b8d-8a41-661bb84b0d51",
+    "name": "EECS 3400 - Electronics I",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "description": ""
+    }
+  },
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "cd4ba51f-f2fc-4e38-83e6-873381c086a5",
+      "offering": "fee4c616-1a20-4a0e-8d9a-f911351dab1e",
+      "day": "MONDAY",
+      "time": "14:30:00",
+      "duration": "00:55:00",
+      "room": "PL 3190"
+    },
+    {
+      "id": "209d2da5-2471-4a16-a2c5-6d9a7442e65a",
+      "offering": "fee4c616-1a20-4a0e-8d9a-f911351dab1e",
+      "day": "WEDNESDAY",
+      "time": "14:30:00",
+      "duration": "00:55:00",
+      "room": "PL 3190"
+    },
+    {
+      "id": "4ed98590-aa06-483d-b70a-3b1eccc4707d",
+      "offering": "fee4c616-1a20-4a0e-8d9a-f911351dab1e",
+      "day": "FRIDAY",
+      "time": "14:30:00",
+      "duration": "00:55:00",
+      "room": "PL 3190"
+    }
+  ]
+}

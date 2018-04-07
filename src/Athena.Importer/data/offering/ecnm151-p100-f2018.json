@@ -1,0 +1,38 @@
+{
+  "id": "05746234-0243-40c3-a974-681e928c1e04",
+  "course": {
+      "id": "91db8c65-c6e5-4a9d-8738-0d865f22c364",
+      "name": "ECNM 151 - MACROECONOMICS",
+      "institution": {
+        "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+        "name": "_",
+        "description": ""
+      }
+  },
+  "campus": {
+    "id": "aa9d5895-dfd1-4926-91b9-c37938ff2067",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-20",
+  "end": "2018-12-09",
+  "meetings": [
+    {
+      "id": "14ad0bd4-1865-4f7d-93e9-e7258d3d1f59",
+      "offering": "05746234-0243-40c3-a974-681e928c1e04",
+      "day": "MONDAY",
+      "time": "11:00:00",
+      "duration": "01:15:00",
+      "room": "IL 114"
+    },
+    {
+      "id": "b9f61d7a-393a-4437-9208-765c64fabe3c",
+      "offering": "05746234-0243-40c3-a974-681e928c1e04",
+      "day": "WEDNESDAY",
+      "time": "11:00:00",
+      "duration": "01:15:00",
+      "room": "IL 114"
+    }
+  ]
+}

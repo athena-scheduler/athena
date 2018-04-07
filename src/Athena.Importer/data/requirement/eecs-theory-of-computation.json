@@ -1,0 +1,5 @@
+{
+  "id": "8235e152-5e82-4a5f-86a9-ea4e62f8c984",
+  "name": "EECS Theory of Computation",
+  "description": "Examines formal models of automata and languages. Finite-state automata, regular languages, pushdown automata, context-free languages, Turing machines, decidability, reducibility, and P vs NP complexity classes."
+}

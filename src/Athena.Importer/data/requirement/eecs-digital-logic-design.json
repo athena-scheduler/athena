@@ -1,0 +1,5 @@
+{
+  "id": "caf78b0a-b4f0-405a-a2b6-38cffd00f8d5",
+  "name": "EECS Digital Logic Design",
+  "description": "Number representation and Boolean Algebra. Combinational circuit analysis and design. K-map and tabulation methods. Multiplexers, decoders, adders/subtracters and PLD devices. Sequential circuit analysis and design. Registers, counters and recognizers."
+}

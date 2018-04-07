@@ -1,0 +1,30 @@
+{
+  "id": "b75d12f9-28dc-4649-b9d0-6a4c4893062c",
+  "course": {
+    "id": "7c92dab2-3c24-4dfe-8cc1-850fd4c05561",
+    "name": "PHYC 252 - COLLEGE PHYSICS II",
+    "institution": {
+      "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+      "name": "_",
+      "description": ""
+    }
+  },
+  "campus": {
+    "id": "aa9d5895-dfd1-4926-91b9-c37938ff2067",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-20",
+  "end": "2018-12-09",
+  "meetings": [
+    {
+      "id": "a63ec16c-82df-43fa-b4c0-4bd5f1f70f05",
+      "offering": "b75d12f9-28dc-4649-b9d0-6a4c4893062c",
+      "day": "TUESDAY",
+      "time": "08:00:00",
+      "duration": "10:50:00",
+      "room": "LS 112"
+    }
+  ]
+}

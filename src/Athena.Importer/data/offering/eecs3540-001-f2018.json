@@ -1,0 +1,38 @@
+{
+  "id": "1b1cd6e8-5a62-4897-a4d1-b76081e82c11",
+  "course": {
+    "id": "4ba40865-6b62-4503-92f3-fb7a3d0a0a2d",
+    "name": "EECS 3540 - EECS Systems And Systems Programming",
+    "institution": {
+      "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+      "name": "_",
+      "Description": ""
+    }
+  },
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+  },
+  "start": "2018-08-27",
+  "end": "2018-12-14",
+  "meetings": [
+    {
+      "id": "3ca54a39-099e-442f-8d48-d00e4c25f4ee",
+      "offering": "1b1cd6e8-5a62-4897-a4d1-b76081e82c11",
+      "day": "TUESDAY",
+      "time": "12:55:00",
+      "duration": "01:20:00",
+      "room": "PL 2650"
+    },
+    {
+      "id": "4ee76bc9-dbfb-4ade-bb59-50ea98ceea46",
+      "offering": "1b1cd6e8-5a62-4897-a4d1-b76081e82c11",
+      "day": "THURSDAY",
+      "time": "12:55:00",
+      "duration": "01:20:00",
+      "room": "PL 2650"
+    }
+  ]
+}

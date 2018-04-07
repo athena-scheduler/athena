@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Athena.Importer.Tests
 {
-    public class GenericImporterTests : IDisposable
+    public class GenericImporterTests : NoOutputTest
     {
         private static readonly Uri DummyApiEndpoint = new Uri("http://localhost:5000/api");
         
@@ -84,8 +84,9 @@ namespace Athena.Importer.Tests
             }
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
+            base.Dispose();
             _http.Dispose();
         }
     }

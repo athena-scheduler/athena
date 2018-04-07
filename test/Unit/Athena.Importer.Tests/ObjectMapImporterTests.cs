@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Athena.Importer.Tests
 {
-    public class ObjectMapImporterTests : IDisposable
+    public class ObjectMapImporterTests : NoOutputTest
     {
         private const string ApiEndpoint = "http://localhost:5000/api";
         
@@ -111,6 +111,10 @@ namespace Athena.Importer.Tests
             }
         }
 
-        public void Dispose() => _http.Dispose();
+        public override void Dispose()
+        {
+            base.Dispose();
+            _http.Dispose();
+        }
     }
 }
