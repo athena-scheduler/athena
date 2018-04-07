@@ -224,6 +224,7 @@ Task("Docker::Push")
 {
     DockerPush($"athenascheduler/athena:{imageTag}");
     DockerPush($"athenascheduler/importer:{imageTag}");
+    DockerPush($"athenascheduler/db:{imageTag}");
 });
 
 Task("CodeCov::Publish")
