@@ -6,6 +6,8 @@ using AutoFixture.Xunit2;
 using Flurl.Http.Testing;
 using Xunit;
 
+[assembly: CollectionBehavior(CollectionBehavior.CollectionPerAssembly)]
+
 namespace Athena.Importer.Tests
 {
     public class ProgramTests : IDisposable
