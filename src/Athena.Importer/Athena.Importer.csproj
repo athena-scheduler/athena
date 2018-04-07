@@ -17,5 +17,4 @@
   <ItemGroup>
     <None Include="data/**/*.json" />
   </ItemGroup>
-  <ProjectExtensions><VisualStudio><UserProperties data_4meeting_4eecs3550-805-s2018-r_1json__JSONSchema="http://json.schemastore.org/bower" /></VisualStudio></ProjectExtensions>
 </Project>
