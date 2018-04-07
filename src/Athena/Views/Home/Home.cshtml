@@ -5,14 +5,34 @@
 
 @if (!User.Identity.IsAuthenticated)
 {
-    <div class="notLoggedIn" style="padding-top:5em">
-        <h1>
-            Welcome to the Athena Scheduling Assistant!
-        </h1>
-        <p>
-            This tool was designed by students for students, to allow for a more streamlined approach to allow students to schedule their course work for each semester and allow them to track thier progression through their degree.
-        </p>
+<div class="notLoggedIn" style="padding-top:5em">
+    <h1>
+        Welcome to the Athena Scheduling Assistant!
+    </h1>
+    <p>
+        This tool was designed by students for students, to allow for a more streamlined approach to allow students to schedule their course work for each semester and allow them to track thier progression through their degree.
+    </p>
+    <div class="row center">
+        <div class="col s4">
+            <i class="large material-icons">person_add</i>
+
+            <p>Security</p>
+            <p>Uses your Google or Microsoft account for easy authentication. We provide a means of keeping your information safe by using the same authentication services as most universities.</p>
+        </div>
+        <div class="col s4">
+            <i class="large material-icons">event_available</i>
+
+            <p>Scheduling and things</p>
+            <p> Schedule the classes you need and view your week at a glance. Manage the classes you've taken and programs you're enrolled in. You can even see the progress of your program completion.</p>
+        </div>
+        <div class="col s4">
+            <i class="large material-icons">mood</i>
+
+            <p>Simplicity</p>
+            <p>Enjoy an easy to use and intuitive layout and functionality. We offer a solution to the many, MANY, overly complicated and numerous schuling systems that universities already use.</p>
+        </div>
     </div>
+</div>
 }
 else
 {
