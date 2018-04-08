@@ -41,6 +41,14 @@
       "time": "08:30:00",
       "duration": "00:55:00",
       "room": "RH 1554"
+    },
+    {
+      "id": "2bc4bc64-ef36-4347-9cd1-728375605df7",
+      "offering": "7183a0e3-bc33-45ad-9f8a-9df66779b2e0",
+      "day": "TUESDAY",
+      "time": "17:00:00",
+      "duration": "02:20:00",
+      "room": "NE 1036"
     }
   ]
 }

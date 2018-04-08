@@ -33,6 +33,14 @@
       "time": "16:30:00",
       "duration": "01:20:00",
       "room": "PL 3050"
+    },
+    {
+      "id": "0be18629-f999-49de-8596-3fb84cf87d8c",
+      "offering": "591a303f-7248-46aa-82ae-fea69de1706d",
+      "day": "FRIDAY",
+      "time": "08:00:00",
+      "duration": "02:20:00",
+      "room": "NI 1075"
     }
   ]
 }
