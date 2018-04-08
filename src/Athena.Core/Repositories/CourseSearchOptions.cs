@@ -6,15 +6,17 @@ namespace Athena.Core.Repositories
     {
         public string Query { get; set; }
         public bool Completed { get; set; }
+        public bool IncludeInProgress { get; set; } = true;
         public Guid StudentId { get; set; }
 
         public bool Equals(CourseSearchOptions other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return string.Equals(Query, other.Query) && 
-                StudentId.Equals (other.StudentId) && 
-                Completed == other.Completed;
+            return string.Equals(Query, other.Query) &&
+                   StudentId.Equals(other.StudentId) &&
+                   Completed == other.Completed &&
+                   IncludeInProgress == other.IncludeInProgress;
         }
 
         public override bool Equals(object obj)
@@ -32,6 +34,7 @@ namespace Athena.Core.Repositories
                 var hashCode = StudentId.GetHashCode();
                 hashCode = (hashCode * 397) ^ (Query != null ? Query.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Completed.GetHashCode());
+                hashCode = (hashCode * 397) ^ (IncludeInProgress.GetHashCode());
                 return hashCode;
             }
         }

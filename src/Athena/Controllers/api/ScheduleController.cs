@@ -47,6 +47,7 @@ namespace Athena.Controllers.api
             {
                 StudentId = student.Id,
                 Completed = false,
+                IncludeInProgress = false,
                 Query = q
             };
             
