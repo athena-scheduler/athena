@@ -7,6 +7,7 @@ using Athena.Handlers;
 using Athena.Extensions;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,10 +42,20 @@ namespace Athena.Setup
                 .AddAthenaIdentityServices()
                 .AddAuthenticationProviders()
                 .AddAuthorization()
+                .ConfigureApplicationCookie(AthenaCookieOptions)
+                .ConfigureExternalCookie(AthenaCookieOptions)
                 .AddMvc()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<StudentValidator>());
             
             return services;
+        }
+
+        private static void AthenaCookieOptions(CookieAuthenticationOptions c)
+        {
+            c.AccessDeniedPath = "/account/login";
+            c.LoginPath = "/account/login";
+            c.SlidingExpiration = true;
+            c.ExpireTimeSpan = TimeSpan.FromHours(1);
         }
 
         private static IServiceCollection AddAuthenticationProviders(this IServiceCollection services)
@@ -71,7 +82,7 @@ namespace Athena.Setup
         {
             var clientKey = Environment.GetEnvironmentVariable(AUTH_GOOGLE_CLIENT_KEY);
             var clientSecret = Environment.GetEnvironmentVariable(AUTH_GOOGLE_CLIENT_SECRET);
-
+            
             if (string.IsNullOrEmpty(clientKey) || string.IsNullOrEmpty(clientSecret))
             {
                 return false;

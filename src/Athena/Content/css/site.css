@@ -199,6 +199,11 @@ ul.tabs {
     margin-bottom: 5px;
 }
 
+.scrolling{
+    overflow-y : scroll;
+    max-height : 25rem;
+}
+
 .HomepageDegreeProgress {
     margin-top: 3rem;
 }

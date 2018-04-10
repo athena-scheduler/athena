@@ -13,7 +13,7 @@ namespace Athena.Data.Repositories.Identity
     public partial class AthenaUserStore : IUserLoginStore<AthenaUser>, IUserEmailStore<AthenaUser>, IUserRoleStore<AthenaUser>, IUserApiKeyStore
     {
         public async Task AddToRoleAsync(AthenaUser user, string roleName, CancellationToken cancellationToken) =>
-            await _db.InsertUniqueAsync(@"
+            await _db.ExecuteCheckedAsync(@"
                 INSERT INTO user_x_role
                 SELECT
                     @id,
@@ -24,7 +24,7 @@ namespace Athena.Data.Repositories.Identity
             );
 
         public async Task RemoveFromRoleAsync(AthenaUser user, string roleName, CancellationToken cancellationToken) =>
-            await _db.ExecuteAsync(@"
+            await _db.ExecuteCheckedAsync(@"
                 DELETE FROM user_x_role
                 WHERE user_id = @id AND role_id IN
                 (

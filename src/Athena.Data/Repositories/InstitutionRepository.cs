@@ -20,12 +20,12 @@ namespace Athena.Data.Repositories
             (await _db.QueryAsync<Institution>("SELECT * FROM institutions WHERE id = @id", new {id}))
                 .FirstOrDefault();
 
-        public async Task AddAsync(Institution obj) => await _db.InsertUniqueAsync(
+        public async Task AddAsync(Institution obj) => await _db.ExecuteCheckedAsync(
             "INSERT INTO institutions VALUES (@id, @name, @description)",
             new { obj.Id, obj.Name, obj.Description }
         );
 
-        public async Task EditAsync(Institution obj) => await _db.ExecuteAsync(@"
+        public async Task EditAsync(Institution obj) => await _db.ExecuteCheckedAsync(@"
             UPDATE institutions SET
                 name = @name,
                 description = @description
@@ -33,7 +33,7 @@ namespace Athena.Data.Repositories
             new { obj.Name, obj.Description, obj.Id }
         );
 
-        public async Task DeleteAsync(Institution obj) => await _db.ExecuteAsync(
+        public async Task DeleteAsync(Institution obj) => await _db.ExecuteCheckedAsync(
             "DELETE FROM institutions WHERE id = @id",
             new {obj.Id}
         );
@@ -68,13 +68,13 @@ namespace Athena.Data.Repositories
             );
 
         public async Task EnrollStudentAsync(Institution institution, Student student) =>
-            await _db.InsertUniqueAsync(
+            await _db.ExecuteCheckedAsync(
                 "INSERT INTO institution_x_student VALUES (@institution, @student)",
                 new { institution = institution.Id, student = student.Id }
             );
 
         public async Task UnenrollStudentAsync(Institution institution, Student student) =>
-            await _db.ExecuteAsync(
+            await _db.ExecuteCheckedAsync(
                 "DELETE FROM institution_x_student WHERE institution = @institution AND student = @student",
                 new { institution = institution.Id, student = student.Id }
             );

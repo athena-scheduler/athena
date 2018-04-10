@@ -63,7 +63,7 @@ namespace Athena.Data.Repositories.Identity
 
             try
             {
-                var count = await _db.InsertUniqueAsync(@"
+                var count = await _db.ExecuteCheckedAsync(@"
                     INSERT INTO users VALUES (
                         @id,
                         @username,
@@ -92,7 +92,7 @@ namespace Athena.Data.Repositories.Identity
 
             try
             {
-                var count = await _db.ExecuteAsync(@"
+                var count = await _db.ExecuteCheckedAsync(@"
                     UPDATE users SET username = @username,
                                      normalized_username = @normalizedUsername,
                                      email = @email,
@@ -118,7 +118,7 @@ namespace Athena.Data.Repositories.Identity
 
             try
             {
-                var count = await _db.ExecuteAsync(
+                var count = await _db.ExecuteCheckedAsync(
                     "DELETE FROM users WHERE id = @id",
                     new {user.Id}
                 );

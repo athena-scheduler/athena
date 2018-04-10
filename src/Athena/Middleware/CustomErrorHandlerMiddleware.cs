@@ -37,7 +37,15 @@ namespace Athena.Middleware
                 ctx.Response.StatusCode = (int) HttpStatusCode.Conflict;
 
                 await ctx.Response.WriteAsync(JsonConvert.SerializeObject(
-                    new { message = e.Message }
+                    new {message = e.Message}
+                ));
+            }
+            catch (DependentObjectException e)
+            {
+                ctx.Response.StatusCode = (int) HttpStatusCode.PreconditionFailed;
+
+                await ctx.Response.WriteAsync(JsonConvert.SerializeObject(
+                    new {message = e.Message}
                 ));
             }
             catch (ApiException e)

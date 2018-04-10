@@ -21,19 +21,19 @@ namespace Athena.Data.Repositories
                 .FirstOrDefault();
 
         public async Task AddAsync(Requirement obj) =>
-            await _db.InsertUniqueAsync(
+            await _db.ExecuteCheckedAsync(
                 "INSERT INTO requirements VALUES (@id, @name, @description)",
                 new {obj.Id, obj.Name, obj.Description}
             );
 
         public async Task EditAsync(Requirement obj) =>
-            await _db.ExecuteAsync(
+            await _db.ExecuteCheckedAsync(
                 "UPDATE requirements SET name = @name, description = @description WHERE id = @id",
                 new {obj.Name, obj.Description, obj.Id}
             );
 
         public async Task DeleteAsync(Requirement obj) =>
-            await _db.ExecuteAsync(
+            await _db.ExecuteCheckedAsync(
                 "DELETE FROM requirements WHERE id = @id",
                 new {obj.Id}
             );
