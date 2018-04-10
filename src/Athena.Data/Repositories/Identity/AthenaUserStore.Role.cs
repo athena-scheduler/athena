@@ -13,7 +13,7 @@ namespace Athena.Data.Repositories.Identity
     public partial class AthenaUserStore : IUserLoginStore<AthenaUser>, IUserEmailStore<AthenaUser>, IUserRoleStore<AthenaUser>, IUserApiKeyStore
     {
         public async Task AddToRoleAsync(AthenaUser user, string roleName, CancellationToken cancellationToken) =>
-            await _db.InsertUniqueAsync(@"
+            await _db.InsertCheckedAsync(@"
                 INSERT INTO user_x_role
                 SELECT
                     @id,

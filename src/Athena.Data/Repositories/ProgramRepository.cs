@@ -32,7 +32,7 @@ namespace Athena.Data.Repositories
                 new {id}
             )).FirstOrDefault();
 
-        public async Task AddAsync(Program obj) => await _db.InsertUniqueAsync(
+        public async Task AddAsync(Program obj) => await _db.InsertCheckedAsync(
             "INSERT INTO programs VALUES (@id, @name, @description, @institution)",
             new {obj.Id, obj.Name, obj.Description, institution = obj.Institution.Id}
         );
@@ -112,7 +112,7 @@ namespace Athena.Data.Repositories
             );
 
         public async Task AddRequirementAsync(Program program, Requirement requirement) =>
-            await _db.InsertUniqueAsync(
+            await _db.InsertCheckedAsync(
                 "INSERT INTO program_requirements VALUES (@program, @req)",
                 new {program = program.Id, req = requirement.Id}
             );

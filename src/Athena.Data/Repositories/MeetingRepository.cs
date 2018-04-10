@@ -21,7 +21,7 @@ namespace Athena.Data.Repositories
                 .FirstOrDefault();
 
         public async Task AddAsync(Meeting obj) =>
-            await _db.InsertUniqueAsync(
+            await _db.InsertCheckedAsync(
                 "INSERT INTO meetings VALUES (@id, @day, @time, @duration, @room, @offering)",
                 new { obj.Id, obj.Day, obj.Time, obj.Duration, obj.Room, obj.Offering }
             );

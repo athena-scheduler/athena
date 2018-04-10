@@ -21,7 +21,7 @@ namespace Athena.Data.Repositories
                 .FirstOrDefault();
 
         public async Task AddAsync(Requirement obj) =>
-            await _db.InsertUniqueAsync(
+            await _db.InsertCheckedAsync(
                 "INSERT INTO requirements VALUES (@id, @name, @description)",
                 new {obj.Id, obj.Name, obj.Description}
             );

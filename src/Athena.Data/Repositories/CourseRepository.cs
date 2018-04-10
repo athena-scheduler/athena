@@ -31,7 +31,7 @@ namespace Athena.Data.Repositories
                 new {id}
             )).FirstOrDefault();
 
-        public async Task AddAsync(Course obj) => await _db.InsertUniqueAsync(
+        public async Task AddAsync(Course obj) => await _db.InsertCheckedAsync(
             "INSERT INTO courses VALUES (@id, @name, @institution)",
             new {obj.Id, obj.Name, institution = obj.Institution.Id}
         );
@@ -82,7 +82,7 @@ namespace Athena.Data.Repositories
             );
 
         public async Task MarkCourseAsCompletedForStudentAsync(Course course, Student student) =>
-            await _db.InsertUniqueAsync(
+            await _db.InsertCheckedAsync(
                 "INSERT INTO student_x_completed_course VALUES (@student, @course)",
                 new {student = student.Id, course = course.Id}
             );
@@ -94,7 +94,7 @@ namespace Athena.Data.Repositories
             );
 
         public async Task AddSatisfiedRequirementAsync(Course course, Requirement requirement) =>
-            await _db.InsertUniqueAsync(
+            await _db.InsertCheckedAsync(
                 "INSERT INTO course_requirements VALUES (@course, @requirement)",
                 new {course = course.Id, requirement = requirement.Id}
             );
@@ -106,7 +106,7 @@ namespace Athena.Data.Repositories
             );
 
         public async Task AddPrerequisiteAsync(Course course, Requirement prereq) =>
-            await _db.InsertUniqueAsync(
+            await _db.InsertCheckedAsync(
                 "INSERT INTO course_prereqs VALUES (@course, @prereq)",
                 new {course = course.Id, prereq = prereq.Id}
             );
@@ -118,7 +118,7 @@ namespace Athena.Data.Repositories
             );
         
         public async Task AddConcurrentPrerequisiteAsync(Course course, Requirement prereq) =>
-            await _db.InsertUniqueAsync(
+            await _db.InsertCheckedAsync(
                 "INSERT INTO course_concurrent_prereqs VALUES (@course, @prereq)",
                 new {course = course.Id, prereq = prereq.Id}
             );

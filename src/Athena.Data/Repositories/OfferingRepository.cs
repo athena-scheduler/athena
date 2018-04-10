@@ -57,7 +57,7 @@ namespace Athena.Data.Repositories
         }
             
         public async Task AddAsync(Offering obj) =>
-            await _db.InsertUniqueAsync(
+            await _db.InsertCheckedAsync(
                 "INSERT INTO offerings VALUES (@id, @campus, @start, @end, @course)",
                 new {obj.Id, campus = obj.Campus.Id, obj.Start, obj.End, course = obj.Course.Id}
             );
@@ -155,13 +155,13 @@ namespace Athena.Data.Repositories
         }
 
         public async Task EnrollStudentInOfferingAsync(Student student, Offering offering) =>
-            await _db.InsertUniqueAsync(
+            await _db.InsertCheckedAsync(
                 "INSERT INTO student_x_in_progress_course VALUES (@student, @course, @offering)", 
                 new { student = student.Id, course = offering.Course.Id, offering = offering.Id }
             );
 
         public async Task UnenrollStudentInOfferingAsync(Student student, Offering offering) =>
-            await _db.InsertUniqueAsync(
+            await _db.InsertCheckedAsync(
                 "DELETE FROM student_x_in_progress_course WHERE student = @student AND course = @course AND offering = @offering", 
                 new { student = student.Id, course = offering.Course.Id, offering = offering.Id }
             );

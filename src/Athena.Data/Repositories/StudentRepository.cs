@@ -20,7 +20,7 @@ namespace Athena.Data.Repositories
                 .FirstOrDefault();
 
         public async Task AddAsync(Student obj) =>
-            await _db.InsertUniqueAsync(
+            await _db.InsertCheckedAsync(
                 "INSERT INTO students VALUES (@id, @name, @email)",
                 new {obj.Id, obj.Name, obj.Email}
             );
@@ -38,7 +38,7 @@ namespace Athena.Data.Repositories
             );
 
         public async Task RegisterForProgramAsync(Student student, Program program) =>
-            await _db.InsertUniqueAsync(
+            await _db.InsertCheckedAsync(
                 "INSERT INTO student_x_program VALUES (@student, @program)",
                 new {student = student.Id, program = program.Id}
             );

@@ -10,7 +10,7 @@ namespace Athena.Data.Extensions
 {
     public static class DbConnectionExtensions
     {
-        public static async Task<int> InsertUniqueAsync(this IDbConnection db, string sql, object param)
+        public static async Task<int> InsertCheckedAsync(this IDbConnection db, string sql, object param)
         {
             try
             {
@@ -18,12 +18,14 @@ namespace Athena.Data.Extensions
             }
             catch (PostgresException ex)
             {
-                if (ex.SqlState == "23505")
+                switch (ex.SqlState)
                 {
-                    throw new DuplicateObjectException(sql, param);
+                    case "23505":
+                        throw new DuplicateObjectException(sql, param);
+                    case "23503":
+                        throw new DependentObjectException(sql, param);
+                    default: throw;
                 }
-
-                throw;
             }
         }
         

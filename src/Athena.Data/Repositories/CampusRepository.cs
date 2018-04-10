@@ -20,7 +20,7 @@ namespace Athena.Data.Repositories
             (await _db.QueryAsync<Campus>("SELECT * FROM campuses WHERE id = @id", new {id}))
                 .FirstOrDefault();
 
-        public async Task AddAsync(Campus obj) => await _db.InsertUniqueAsync(
+        public async Task AddAsync(Campus obj) => await _db.InsertCheckedAsync(
             "INSERT INTO campuses VALUES (@id, @name, @description, @location)",
             new {obj.Id, obj.Name, obj.Description, obj.Location}
         );
@@ -53,7 +53,7 @@ namespace Athena.Data.Repositories
             );
 
         public async Task AssociateCampusWithInstitutionAsync(Campus campus, Institution institution) =>
-            await _db.InsertUniqueAsync(
+            await _db.InsertCheckedAsync(
                 "INSERT INTO campus_x_institution VALUES (@campus, @institution)",
                 new {campus = campus.Id, institution = institution.Id}
             );

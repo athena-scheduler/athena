@@ -26,7 +26,7 @@ namespace Athena.Data.Repositories.Identity
 
             try
             {
-                await _db.InsertUniqueAsync(
+                await _db.InsertCheckedAsync(
                     "INSERT INTO external_logins VALUES (@providerKey, @loginProvider, @providerDisplayName, @userId)",
                     new { login.ProviderKey, login.LoginProvider, login.ProviderDisplayName, userId = user.Id }
                 );
