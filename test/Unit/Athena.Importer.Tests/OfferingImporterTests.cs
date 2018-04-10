@@ -48,7 +48,7 @@ namespace Athena.Importer.Tests
             }
         }
 
-        public virtual void Dispose()
+        public override void Dispose()
         {
             base.Dispose();
             _http.Dispose();
