@@ -21,13 +21,13 @@ namespace Athena.Data.Repositories
                 .FirstOrDefault();
 
         public async Task AddAsync(Meeting obj) =>
-            await _db.InsertCheckedAsync(
+            await _db.ExecuteCheckedAsync(
                 "INSERT INTO meetings VALUES (@id, @day, @time, @duration, @room, @offering)",
                 new { obj.Id, obj.Day, obj.Time, obj.Duration, obj.Room, obj.Offering }
             );
 
         public async Task EditAsync(Meeting obj) =>
-            await _db.ExecuteAsync(@"
+            await _db.ExecuteCheckedAsync(@"
                 UPDATE meetings SET
                     day = @day,
                     time = @time,
@@ -39,7 +39,7 @@ namespace Athena.Data.Repositories
             );
 
         public async Task DeleteAsync(Meeting obj) =>
-            await _db.ExecuteAsync("DELETE FROM meetings WHERE id = @id", new {obj.Id});
+            await _db.ExecuteCheckedAsync("DELETE FROM meetings WHERE id = @id", new {obj.Id});
 
         public async Task<IEnumerable<Meeting>> GetMeetingsForOfferingAsync(Offering offering) =>
             await _db.QueryAsync<Meeting>(@"

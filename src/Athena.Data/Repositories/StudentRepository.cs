@@ -20,31 +20,31 @@ namespace Athena.Data.Repositories
                 .FirstOrDefault();
 
         public async Task AddAsync(Student obj) =>
-            await _db.InsertCheckedAsync(
+            await _db.ExecuteCheckedAsync(
                 "INSERT INTO students VALUES (@id, @name, @email)",
                 new {obj.Id, obj.Name, obj.Email}
             );
 
         public async Task EditAsync(Student obj) =>
-            await _db.ExecuteAsync(
+            await _db.ExecuteCheckedAsync(
                 "UPDATE students SET name = @name, email = @email WHERE id = @id",
                 new {obj.Name, obj.Email, obj.Id}
             );
 
         public async Task DeleteAsync(Student obj) =>
-            await _db.ExecuteAsync(
+            await _db.ExecuteCheckedAsync(
                 "DELETE FROM students WHERE id = @id",
                 new {obj.Id}
             );
 
         public async Task RegisterForProgramAsync(Student student, Program program) =>
-            await _db.InsertCheckedAsync(
+            await _db.ExecuteCheckedAsync(
                 "INSERT INTO student_x_program VALUES (@student, @program)",
                 new {student = student.Id, program = program.Id}
             );
 
         public async Task UnregisterForProgramAsync(Student student, Program program) =>
-            await _db.ExecuteAsync(
+            await _db.ExecuteCheckedAsync(
                 "DELETE FROM student_x_program WHERE student = @student AND program = @program",
                 new {student = student.Id, program = program.Id}
             );

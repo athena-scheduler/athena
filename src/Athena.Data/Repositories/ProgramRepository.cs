@@ -32,17 +32,17 @@ namespace Athena.Data.Repositories
                 new {id}
             )).FirstOrDefault();
 
-        public async Task AddAsync(Program obj) => await _db.InsertCheckedAsync(
+        public async Task AddAsync(Program obj) => await _db.ExecuteCheckedAsync(
             "INSERT INTO programs VALUES (@id, @name, @description, @institution)",
             new {obj.Id, obj.Name, obj.Description, institution = obj.Institution.Id}
         );
 
-        public async Task EditAsync(Program obj) => await _db.ExecuteAsync(
+        public async Task EditAsync(Program obj) => await _db.ExecuteCheckedAsync(
             "UPDATE programs SET name = @name, description = @description, institution = @institution WHERE id = @id",
             new {obj.Name, obj.Description, institution = obj.Institution.Id, obj.Id}
         );
 
-        public async Task DeleteAsync(Program obj) => await _db.ExecuteAsync(
+        public async Task DeleteAsync(Program obj) => await _db.ExecuteCheckedAsync(
             "DELETE FROM programs WHERE id = @id",
             new {obj.Id}
         );
@@ -112,13 +112,13 @@ namespace Athena.Data.Repositories
             );
 
         public async Task AddRequirementAsync(Program program, Requirement requirement) =>
-            await _db.InsertCheckedAsync(
+            await _db.ExecuteCheckedAsync(
                 "INSERT INTO program_requirements VALUES (@program, @req)",
                 new {program = program.Id, req = requirement.Id}
             );
 
         public async Task RemoveRequirementAsync(Program program, Requirement requirement) =>
-            await _db.ExecuteAsync(
+            await _db.ExecuteCheckedAsync(
                 "DELETE FROM program_requirements WHERE program = @program AND requirement = @req",
                 new {program = program.Id, req = requirement.Id}
             );

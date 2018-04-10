@@ -31,12 +31,12 @@ namespace Athena.Data.Repositories
                 new {id}
             )).FirstOrDefault();
 
-        public async Task AddAsync(Course obj) => await _db.InsertCheckedAsync(
+        public async Task AddAsync(Course obj) => await _db.ExecuteCheckedAsync(
             "INSERT INTO courses VALUES (@id, @name, @institution)",
             new {obj.Id, obj.Name, institution = obj.Institution.Id}
         );
 
-        public async Task EditAsync(Course obj) => await _db.ExecuteAsync(@"
+        public async Task EditAsync(Course obj) => await _db.ExecuteCheckedAsync(@"
             UPDATE courses SET
                 name = @name,
                 institution = @institution
@@ -44,7 +44,7 @@ namespace Athena.Data.Repositories
             new {obj.Name, institution = obj.Institution.Id, obj.Id}
         );
 
-        public async Task DeleteAsync(Course obj) => await _db.ExecuteAsync(
+        public async Task DeleteAsync(Course obj) => await _db.ExecuteCheckedAsync(
             "DELETE FROM courses WHERE id = @id",
             new {obj.Id}
         );
@@ -82,49 +82,49 @@ namespace Athena.Data.Repositories
             );
 
         public async Task MarkCourseAsCompletedForStudentAsync(Course course, Student student) =>
-            await _db.InsertCheckedAsync(
+            await _db.ExecuteCheckedAsync(
                 "INSERT INTO student_x_completed_course VALUES (@student, @course)",
                 new {student = student.Id, course = course.Id}
             );
 
         public async Task MarkCourseAsUncompletedForStudentAsync(Course course, Student student) =>
-            await _db.ExecuteAsync(
+            await _db.ExecuteCheckedAsync(
                 "DELETE FROM student_x_completed_course WHERE student = @student AND course = @course",
                 new {student = student.Id, course = course.Id}
             );
 
         public async Task AddSatisfiedRequirementAsync(Course course, Requirement requirement) =>
-            await _db.InsertCheckedAsync(
+            await _db.ExecuteCheckedAsync(
                 "INSERT INTO course_requirements VALUES (@course, @requirement)",
                 new {course = course.Id, requirement = requirement.Id}
             );
 
         public async Task RemoveSatisfiedRequirementAsync(Course course, Requirement requirement) =>
-            await _db.ExecuteAsync(
+            await _db.ExecuteCheckedAsync(
                 "DELETE FROM course_requirements WHERE course = @course AND requirement = @requirement",
                 new {course = course.Id, requirement = requirement.Id}
             );
 
         public async Task AddPrerequisiteAsync(Course course, Requirement prereq) =>
-            await _db.InsertCheckedAsync(
+            await _db.ExecuteCheckedAsync(
                 "INSERT INTO course_prereqs VALUES (@course, @prereq)",
                 new {course = course.Id, prereq = prereq.Id}
             );
 
         public async Task RemovePrerequisiteAsync(Course course, Requirement prereq) =>
-            await _db.ExecuteAsync(
+            await _db.ExecuteCheckedAsync(
                 "DELETE FROM course_prereqs WHERE course = @course AND prereq = @prereq",
                 new {course = course.Id, prereq = prereq.Id}
             );
         
         public async Task AddConcurrentPrerequisiteAsync(Course course, Requirement prereq) =>
-            await _db.InsertCheckedAsync(
+            await _db.ExecuteCheckedAsync(
                 "INSERT INTO course_concurrent_prereqs VALUES (@course, @prereq)",
                 new {course = course.Id, prereq = prereq.Id}
             );
         
         public async Task RemoveConcurrentPrerequisiteAsync(Course course, Requirement prereq) =>
-            await _db.ExecuteAsync(
+            await _db.ExecuteCheckedAsync(
                 "DELETE FROM course_concurrent_prereqs WHERE course = @course AND prereq = @prereq",
                 new {course = course.Id, prereq = prereq.Id}
             );

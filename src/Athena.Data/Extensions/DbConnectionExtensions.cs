@@ -10,7 +10,7 @@ namespace Athena.Data.Extensions
 {
     public static class DbConnectionExtensions
     {
-        public static async Task<int> InsertCheckedAsync(this IDbConnection db, string sql, object param)
+        public static async Task<int> ExecuteCheckedAsync(this IDbConnection db, string sql, object param)
         {
             try
             {

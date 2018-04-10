@@ -31,7 +31,7 @@ namespace Athena.Data.Repositories.Identity
             
             try
             {
-                var count = await _db.InsertCheckedAsync(@"
+                var count = await _db.ExecuteCheckedAsync(@"
                     INSERT INTO roles VALUES (
                         @id,
                         @name,
@@ -55,7 +55,7 @@ namespace Athena.Data.Repositories.Identity
 
             try
             {
-                var count = await _db.ExecuteAsync(
+                var count = await _db.ExecuteCheckedAsync(
                     "UPDATE roles SET name = @name, normalized_name = @normalizedName WHERE id = @id",
                     new { role.Name, role.NormalizedName, role.Id }
                 );
@@ -75,7 +75,7 @@ namespace Athena.Data.Repositories.Identity
 
             try
             {
-                var count = await _db.ExecuteAsync(
+                var count = await _db.ExecuteCheckedAsync(
                     "DELETE FROM roles WHERE id = @id",
                     new {role.Id}
                 );

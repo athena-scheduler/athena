@@ -57,19 +57,19 @@ namespace Athena.Data.Repositories
         }
             
         public async Task AddAsync(Offering obj) =>
-            await _db.InsertCheckedAsync(
+            await _db.ExecuteCheckedAsync(
                 "INSERT INTO offerings VALUES (@id, @campus, @start, @end, @course)",
                 new {obj.Id, campus = obj.Campus.Id, obj.Start, obj.End, course = obj.Course.Id}
             );
         
         public async Task EditAsync(Offering obj) =>
-            await _db.ExecuteAsync(
+            await _db.ExecuteCheckedAsync(
                 "UPDATE offerings SET campus = @campus, start = @start, \"end\" = @end, course = @course WHERE id = @id",
                 new { campus = obj.Campus.Id, obj.Start, obj.End, course = obj.Course.Id, obj.Id }
             );
 
         public async Task DeleteAsync(Offering obj) =>
-            await _db.ExecuteAsync(
+            await _db.ExecuteCheckedAsync(
                 "DELETE FROM offerings WHERE id = @id",
                 new {id = obj.Id}
             );
@@ -155,13 +155,13 @@ namespace Athena.Data.Repositories
         }
 
         public async Task EnrollStudentInOfferingAsync(Student student, Offering offering) =>
-            await _db.InsertCheckedAsync(
+            await _db.ExecuteCheckedAsync(
                 "INSERT INTO student_x_in_progress_course VALUES (@student, @course, @offering)", 
                 new { student = student.Id, course = offering.Course.Id, offering = offering.Id }
             );
 
         public async Task UnenrollStudentInOfferingAsync(Student student, Offering offering) =>
-            await _db.InsertCheckedAsync(
+            await _db.ExecuteCheckedAsync(
                 "DELETE FROM student_x_in_progress_course WHERE student = @student AND course = @course AND offering = @offering", 
                 new { student = student.Id, course = offering.Course.Id, offering = offering.Id }
             );
