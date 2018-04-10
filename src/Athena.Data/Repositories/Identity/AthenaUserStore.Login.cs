@@ -26,7 +26,7 @@ namespace Athena.Data.Repositories.Identity
 
             try
             {
-                await _db.InsertUniqueAsync(
+                await _db.ExecuteCheckedAsync(
                     "INSERT INTO external_logins VALUES (@providerKey, @loginProvider, @providerDisplayName, @userId)",
                     new { login.ProviderKey, login.LoginProvider, login.ProviderDisplayName, userId = user.Id }
                 );
@@ -46,7 +46,7 @@ namespace Athena.Data.Repositories.Identity
 
             try
             {
-                await _db.ExecuteAsync(@"
+                await _db.ExecuteCheckedAsync(@"
                     DELETE FROM external_logins WHERE login_provider = @loginProvider AND
                                                       provider_key = @providerKey AND
                                                       user_id = @userId",
