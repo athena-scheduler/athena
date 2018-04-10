@@ -12,10 +12,10 @@ let studentId = null;
 let isReadOnly = false;
 
 function reloadSchedule() {
-    self.calendar.removeEvents();
-    
     $.get(apiRoot + '/student/' + self.studentId + '/schedule')
         .done(function (data) {
+            self.calendar.removeEvents();
+            
             for(let ev of data) {
                 self.calendar.renderEvent(ev, false);
             }
@@ -83,10 +83,7 @@ function setSearchResults(data) {
             $.ajax({
                 url: apiRoot + '/student/' + self.studentId + '/offerings/' + offering.id,
                 method: 'PUT',
-                complete: function () {
-                    reloadSchedule();
-                    doSearch();
-                }  
+                complete: reloadAll
             });
         });
         
@@ -112,13 +109,21 @@ function doSearch() {
                 url: apiRoot + '/student/' + self.studentId + '/schedule/offerings/available',
                 data: { q: q }
             }).done(setSearchResults)
-                .fail(function () {
-                    setSearchResults([]);
-                    console.error("Failed to search for completeed courses")
-                })
+            .fail(function () {
+                setSearchResults([]);
+                console.error("Failed to search for completeed courses")
+            })
         },
         250
     );
+}
+
+function reloadAll() {
+    $('.tooltipped').tooltip('remove');
+    reloadSchedule();
+    doSearch();
+    
+    // Tooltips are re-added in the afterAllRender event for the calendar
 }
 
 export function render() {
@@ -143,10 +148,20 @@ export function init(studentId, readOnly) {
         header: false,
         columnFormat: 'ddd',
         eventRender: function (event, element, view) {
-            $(element).addClass('tooltipped')
+            $(element).addClass('tooltipped blue-grey darken-4')
                 .attr('data-position', 'bottom')
                 .attr('data-delay', 25)
-                .attr('data-tooltip', event.title);
+                .attr('data-tooltip', event.title)
+                .find('.fc-time').append(
+                    $(`<span class="right"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
+                        .click(function () {
+                            $.ajax({
+                                url: apiRoot + '/student/' + self.studentId + '/offerings/' + event.offeringId,
+                                method: 'DELETE',
+                                complete: reloadAll
+                            });
+                        })
+                );
         },
         eventAfterAllRender: function (view) {
             $('.tooltipped').tooltip();
