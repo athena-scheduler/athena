@@ -4,10 +4,17 @@
     var student = User.ToAthenaUser();
 }
 
+<h2>Edit Schedule</h2>
+
+<p class="flow-text">
+    Here's what your weekly schedule looks like so far. Feel free to add and remove courses
+    to see what works:
+</p>
+
 <div id="schedule">
-    @Html.Partial("_CurrentSchedule")
+    @Html.Partial("_CurrentSchedule", false)
 </div>
-@Html.Partial("_CurrentScheduleModal")
+@Html.Partial("_CurrentScheduleModal", false)
 
 @section Scripts
 {

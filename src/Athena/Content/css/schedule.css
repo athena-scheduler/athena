@@ -1,0 +1,43 @@
+#calendar {
+  margin: 0 auto;
+  background-color: white;
+  padding: 0;
+}
+
+.cal-card-content {
+  background-color: lightgray;
+}
+
+@media (min-width: 1170px) {
+    div.fc-view.fc-agendaDay-view.fc-agenda-view table {
+        max-width: 100%;
+    }
+}
+@media (max-width: 1170px) {
+    div.fc-view-container {
+        overflow-x: scroll;
+    }
+    div.fc-view.fc-agendaDay-view.fc-agenda-view table {
+        min-width: 1170px;
+    }
+}
+
+@media print {
+    #schedule {
+        background-color: white;
+        height: 100% !important;
+        width: 100% !important;
+        position: fixed !important;
+        overflow-x: hidden !important;
+        top: 0 !important;
+        left: 0 !important;
+        margin: 0 !important;
+        padding: 2rem !important;
+        font-size: 14px !important;
+        line-height: 18px !important;
+    }
+    
+    .material-tooltip, .hidden-print, .profiler-results {
+        display: none !important;
+    }
+}

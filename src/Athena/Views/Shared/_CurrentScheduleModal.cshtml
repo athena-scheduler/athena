@@ -1,10 +1,28 @@
-﻿<div id="modal1" class="modal">
+﻿@model bool
+
+<div id="modal1" class="modal">
     <div class="modal-content">
         <h4>Complete Courses</h4>
         <p>Are you sure you would like to mark all of the currently scheduled courses as complete?</p>
     </div>
     <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat" onclick="completeClasses()">Agree</a>
-        <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Cancel</a>
+        <a href="#" class="modal-action modal-close waves-effect waves-blue btn-flat" onclick="completeClasses()">Agree</a>
+        <a href="#" class="modal-action modal-close waves-effect waves-blue btn-flat">Cancel</a>
     </div>
 </div>
+
+@if (!Model)
+{
+    <div id="add-courses" class="modal bottom-sheet">
+        <div class="modal-content">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">search</i>
+                    <input type="text" class="flow-text" id="course-search" />
+                    <label for="course-search">Search</label>
+                </div>
+            </div>
+            <div class="row" id="course-search-results"></div>
+        </div>
+    </div>
+}

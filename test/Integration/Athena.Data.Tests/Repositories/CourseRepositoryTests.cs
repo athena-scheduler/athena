@@ -280,9 +280,11 @@ namespace Athena.Data.Tests.Repositories
         public async Task Search_ThrowsForEmptyStudent() => await Assert.ThrowsAsync<ArgumentException>(async () => await _sut.SearchAsync(new CourseSearchOptions()));
 
         [Theory, AutoData]
-        public async Task Search_NonCompleted_Valid(List<Course> completed, List<Course> nonCompleted, Course exclude, List<Institution> institutions, Student student)
+        public async Task Search_NonCompleted_IncludeInProgress_Valid(List<Course> completed, List<Offering> inProgress, List<Course> nonCompleted, Course exclude, List<Institution> institutions, Student student)
         {
             var studentRepo = new StudentRepository(_db);
+            var campusRepo = new CampusRepository(_db);
+            var offeringRepo = new OfferingRepository(_db, new MeetingRepository(_db));
             await studentRepo.AddAsync(student);
 
             foreach(var institution in institutions.Union(completed.Select(c => c.Institution)).Union(nonCompleted.Select(c => c.Institution)))
@@ -297,6 +299,16 @@ namespace Athena.Data.Tests.Repositories
                 await _sut.MarkCourseAsCompletedForStudentAsync(course, student);
             }
 
+            foreach (var offering in inProgress)
+            {
+                offering.Course.Institution = institutions[0];
+                offering.Course.Name = "Foo Bar Baz";
+                await _sut.AddAsync(offering.Course);
+                await campusRepo.AddAsync(offering.Campus);
+                await offeringRepo.AddAsync(offering);
+                await offeringRepo.EnrollStudentInOfferingAsync(student, offering);
+            }
+            
             foreach(var course in nonCompleted)
             {
                 course.Institution = institutions[0];
@@ -310,8 +322,58 @@ namespace Athena.Data.Tests.Repositories
 
             var results = (await _sut.SearchAsync(new CourseSearchOptions { Query = "bar", Completed = false, StudentId = student.Id })).ToList();
 
+            Assert.Equal(nonCompleted.Count + inProgress.Count, results.Count);
+            Assert.All(nonCompleted, c => Assert.Contains(c, results));
+            Assert.All(inProgress, o => Assert.Contains(o.Course, results));
+            Assert.DoesNotContain(exclude, results);
+        }
+        
+        [Theory, AutoData]
+        public async Task Search_NonCompleted_NotInProgress_Valid(List<Course> completed, List<Offering> inProgress, List<Course> nonCompleted, Course exclude, List<Institution> institutions, Student student)
+        {
+            var studentRepo = new StudentRepository(_db);
+            var campusRepo = new CampusRepository(_db);
+            var offeringRepo = new OfferingRepository(_db, new MeetingRepository(_db));
+            await studentRepo.AddAsync(student);
+
+            foreach(var institution in institutions.Union(completed.Select(c => c.Institution)).Union(nonCompleted.Select(c => c.Institution)))
+            {
+                await _institutions.AddAsync(institution);
+                await _institutions.EnrollStudentAsync(institution, student);
+            }
+
+            foreach (var course in completed)
+            {
+                await _sut.AddAsync(course);
+                await _sut.MarkCourseAsCompletedForStudentAsync(course, student);
+            }
+
+            foreach (var offering in inProgress)
+            {
+                offering.Course.Institution = institutions[0];
+                offering.Course.Name = "Foo Bar Baz";
+                await _sut.AddAsync(offering.Course);
+                await campusRepo.AddAsync(offering.Campus);
+                await offeringRepo.AddAsync(offering);
+                await offeringRepo.EnrollStudentInOfferingAsync(student, offering);
+            }
+
+            foreach(var course in nonCompleted)
+            {
+                course.Institution = institutions[0];
+                course.Name = "Foo Bar Baz";
+                await _sut.AddAsync(course);
+            }
+
+            await _institutions.AddAsync(exclude.Institution);
+            exclude.Name = "Foo Bar Baz";
+            await _sut.AddAsync(exclude);
+
+            var results = (await _sut.SearchAsync(new CourseSearchOptions { Query = "bar", Completed = false, IncludeInProgress = false, StudentId = student.Id })).ToList();
+
             Assert.Equal(nonCompleted.Count, results.Count);
             Assert.All(nonCompleted, c => Assert.Contains(c, results));
+            Assert.All(inProgress, o => Assert.DoesNotContain(o.Course, results));
             Assert.DoesNotContain(exclude, results);
         }
 
