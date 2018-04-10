@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import 'fullcalendar';
+import 'materialize-css';
 import moment from 'moment';
 
 const self = this;
@@ -11,12 +12,12 @@ let studentId = null;
 let isReadOnly = false;
 
 function reloadSchedule() {
-    self.calendar.fullCalendar('removeEvents');
+    self.calendar.removeEvents();
     
     $.get(apiRoot + '/student/' + self.studentId + '/schedule')
         .done(function (data) {
             for(let ev of data) {
-                self.calendar.fullCalendar('renderEvent', ev, false);
+                self.calendar.renderEvent(ev, false);
             }
         })
         .fail(function (err) {
@@ -94,16 +95,16 @@ function setSearchResults(data) {
 }
 
 export function render() {
-    self.calendar.fullCalendar('render');
+    self.calendar.render();
 }
 
 export function init(studentId, readOnly) {
     self.studentId = studentId;
     self.isReadOnly = readOnly;
     
-    self.calendar = $('#calendar');
-    
-    self.calendar.fullCalendar({
+    const calendarDiv = $('#calendar');
+
+    calendarDiv.fullCalendar({
         defaultView: "agendaWeek",
         minTime: "07:00:00",
         maxTime: "22:00:00",
@@ -114,9 +115,20 @@ export function init(studentId, readOnly) {
         width: "auto",
         header: false,
         columnFormat: 'ddd',
+        eventRender: function (event, element, view) {
+            $(element).addClass('tooltipped')
+                .attr('data-position', 'bottom')
+                .attr('data-delay', 25)
+                .attr('data-tooltip', event.title);
+        },
+        eventAfterAllRender: function (view) {
+            $('.tooltipped').tooltip();
+        }
     });
     
-    self.calendar.fullCalendar('next');
+    self.calendar = calendarDiv.fullCalendar('getCalendar');
+    
+    self.calendar.next();
 
     reloadSchedule();
     

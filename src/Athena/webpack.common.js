@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
@@ -18,8 +19,30 @@ module.exports = {
         libraryTarget: 'var',
         library: ['athena', '[name]']
     },
+    resolve: {
+        alias: {
+            jquery: 'jquery/src/jquery'
+        }
+    },
     module: {
         rules: [
+            {
+                test: require.resolve('jquery'),
+                use: [
+                    {
+                        loader: 'expose-loader',
+                        options: '$'
+                    },
+                    {
+                        loader: 'expose-loader',
+                        options: 'jquery'
+                    },
+                    {
+                        loader: 'expose-loader',
+                        options: 'jQuery'
+                    }
+                ]
+            },
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
