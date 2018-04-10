@@ -8,9 +8,9 @@ function updateEnrolledInstitutions(studentId) {
     $.get(apiRoot + "/student/" + studentId + "/institutions")
         .done(function(data) {
             enrolledInstitutions = data;
-            setInstitutionResults(studentId,  enrolledInstitutions);
+            setInstitutionResults(studentId, enrolledInstitutions);
         })
-        .fail(function(err) {
+        .fail(function (err) {
             setInstitutionResults(studentId, []);
             console.error("Failed to get institutions");
         });
@@ -44,8 +44,6 @@ function makeCard(id, title, description) {
                                 <p></p>
                             </div>
                             <div class="card-action">
-                                <a href="#" class="unenroll">Unenroll</a>
-                                <a href="#" class="enroll">Enroll</a>
                             </div>
                         </div>
                     </div>
@@ -72,7 +70,7 @@ function makeCard(id, title, description) {
 function setInstitutionResults(studentId, data) {
     const results = $("#institution-results");
 
-    results.html("");
+    results.html('');
     for (let i of data) {
         const card = makeCard(i.id, i.name, i.description);
 
@@ -80,7 +78,7 @@ function setInstitutionResults(studentId, data) {
             $.ajax({
                 url: apiRoot + '/student/' + studentId + '/institutions/' + i.id,
                 type: 'PUT',
-                complete: function() {
+                complete: function () {
                     updateEnrolledInstitutions(studentId);
                 }
             })
@@ -89,12 +87,61 @@ function setInstitutionResults(studentId, data) {
             $.ajax({
                 url: apiRoot + '/student/' + studentId + '/institutions/' + i.id,
                 type: 'DELETE',
-                complete: function() {
+                complete: function () {
                     updateEnrolledInstitutions(studentId);
                 }
             });
         });
 
+        results.append(card);
+    }
+}
+
+
+
+function setInstutitonSearchResults(studentId, data) {
+    const results = $("#institution-results");
+
+    results.html("");
+    for (let i of data) {
+        const card = makeCard(i.id, i.name, i.description);
+        const link = $('<a href="#">Enroll in institution</a>');
+
+        link.click(function () {
+            $.ajax({
+                url: apiRoot + '/student/' + studentId + '/institutions/' + i.id,
+                type: 'PUT',
+                complete: function () {
+                    updateEnrolledInstitutions(studentId);
+                }
+            });
+            card.remove();
+        });
+
+        card.find('.card-action').append(link);
+        results.append(card);
+    }
+}
+
+function setInstitutionResults(studentId, data) {
+    const results = $("#institution-results");
+
+    results.html('');
+    for (let i of data) {
+        const card = makeCard(i.id, i.name, i.description);
+        const link = $('<a href="#">Unenroll in institution</a>');
+
+        link.click(function () {
+            $.ajax({
+                url: apiRoot + '/student/' + studentId + '/institutions/' + i.id,
+                type: 'DELETE',
+                complete: function () {
+                    updateEnrolledInstitutions(studentId);
+                }
+            });
+        });
+
+        card.find('.card-action').append(link);
         results.append(card);
     }
 }
@@ -144,7 +191,7 @@ export function init (studentId) {
             institutionSearchTimeout = setTimeout(
                 function() {
                     if (q.length < 3) {
-                        setInstitutionResults(studentId,  enrolledInstitutions);
+                        setInstitutionResults(studentId, enrolledInstitutions);
                         return;
                     }
 
@@ -152,9 +199,9 @@ export function init (studentId) {
                         url: apiRoot + "/institution",
                         data: { q: q }
                     }).done(function(data){
-                        setInstitutionResults(studentId, data)
+                        setInstutitonSearchResults(studentId, data)
                     }).fail(function() {
-                        setInstitutionResults(studentId,  []);
+                        setInstutitonSearchResults(studentId,  []);
                         console.error("Failed to search institutions");
                     });
                 },
