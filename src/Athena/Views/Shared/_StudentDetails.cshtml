@@ -1,27 +1,21 @@
-﻿<div class="HomepageDegreeProgress" >
+﻿<div class="HomepageDegreeProgress">
     <div class="row">
-    <div class="col s2">
-        <h4>Degree Progress:</h4>
-    </div>
-    <div class="col s4 offset-s2">
-        <div id="progress-bar" class="all-rounded">
-            <div id="progress-bar-percentage" class="all-rounded" style="width: 68%"><span>68/100</span></div>
+        <div class="col s2">
+            <h4>Degree Progress:</h4>
+        </div>
+        <div class="col s4 offset-s2">
+            <div id="progress-bar" class="all-rounded">
+                <div id="progress-bar-percentage" class="all-rounded" style="width: 68%"><span>68/100</span></div>
+            </div>
+        </div>
+        <div class="col s2 offset-s1">
+            <h5>ETC:</h5>
+            <h6>??/??/????</h6>
         </div>
     </div>
-    <div class="col s2 offset-s1">
-        <h5>ETC:</h5>
-        <h6>??/??/????</h6>
-    </div>
-</div>
 </div>
 <div class="row">
-    <div class="card">
-        <div class="card-content cal-card-content">
-            <h4>Weekly Schedule:</h4>
-            <div id="calendar" class="user-tabs"></div>
-        </div>
-        <a class="btn-floating halfway-fab waves-effect waves-light blue darken-4 tooltipped printBtn hidden-print" data-position="left" data-delay="50" data-tooltip="Print schedule here"><i class="material-icons">print</i></a>
-        <a class="btn-floating halfway-fab waves-effect waves-light blue darken-4 tooltipped complete_course_btn modal-trigger hidden-print" data-position="left" data-delay="50" data-tooltip="Complete Courses" href="#modal1"><i class="material-icons">check</i></a>
-    </div>
+    @Html.Partial("_CurrentSchedule", true)
 </div>
+@Html.Partial("_CurrentScheduleModal")
 

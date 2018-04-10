@@ -38,7 +38,6 @@ else
 {
     @Html.Partial("_StudentDetails")
 
-    @Html.Partial("_CurrentScheduleModal")
 }
 
 @section scripts {
@@ -48,14 +47,6 @@ else
         <script type="text/javascript">
             $(function () {
                 athena.schedule.init('@(student.Id)', true);
-
-                $('ul.tabs').tabs({
-                    onShow: function(tab) {
-                        if ($(tab).attr('id') === "schedule") {
-                            athena.schedule.render();                            
-                        }
-                    }
-                });
             });
 
             $('.printBtn').on('click', function () {
