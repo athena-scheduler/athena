@@ -4,6 +4,17 @@ import 'materialize-css';
 import moment from 'moment';
 
 const self = this;
+const offeringColors = [
+    "cyan darken-4",
+    "red darken-4",
+    "pink darken-4",
+    "deep-orange darken-4",
+    "indigo darken-4",
+    "green darken-4",
+    "blue darken-4",
+];
+
+let nextColor = 0;
 
 let searchTimeout = null;
 
@@ -15,8 +26,17 @@ function reloadSchedule() {
     $.get(apiRoot + '/student/' + self.studentId + '/schedule')
         .done(function (data) {
             self.calendar.removeEvents();
+            nextColor = 0;
+            let colorMap = {};
             
             for(let ev of data) {
+                if (!colorMap[ev.offeringId]) {
+                    colorMap[ev.offeringId] = offeringColors[nextColor];
+                    nextColor = (nextColor + 1) % offeringColors.length;
+                }
+                
+                ev.color = colorMap[ev.offeringId];
+                
                 self.calendar.renderEvent(ev, false);
             }
         })
@@ -148,7 +168,8 @@ export function init(studentId, readOnly) {
         header: false,
         columnFormat: 'ddd',
         eventRender: function (event, element, view) {
-            $(element).addClass('tooltipped blue-grey darken-4')
+            $(element).addClass('tooltipped')
+                .addClass(event.color)
                 .attr('data-position', 'bottom')
                 .attr('data-delay', 25)
                 .attr('data-tooltip', event.title)
