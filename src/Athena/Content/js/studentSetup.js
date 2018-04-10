@@ -26,7 +26,7 @@ function updateEnrolledPrograms(studentId) {
         })
         .fail(function(err) {
             setProgramResults(studentId,  []);
-            console.error("Failed to get institutions");
+            console.error("Failed to get Programs");
         });
     
     $("#program-search").val("");
@@ -66,38 +66,6 @@ function makeCard(id, title, description) {
 
     return wrapper;
 }
-
-function setInstitutionResults(studentId, data) {
-    const results = $("#institution-results");
-
-    results.html('');
-    for (let i of data) {
-        const card = makeCard(i.id, i.name, i.description);
-
-        card.find('.enroll').click(function() {
-            $.ajax({
-                url: apiRoot + '/student/' + studentId + '/institutions/' + i.id,
-                type: 'PUT',
-                complete: function () {
-                    updateEnrolledInstitutions(studentId);
-                }
-            })
-        });
-        card.find('.unenroll').click(function() {
-            $.ajax({
-                url: apiRoot + '/student/' + studentId + '/institutions/' + i.id,
-                type: 'DELETE',
-                complete: function () {
-                    updateEnrolledInstitutions(studentId);
-                }
-            });
-        });
-
-        results.append(card);
-    }
-}
-
-
 
 function setInstutitonSearchResults(studentId, data) {
     const results = $("#institution-results");
@@ -152,17 +120,9 @@ function setProgramResults(studentId, data) {
     results.html("");
     for (let p of data) {
         const card = makeCard(p.id, p.name, p.description);
+        const link = $('<a href="#">Remove Program</a>');
 
-        card.find('.enroll').click(function() {
-            $.ajax({
-                url: apiRoot + '/student/' + studentId + '/programs/' + p.id,
-                type: 'PUT',
-                complete: function() {
-                    updateEnrolledPrograms(studentId);
-                }
-            });
-        });
-        card.find('.unenroll').click(function() {
+        link.click(function () {
             $.ajax({
                 url: apiRoot + '/student/' + studentId + '/programs/' + p.id,
                 type: 'DELETE',
@@ -172,6 +132,31 @@ function setProgramResults(studentId, data) {
             });
         });
 
+        card.find('.card-action').append(link);
+        results.append(card);
+    }
+}
+
+function setProgramSearchResults(studentId, data) {
+    const results = $("#program-results");
+
+    results.html("");
+    for (let p of data) {
+        const card = makeCard(p.id, p.name, p.description);
+        const link = $('<a href="#">Add Program</a>');
+
+        link.click(function () {
+            $.ajax({
+                url: apiRoot + '/student/' + studentId + '/programs/' + p.id,
+                type: 'PUT',
+                complete: function () {
+                    updateEnrolledPrograms(studentId);
+                }
+            });
+            card.remove();
+        });
+
+        card.find('.card-action').append(link);
         results.append(card);
     }
 }
@@ -221,7 +206,7 @@ export function init (studentId) {
             programSearchTimeout = setTimeout(
                 function() {
                     if (q.length < 3) {
-                        setProgramResults(enrolledPrograms);
+                        setProgramSearchResults(enrolledPrograms);
                         return;
                     }
 
@@ -229,9 +214,9 @@ export function init (studentId) {
                         url: apiRoot + "/program",
                         data: { q: q }
                     }).done(function(data) {
-                        setProgramResults(studentId, data)
+                        setProgramSearchResults(studentId, data)
                     }).fail(function(data) {
-                        setProgramResults(studentId, []);
+                        setProgramSearchResults(studentId, []);
                         console.error("Failed to search programs");
                     });
                 },
