@@ -1,63 +1,21 @@
-﻿<div class="row">
-    <div class="col s2">
-        <h4>Degree Progress:</h4>
-    </div>
-    <div class="col s4 offset-s2">
-        <div id="progress-bar" class="all-rounded">
-            <div id="progress-bar-percentage" class="all-rounded" style="width: 68%"><span>68/100</span></div>
+﻿<div class="HomepageDegreeProgress">
+    <div class="row">
+        <div class="col s2">
+            <h4>Degree Progress:</h4>
+        </div>
+        <div class="col s4 offset-s2">
+            <div id="progress-bar" class="all-rounded">
+                <div id="progress-bar-percentage" class="all-rounded" style="width: 68%"><span>68/100</span></div>
+            </div>
+        </div>
+        <div class="col s2 offset-s1">
+            <h5>ETC:</h5>
+            <h6>??/??/????</h6>
         </div>
     </div>
-    <div class="col s2 offset-s1">
-        <h5>ETC:</h5>
-        <h6>??/??/????</h6>
-    </div>
 </div>
-<div class="courseTable">
-    <table class="striped bordered">
-        <thead>
-            <tr>
-                <th>Completed Courses</th>
-                <th>Number</th>
-                <th>Term</th>
-                <th>University</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Calculus I</td>
-                <td>1003</td>
-                <td>Spring</td>
-                <td>LCCC</td>
-            </tr>
-            <tr>
-                <td>Physics</td>
-                <td>2105</td>
-                <td>Fall</td>
-                <td>Lorain County Community College</td>
-            </tr>
-            <tr>
-                <td>Programming</td>
-                <td>3562</td>
-                <td>Summer</td>
-                <td>University of Toledo</td>
-            </tr>
-            <tr>
-                <td>English</td>
-                <td>1452</td>
-                <td>Summer</td>
-                <td>UT</td>
-            </tr>
-            <tr>
-                <td>Geography</td>
-                <td>1324</td>
-                <td>Fall</td>
-                <td>Cleveland State University</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<br /><br />
 <div class="row">
-    <a href="@Url.Action(nameof(ScheduleController.ScheduleEditor), "Schedule")" class="btn col s5 m5 l3 offset-s0 offset-m0 offset-l2">New Schedule</a>
-    <a href="@Url.Action(nameof(HomeController.Add_Classes), "Home")" class="btn col s5 m5 l3 offset-s2 offset-m2 offset-l2">Complete Classes</a>
+    @Html.Partial("_CurrentSchedule", true)
 </div>
+@Html.Partial("_CurrentScheduleModal")
+

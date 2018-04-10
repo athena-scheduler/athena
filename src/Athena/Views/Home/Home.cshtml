@@ -36,23 +36,8 @@
 }
 else
 {
-    <div class="vh-80">
-        <div class="row">
-            <div class="col s12">
-                <ul class="tabs tabs-fixed-width">
-                    <li class="tab hidden-print"><a href="#student" class="active">Student</a></li>
-                    <li class="tab hidden-print"><a href="#schedule">Schedule</a></li>
-                </ul>
-                <div id="student" class="col s12 vh-80">
-                    @Html.Partial("_StudentDetails")
-                </div>
-                <div id="schedule" class="col s12 vh-80">
-                    @Html.Partial("_CurrentSchedule", true)
-                </div>
-                @Html.Partial("_CurrentScheduleModal", true)
-            </div>
-        </div>
-    </div>
+    @Html.Partial("_StudentDetails")
+
 }
 
 @section scripts {
@@ -62,14 +47,6 @@ else
         <script type="text/javascript">
             $(function () {
                 athena.schedule.init('@(student.Id)', true);
-
-                $('ul.tabs').tabs({
-                    onShow: function(tab) {
-                        if ($(tab).attr('id') === "schedule") {
-                            athena.schedule.render();                            
-                        }
-                    }
-                });
             });
 
             $('.printBtn').on('click', function () {
