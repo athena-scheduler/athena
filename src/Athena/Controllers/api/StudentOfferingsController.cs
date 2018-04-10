@@ -45,7 +45,7 @@ namespace Athena.Controllers.api
                 foreach (var inProgressMeeting in inProgressOffering.Meetings)
                 {
                     // Clever solutin from https://stackoverflow.com/a/13513973/8723823
-                    if (offering.Meetings.Any(m => inProgressMeeting.Time < m.End && m.Time < inProgressMeeting.End))
+                    if (offering.Meetings.Any(m => m.Day == inProgressMeeting.Day && inProgressMeeting.Time < m.End && m.Time < inProgressMeeting.End))
                     {
                         throw new ApiException(
                             HttpStatusCode.Conflict,
@@ -55,6 +55,7 @@ namespace Athena.Controllers.api
                                 conflict = inProgressOffering,
                                 conflictingTimeSlot = new
                                 {
+                                    dow = inProgressMeeting.Day,
                                     start = inProgressMeeting.Time,
                                     end = inProgressMeeting.End
                                 }

@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import 'fullcalendar';
-import 'materialize-css';
+import Materialize from 'materialize-css';
 import moment from 'moment';
 
 const self = this;
@@ -21,6 +21,10 @@ let searchTimeout = null;
 let calendar = null;
 let studentId = null;
 let isReadOnly = false;
+
+function timeSpanToMoment(ts) {
+    return moment().startOf('day').clone().add(moment.duration(ts));
+}
 
 function reloadSchedule() {
     $.get(apiRoot + '/student/' + self.studentId + '/schedule')
@@ -76,10 +80,8 @@ function makeCard(offering) {
     const ul = wrapper.find('.card-content>div>ul');
     
     for (let meeting of offering.meetings) {
-        const startOfDay = moment().startOf('day');
-        
-        const start = startOfDay.clone().add(moment.duration(meeting.time)).format('h:mm A');
-        const end   = startOfDay.clone().add(moment.duration(meeting.time)).add(moment.duration(meeting.duration)).format('h:mm A');
+        const start = timeSpanToMoment(meeting.time).format('h:mm A');
+        const end   = timeSpanToMoment(meeting.time).add(moment.duration(meeting.duration)).format('h:mm A');
         
         ul.append($('<li></li>').text(moment.weekdays()[meeting.day] + ': ' + start + ' - ' + end + ' in ' + meeting.room));
     }
@@ -103,7 +105,36 @@ function setSearchResults(data) {
             $.ajax({
                 url: apiRoot + '/student/' + self.studentId + '/offerings/' + offering.id,
                 method: 'PUT',
-                complete: reloadAll
+                complete: reloadAll,
+                error: function (err) {
+                    const payload = err.responseJSON;
+                    if (err.status === 409 && payload.details)
+                    {
+                        const start = timeSpanToMoment(payload.details.conflictingTimeSlot.start).format('h:mm A');
+                        const end   = timeSpanToMoment(payload.details.conflictingTimeSlot.end).format('h:mm A');
+                        
+                        const toastContent = $(`<div>
+                            <div style="margin-bottom: 0.25rem">
+                                Unable to enroll in <span class="conflict-target" style="text-decoration: underline"></span>
+                            </div>
+                            <div style="margin-bottom: 0.25rem">
+                                As it conflicts with <span class="conflict-source" style="text-decoration: underline"></span>
+                            </div>
+                            <div style="margin-bottom: 0.25rem">
+                                Between <span class="conflict-time-start"></span> and <span class="conflict-time-end"></span> on <span class="conflict-dow"></span>
+                            </div>
+                        </div>`);
+                        
+                        toastContent.find('.conflict-target').text(offering.course.name);
+                        toastContent.find('.conflict-source').text(payload.details.conflict.Course.Name);
+                        toastContent.find('.conflict-time-start').text(start);
+                        toastContent.find('.conflict-time-end').text(end);
+                        toastContent.find('.conflict-dow').text(moment.weekdays()[payload.details.conflictingTimeSlot.dow]);
+                        
+                        Materialize.Toast.removeAll();
+                        Materialize.toast(toastContent, 10000, 'amber darken-4 toast-wrap right');
+                    }
+                }
             });
         });
         
