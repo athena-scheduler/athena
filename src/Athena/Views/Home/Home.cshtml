@@ -47,12 +47,15 @@ else
         <script type="text/javascript" src="@Url.Content("~/schedule.js")"></script>
         <script type="text/javascript">
             $(function () {
-                $('ul.tabs').tabs({
-                    swipeable: true,
-                    responsiveThreshold: 1920
-                });
-
                 athena.schedule.init('@(student.Id)', true);
+
+                $('ul.tabs').tabs({
+                    onShow: function(tab) {
+                        if ($(tab).attr('id') === "schedule") {
+                            athena.schedule.render();                            
+                        }
+                    }
+                });
             });
 
             $('.printBtn').on('click', function () {

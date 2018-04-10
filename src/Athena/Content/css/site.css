@@ -3,29 +3,8 @@
 @import '~fullcalendar/dist/fullcalendar.css';
 
 @import 'nav.css';
+@import 'schedule.css';
 @import 'footer.css';
-
-@media print {
-    .visible-print {
-        display: inherit !important;
-    }
-
-    .hidden-print {
-        display: none !important;
-    }
-
-    .material-tooltip {
-        display: none !important;
-    }
-
-   .card-panel, .card{
-        -webkit-box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0), 0 0px 0px 0 rgba(0, 0, 0, 0), 0 0px 0px 0px rgba(0, 0, 0, 0);
-        box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0), 0 0px 0px 0 rgba(0, 0, 0, 0), 0 0px 0px 0px rgba(0, 0, 0, 0);
-    }
-}
-
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
 
 .carousel .carousel-item {
     width: 100%;
@@ -39,7 +18,6 @@
 
 .tabs-content.carousel .carousel-item {
     width: 100%;
-    height: 550px;
 }
 
 .body-content {
@@ -88,12 +66,6 @@ main {
     flex: 1 0 auto;
 }
 
-#calendar {
-    margin: 0 auto;
-    background-color:white;
-    padding:0px;  
-}
-
 .overlay {
     bottom: 0;
     left: 0;
@@ -123,12 +95,12 @@ main {
     left: 0;
 }
 
-.cal-card-content{
-    background-color:lightgray;
-}
-
 .user-tabs {
     padding-bottom:1.5em
+}
+
+ul.tabs {
+    margin: 1em 0;
 }
 
 .tabs .tab a.active {
@@ -151,42 +123,16 @@ main {
     border: .15em solid black
 }
 
-.classUnordered{
-    height:300px;
-    overflow-y:scroll;
-    background-color:gray
-}
-
-.courseCard {
-    background-color: #0d47a1;
-    margin-left:.25em;
-    margin-right:.25em;
-}
-.courseCardTitle {
-    margin-left:1em;
-    color: white;
-}
-.courseCardContent {
-    background-color: white;
-}
-.addclass_dropdowns {
-    margin-top: 4em;
-}
-
-.complete_course_btn{
-    margin-right:80px;
-}
-
 .courseTable tbody {
     display: block;
-    height: 200px;
+    height: 50vh;
     overflow: auto;
 }
 
 .courseTable thead, .courseTable tbody tr {
-        display: table;
-        width: 100%;
-        table-layout: fixed;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
 }
 
 .courseTable thead {
@@ -195,15 +141,6 @@ main {
 
 .courseTable table {
     width: 100%;
-}
-
-nav .chip {
-    background-color: lightgray;
-}
-
-nav .chip:hover {
-    color: white;
-    background-color: #2962ff;
 }
 
 .tooltip {

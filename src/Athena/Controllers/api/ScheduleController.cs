@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Athena.Core.Models;
 using Athena.Core.Repositories;
 using Athena.Extensions;
 using Athena.Models;
@@ -14,19 +15,16 @@ namespace Athena.Controllers.api
     {
         private readonly IStudentRepository _students;
         private readonly IOfferingReository _offerings;
-        private readonly IInstitutionRepository _institutions;
         private readonly ICourseRepository _courses;
 
         public ScheduleController(
             IStudentRepository students,
             IOfferingReository offerings,
-            IInstitutionRepository institutions,
             ICourseRepository courses
         )
         {
             _students = students ?? throw new ArgumentNullException(nameof(students));
             _offerings = offerings ?? throw new ArgumentNullException(nameof(offerings));
-            _institutions = institutions ?? throw new ArgumentNullException(nameof(institutions));
             _courses = courses ?? throw new ArgumentNullException(nameof(courses));
         }
         
@@ -37,6 +35,28 @@ namespace Athena.Controllers.api
             var enrolledOfferings = await _offerings.GetInProgressOfferingsForStudentAsync(student);
 
             return enrolledOfferings.SelectMany(o => o.Meetings.Select(m => new ScheduleEntry(o, m)));
+        }
+
+        [HttpGet("offerings/available")]
+        public async Task<IEnumerable<Offering>> FindOfferings(Guid studentId, string q)
+        {
+            var student = (await _students.GetAsync(studentId)).NotFoundIfNull();
+
+            var results = new List<Offering>();
+            var searchOptions = new CourseSearchOptions
+            {
+                StudentId = student.Id,
+                Completed = false,
+                IncludeInProgress = false,
+                Query = q
+            };
+            
+            foreach (var course in await _courses.SearchAsync(searchOptions))
+            {
+                results.AddRange(await _offerings.GetOfferingsForCourseAsync(course));
+            }
+
+            return results;
         }
     }
 }

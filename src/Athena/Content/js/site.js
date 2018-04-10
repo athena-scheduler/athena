@@ -1,5 +1,8 @@
-﻿const jquery = require("jquery");
-window.$ = window.jQuery = jquery;
+﻿import 'jquery';
+import 'materialize-css';
 
-require("materialize-css");
-require("collapsible.js");
+$(function () {
+    $('.print-trigger').click(function () {
+       window.print(); 
+    });
+});

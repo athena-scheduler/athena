@@ -139,8 +139,9 @@ namespace Athena.Data.Repositories
             return await (query.Completed ? searchCompletedAsync(query) : searchNonCompletedAsync(query));
         }
 
-        private async Task<IEnumerable<Course>> searchNonCompletedAsync(CourseSearchOptions query) =>
-            await _db.QueryAsync<Course, Institution, Course>(@"
+        private async Task<IEnumerable<Course>> searchNonCompletedAsync(CourseSearchOptions query)
+        {
+            var sql = @"
                 SELECT c.id,
                        c.name,
                        i.id,
@@ -151,10 +152,21 @@ namespace Athena.Data.Repositories
                         ON c.institution = i.id
                 WHERE c.id NOT IN (SELECT course FROM student_x_completed_course WHERE student = @student)
                       AND c.name ILIKE ('%' || @q || '%')
-                      AND i.id IN (SELECT institution FROM institution_x_student WHERE student = @student)",
+                      AND i.id IN (SELECT institution FROM institution_x_student WHERE student = @student)
+                      ";
+
+            if (!query.IncludeInProgress)
+            {
+                sql += "AND c.id NOT IN (SELECT course FROM student_x_in_progress_course WHERE student = @student)";
+            }
+            
+            return await _db.QueryAsync<Course, Institution, Course>(
+                sql,
                 _mapInstitution,
                 new { student = query.StudentId, q = query.Query }
             );
+        }
+            
 
         private async Task<IEnumerable<Course>> searchCompletedAsync(CourseSearchOptions query) =>
             await _db.QueryAsync<Course, Institution, Course>(@"

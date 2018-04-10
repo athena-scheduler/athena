@@ -9,3 +9,12 @@
     max-width: 6rem;
     padding-left: 3em;
 }
+
+nav .chip {
+    background-color: lightgray;
+}
+
+nav .chip:hover {
+    color: white;
+    background-color: #2962ff;
+}

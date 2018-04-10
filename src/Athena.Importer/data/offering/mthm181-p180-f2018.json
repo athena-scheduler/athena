@@ -1,0 +1,46 @@
+{
+  "id": "006420bb-0325-4df9-b4f6-7a03769d25d3",
+  "course": {
+    "id": "a15df1a8-9d14-4ae7-8e97-0d6f6e0c03bb",
+    "name": "MTHM 181 - CALCULUS I",
+    "institution": {
+      "id": "49ea51f7-b3dd-4266-a3fc-85c5259fe3c6",
+      "name": "_",
+      "description": ""
+    }
+  },
+  "campus": {
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "_",
+    "description": "",
+    "location": "_"
+  },
+  "start": "2018-08-20",
+  "end": "2018-12-09",
+  "meetings": [
+    {
+      "id": "d09aef3f-bb77-4a48-803f-885e4eb03e0f",
+      "offering": "006420bb-0325-4df9-b4f6-7a03769d25d3",
+      "day": "MONDAY",
+      "time": "08:00:00",
+      "duration": "01:50:00",
+      "room": "UPRC 201"
+    },
+    {
+      "id": "76a084e4-661e-41b6-9be1-bb4bfe50e358",
+      "offering": "006420bb-0325-4df9-b4f6-7a03769d25d3",
+      "day": "WEDNESDAY",
+      "time": "08:00:00",
+      "duration": "01:50:00",
+      "room": "UPRC 201"
+    },
+    {
+      "id": "1b6748f8-b16b-4e41-9230-ff1dee4ca33e",
+      "offering": "006420bb-0325-4df9-b4f6-7a03769d25d3",
+      "day": "FRIDAY",
+      "time": "08:00:00",
+      "duration": "00:50:00",
+      "room": "UPRC 201"
+    }
+  ]
+}
