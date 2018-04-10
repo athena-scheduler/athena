@@ -73,7 +73,7 @@ function setInstutitonSearchResults(studentId, data) {
     results.html("");
     for (let i of data) {
         const card = makeCard(i.id, i.name, i.description);
-        const link = $('<a href="#">Enroll in institution</a>');
+        const link = $('<a href="#">Enroll</a>');
 
         link.click(function () {
             $.ajax({
@@ -97,7 +97,7 @@ function setInstitutionResults(studentId, data) {
     results.html('');
     for (let i of data) {
         const card = makeCard(i.id, i.name, i.description);
-        const link = $('<a href="#">Unenroll in institution</a>');
+        const link = $('<a href="#">Unenroll</a>');
 
         link.click(function () {
             $.ajax({
@@ -120,7 +120,7 @@ function setProgramResults(studentId, data) {
     results.html("");
     for (let p of data) {
         const card = makeCard(p.id, p.name, p.description);
-        const link = $('<a href="#">Remove Program</a>');
+        const link = $('<a href="#">Unenroll</a>');
 
         link.click(function () {
             $.ajax({
@@ -143,7 +143,7 @@ function setProgramSearchResults(studentId, data) {
     results.html("");
     for (let p of data) {
         const card = makeCard(p.id, p.name, p.description);
-        const link = $('<a href="#">Add Program</a>');
+        const link = $('<a href="#">Enroll</a>');
 
         link.click(function () {
             $.ajax({
