@@ -261,3 +261,8 @@ nav .chip:hover {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+.scrolling{
+    overflow-y : scroll;
+    max-height : 25rem;
+}
