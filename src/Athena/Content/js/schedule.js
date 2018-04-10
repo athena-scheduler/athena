@@ -85,13 +85,40 @@ function setSearchResults(data) {
                 method: 'PUT',
                 complete: function () {
                     reloadSchedule();
-                    card.remove();
+                    doSearch();
                 }  
             });
         });
         
         results.append(card);
     }
+}
+
+function doSearch() {
+    const q = $('#course-search').val();
+    
+    if (searchTimeout) {
+        clearTimeout(searchTimeout)
+    }
+
+    searchTimeout = setTimeout(
+        function () {
+            if (q.length < 3) {
+                setSearchResults([]);
+                return;
+            }
+
+            $.get({
+                url: apiRoot + '/student/' + self.studentId + '/schedule/offerings/available',
+                data: { q: q }
+            }).done(setSearchResults)
+                .fail(function () {
+                    setSearchResults([]);
+                    console.error("Failed to search for completeed courses")
+                })
+        },
+        250
+    );
 }
 
 export function render() {
@@ -134,31 +161,6 @@ export function init(studentId, readOnly) {
     
     if (!self.isReadOnly)
     {
-        $('#course-search').on("paste keyup", function () {
-            const q = $(this).val();
-            
-            if (searchTimeout) {
-                clearTimeout(searchTimeout)
-            }
-            
-            searchTimeout = setTimeout(
-                function () {
-                    if (q.length < 3) {
-                        setSearchResults([]);
-                        return;
-                    }
-                    
-                    $.get({
-                        url: apiRoot + '/student/' + self.studentId + '/schedule/offerings/available',
-                        data: { q: q }
-                    }).done(setSearchResults)
-                      .fail(function () {
-                        setSearchResults([]);
-                        console.error("Failed to search for completeed courses")
-                    })
-                },
-                250
-            );
-        });
+        $('#course-search').on("paste keyup", doSearch);
     }
 }
