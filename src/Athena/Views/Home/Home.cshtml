@@ -36,16 +36,8 @@
 }
 else
 {
-    <ul class="tabs">
-        <li class="tab hidden-print"><a href="#student">Student</a></li>
-        <li class="tab hidden-print"><a href="#schedule">Schedule</a></li>
-    </ul>
-    <div id="student">
-        @Html.Partial("_StudentDetails")
-    </div>
-    <div id="schedule">
-        @Html.Partial("_CurrentSchedule")
-    </div>
+    @Html.Partial("_StudentDetails")
+
     @Html.Partial("_CurrentScheduleModal")
 }
 
