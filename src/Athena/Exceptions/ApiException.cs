@@ -6,13 +6,12 @@ namespace Athena.Exceptions
     public class ApiException : Exception
     {
         public readonly HttpStatusCode ResponseCode;
-        private HttpStatusCode notFound;
+        public readonly object Payload;
 
-        public ApiException(HttpStatusCode notFound)
+        public ApiException(HttpStatusCode status, string message, object payload = null) : base(message)
         {
-            this.notFound = notFound;
+            ResponseCode = status;
+            Payload = payload;
         }
-
-        public ApiException(HttpStatusCode status, string message) : base(message) => ResponseCode = status;
     }
 }

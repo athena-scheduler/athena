@@ -47,6 +47,28 @@ namespace Athena.Tests.Controllers.Api
         }
 
         [Theory, AutoData]
+        public async Task Enroll_ConflictForOverlappingOffering(Student student, Offering overlap, Offering target, Meeting conflict)
+        {
+            Students.Setup(s => s.GetAsync(It.IsAny<Guid>())).ReturnsAsync(student);
+            Offerings.Setup(o => o.GetAsync(It.IsAny<Guid>())).ReturnsAsync(target);
+            Offerings.Setup(o => o.GetInProgressOfferingsForStudentAsync(It.IsAny<Student>()))
+                .ReturnsAsync(new[] {overlap});
+
+            overlap.Meetings = new[] {conflict};
+            target.Meetings = new[] {conflict};
+
+            var ex = await Assert.ThrowsAsync<ApiException>(async () =>
+                await _sut.EnrollInOffering(student.Id, target.Id));
+            
+            Assert.Equal(HttpStatusCode.Conflict, ex.ResponseCode);
+            Assert.NotNull(ex.Payload);
+            
+            Students.Verify(s => s.GetAsync(student.Id), Times.Once);
+            Offerings.Verify(o => o.GetAsync(target.Id), Times.Once);
+            Offerings.Verify(o => o.GetInProgressOfferingsForStudentAsync(student), Times.Once);
+        }
+
+        [Theory, AutoData]
         public async Task Enroll_ThrowsForStudentNotFound(Guid student, Guid offering)
         {
             Students.Setup(s => s.GetAsync(It.IsAny<Guid>())).ReturnsNullAsync();
