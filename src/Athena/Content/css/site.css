@@ -6,25 +6,6 @@
 @import 'schedule.css';
 @import 'footer.css';
 
-@media print {
-    .visible-print {
-        display: inherit !important;
-    }
-
-    .hidden-print {
-        display: none !important;
-    }
-
-    .material-tooltip {
-        display: none !important;
-    }
-
-   .card-panel, .card{
-        -webkit-box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0), 0 0px 0px 0 rgba(0, 0, 0, 0), 0 0px 0px 0px rgba(0, 0, 0, 0);
-        box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0), 0 0px 0px 0 rgba(0, 0, 0, 0), 0 0px 0px 0px rgba(0, 0, 0, 0);
-    }
-}
-
 .carousel .carousel-item {
     width: 100%;
 }

@@ -153,7 +153,7 @@ export function init(studentId, readOnly) {
                 .attr('data-delay', 25)
                 .attr('data-tooltip', event.title)
                 .find('.fc-time').append(
-                    $(`<span class="right"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
+                    $(`<span class="right hidden-print"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
                         .click(function () {
                             $.ajax({
                                 url: apiRoot + '/student/' + self.studentId + '/offerings/' + event.offeringId,
