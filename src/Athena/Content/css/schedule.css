@@ -8,6 +8,10 @@
   background-color: lightgray;
 }
 
+.toast-wrap {
+    font-weight: bold;
+}
+
 @media (min-width: 1170px) {
     div.fc-view.fc-agendaDay-view.fc-agenda-view table {
         max-width: 100%;

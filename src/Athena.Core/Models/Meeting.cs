@@ -24,6 +24,11 @@ namespace Athena.Core.Models
         /// The durationof the meeting
         /// </summary>
         public TimeSpan Duration { get; set; }
+
+        /// <summary>
+        /// The end time of the Meeting, calculated from the Time and Duration 
+        /// </summary>
+        public TimeSpan End => Time + Duration;
         
         /// <summary>
         /// The room the meeting is in

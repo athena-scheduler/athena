@@ -54,7 +54,11 @@ namespace Athena.Middleware
                 ctx.Response.ContentType = "application/json";
 
                 await ctx.Response.WriteAsync(JsonConvert.SerializeObject(
-                    new {message = e.Message}
+                    new
+                    {
+                        message = e.Message,
+                        details = e.Payload
+                    }
                 ));
             }
         }
