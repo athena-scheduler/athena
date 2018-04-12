@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Net;
-using System.Runtime.InteropServices.ComTypes;
+﻿using System.Net;
 using System.Threading.Tasks;
 using Athena.Core.Exceptions;
 using Athena.Exceptions;
@@ -20,17 +18,6 @@ namespace Athena.Middleware
             try
             {
                 await _next(ctx);
-            }
-            catch (BadModelException e)
-            {
-                ctx.Response.StatusCode = (int) HttpStatusCode.BadRequest;
-                ctx.Response.ContentType = "application/json";
-
-                await ctx.Response.WriteAsync(JsonConvert.SerializeObject(
-                    e.ModelState.Keys.Select(
-                        k => new {Key = k, Error = e.ModelState[k].Errors.Select(er => er.ErrorMessage)}
-                    ).ToDictionary(k => k.Key, v => v.Error)
-                ));
             }
             catch (DuplicateObjectException e)
             {

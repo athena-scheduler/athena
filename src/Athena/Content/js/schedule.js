@@ -110,8 +110,8 @@ function setSearchResults(data) {
                     const payload = err.responseJSON;
                     if (err.status === 409 && payload.details)
                     {
-                        const start = timeSpanToMoment(payload.details.conflictingTimeSlot.start).format('h:mm A');
-                        const end   = timeSpanToMoment(payload.details.conflictingTimeSlot.end).format('h:mm A');
+                        const start = timeSpanToMoment(payload.details.conflictingTimeSlot.Time).format('h:mm A');
+                        const end   = timeSpanToMoment(payload.details.conflictingTimeSlot.End).format('h:mm A');
                         
                         const toastContent = $(`<div>
                             <div style="margin-bottom: 0.25rem">
@@ -129,10 +129,30 @@ function setSearchResults(data) {
                         toastContent.find('.conflict-source').text(payload.details.conflict.Course.Name);
                         toastContent.find('.conflict-time-start').text(start);
                         toastContent.find('.conflict-time-end').text(end);
-                        toastContent.find('.conflict-dow').text(moment.weekdays()[payload.details.conflictingTimeSlot.dow]);
+                        toastContent.find('.conflict-dow').text(moment.weekdays()[payload.details.conflictingTimeSlot.Day]);
                         
                         Materialize.Toast.removeAll();
-                        Materialize.toast(toastContent, 10000, 'amber darken-4 toast-wrap right');
+                        Materialize.toast(toastContent, 10000, 'red darken-4 toast-wrap right');
+                    } else if (err.status === 412 && payload.details) {
+                        const modal = $('#unmet-dependency-error');
+                        
+                        modal.find('#unmet-target').text(payload.details.course.Name);
+                        
+                        const unmetConcurrentList = modal.find('#unmet-concurrent-list').html('');
+                        if (payload.details.unmetConcurrent.length > 0) {
+                            for (let r of payload.details.unmetConcurrent) {
+                                unmetConcurrentList.append($(`<li></li>`).text(r.Name + ' - ' + r.Description));
+                            }
+                        }
+                        
+                        const unmetList = modal.find('#unmet-list').html('');
+                        if (payload.details.unmet.length > 0) {
+                            for (let r of payload.details.unmet) {
+                                unmetList.append($(`<li></li>`).text(r.Name + ' - ' + r.Description));
+                            }
+                        }
+                        
+                        modal.modal('open');
                     }
                 }
             });

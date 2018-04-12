@@ -7,6 +7,7 @@ using Athena.Controllers.api;
 using Athena.Core.Models;
 using Athena.Exceptions;
 using Athena.Tests.Extensions;
+using AutoFixture.Kernel;
 using AutoFixture.Xunit2;
 using Moq;
 using Xunit;
@@ -18,7 +19,7 @@ namespace Athena.Tests.Controllers.Api
         private readonly StudentOfferingsController _sut;
 
         public StudentOfferingsControllerTests() =>
-            _sut = new StudentOfferingsController(Students.Object, Offerings.Object);
+            _sut = new StudentOfferingsController(Students.Object, Offerings.Object, Requirements.Object);
 
         [Theory, AutoData]
         public async Task GetEnrolledOfferingsValid(List<Offering> offerings, Student student)
@@ -57,15 +58,29 @@ namespace Athena.Tests.Controllers.Api
             overlap.Meetings = new[] {conflict};
             target.Meetings = new[] {conflict};
 
-            var ex = await Assert.ThrowsAsync<ApiException>(async () =>
+            var ex = await Assert.ThrowsAsync<OfferingConflictException>(async () =>
                 await _sut.EnrollInOffering(student.Id, target.Id));
             
             Assert.Equal(HttpStatusCode.Conflict, ex.ResponseCode);
             Assert.NotNull(ex.Payload);
             
-            Students.Verify(s => s.GetAsync(student.Id), Times.Once);
-            Offerings.Verify(o => o.GetAsync(target.Id), Times.Once);
-            Offerings.Verify(o => o.GetInProgressOfferingsForStudentAsync(student), Times.Once);
+            Offerings.Verify(o => o.EnrollStudentInOfferingAsync(It.IsAny<Student>(), It.IsAny<Offering>()), Times.Never);
+        }
+        
+        [Theory, AutoData]
+        public async Task Enroll_ThrowsForUnmetDependencies(Student student, Offering target, Requirement prereq)
+        {
+            Students.Setup(s => s.GetAsync(It.IsAny<Guid>())).ReturnsAsync(student);
+            Offerings.Setup(o => o.GetAsync(It.IsAny<Guid>())).ReturnsAsync(target);
+            Requirements.Setup(r => r.GetPrereqsForCourseAsync(It.IsAny<Course>())).ReturnsAsync(new[] {prereq});
+            
+            var ex = await Assert.ThrowsAsync<UnmetDependencyException>(async () =>
+                await _sut.EnrollInOffering(student.Id, target.Id));
+            
+            Assert.Equal(HttpStatusCode.PreconditionFailed, ex.ResponseCode);
+            Assert.NotNull(ex.Payload);
+            
+            Offerings.Verify(o => o.EnrollStudentInOfferingAsync(It.IsAny<Student>(), It.IsAny<Offering>()), Times.Never);
         }
 
         [Theory, AutoData]
