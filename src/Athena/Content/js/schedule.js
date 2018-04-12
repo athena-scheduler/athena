@@ -110,8 +110,8 @@ function setSearchResults(data) {
                     const payload = err.responseJSON;
                     if (err.status === 409 && payload.details)
                     {
-                        const start = timeSpanToMoment(payload.details.conflictingTimeSlot.start).format('h:mm A');
-                        const end   = timeSpanToMoment(payload.details.conflictingTimeSlot.end).format('h:mm A');
+                        const start = timeSpanToMoment(payload.details.conflictingTimeSlot.Time).format('h:mm A');
+                        const end   = timeSpanToMoment(payload.details.conflictingTimeSlot.End).format('h:mm A');
                         
                         const toastContent = $(`<div>
                             <div style="margin-bottom: 0.25rem">
@@ -129,7 +129,7 @@ function setSearchResults(data) {
                         toastContent.find('.conflict-source').text(payload.details.conflict.Course.Name);
                         toastContent.find('.conflict-time-start').text(start);
                         toastContent.find('.conflict-time-end').text(end);
-                        toastContent.find('.conflict-dow').text(moment.weekdays()[payload.details.conflictingTimeSlot.dow]);
+                        toastContent.find('.conflict-dow').text(moment.weekdays()[payload.details.conflictingTimeSlot.Day]);
                         
                         Materialize.Toast.removeAll();
                         Materialize.toast(toastContent, 10000, 'amber darken-4 toast-wrap right');
