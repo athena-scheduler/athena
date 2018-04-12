@@ -23,7 +23,7 @@ namespace Athena.Data.Tests.Repositories
         public OfferingRepositoryTests()
         {
             _campuses = new CampusRepository(_db);
-            _courses = new CourseRepository(_db);
+            _courses = new CourseRepository(_db, new RequirementRepository(_db));
             _institutions = new InstitutionRepository(_db);
             _meetings = new MeetingRepository(_db);
             _sut = new OfferingRepository(_db, _meetings);
