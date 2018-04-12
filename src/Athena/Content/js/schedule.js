@@ -117,7 +117,7 @@ function setSearchResults(data) {
                             <div style="margin-bottom: 0.25rem">
                                 Unable to enroll in <span class="conflict-target" style="text-decoration: underline"></span>
                             </div>
-                            <div style="margin-bottom: 0.25rem">
+                            <div style="margin-bottom: 0.25rem">f
                                 As it conflicts with <span class="conflict-source" style="text-decoration: underline"></span>
                             </div>
                             <div style="margin-bottom: 0.25rem">
@@ -133,6 +133,26 @@ function setSearchResults(data) {
                         
                         Materialize.Toast.removeAll();
                         Materialize.toast(toastContent, 10000, 'amber darken-4 toast-wrap right');
+                    } else if (err.status === 412 && payload.details) {
+                        const modal = $('#unmet-dependency-error');
+                        
+                        modal.find('#unmet-target').text(payload.details.course.Name);
+                        
+                        const unmetConcurrentList = modal.find('#unmet-concurrent-list').html('');
+                        if (payload.details.unmetConcurrent.length > 0) {
+                            for (let r of payload.details.unmetConcurrent) {
+                                unmetConcurrentList.append($(`<li></li>`).text(r.Name + ' - ' + r.Description));
+                            }
+                        }
+                        
+                        const unmetList = modal.find('#unmet-list').html('');
+                        if (payload.details.unmet.length > 0) {
+                            for (let r of payload.details.unmet) {
+                                unmetList.append($(`<li></li>`).text(r.Name + ' - ' + r.Description));
+                            }
+                        }
+                        
+                        modal.modal('open');
                     }
                 }
             });

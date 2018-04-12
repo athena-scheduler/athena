@@ -23,5 +23,23 @@ namespace Athena.Extensions
                 }
             }
         }
+
+        public static async Task CheckForMetPrerequisites(this Offering offering, Student student, IRequirementRepository requirements)
+        {
+            var required = (await requirements.GetPrereqsForCourseAsync(offering.Course)).ToList();
+            var concurrent = (await requirements.GetConcurrentPrereqsAsync(offering.Course)).ToList();
+
+            var taken = (await requirements.GetCompletedRequirementsForStudentAsync(student)).ToList();
+            var inProgress = (await requirements.GetInProgressRequirementsForStudentAsync(student)).ToList();
+
+            var unmet = required.Where(r => !taken.Contains(r)).ToList();
+            var unmetConcurrent = required.Union(concurrent).Where(r => !taken.Contains(r) && !inProgress.Contains(r))
+                .ToList();
+
+            if (unmet.Count + unmetConcurrent.Count != 0)
+            {
+                throw new UnmetDependencyException(offering.Course, unmet, unmetConcurrent);
+            }
+        }
     }
 }

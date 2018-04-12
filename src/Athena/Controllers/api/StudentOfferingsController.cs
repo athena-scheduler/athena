@@ -13,14 +13,17 @@ namespace Athena.Controllers.api
     {
         private readonly IStudentRepository _students;
         private readonly IOfferingReository _offerings;
+        private readonly IRequirementRepository _requirements;
 
         public StudentOfferingsController(
             IStudentRepository students,
-            IOfferingReository offerings
+            IOfferingReository offerings,
+            IRequirementRepository requirements
         )
         {
             _students = students ?? throw new ArgumentNullException(nameof(students));
             _offerings = offerings ?? throw new ArgumentNullException(nameof(offerings));
+            _requirements = requirements ?? throw new ArgumentNullException(nameof(requirements));
         }
 
         [HttpGet]
@@ -38,7 +41,7 @@ namespace Athena.Controllers.api
             var offering = (await _offerings.GetAsync(offeringId)).NotFoundIfNull();
                 
             await offering.CheckForConflictingTimeSlots(student, _offerings);
-            
+            await offering.CheckForMetPrerequisites(student, _requirements);
 
             await _offerings.EnrollStudentInOfferingAsync(student, offering);
         }
