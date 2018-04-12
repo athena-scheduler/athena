@@ -117,7 +117,7 @@ function setSearchResults(data) {
                             <div style="margin-bottom: 0.25rem">
                                 Unable to enroll in <span class="conflict-target" style="text-decoration: underline"></span>
                             </div>
-                            <div style="margin-bottom: 0.25rem">f
+                            <div style="margin-bottom: 0.25rem">
                                 As it conflicts with <span class="conflict-source" style="text-decoration: underline"></span>
                             </div>
                             <div style="margin-bottom: 0.25rem">
@@ -132,7 +132,7 @@ function setSearchResults(data) {
                         toastContent.find('.conflict-dow').text(moment.weekdays()[payload.details.conflictingTimeSlot.Day]);
                         
                         Materialize.Toast.removeAll();
-                        Materialize.toast(toastContent, 10000, 'amber darken-4 toast-wrap right');
+                        Materialize.toast(toastContent, 10000, 'red darken-4 toast-wrap right');
                     } else if (err.status === 412 && payload.details) {
                         const modal = $('#unmet-dependency-error');
                         
