@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Athena.Core.Exceptions;
 using Athena.Core.Models;
 using Athena.Core.Repositories;
 using Athena.Data.Extensions;
@@ -12,10 +13,11 @@ namespace Athena.Data.Repositories
 {
     public class CourseRepository : PostgresRepository, ICourseRepository
     {
-        public CourseRepository(IDbConnection db) : base(db)
-        {
-        }
+        private readonly IRequirementRepository _requirements;
 
+        public CourseRepository(IDbConnection db, IRequirementRepository requirements) : base(db) =>
+            _requirements = requirements ?? throw new ArgumentNullException(nameof(requirements));
+        
         public async Task<Course> GetAsync(Guid id) =>
             (await _db.QueryAsync<Course, Institution, Course>(@"
                 SELECT c.id,
@@ -105,11 +107,23 @@ namespace Athena.Data.Repositories
                 new {course = course.Id, requirement = requirement.Id}
             );
 
-        public async Task AddPrerequisiteAsync(Course course, Requirement prereq) =>
-            await _db.ExecuteCheckedAsync(
-                "INSERT INTO course_prereqs VALUES (@course, @prereq)",
-                new {course = course.Id, prereq = prereq.Id}
-            );
+        public async Task AddPrerequisiteAsync(Course course, Requirement prereq)
+        {
+            using (var t = _db.CreateAsyncTransactionScope())
+            {
+                if ((await _requirements.GetConcurrentPrereqsAsync(course)).Contains(prereq))
+                {
+                    throw new IllegalPrerequisiteException(course, prereq);
+                }
+                
+                await _db.ExecuteCheckedAsync(
+                    "INSERT INTO course_prereqs VALUES (@course, @prereq)",
+                    new {course = course.Id, prereq = prereq.Id}
+                );
+                
+                t.Complete();
+            }
+        }
 
         public async Task RemovePrerequisiteAsync(Course course, Requirement prereq) =>
             await _db.ExecuteCheckedAsync(
@@ -117,11 +131,23 @@ namespace Athena.Data.Repositories
                 new {course = course.Id, prereq = prereq.Id}
             );
         
-        public async Task AddConcurrentPrerequisiteAsync(Course course, Requirement prereq) =>
-            await _db.ExecuteCheckedAsync(
-                "INSERT INTO course_concurrent_prereqs VALUES (@course, @prereq)",
-                new {course = course.Id, prereq = prereq.Id}
-            );
+        public async Task AddConcurrentPrerequisiteAsync(Course course, Requirement prereq)
+        {
+            using (var t = _db.CreateAsyncTransactionScope())
+            {
+                if ((await _requirements.GetPrereqsForCourseAsync(course)).Contains(prereq))
+                {
+                    throw new IllegalPrerequisiteException(course, prereq);
+                }
+                
+                await _db.ExecuteCheckedAsync(
+                    "INSERT INTO course_concurrent_prereqs VALUES (@course, @prereq)",
+                    new {course = course.Id, prereq = prereq.Id}
+                );
+                
+                t.Complete();
+            }
+        }
         
         public async Task RemoveConcurrentPrerequisiteAsync(Course course, Requirement prereq) =>
             await _db.ExecuteCheckedAsync(

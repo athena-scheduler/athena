@@ -18,7 +18,7 @@ namespace Athena.Data.Tests.Repositories
 
         public CourseRepositoryTests()
         {
-            _sut = new CourseRepository(_db);
+            _sut = new CourseRepository(_db, new RequirementRepository(_db));
             _institutions = new InstitutionRepository(_db);
         }
 
@@ -168,6 +168,20 @@ namespace Athena.Data.Tests.Repositories
         }
         
         [Theory, AutoData]
+        public async Task Prereq_ThrowsForDuplicateConcurrent(Requirement prereq, Course course)
+        {
+            var requirementRepository = new RequirementRepository(_db);
+
+            await _institutions.AddAsync(course.Institution);
+            await _sut.AddAsync(course);
+            await requirementRepository.AddAsync(prereq);
+
+            await _sut.AddConcurrentPrerequisiteAsync(course, prereq);
+            await Assert.ThrowsAsync<IllegalPrerequisiteException>(async () =>
+                await _sut.AddPrerequisiteAsync(course, prereq));
+        }
+        
+        [Theory, AutoData]
         public async Task TracksConcurrentPrereqs(List<Requirement> prereqs, Course course)
         {
             var requirementRepository = new RequirementRepository(_db);
@@ -205,6 +219,20 @@ namespace Athena.Data.Tests.Repositories
 
             await _sut.AddConcurrentPrerequisiteAsync(course, prereq);
             await Assert.ThrowsAsync<DuplicateObjectException>(async () =>
+                await _sut.AddConcurrentPrerequisiteAsync(course, prereq));
+        }
+        
+        [Theory, AutoData]
+        public async Task ConcurrentPrereq_ThrowsForDuplicatePrereq(Requirement prereq, Course course)
+        {
+            var requirementRepository = new RequirementRepository(_db);
+
+            await _institutions.AddAsync(course.Institution);
+            await _sut.AddAsync(course);
+            await requirementRepository.AddAsync(prereq);
+
+            await _sut.AddPrerequisiteAsync(course, prereq);
+            await Assert.ThrowsAsync<IllegalPrerequisiteException>(async () =>
                 await _sut.AddConcurrentPrerequisiteAsync(course, prereq));
         }
 

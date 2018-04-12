@@ -65,7 +65,7 @@ namespace Athena.Data.Tests.Repositories
             AthenaUser user)
         {
             var campuses = new CampusRepository(_db);
-            var courses = new CourseRepository(_db);
+            var courses = new CourseRepository(_db, _sut);
             var institutions = new InstitutionRepository(_db);
             var meetings = new MeetingRepository(_db);
             var offerings = new OfferingRepository(_db, meetings);
@@ -115,7 +115,7 @@ namespace Athena.Data.Tests.Repositories
             AthenaUser user)
         {
             var campuses = new CampusRepository(_db);
-            var courses = new CourseRepository(_db);
+            var courses = new CourseRepository(_db, _sut);
             var institutions = new InstitutionRepository(_db);
             var meetings = new MeetingRepository(_db);
             var offerings = new OfferingRepository(_db, meetings);
