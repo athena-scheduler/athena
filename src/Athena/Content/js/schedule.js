@@ -204,7 +204,8 @@ export function init(studentId, readOnly) {
                 .attr('data-position', 'bottom')
                 .attr('data-delay', 25)
                 .attr('data-tooltip', event.title)
-                .find('.fc-time').append(
+            if (!readOnly) {  
+                $(element).find('.fc-time').append(
                     $(`<span class="right hidden-print"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
                         .click(function () {
                             $.ajax({
@@ -214,6 +215,7 @@ export function init(studentId, readOnly) {
                             });
                         })
                 );
+            }
         },
         eventAfterAllRender: function (view) {
             $('.tooltipped').tooltip();
