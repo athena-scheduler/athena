@@ -9,9 +9,9 @@ namespace Athena.Extensions
 {
     public static class EnumerableExtensions
     {
-        public static async Task CheckForConflictingTimeSlots(this Offering offering, Student student, IOfferingReository _offerings)
+        public static async Task CheckForConflictingTimeSlots(this Offering offering, Student student, IOfferingReository offerings)
         {
-            foreach (var inProgressOffering in await _offerings.GetInProgressOfferingsForStudentAsync(student))
+            foreach (var inProgressOffering in await offerings.GetInProgressOfferingsForStudentAsync(student))
             {
                 foreach (var inProgressMeeting in inProgressOffering.Meetings)
                 {
@@ -33,8 +33,7 @@ namespace Athena.Extensions
             var inProgress = (await requirements.GetInProgressRequirementsForStudentAsync(student)).ToList();
 
             var unmet = required.Where(r => !taken.Contains(r)).ToList();
-            var unmetConcurrent = required.Union(concurrent).Where(r => !taken.Contains(r) && !inProgress.Contains(r))
-                .ToList();
+            var unmetConcurrent = concurrent.Where(r => !taken.Contains(r) && !inProgress.Contains(r)).ToList();
 
             if (unmet.Count + unmetConcurrent.Count != 0)
             {

@@ -138,18 +138,27 @@ function setSearchResults(data) {
                         
                         modal.find('#unmet-target').text(payload.details.course.Name);
                         
-                        const unmetConcurrentList = modal.find('#unmet-concurrent-list').html('');
+                        const unmetConcurrentContainer = modal.find('#unmet-concurrent-container').html('');
                         if (payload.details.unmetConcurrent.length > 0) {
+                            const unmetConcurrentList = $('<ul class="browser-default"></ul>');
                             for (let r of payload.details.unmetConcurrent) {
                                 unmetConcurrentList.append($(`<li></li>`).text(r.Name + ' - ' + r.Description));
                             }
+                            
+                            unmetConcurrentContainer.append($(`<h5>May be taken concurrently:</h5>`));
+                            unmetConcurrentContainer.append(unmetConcurrentList);
                         }
                         
-                        const unmetList = modal.find('#unmet-list').html('');
+                        const unmetContainer = modal.find('#unmet-container').html('');
                         if (payload.details.unmet.length > 0) {
+                            const unmetList = $('<ul class="browser-default"></ul>');
+
                             for (let r of payload.details.unmet) {
                                 unmetList.append($(`<li></li>`).text(r.Name + ' - ' + r.Description));
                             }
+                            
+                            unmetContainer.append($(`<h5>Must be taken first:</h5>`));
+                            unmetContainer.append(unmetList);
                         }
                         
                         modal.modal('open');
