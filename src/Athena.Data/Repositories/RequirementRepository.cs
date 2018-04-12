@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Athena.Core.Models;
 using Athena.Core.Repositories;
@@ -84,6 +85,34 @@ namespace Athena.Data.Repositories
                         ON r.id = link.requirement
                 WHERE link.program = @id",
                 new {program.Id}
+            );
+
+        public async Task<IEnumerable<Requirement>> GetInProgressRequirementsForStudentAsync(Student student) =>
+            await _db.QueryAsync<Requirement>(@"
+                SELECT r.id,
+                       r.name,
+                       r.description
+                FROM requirements r
+                    LEFT JOIN course_requirements c
+                        ON r.id = c.requirement
+                    LEFT JOIN student_x_in_progress_course link
+                        ON c.course = link.course
+                WHERE link.student = @id",
+                new {student.Id}
+            );
+
+        public async Task<IEnumerable<Requirement>> GetCompletedRequirementsForStudentAsync(Student student) =>
+            await _db.QueryAsync<Requirement>(@"
+                SELECT r.id,
+                       r.name,
+                       r.description
+                FROM requirements r
+                    LEFT JOIN course_requirements c
+                        ON r.id = c.requirement
+                    LEFT JOIN student_x_completed_course link
+                        ON c.course = link.course
+                WHERE link.student = @id",
+                new {student.Id}
             );
     }
 }

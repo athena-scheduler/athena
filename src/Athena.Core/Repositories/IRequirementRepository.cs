@@ -50,5 +50,19 @@ namespace Athena.Core.Repositories
         /// and <see cref="IProgramRepository.RemoveRequirementAsync"/>
         /// </remarks>
         Task<IEnumerable<Requirement>> GetRequirementsForProgramAsync(Program program);
+
+        /// <summary>
+        /// Gets all requirements a student is currently taking
+        /// </summary>
+        /// <param name="student">The student to get requirements for</param>
+        /// <returns>A collection of all requirements the student is currently taking</returns>
+        Task<IEnumerable<Requirement>> GetInProgressRequirementsForStudentAsync(Student student);
+        
+        /// <summary>
+        /// Gets all requirements a student has completed
+        /// </summary>
+        /// <param name="student">The student to get requirements for</param>
+        /// <returns>A collection of all requirements the student has already completed</returns>
+        Task<IEnumerable<Requirement>> GetCompletedRequirementsForStudentAsync(Student student);
     }
 }
