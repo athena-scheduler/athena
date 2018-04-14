@@ -33,6 +33,8 @@ function reloadSchedule() {
             self.calendar.removeEvents();
             nextColor = 0;
             let colorMap = {};
+
+            $("#complete-courses-trigger").prop("disabled", data.length === 0);
             
             for(let ev of data) {
                 if (!colorMap[ev.offeringId]) {
@@ -47,6 +49,7 @@ function reloadSchedule() {
         })
         .fail(function (err) {
             console.error(err);
+            $("#complete-courses-trigger").prop("disabled", true);
             window.Materialize.toast('Failed to load enrolled courses', 3000, 'red darken-4');
         });
 }
@@ -215,9 +218,19 @@ export function render() {
     self.calendar.render();
 }
 
+export function completeSchedule() {
+    $.get(apiRoot + '/student/' + self.studentId + '/schedule/complete')
+        .done(reloadAll)
+        .fail(function () {
+            Materialize.toast("Failed to update schedule", 5000, "red darken-4")
+        });
+}
+
 export function init(studentId, readOnly) {
     self.studentId = studentId;
     self.isReadOnly = readOnly;
+    
+    $('#schedule-complete-btn').click(completeSchedule);
     
     const calendarDiv = $('#calendar');
 

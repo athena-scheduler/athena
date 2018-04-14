@@ -85,7 +85,7 @@ namespace Athena.Data.Repositories
 
         public async Task MarkCourseAsCompletedForStudentAsync(Course course, Student student) =>
             await _db.ExecuteCheckedAsync(
-                "INSERT INTO student_x_completed_course VALUES (@student, @course)",
+                "INSERT INTO student_x_completed_course VALUES (@student, @course); DELETE FROM student_x_in_progress_course WHERE student = @student AND course = @course;",
                 new {student = student.Id, course = course.Id}
             );
 
