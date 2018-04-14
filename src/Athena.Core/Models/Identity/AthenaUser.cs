@@ -19,6 +19,7 @@ namespace Athena.Core.Models.Identity
                    string.Equals(Email, other.Email) &&
                    string.Equals(NormalizedEmail, other.NormalizedEmail) &&
                    string.Equals(ApiKey, other.ApiKey) &&
+                   string.Equals(SecurityStamp, other.SecurityStamp) &&
                    EmailConfirmed == other.EmailConfirmed;
         }
 
@@ -40,6 +41,7 @@ namespace Athena.Core.Models.Identity
                 hashCode = (hashCode * 397) ^ (Email?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (NormalizedEmail?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (ApiKey?.GetHashCode() ?? 0);
+                hashCode = (hashCode * 397) ^ (SecurityStamp?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (EmailConfirmed.GetHashCode());
                 return hashCode;
             }
