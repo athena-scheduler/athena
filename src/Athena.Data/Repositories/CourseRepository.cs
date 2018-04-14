@@ -95,6 +95,19 @@ namespace Athena.Data.Repositories
                 new {student = student.Id, course = course.Id}
             );
 
+        public async Task CompleteBulkForStudentAsync(IEnumerable<Course> courses, Student student)
+        {
+            using (var scope = _db.CreateAsyncTransactionScope())
+            {
+                foreach (var course in courses)
+                {
+                    await MarkCourseAsCompletedForStudentAsync(course, student);
+                }
+                
+                scope.Complete();
+            }
+        }
+
         public async Task AddSatisfiedRequirementAsync(Course course, Requirement requirement) =>
             await _db.ExecuteCheckedAsync(
                 "INSERT INTO course_requirements VALUES (@course, @requirement)",

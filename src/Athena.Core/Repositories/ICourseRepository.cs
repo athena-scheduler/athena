@@ -36,6 +36,13 @@ namespace Athena.Core.Repositories
         Task MarkCourseAsUncompletedForStudentAsync(Course course, Student student);
 
         /// <summary>
+        /// Mark all of the provided coursees as complete for the provided student
+        /// </summary>
+        /// <param name="courses">The courses to mark as completed</param>
+        /// <param name="student">The student to modify</param>
+        Task CompleteBulkForStudentAsync(IEnumerable<Course> courses, Student student);
+
+        /// <summary>
         /// Add a requirement that this course satisfies
         /// </summary>
         /// <param name="course">The course to modify</param>
