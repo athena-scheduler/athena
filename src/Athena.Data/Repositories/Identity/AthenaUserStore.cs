@@ -12,10 +12,24 @@ using Serilog;
 
 namespace Athena.Data.Repositories.Identity
 {
-    public partial class AthenaUserStore : IUserLoginStore<AthenaUser>, IUserEmailStore<AthenaUser>, IUserRoleStore<AthenaUser>, IUserApiKeyStore
+    public partial class AthenaUserStore : IUserStore<AthenaUser>
     {
         private readonly IDbConnection _db;
         private readonly ILogger _log = Log.ForContext<AthenaUserStore>();
+
+        private const string UserProps = @"
+           u.id,
+           u.username,
+           u.normalized_username,
+           u.email,
+           u.normalized_email,
+           u.email_confirmed,
+           u.api_key,
+           u.security_stamp,
+           s.id,
+           s.name,
+           s.email
+        ";
 
         public AthenaUserStore(IDbConnection db) => _db = db ?? throw new ArgumentNullException(nameof(db));
         
@@ -71,9 +85,10 @@ namespace Athena.Data.Repositories.Identity
                         @email,
                         @normalizedEmail,
                         @emailConfirmed,
-                        @apiKey
+                        @apiKey,
+                        @securityStamp
                     )",
-                    new { user.Id, user.UserName, user.NormalizedUserName, user.Email, user.NormalizedEmail, user.EmailConfirmed, user.ApiKey }
+                    new { user.Id, user.UserName, user.NormalizedUserName, user.Email, user.NormalizedEmail, user.EmailConfirmed, user.ApiKey, user.SecurityStamp }
                 );
 
                 return count == 1 ? IdentityResult.Success : IdentityResult.Failed();
@@ -83,7 +98,6 @@ namespace Athena.Data.Repositories.Identity
                 _log.Error(ex, "Failed to create user {@user}", user);
                 return IdentityResult.Failed();
             }
-
         }
 
         public async Task<IdentityResult> UpdateAsync(AthenaUser user, CancellationToken cancellationToken)
@@ -98,9 +112,10 @@ namespace Athena.Data.Repositories.Identity
                                      email = @email,
                                      normalized_email = @normalizedEmail,
                                      email_confirmed = @emailConfirmed,
-                                     api_key = @apiKey
+                                     api_key = @apiKey,
+                                     security_stamp = @securityStamp
                     WHERE id = @id",
-                    new {user.UserName, user.NormalizedUserName, user.Email, user.NormalizedEmail, user.EmailConfirmed, user.Id, user.ApiKey}
+                    new {user.UserName, user.NormalizedUserName, user.Email, user.NormalizedEmail, user.EmailConfirmed, user.Id, user.ApiKey, user.SecurityStamp}
                 );
                 
                 return count == 1 ? IdentityResult.Success : IdentityResult.Failed();
@@ -133,17 +148,8 @@ namespace Athena.Data.Repositories.Identity
         }
 
         public async Task<AthenaUser> FindByIdAsync(string userId, CancellationToken cancellationToken) =>
-            (await _db.QueryAsync<AthenaUser, Student, AthenaUser>(@"
-                SELECT u.id,
-                       u.username,
-                       u.normalized_username,
-                       u.email,
-                       u.normalized_email,
-                       u.email_confirmed,
-                       u.api_key,
-                       s.id,
-                       s.name,
-                       s.email
+            (await _db.QueryAsync<AthenaUser, Student, AthenaUser>($@"
+                SELECT {UserProps}
                 FROM users u
                     LEFT JOIN students s ON u.id = s.id
                 WHERE u.id = @id",
@@ -152,17 +158,8 @@ namespace Athena.Data.Repositories.Identity
             )).FirstOrDefault();
         
         public async Task<AthenaUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken) =>
-            (await _db.QueryAsync<AthenaUser, Student, AthenaUser>(@"
-                SELECT u.id,
-                       u.username,
-                       u.normalized_username,
-                       u.email,
-                       u.normalized_email,
-                       u.email_confirmed,
-                       u.api_key,
-                       s.id,
-                       s.name,
-                       s.email
+            (await _db.QueryAsync<AthenaUser, Student, AthenaUser>($@"
+                SELECT {UserProps}
                 FROM users u
                     LEFT JOIN students s ON u.id = s.id
                 WHERE normalized_username = @normalizedUserName",

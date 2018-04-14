@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Athena.Data.Repositories.Identity
 {
-    public partial class AthenaUserStore : IUserLoginStore<AthenaUser>, IUserEmailStore<AthenaUser>, IUserRoleStore<AthenaUser>, IUserApiKeyStore
+    public partial class AthenaUserStore : IUserLoginStore<AthenaUser>
     {
         private class UserLoginInfoEx
         {
@@ -74,17 +74,8 @@ namespace Athena.Data.Repositories.Identity
               .ToList();
 
         public async Task<AthenaUser> FindByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken) =>
-            (await _db.QueryAsync<AthenaUser, Student, AthenaUser>(@"
-                SELECT u.id,
-                       u.username,
-                       u.normalized_username,
-                       u.email,
-                       u.normalized_email,
-                       u.email_confirmed,
-                       u.api_key,
-                       s.id,
-                       s.name,
-                       s.email
+            (await _db.QueryAsync<AthenaUser, Student, AthenaUser>($@"
+                SELECT {UserProps}
                 FROM users u
                     LEFT JOIN students s ON u.id = s.id
                     LEFT JOIN external_logins link ON u.id = link.user_id
