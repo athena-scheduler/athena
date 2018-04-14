@@ -210,13 +210,16 @@ export function init (studentId) {
             programSearchTimeout = setTimeout(
                 function() {
                     if (q.length < 3) {
-                        setProgramSearchResults(enrolledPrograms);
+                        setProgramResults(studentId,  enrolledPrograms);
                         return;
                     }
-
+                    
                     $.get({
                         url: apiRoot + "/program",
-                        data: { q: q }
+                        data: {
+                            q: q,
+                            student: studentId
+                        }
                     }).done(function(data) {
                         setProgramSearchResults(studentId, data)
                     }).fail(function(data) {

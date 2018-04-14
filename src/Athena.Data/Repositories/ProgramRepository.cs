@@ -61,21 +61,25 @@ namespace Athena.Data.Repositories
                         ON p.institution = i.id
                 WHERE (p.name ILIKE ('%' || @query || '%') or p.description ILIKE ('%' || @query || '%'))";
 
-            object opts = new {query = query.Query};
-
-            var iid = query.InstitutionIds?.ToList();
-            if (iid?.Any() ?? false)
+            if (query.Student != Guid.Empty)
             {
-                sql += " AND i.id = ANY (@iid)";
-                opts = new {query = query.Query, iid};
+                sql += @" 
+                    AND p.id not in (SELECT program FROM student_x_program WHERE student = @student)
+                    AND p.institution in (SELECT institution FROM institution_x_student WHERE student = @student)";
             }
             
             return await _db.QueryAsync<Program, Institution, Program>(
                 sql,
                 _mapProgram,
-                opts
+                new
+                {
+                    query = query.Query,
+                    includeRegistered = query.Student == Guid.Empty,
+                    query.Student
+                }
             );
         }
+            
 
         public async Task<IEnumerable<Program>> GetProgramsOfferedByInstitutionAsync(Institution institution) =>
             await _db.QueryAsync<Program, Institution, Program>(@"

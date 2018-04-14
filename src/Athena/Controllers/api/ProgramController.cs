@@ -20,16 +20,16 @@ namespace Athena.Controllers.api
 
         [HttpPost]
         public async Task AddProgram([FromBody] Program program) => await _programs.AddAsync(program);
-
+        
         [HttpGet]
-        public async Task<IEnumerable<Program>> Search(string q, IEnumerable<Guid> institutions = null)
+        public async Task<IEnumerable<Program>> Search(string q, Guid student = default(Guid))
         {
             if ((q?.Length ?? 0) < 3)
             {
                 throw new ApiException(HttpStatusCode.BadRequest, "Search term must be at least three characters");
             }
 
-            return await _programs.SearchAsync(new ProgramSearchOptions{Query = q, InstitutionIds = institutions});
+            return await _programs.SearchAsync(new ProgramSearchOptions{Query = q, Student = student});
         }
 
         [HttpGet("{id}")]
