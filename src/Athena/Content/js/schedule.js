@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import * as utils from './utils';
 import 'fullcalendar';
 import Materialize from 'materialize-css';
 import moment from 'moment';
@@ -105,7 +106,11 @@ function setSearchResults(data) {
             $.ajax({
                 url: apiRoot + '/student/' + self.studentId + '/offerings/' + offering.id,
                 method: 'PUT',
-                complete: reloadAll,
+                complete: function () {
+                    reloadAll();
+                    $('#course-search').val('');
+                    utils.focusInput('#course-search');
+                },
                 error: function (err) {
                     const payload = err.responseJSON;
                     if (err.status === 409 && payload.details)
@@ -260,5 +265,10 @@ export function init(studentId, readOnly) {
     if (!self.isReadOnly)
     {
         $('#course-search').on("paste keyup", doSearch);
+        $('#add-courses').modal({
+            ready: function () {
+                utils.focusInput('#course-search');
+            }
+        })
     }
 }

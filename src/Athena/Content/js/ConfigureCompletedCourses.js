@@ -1,4 +1,6 @@
-﻿const self = this;
+﻿import * as utils from './utils'
+
+const self = this;
 let StudentId = null;
 
 let completedCourses = [];
@@ -58,6 +60,8 @@ function setIncompleteCourses(data) {
         link.click(function () {
             markCourseComplete(course.id);
             card.remove();
+            $("#incomplete-search").val('');
+            utils.focusInput("#incomplete-search")
         });
 
         card.find('.card-action').append(link);
@@ -75,6 +79,8 @@ function setCompletedCourses(data) {
 
         link.click(function () {
             markNotComplete(course.id);
+            $("#completed-search").val('');
+            utils.focusInput("#completed-search")
         });
 
         card.find('.card-action').append(link);
@@ -164,4 +170,10 @@ export function init(studentId) {
             );
         }
     );
+    
+    $('#add-completed-courses-dialog').modal({
+        ready: function () {
+            utils.focusInput("#incomplete-search");
+        }
+    })
 }
