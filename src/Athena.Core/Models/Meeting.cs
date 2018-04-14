@@ -26,6 +26,11 @@ namespace Athena.Core.Models
         public TimeSpan Duration { get; set; }
 
         /// <summary>
+        /// External meetings are for online courses or off-campus meetings
+        /// </summary>
+        public bool External { get; set; } = false;
+
+        /// <summary>
         /// The end time of the Meeting, calculated from the Time and Duration 
         /// </summary>
         public TimeSpan End => Time + Duration;
@@ -44,6 +49,7 @@ namespace Athena.Core.Models
                    Day == other.Day &&
                    Math.Floor(Time.TotalMilliseconds).Equals(Math.Floor(other.Time.TotalMilliseconds)) &&
                    Math.Floor(Duration.TotalMilliseconds).Equals(Math.Floor(other.Duration.TotalMilliseconds)) &&
+                   External == other.External &&
                    string.Equals(Room, other.Room);
         }
 
@@ -63,6 +69,7 @@ namespace Athena.Core.Models
                 hashCode = (hashCode * 397) ^ (int) Day;
                 hashCode = (hashCode * 397) ^ Time.GetHashCode();
                 hashCode = (hashCode * 397) ^ Duration.GetHashCode();
+                hashCode = (hashCode * 397) ^ External.GetHashCode();
                 hashCode = (hashCode * 397) ^ (Room != null ? Room.GetHashCode() : 0);
                 return hashCode;
             }

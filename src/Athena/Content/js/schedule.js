@@ -41,6 +41,10 @@ function reloadSchedule() {
                 }
                 
                 ev.color = colorMap[ev.offeringId];
+                if (ev.allDay) {
+                    ev.start = "0000-01-01";
+                    ev.end = "9999-12-31";
+                }
                 
                 self.calendar.renderEvent(ev, false);
             }
@@ -221,11 +225,23 @@ export function init(studentId, readOnly) {
     
     const calendarDiv = $('#calendar');
 
+    function makeRemoveButton(event) {
+        return $(`<span class="right hidden-print"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
+            .click(function () {
+                $.ajax({
+                    url: apiRoot + '/student/' + self.studentId + '/offerings/' + event.offeringId,
+                    method: 'DELETE',
+                    complete: reloadAll
+                });
+            });
+    }
+
     calendarDiv.fullCalendar({
         defaultView: "agendaWeek",
         minTime: "07:00:00",
         maxTime: "22:00:00",
-        allDaySlot: false,
+        allDaySlot: true,
+        allDayText: "Independent",
         slotDuration: "00:30",
         slotWidth: 2,
         height: "auto",
@@ -237,18 +253,13 @@ export function init(studentId, readOnly) {
                 .addClass(event.color)
                 .attr('data-position', 'bottom')
                 .attr('data-delay', 25)
-                .attr('data-tooltip', event.title)
-            if (!readOnly) {  
-                $(element).find('.fc-time').append(
-                    $(`<span class="right hidden-print"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
-                        .click(function () {
-                            $.ajax({
-                                url: apiRoot + '/student/' + self.studentId + '/offerings/' + event.offeringId,
-                                method: 'DELETE',
-                                complete: reloadAll
-                            });
-                        })
-                );
+                .attr('data-tooltip', event.title);
+            if (!readOnly) {
+                if (event.allDay) {
+                    $(element).find('.fc-title').append(makeRemoveButton(event));
+                } else {
+                    $(element).find('.fc-time').append(makeRemoveButton(event));
+                }
             }
         },
         eventAfterAllRender: function (view) {
