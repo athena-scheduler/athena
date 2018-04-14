@@ -1,3 +1,5 @@
+import * as utils from './utils'
+
 let institutionSearchTimeout = null;
 let programSearchTimeout = null;
 
@@ -16,6 +18,7 @@ function updateEnrolledInstitutions(studentId) {
         });
     
     $("#institution-search").val("");
+    utils.focusInput("#institution-search");
 }
 
 function updateEnrolledPrograms(studentId) {
@@ -30,6 +33,7 @@ function updateEnrolledPrograms(studentId) {
         });
     
     $("#program-search").val("");
+    utils.focusInput("#program-search");
 }
 
 function makeCard(id, title, description) {
