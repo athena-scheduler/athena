@@ -80,7 +80,7 @@ function makeCard(offering) {
     wrapper.find('.card-content>div>p').text(offering.course.name);
     const ul = wrapper.find('.card-content>div>ul');
     
-    for (let meeting of offering.meetings) {
+    for (let meeting of offering.meetings.sort(function (a, b) { return a.day - b.day })) {
         const start = timeSpanToMoment(meeting.time).format('h:mm A');
         const end   = timeSpanToMoment(meeting.time).add(moment.duration(meeting.duration)).format('h:mm A');
         
