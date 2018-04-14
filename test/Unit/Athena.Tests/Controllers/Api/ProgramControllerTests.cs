@@ -32,31 +32,18 @@ namespace Athena.Tests.Controllers.Api
         {
             Programs.Setup(p => p.SearchAsync(It.IsAny<ProgramSearchOptions>())).ReturnsAsync(programs);
 
-            var result = (await _controller.Search(q)).ToList();
+            var result = (await _controller.Search(q, Guid.Empty)).ToList();
             
             Assert.Equal(programs.Count, result.Count);
             Assert.All(programs, p => Assert.Contains(p, result));
             
-            Programs.Verify(p => p.SearchAsync(new ProgramSearchOptions{Query = q, InstitutionIds = null}), Times.Once);
-        }
-
-        [Theory, AutoData]
-        public async Task Search_IncludesInstitutionids(string q, List<Guid> institutions, List<Program> programs)
-        {
-            Programs.Setup(p => p.SearchAsync(It.IsAny<ProgramSearchOptions>())).ReturnsAsync(programs);
-
-            var result = (await _controller.Search(q, institutions)).ToList();
-            
-            Assert.Equal(programs.Count, result.Count);
-            Assert.All(programs, p => Assert.Contains(p, result));
-            
-            Programs.Verify(p => p.SearchAsync(new ProgramSearchOptions{Query = q, InstitutionIds = institutions}), Times.Once);
+            Programs.Verify(p => p.SearchAsync(new ProgramSearchOptions{Query = q}), Times.Once);
         }
 
         [Fact]
         public async Task Search_BadRequestForShortQuery()
         {
-            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.Search("a"));
+            var ex = await Assert.ThrowsAsync<ApiException>(async () => await _controller.Search("a", Guid.Empty));
 
             Assert.Equal(HttpStatusCode.BadRequest, ex.ResponseCode);
         }
