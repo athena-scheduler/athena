@@ -24,6 +24,7 @@
       "day": "MONDAY",
       "time": "08:00:00",
       "duration": "01:10:00",
+      "external": true,
       "room": "NA"
     }
   ]

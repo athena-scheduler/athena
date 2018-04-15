@@ -22,8 +22,8 @@ namespace Athena.Data.Repositories
 
         public async Task AddAsync(Meeting obj) =>
             await _db.ExecuteCheckedAsync(
-                "INSERT INTO meetings VALUES (@id, @day, @time, @duration, @room, @offering)",
-                new { obj.Id, obj.Day, obj.Time, obj.Duration, obj.Room, obj.Offering }
+                "INSERT INTO meetings VALUES (@id, @day, @time, @duration, @room, @offering, @external)",
+                new { obj.Id, obj.Day, obj.Time, obj.Duration, obj.External, obj.Room, obj.Offering }
             );
 
         public async Task EditAsync(Meeting obj) =>
@@ -32,10 +32,11 @@ namespace Athena.Data.Repositories
                     day = @day,
                     time = @time,
                     duration = @duration,
+                    external = @external,
                     room = @room,
                     offering = @offering
                 WHERE id = @id",
-                new {obj.Day, obj.Time, obj.Duration, obj.Room, obj.Offering, obj.Id}
+                new {obj.Day, obj.Time, obj.Duration, obj.External, obj.Room, obj.Offering, obj.Id}
             );
 
         public async Task DeleteAsync(Meeting obj) =>
@@ -47,6 +48,7 @@ namespace Athena.Data.Repositories
                        m.day,
                        m.time,
                        m.duration,
+                       m.external,
                        m.room,
                        m.offering
                 FROM meetings m

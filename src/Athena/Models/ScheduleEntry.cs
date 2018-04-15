@@ -9,6 +9,17 @@ namespace Athena.Models
     /// </summary>
     public class ScheduleEntry
     {
+        private static readonly DayOfWeek[] EXTERNAL_DOW =
+        {
+            DayOfWeek.Sunday,
+            DayOfWeek.Monday,
+            DayOfWeek.Tuesday,
+            DayOfWeek.Wednesday,
+            DayOfWeek.Thursday,
+            DayOfWeek.Friday,
+            DayOfWeek.Saturday
+        };
+        
         public string Id => $"{OfferingId}/{MeetingId}";
         public readonly Guid OfferingId;
         public readonly Guid MeetingId;
@@ -17,6 +28,8 @@ namespace Athena.Models
         
         [JsonProperty("dow")]
         public readonly DayOfWeek[] Day;
+
+        public readonly bool AllDay;
         
         public readonly TimeSpan Start;
         public readonly TimeSpan End;
@@ -26,12 +39,14 @@ namespace Athena.Models
             OfferingId = offering.Id;
             MeetingId = meeting.Id;
 
-            Title = $"{offering.Course.Name} - At {offering.Campus.Name} in {meeting.Room}";
+            Title = meeting.External ? offering.Course.Name : $"{offering.Course.Name} - At {offering.Campus.Name} in {meeting.Room}";
 
-            Day = new []{ meeting.Day };
+            Day = meeting.External ? EXTERNAL_DOW : new []{ meeting.Day };
 
             Start = meeting.Time;
             End = meeting.Time.Add(meeting.Duration);
+
+            AllDay = meeting.External;
         }
     }
 }
