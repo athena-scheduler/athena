@@ -157,9 +157,8 @@ function setSearchResults(data) {
                                 unmetConcurrentList.append($(`<li></li>`).text(r.Name + ' - ' + r.Description));
                             }
                             
-                            unmetConcurrentContainer.append($(`<h5>May be taken concurrently:</h5>`));
+                            unmetConcurrentContainer.append($(`<h5>It's requried that you have taken or are scheduled for these courses:</h5>`));
                             unmetConcurrentContainer.append(unmetConcurrentList);
-                            unmetConcurrentContainer.append($('<h5>Please enroll in concurrent courses before enrolling in this course<\h5>'))
                         }
                         
                         const unmetContainer = modal.find('#unmet-container').html('');
@@ -204,7 +203,7 @@ function doSearch() {
             }).done(setSearchResults)
             .fail(function () {
                 setSearchResults([]);
-                console.error("Failed to search for completeed courses")
+                console.error("Failed to search for completed courses")
             })
         },
         250
