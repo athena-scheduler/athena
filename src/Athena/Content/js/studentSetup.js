@@ -6,7 +6,7 @@ let programSearchTimeout = null;
 let enrolledInstitutions = [];
 let enrolledPrograms = [];
 
-function updateEnrolledInstitutions(studentId) {
+function updateEnrolledInstitutions(studentId, focus) {
     $.get(apiRoot + "/student/" + studentId + "/institutions")
         .done(function(data) {
             enrolledInstitutions = data;
@@ -17,11 +17,13 @@ function updateEnrolledInstitutions(studentId) {
             console.error("Failed to get institutions");
         });
     
-    $("#institution-search").val("");
-    utils.focusInput("#institution-search");
+    if (focus) {
+        $("#institution-search").val("");
+        utils.focusInput("#institution-search");    
+    }
 }
 
-function updateEnrolledPrograms(studentId) {
+function updateEnrolledPrograms(studentId, focus) {
     $.get(apiRoot + "/student/" + studentId + "/programs")
         .done(function(data) {
             enrolledPrograms = data;
@@ -32,8 +34,10 @@ function updateEnrolledPrograms(studentId) {
             console.error("Failed to get Programs");
         });
     
-    $("#program-search").val("");
-    utils.focusInput("#program-search");
+    if (focus) {
+        $("#program-search").val("");
+        utils.focusInput("#program-search");
+    }
 }
 
 function makeCard(id, title, description) {
@@ -84,7 +88,7 @@ function setInstutitonSearchResults(studentId, data) {
                 url: apiRoot + '/student/' + studentId + '/institutions/' + i.id,
                 type: 'PUT',
                 complete: function () {
-                    updateEnrolledInstitutions(studentId);
+                    updateEnrolledInstitutions(studentId, true);
                 }
             });
             card.remove();
@@ -108,7 +112,7 @@ function setInstitutionResults(studentId, data) {
                 url: apiRoot + '/student/' + studentId + '/institutions/' + i.id,
                 type: 'DELETE',
                 complete: function () {
-                    updateEnrolledInstitutions(studentId);
+                    updateEnrolledInstitutions(studentId, true);
                 }
             });
         });
@@ -131,7 +135,7 @@ function setProgramResults(studentId, data) {
                 url: apiRoot + '/student/' + studentId + '/programs/' + p.id,
                 type: 'DELETE',
                 complete: function() {
-                    updateEnrolledPrograms(studentId);
+                    updateEnrolledPrograms(studentId, true);
                 }
             });
         });
@@ -154,7 +158,7 @@ function setProgramSearchResults(studentId, data) {
                 url: apiRoot + '/student/' + studentId + '/programs/' + p.id,
                 type: 'PUT',
                 complete: function () {
-                    updateEnrolledPrograms(studentId);
+                    updateEnrolledPrograms(studentId, true);
                 }
             });
             card.remove();
@@ -166,8 +170,8 @@ function setProgramSearchResults(studentId, data) {
 }
 
 export function init (studentId) {
-    updateEnrolledInstitutions(studentId);
-    updateEnrolledPrograms(studentId);
+    updateEnrolledInstitutions(studentId, false);
+    updateEnrolledPrograms(studentId, false);
 
     $("#institution-search").on("paste keyup",
         function() {
