@@ -157,7 +157,7 @@ function setSearchResults(data) {
                                 unmetConcurrentList.append($(`<li></li>`).text(r.Name + ' - ' + r.Description));
                             }
                             
-                            unmetConcurrentContainer.append($(`<h5>May be taken concurrently:</h5>`));
+                            unmetConcurrentContainer.append($(`<h5>It's requried that you have taken or are scheduled for these courses:</h5>`));
                             unmetConcurrentContainer.append(unmetConcurrentList);
                         }
                         
