@@ -276,6 +276,26 @@ namespace Athena.Data.Tests.Repositories
         }
 
         [Theory, AutoData]
+        public async Task CompleteBulkValid(List<Course> courses, Student student)
+        {
+            var studentRepo = new StudentRepository(_db);
+            await studentRepo.AddAsync(student);
+
+            foreach (var c in courses)
+            {
+                await _institutions.AddAsync(c.Institution);
+                await _sut.AddAsync(c);
+            }
+
+            await _sut.CompleteBulkForStudentAsync(courses, student);
+
+            var results = (await _sut.GetCompletedCoursesForStudentAsync(student)).ToList();
+            
+            Assert.Equal(courses.Count, results.Count);
+            Assert.All(courses, c => Assert.Contains(c, results));
+        }
+
+        [Theory, AutoData]
         public async Task TracksOfferings(List<Offering> offerings, Course common)
         {
             var campusRepo = new CampusRepository(_db);

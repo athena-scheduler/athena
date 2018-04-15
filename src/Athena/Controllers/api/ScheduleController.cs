@@ -37,6 +37,15 @@ namespace Athena.Controllers.api
             return enrolledOfferings.SelectMany(o => o.Meetings.Select(m => new ScheduleEntry(o, m)));
         }
 
+        [HttpGet("complete")]
+        public async Task CompleteCurrentSchedule(Guid studentId)
+        {
+            var student = (await _students.GetAsync(studentId)).NotFoundIfNull();
+            var enrolledOfferings = await _offerings.GetInProgressOfferingsForStudentAsync(student);
+
+            await _courses.CompleteBulkForStudentAsync(enrolledOfferings.Select(o => o.Course), student);
+        }
+
         [HttpGet("offerings/available")]
         public async Task<IEnumerable<Offering>> FindOfferings(Guid studentId, string q)
         {

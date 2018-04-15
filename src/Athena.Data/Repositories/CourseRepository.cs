@@ -85,7 +85,7 @@ namespace Athena.Data.Repositories
 
         public async Task MarkCourseAsCompletedForStudentAsync(Course course, Student student) =>
             await _db.ExecuteCheckedAsync(
-                "INSERT INTO student_x_completed_course VALUES (@student, @course)",
+                "INSERT INTO student_x_completed_course VALUES (@student, @course); DELETE FROM student_x_in_progress_course WHERE student = @student AND course = @course;",
                 new {student = student.Id, course = course.Id}
             );
 
@@ -94,6 +94,19 @@ namespace Athena.Data.Repositories
                 "DELETE FROM student_x_completed_course WHERE student = @student AND course = @course",
                 new {student = student.Id, course = course.Id}
             );
+
+        public async Task CompleteBulkForStudentAsync(IEnumerable<Course> courses, Student student)
+        {
+            using (var scope = _db.CreateAsyncTransactionScope())
+            {
+                foreach (var course in courses)
+                {
+                    await MarkCourseAsCompletedForStudentAsync(course, student);
+                }
+                
+                scope.Complete();
+            }
+        }
 
         public async Task AddSatisfiedRequirementAsync(Course course, Requirement requirement) =>
             await _db.ExecuteCheckedAsync(
