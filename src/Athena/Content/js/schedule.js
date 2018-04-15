@@ -203,7 +203,7 @@ function doSearch() {
             }).done(setSearchResults)
             .fail(function () {
                 setSearchResults([]);
-                console.error("Failed to search for completeed courses")
+                console.error("Failed to search for completed courses")
             })
         },
         250
@@ -266,7 +266,7 @@ export function init(studentId, readOnly) {
                 .addClass(event.color)
                 .attr('data-position', 'bottom')
                 .attr('data-delay', 25)
-                .attr('data-tooltip', event.title);
+                .attr('data-tooltip', event.tooltip);
             if (!readOnly) {
                 if (event.allDay) {
                     $(element).find('.fc-title').append(makeRemoveButton(event));

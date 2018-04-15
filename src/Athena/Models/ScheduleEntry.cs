@@ -25,6 +25,7 @@ namespace Athena.Models
         public readonly Guid MeetingId;
 
         public readonly string Title;
+        public readonly string Tooltip;
         
         [JsonProperty("dow")]
         public readonly DayOfWeek[] Day;
@@ -39,7 +40,9 @@ namespace Athena.Models
             OfferingId = offering.Id;
             MeetingId = meeting.Id;
 
-            Title = meeting.External ? offering.Course.Name : $"{offering.Course.Name} - At {offering.Campus.Name} in {meeting.Room}";
+            Title = offering.Course.Name;
+
+            Tooltip = meeting.External ? offering.Course.Name : $"{offering.Course.Name} - At {offering.Campus.Name} in {meeting.Room}";
 
             Day = meeting.External ? EXTERNAL_DOW : new []{ meeting.Day };
 
