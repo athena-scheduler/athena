@@ -6,6 +6,27 @@
 
 A tool for assisting students with scheduling for courses.
 
+## Usage
+
+The easiest way to run the scheduler is via docker. This repository contains an example `docker-compose`
+file which is based off of [sample data](src/Athena.Importer/data/). If you want to enable authentication
+from external login providers (which you will need to do in order to do anything useful), copy `auth-keys.env.sample`
+to `auth-keys.env` and supply your google or microsoft OAuth2 keys:
+
+```bash
+cp auth-keys.env.sample auth-keys.env
+# Edit auth-keys.env to use your keys
+
+docker-compose pull
+docker-compose up
+```
+
+The web interface is now accessible at http://localhost:5000/. The API is on `/api` and the default admin
+api key for this sample data is `athena-sample`. Feel free to import more data.
+
+If you want to start from scratch, stand up a postgres 9.6 database and change the connection string in
+`docker-compose.yml` appropriately.
+
 ## Building
 
 Invoke the build build script:
