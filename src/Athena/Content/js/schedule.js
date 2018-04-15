@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import * as utils from './utils';
 import 'fullcalendar';
 import Materialize from 'materialize-css';
 import moment from 'moment';
@@ -32,6 +33,8 @@ function reloadSchedule() {
             self.calendar.removeEvents();
             nextColor = 0;
             let colorMap = {};
+
+            $("#complete-courses-trigger").prop("disabled", data.length === 0);
             
             for(let ev of data) {
                 if (!colorMap[ev.offeringId]) {
@@ -40,12 +43,17 @@ function reloadSchedule() {
                 }
                 
                 ev.color = colorMap[ev.offeringId];
+                if (ev.allDay) {
+                    ev.start = "0000-01-01";
+                    ev.end = "9999-12-31";
+                }
                 
                 self.calendar.renderEvent(ev, false);
             }
         })
         .fail(function (err) {
             console.error(err);
+            $("#complete-courses-trigger").prop("disabled", true);
             window.Materialize.toast('Failed to load enrolled courses', 3000, 'red darken-4');
         });
 }
@@ -79,7 +87,7 @@ function makeCard(offering) {
     wrapper.find('.card-content>div>p').text(offering.course.name);
     const ul = wrapper.find('.card-content>div>ul');
     
-    for (let meeting of offering.meetings) {
+    for (let meeting of offering.meetings.sort(function (a, b) { return a.day - b.day })) {
         const start = timeSpanToMoment(meeting.time).format('h:mm A');
         const end   = timeSpanToMoment(meeting.time).add(moment.duration(meeting.duration)).format('h:mm A');
         
@@ -105,7 +113,11 @@ function setSearchResults(data) {
             $.ajax({
                 url: apiRoot + '/student/' + self.studentId + '/offerings/' + offering.id,
                 method: 'PUT',
-                complete: reloadAll,
+                complete: function () {
+                    reloadAll();
+                    $('#course-search').val('');
+                    utils.focusInput('#course-search');
+                },
                 error: function (err) {
                     const payload = err.responseJSON;
                     if (err.status === 409 && payload.details)
@@ -211,17 +223,39 @@ export function render() {
     self.calendar.render();
 }
 
+export function completeSchedule() {
+    $.get(apiRoot + '/student/' + self.studentId + '/schedule/complete')
+        .done(reloadAll)
+        .fail(function () {
+            Materialize.toast("Failed to update schedule", 5000, "red darken-4")
+        });
+}
+
 export function init(studentId, readOnly) {
     self.studentId = studentId;
     self.isReadOnly = readOnly;
     
+    $('#schedule-complete-btn').click(completeSchedule);
+    
     const calendarDiv = $('#calendar');
+
+    function makeRemoveButton(event) {
+        return $(`<span class="right hidden-print"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
+            .click(function () {
+                $.ajax({
+                    url: apiRoot + '/student/' + self.studentId + '/offerings/' + event.offeringId,
+                    method: 'DELETE',
+                    complete: reloadAll
+                });
+            });
+    }
 
     calendarDiv.fullCalendar({
         defaultView: "agendaWeek",
         minTime: "07:00:00",
         maxTime: "22:00:00",
-        allDaySlot: false,
+        allDaySlot: true,
+        allDayText: "Independent",
         slotDuration: "00:30",
         slotWidth: 2,
         height: "auto",
@@ -233,18 +267,13 @@ export function init(studentId, readOnly) {
                 .addClass(event.color)
                 .attr('data-position', 'bottom')
                 .attr('data-delay', 25)
-                .attr('data-tooltip', event.title)
-            if (!readOnly) {  
-                $(element).find('.fc-time').append(
-                    $(`<span class="right hidden-print"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
-                        .click(function () {
-                            $.ajax({
-                                url: apiRoot + '/student/' + self.studentId + '/offerings/' + event.offeringId,
-                                method: 'DELETE',
-                                complete: reloadAll
-                            });
-                        })
-                );
+                .attr('data-tooltip', event.title);
+            if (!readOnly) {
+                if (event.allDay) {
+                    $(element).find('.fc-title').append(makeRemoveButton(event));
+                } else {
+                    $(element).find('.fc-time').append(makeRemoveButton(event));
+                }
             }
         },
         eventAfterAllRender: function (view) {
@@ -261,5 +290,10 @@ export function init(studentId, readOnly) {
     if (!self.isReadOnly)
     {
         $('#course-search').on("paste keyup", doSearch);
+        $('#add-courses').modal({
+            ready: function () {
+                utils.focusInput('#course-search');
+            }
+        })
     }
 }

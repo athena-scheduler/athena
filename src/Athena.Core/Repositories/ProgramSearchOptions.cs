@@ -7,13 +7,14 @@ namespace Athena.Core.Repositories
     public class ProgramSearchOptions : IEquatable<ProgramSearchOptions>
     {
         public string Query { get; set; }
-        public IEnumerable<Guid> InstitutionIds { get; set; } = Enumerable.Empty<Guid>();
+        public Guid Student { get; set; }
 
         public bool Equals(ProgramSearchOptions other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return string.Equals(Query, other.Query) && Equals(InstitutionIds, other.InstitutionIds);
+            return string.Equals(Query, other.Query) &&
+                   Student.Equals(other.Student);
         }
 
         public override bool Equals(object obj)
@@ -28,7 +29,9 @@ namespace Athena.Core.Repositories
         {
             unchecked
             {
-                return ((Query != null ? Query.GetHashCode() : 0) * 397) ^ (InstitutionIds != null ? InstitutionIds.GetHashCode() : 0);
+                var hashCode = (Query != null ? Query.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ Student.GetHashCode();
+                return hashCode;
             }
         }
     }

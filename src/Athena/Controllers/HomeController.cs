@@ -16,12 +16,6 @@ namespace Athena.Controllers
             return View();
         }
 
-        [HttpGet("Add_Classes")]
-        public IActionResult Add_Classes()
-        {
-            return View();
-        }
-
         [HttpGet("Error")]
         public IActionResult Error()
         {

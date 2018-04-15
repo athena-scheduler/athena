@@ -7,11 +7,9 @@
             Current Schedule
             <span class="right">
                 <a class="btn waves-effect waves-light blue darken-4 tooltipped print-trigger hidden-print" data-position="bottom" data-delay="50" data-tooltip="Print schedule here"><i class="material-icons">print</i></a>
-                @if (Model)
-                {
-                    <a class="btn waves-effect waves-light blue darken-4 tooltipped complete_course_btn modal-trigger hidden-print" data-position="bottom" data-delay="50" data-tooltip="Complete Courses" href="#modal1"><i class="material-icons">check</i></a>
-                }
-                else
+                <button class="btn waves-effect waves-light blue darken-4 tooltipped complete_course_btn modal-trigger hidden-print" id="complete-courses-trigger" data-position="bottom" data-delay="50" data-tooltip="Complete Courses" href="#modal1" disabled><i class="material-icons">check</i></button>
+
+                @if (!Model)
                 {
                     <a class="btn waves-effect waves-light blue darken-4 tooltipped complete_course_btn modal-trigger hidden-print" data-position="bottom" data-delay="50" data-tooltip="Add Courses" href="#add-courses"><i class="material-icons">add_box</i></a>
                 }

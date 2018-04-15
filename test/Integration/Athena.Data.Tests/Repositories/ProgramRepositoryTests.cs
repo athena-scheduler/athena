@@ -106,8 +106,6 @@ namespace Athena.Data.Tests.Repositories
 
             foreach (var p in programs.Union(new []{target}))
             {
-                p.Name = target.Name;
-
                 await _instutitons.AddAsync(p.Institution);
                 await _sut.AddAsync(p);
             }
@@ -115,7 +113,6 @@ namespace Athena.Data.Tests.Repositories
             var result = (await _sut.SearchAsync(new ProgramSearchOptions
             {
                 Query = "bAr",
-                InstitutionIds = new [] {target.Institution.Id}
             })).ToList();
 
             Assert.Single(result);
