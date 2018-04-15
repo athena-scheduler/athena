@@ -147,6 +147,7 @@ function setSearchResults(data) {
                             
                             unmetConcurrentContainer.append($(`<h5>May be taken concurrently:</h5>`));
                             unmetConcurrentContainer.append(unmetConcurrentList);
+                            unmetConcurrentContainer.append($('<h5>Please enroll in concurrent courses before enrolling in this course<\h5>'))
                         }
                         
                         const unmetContainer = modal.find('#unmet-container').html('');
