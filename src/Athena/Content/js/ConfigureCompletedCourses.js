@@ -45,46 +45,62 @@ function markCourseComplete(courseId) {
     $.ajax({
         url: apiRoot + '/student/' + self.StudentId + '/courses/completed/' + courseId,
         type: 'PUT',
-        complete: fetchCompletedCourses
+        complete: function () {
+            fetchCompletedCourses();
+            doIncompleteSearch();
+        }
     })
 }
 
 function setIncompleteCourses(data) {
     const resultsDiv = $('#incomplete-courses');
     resultsDiv.html('');
+    
+    for (let chunk of utils.chunk(data,  3)) {
+        const rowWrapper = $(`<div class="row"></div>`);
+        
+        for (let course of chunk) {
+            const card = makeCard(course);
+            const link = $('<a href="#">Mark As Complete</a>');
 
-    for (let course of data) {
-        const card = makeCard(course);
-        const link = $('<a href="#")">Mark As Complete</a>')
+            link.click(function () {
+                markCourseComplete(course.id);
+                card.remove();
+                utils.focusInput("#incomplete-search");
+            });
 
-        link.click(function () {
-            markCourseComplete(course.id);
-            card.remove();
-            $("#incomplete-search").val('');
-            utils.focusInput("#incomplete-search")
-        });
+            card.find('.card-action').append(link);
+            rowWrapper.append(card);
+        }
 
-        card.find('.card-action').append(link);
-        resultsDiv.append(card);
+        resultsDiv.append(rowWrapper);
     }
 }
 
 function setCompletedCourses(data) {
     const resultsDiv = $('#completed-courses');
     resultsDiv.html('');
+    
+    for (let chunk of utils.chunk(data,  3)) {
+        const rowWrapper = $(`<div class="row"></div>`);
 
-    for (let course of data) {
-        const card = makeCard(course);
-        const link = $('<a href="#")">Mark As Incomplete</a>')
+        for (let course of chunk) {
 
-        link.click(function () {
-            markNotComplete(course.id);
-            $("#completed-search").val('');
-            utils.focusInput("#completed-search")
-        });
+            const card = makeCard(course);
+            const link = $('<a href="#">Mark As Incomplete</a>');
 
-        card.find('.card-action').append(link);
-        resultsDiv.append(card);
+            link.click(function () {
+                markNotComplete(course.id);
+                $("#completed-search").val('');
+                utils.focusInput("#completed-search");
+            });
+
+            card.find('.card-action').append(link);
+            rowWrapper.append(card);
+        }
+
+        resultsDiv.append(rowWrapper);
+
     }
 }
 
@@ -107,6 +123,23 @@ function fetchIncompleteCourses() {
         })
         .fail(function (err) {
             console.error("broke: ", err)
+        });
+}
+
+function doIncompleteSearch() {
+    const q = $("#incomplete-search").val();
+    
+    if (q.length < 3) {
+        setIncompleteCourses(self.incompleteCourses);
+        return;
+    }
+    $.get({
+        url: apiRoot + '/student/' + self.StudentId + '/courses/incomplete',
+        data: { query: q }
+    }).done(setIncompleteCourses)
+        .fail(function (data) {
+            setIncompleteCourses([]);
+            console.error("Failed to search courses");
         });
 }
 
@@ -145,27 +178,12 @@ export function init(studentId) {
 
     $("#incomplete-search").on("paste keyup",
         function () {
-            const q = $(this).val();
-
             if (incompleteSearchTimeout) {
                 clearTimeout(incompleteSearchTimeout);
             }
 
             incompleteSearchTimeout = setTimeout(
-                function () {
-                    if (q.length < 3) {
-                        setIncompleteCourses(self.incompleteCourses);
-                        return;
-                    }
-                    $.get({
-                        url: apiRoot + '/student/' + self.StudentId + '/courses/incomplete',
-                        data: { query: q }
-                    }).done(setIncompleteCourses)
-                        .fail(function (data) {
-                            setIncompleteCourses([]);
-                            console.error("Failed to search courses");
-                        });
-                },
+                doIncompleteSearch,
                 250
             );
         }
