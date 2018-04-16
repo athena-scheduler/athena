@@ -1,0 +1,43 @@
+﻿@{
+    var student = User.ToAthenaUser().Student;
+}
+
+<p class="flow-text">
+    To assist the schuleder, you can mark courses that you already took.
+</p>
+<div class="row">
+    <div class="col s12">
+        <div class="row">
+            <div class="input-field col s11">
+                <i class="material-icons prefix">search</i>
+                <input type="text" class="flow-text" id="completed-search" />
+                <label for="completed-search">Search</label>
+            </div>
+            <div class="input-field col s1 center">
+                <a class="modal-trigger color-inherit" href="#add-completed-courses-dialog"><i class="material-icons small">playlist_add</i></a>
+            </div>
+        </div>
+        <div class="row scrolling" id="completed-courses">
+            <div class="col s12">
+                <div class="progress"><div class="indeterminate"></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="add-completed-courses-dialog" class="modal modal-fixed-footer">
+    <div class="modal-content scrolling">
+        <h4>What courses did you take ?</h4>
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">search</i>
+                <input type="text" class="flow-text" id="incomplete-search" />
+                <label for="incomplete-search">Search</label>
+            </div>
+        </div>
+        <div class="row" id="incomplete-courses">
+            <div class="col s12">
+                <div class="progress"><div class="indeterminate"></div></div>
+            </div>
+        </div>
+    </div>
+</div>
