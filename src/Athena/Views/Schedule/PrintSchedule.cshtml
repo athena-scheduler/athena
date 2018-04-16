@@ -1,0 +1,36 @@
+﻿@{
+    Layout = null;
+    var student = User.ToAthenaUser();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Print Schedule - Athena</title>
+
+    <link rel="stylesheet" href="@Url.Content("~/print.css")" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<h2>@User.GetStudent().Name - Schedule</h2>
+<div id="calendar" style="height: 8in !important; width: 8in !important"></div>
+
+
+<script type="text/javascript" src="@Url.Content("~/athena.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/schedule.js")"></script>
+<script type="text/javascript">
+    const apiRoot = "@Url.Content("~/api/v1")";
+
+    $(function() {
+        athena.schedule.setLoadedCallback(function() {
+            $('.material-tooltip').remove();
+            window.print();
+            setTimeout(window.close, 200);
+        });
+        athena.schedule.init('@(student.Id)', true);
+    });
+</script>
+</body>
+</html>

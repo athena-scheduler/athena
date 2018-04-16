@@ -17,7 +17,9 @@ const offeringColors = [
 
 let nextColor = 0;
 
+let isFirstLoad = true;
 let searchTimeout = null;
+let loadedCallback = null;
 
 let calendar = null;
 let studentId = null;
@@ -49,6 +51,13 @@ function reloadSchedule() {
                 }
                 
                 self.calendar.renderEvent(ev, false);
+            }
+            
+            if (isFirstLoad) {
+                isFirstLoad = false;
+                if (loadedCallback) {
+                    loadedCallback();
+                }
             }
         })
         .fail(function (err) {
@@ -157,7 +166,7 @@ function setSearchResults(data) {
                                 unmetConcurrentList.append($(`<li></li>`).text(r.Name + ' - ' + r.Description));
                             }
                             
-                            unmetConcurrentContainer.append($(`<h5>May be taken concurrently:</h5>`));
+                            unmetConcurrentContainer.append($(`<h5>It's requried that you have taken or are scheduled for these courses:</h5>`));
                             unmetConcurrentContainer.append(unmetConcurrentList);
                         }
                         
@@ -203,7 +212,7 @@ function doSearch() {
             }).done(setSearchResults)
             .fail(function () {
                 setSearchResults([]);
-                console.error("Failed to search for completeed courses")
+                console.error("Failed to search for completed courses")
             })
         },
         250
@@ -230,6 +239,10 @@ export function completeSchedule() {
         });
 }
 
+export function setLoadedCallback(cb) {
+    loadedCallback = cb;
+}
+
 export function init(studentId, readOnly) {
     self.studentId = studentId;
     self.isReadOnly = readOnly;
@@ -239,7 +252,7 @@ export function init(studentId, readOnly) {
     const calendarDiv = $('#calendar');
 
     function makeRemoveButton(event) {
-        return $(`<span class="right hidden-print"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
+        return $(`<span class="right"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
             .click(function () {
                 $.ajax({
                     url: apiRoot + '/student/' + self.studentId + '/offerings/' + event.offeringId,
@@ -266,7 +279,7 @@ export function init(studentId, readOnly) {
                 .addClass(event.color)
                 .attr('data-position', 'bottom')
                 .attr('data-delay', 25)
-                .attr('data-tooltip', event.title);
+                .attr('data-tooltip', event.tooltip);
             if (!readOnly) {
                 if (event.allDay) {
                     $(element).find('.fc-title').append(makeRemoveButton(event));

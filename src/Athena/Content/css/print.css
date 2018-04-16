@@ -1,0 +1,10 @@
+@import '~fullcalendar/dist/fullcalendar.css';
+
+.fc-event, .fc-event-dot {
+    background-color: white;
+}
+
+.fc-event {
+    border-color: black;
+    color: black;
+}
