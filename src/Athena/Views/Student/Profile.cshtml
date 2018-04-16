@@ -1,17 +1,61 @@
 ﻿@{
     ViewData["Title"] = "Profile";
+    var student = User.ToAthenaUser().Student;
 }
-
 
 <h2>Profile</h2>
 
+<ul class="collapsible popout">
+    <li class="">
+        <div class="active collapsible-header blue darken-4 white-text"><i class="material-icons">school</i>Institution</div>
+        <div class="collapsible-body">
+            <span>
+                @Html.Partial("ConfigureInstitutions")
+            </span>
+        </div>
+    </li>
+    <li>
+        <div class="collapsible-header blue darken-4 white-text"><i class="material-icons">book</i>Program</div>
+        <div class="collapsible-body">
+            <span>
+                @Html.Partial("ConfigurePrograms")
+            </span>
+        </div>
+    </li>
+    <li>
+        <div class="collapsible-header blue darken-4 white-text"><i class="material-icons">playlist_add</i>Add / Drop Classes</div>
+        <div class="collapsible-body">
+            <span>
+                @Html.Partial("ConfigureCompletedCourses")
+            </span>
+        </div>
+    </li>
+</ul>
+
 <div class="row">
-    <div class="col s6">
-        <a class="btn btn-block btn-large" href="@Url.Action(nameof(StudentController.UserSetup), "Student", new { returnUrl = Context.Request.Path.ToString() })">
-            Manage Institutions & Programs
-        </a>
-    </div>
-    <div class="col s6">
-        <a class="btn btn-block btn-large" href="@Url.Action(nameof(StudentController.ConfigureCompletedCourses), "Student")">Add / Drop Classes</a>
+    <div class="col s2 offset-s10">
+        <form asp-action="@nameof(StudentController.UserSetupComplete)" asp-route-returnUrl="@Model" method="post">
+            <button class="btn btn-block right" type="submit">Finish</button>
+        </form>
     </div>
 </div>
+
+
+
+
+@section scripts
+    {
+
+
+    <script type="text/javascript" src="@Url.Content("~/studentSetup.js")"></script>
+    <script type="text/javascript">
+        $(function() {
+            athena.studentSetup.init('@(student.Id)');
+        });
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/completedCourses.js")"></script>
+    <script type="text/javascript">
+            athena.completedCourses.init("@(student.Id)");
+    </script>
+
+}
