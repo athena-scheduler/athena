@@ -110,31 +110,35 @@ function setSearchResults(data) {
     const results = $("#course-search-results");
     results.html('');
     
-    for (let offering of data) {
-        const card = makeCard(offering);
+    for (let chunk of utils.chunk(data,  3))
+    {
+        const rowWrapper = $(`<div class="row"></div>`);
         
-        card.find('.enroll').click(function () {
-            if ($(this).hasClass('.disabled')) {
-                return;
-            }
-            
-            $(this).addClass('disabled').attr('disabled', 'disabled');
-            $.ajax({
-                url: apiRoot + '/student/' + self.studentId + '/offerings/' + offering.id,
-                method: 'PUT',
-                complete: function () {
-                    reloadAll();
-                    $('#course-search').val('');
-                    utils.focusInput('#course-search');
-                },
-                error: function (err) {
-                    const payload = err.responseJSON;
-                    if (err.status === 409 && payload.details)
-                    {
-                        const start = timeSpanToMoment(payload.details.conflictingTimeSlot.Time).format('h:mm A');
-                        const end   = timeSpanToMoment(payload.details.conflictingTimeSlot.End).format('h:mm A');
-                        
-                        const toastContent = $(`<div>
+        for (let offering of chunk) {
+            const card = makeCard(offering);
+
+            card.find('.enroll').click(function () {
+                if ($(this).hasClass('.disabled')) {
+                    return;
+                }
+
+                $(this).addClass('disabled').attr('disabled', 'disabled');
+                $.ajax({
+                    url: apiRoot + '/student/' + self.studentId + '/offerings/' + offering.id,
+                    method: 'PUT',
+                    complete: function () {
+                        reloadAll();
+                        $('#course-search').val('');
+                        utils.focusInput('#course-search');
+                    },
+                    error: function (err) {
+                        const payload = err.responseJSON;
+                        if (err.status === 409 && payload.details)
+                        {
+                            const start = timeSpanToMoment(payload.details.conflictingTimeSlot.Time).format('h:mm A');
+                            const end   = timeSpanToMoment(payload.details.conflictingTimeSlot.End).format('h:mm A');
+
+                            const toastContent = $(`<div>
                             <div style="margin-bottom: 0.25rem">
                                 Unable to enroll in <span class="conflict-target" style="text-decoration: underline"></span>
                             </div>
@@ -145,50 +149,53 @@ function setSearchResults(data) {
                                 Between <span class="conflict-time-start"></span> and <span class="conflict-time-end"></span> on <span class="conflict-dow"></span>
                             </div>
                         </div>`);
-                        
-                        toastContent.find('.conflict-target').text(offering.course.name);
-                        toastContent.find('.conflict-source').text(payload.details.conflict.Course.Name);
-                        toastContent.find('.conflict-time-start').text(start);
-                        toastContent.find('.conflict-time-end').text(end);
-                        toastContent.find('.conflict-dow').text(moment.weekdays()[payload.details.conflictingTimeSlot.Day]);
-                        
-                        Materialize.Toast.removeAll();
-                        Materialize.toast(toastContent, 10000, 'red darken-4 toast-wrap right');
-                    } else if (err.status === 412 && payload.details) {
-                        const modal = $('#unmet-dependency-error');
-                        
-                        modal.find('#unmet-target').text(payload.details.course.Name);
-                        
-                        const unmetConcurrentContainer = modal.find('#unmet-concurrent-container').html('');
-                        if (payload.details.unmetConcurrent.length > 0) {
-                            const unmetConcurrentList = $('<ul class="browser-default"></ul>');
-                            for (let r of payload.details.unmetConcurrent) {
-                                unmetConcurrentList.append($(`<li></li>`).text(r.Name + ' - ' + r.Description));
-                            }
-                            
-                            unmetConcurrentContainer.append($(`<h5>It's requried that you have taken or are scheduled for these courses:</h5>`));
-                            unmetConcurrentContainer.append(unmetConcurrentList);
-                        }
-                        
-                        const unmetContainer = modal.find('#unmet-container').html('');
-                        if (payload.details.unmet.length > 0) {
-                            const unmetList = $('<ul class="browser-default"></ul>');
 
-                            for (let r of payload.details.unmet) {
-                                unmetList.append($(`<li></li>`).text(r.Name + ' - ' + r.Description));
+                            toastContent.find('.conflict-target').text(offering.course.name);
+                            toastContent.find('.conflict-source').text(payload.details.conflict.Course.Name);
+                            toastContent.find('.conflict-time-start').text(start);
+                            toastContent.find('.conflict-time-end').text(end);
+                            toastContent.find('.conflict-dow').text(moment.weekdays()[payload.details.conflictingTimeSlot.Day]);
+
+                            Materialize.Toast.removeAll();
+                            Materialize.toast(toastContent, 10000, 'red darken-4 toast-wrap right');
+                        } else if (err.status === 412 && payload.details) {
+                            const modal = $('#unmet-dependency-error');
+
+                            modal.find('#unmet-target').text(payload.details.course.Name);
+
+                            const unmetConcurrentContainer = modal.find('#unmet-concurrent-container').html('');
+                            if (payload.details.unmetConcurrent.length > 0) {
+                                const unmetConcurrentList = $('<ul class="browser-default"></ul>');
+                                for (let r of payload.details.unmetConcurrent) {
+                                    unmetConcurrentList.append($(`<li></li>`).text(r.Name + ' - ' + r.Description));
+                                }
+
+                                unmetConcurrentContainer.append($(`<h5>It's requried that you have taken or are scheduled for these courses:</h5>`));
+                                unmetConcurrentContainer.append(unmetConcurrentList);
                             }
-                            
-                            unmetContainer.append($(`<h5>Must be taken first:</h5>`));
-                            unmetContainer.append(unmetList);
+
+                            const unmetContainer = modal.find('#unmet-container').html('');
+                            if (payload.details.unmet.length > 0) {
+                                const unmetList = $('<ul class="browser-default"></ul>');
+
+                                for (let r of payload.details.unmet) {
+                                    unmetList.append($(`<li></li>`).text(r.Name + ' - ' + r.Description));
+                                }
+
+                                unmetContainer.append($(`<h5>Must be taken first:</h5>`));
+                                unmetContainer.append(unmetList);
+                            }
+
+                            modal.modal('open');
                         }
-                        
-                        modal.modal('open');
                     }
-                }
+                });
             });
-        });
+
+            rowWrapper.append(card);
+        }
         
-        results.append(card);
+        results.append(rowWrapper);
     }
 }
 
