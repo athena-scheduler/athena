@@ -32,30 +32,14 @@
     </li>
 </ul>
 
-<div class="row">
-    <div class="col s2 offset-s10">
-        <form asp-action="@nameof(StudentController.UserSetupComplete)" asp-route-returnUrl="@Model" method="post">
-            <button class="btn btn-block right" type="submit">Finish</button>
-        </form>
-    </div>
-</div>
-
-
-
-
 @section scripts
-    {
-
-
+{
+    <script type="text/javascript" src="@Url.Content("~/completedCourses.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/studentSetup.js")"></script>
     <script type="text/javascript">
         $(function() {
             athena.studentSetup.init('@(student.Id)');
         });
-    </script>
-    <script type="text/javascript" src="@Url.Content("~/completedCourses.js")"></script>
-    <script type="text/javascript">
             athena.completedCourses.init("@(student.Id)");
     </script>
-
 }
