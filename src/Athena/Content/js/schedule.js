@@ -36,7 +36,7 @@ function reloadSchedule() {
             nextColor = 0;
             let colorMap = {};
 
-            $("#complete-courses-trigger").prop("disabled", data.length === 0);
+            $("#complete-courses-trigger, .print-trigger").prop("disabled", data.length === 0);
             
             for(let ev of data) {
                 if (!colorMap[ev.offeringId]) {
