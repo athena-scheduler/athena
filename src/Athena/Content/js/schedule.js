@@ -97,6 +97,12 @@ function makeCard(offering) {
     const ul = wrapper.find('.card-content>div>ul');
     
     for (let meeting of offering.meetings.sort(function (a, b) { return a.day - b.day })) {
+        if (meeting.external) {
+            ul.remove();
+            wrapper.find('.card-content').append($(`<p>This course does not have any meetings. It may be an online or self-study course.</p>`));
+            break;
+        }
+        
         const start = timeSpanToMoment(meeting.time).format('h:mm A');
         const end   = timeSpanToMoment(meeting.time).add(moment.duration(meeting.duration)).format('h:mm A');
         
@@ -138,17 +144,19 @@ function setSearchResults(data) {
                             const start = timeSpanToMoment(payload.details.conflictingTimeSlot.Time).format('h:mm A');
                             const end   = timeSpanToMoment(payload.details.conflictingTimeSlot.End).format('h:mm A');
 
-                            const toastContent = $(`<div>
-                            <div style="margin-bottom: 0.25rem">
-                                Unable to enroll in <span class="conflict-target" style="text-decoration: underline"></span>
-                            </div>
-                            <div style="margin-bottom: 0.25rem">
-                                As it conflicts with <span class="conflict-source" style="text-decoration: underline"></span>
-                            </div>
-                            <div style="margin-bottom: 0.25rem">
-                                Between <span class="conflict-time-start"></span> and <span class="conflict-time-end"></span> on <span class="conflict-dow"></span>
-                            </div>
-                        </div>`);
+                            const toastContent = $(`
+                                <div>
+                                    <div style="margin-bottom: 0.25rem">
+                                        Unable to enroll in <span class="conflict-target" style="text-decoration: underline"></span>
+                                    </div>
+                                    <div style="margin-bottom: 0.25rem">
+                                        As it conflicts with <span class="conflict-source" style="text-decoration: underline"></span>
+                                    </div>
+                                    <div style="margin-bottom: 0.25rem">
+                                        Between <span class="conflict-time-start"></span> and <span class="conflict-time-end"></span> on <span class="conflict-dow"></span>
+                                    </div>
+                                </div>`
+                            );
 
                             toastContent.find('.conflict-target').text(offering.course.name);
                             toastContent.find('.conflict-source').text(payload.details.conflict.Course.Name);
