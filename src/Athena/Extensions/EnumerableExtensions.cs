@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Athena.Core.Models;
 using Athena.Core.Repositories;
@@ -11,7 +10,12 @@ namespace Athena.Extensions
     {
         public static async Task CheckForConflictingTimeSlots(this Offering offering, Student student, IOfferingReository offerings)
         {
-            foreach (var inProgressOffering in await offerings.GetInProgressOfferingsForStudentAsync(student))
+            if (offering.Meetings.Any(m => m.External))
+            {
+                return;
+            }
+            
+            foreach (var inProgressOffering in (await offerings.GetInProgressOfferingsForStudentAsync(student)).Where(o => !o.Meetings.Any(m => m.External)))
             {
                 foreach (var inProgressMeeting in inProgressOffering.Meetings)
                 {
