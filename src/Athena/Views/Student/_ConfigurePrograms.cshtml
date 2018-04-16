@@ -22,13 +22,3 @@
                 </div>
     </div>
 </div>
-
-@section Scripts
-{
-    <script type="text/javascript" src="@Url.Content("~/studentSetup.js")"></script>
-    <script type="text/javascript">
-        $(function() {
-            athena.studentSetup.init('@(student.Id)');
-        });
-    </script>
-}

@@ -9,37 +9,31 @@
     <li class="">
         <div class="active collapsible-header blue darken-4 white-text"><i class="material-icons">school</i>Institution</div>
         <div class="collapsible-body">
-            <span>
-                @Html.Partial("ConfigureInstitutions")
-            </span>
+            @Html.Partial("_ConfigureInstitutions")
         </div>
     </li>
     <li>
         <div class="collapsible-header blue darken-4 white-text"><i class="material-icons">book</i>Program</div>
         <div class="collapsible-body">
-            <span>
-                @Html.Partial("ConfigurePrograms")
-            </span>
+            @Html.Partial("_ConfigurePrograms")
         </div>
     </li>
     <li>
         <div class="collapsible-header blue darken-4 white-text"><i class="material-icons">playlist_add</i>Add / Drop Classes</div>
         <div class="collapsible-body">
-            <span>
-                @Html.Partial("ConfigureCompletedCourses")
-            </span>
+            @Html.Partial("_ConfigureCompletedCourses")
         </div>
     </li>
 </ul>
 
 @section scripts
-{
+    {
     <script type="text/javascript" src="@Url.Content("~/completedCourses.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/studentSetup.js")"></script>
     <script type="text/javascript">
         $(function() {
             athena.studentSetup.init('@(student.Id)');
-        });
             athena.completedCourses.init("@(student.Id)");
+        });
     </script>
 }
