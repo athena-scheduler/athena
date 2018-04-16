@@ -55,6 +55,8 @@ namespace Athena.Tests.Controllers.Api
             Offerings.Setup(o => o.GetInProgressOfferingsForStudentAsync(It.IsAny<Student>()))
                 .ReturnsAsync(new[] {overlap});
 
+            conflict.External = false;
+
             overlap.Meetings = new[] {conflict};
             target.Meetings = new[] {conflict};
 
@@ -65,6 +67,48 @@ namespace Athena.Tests.Controllers.Api
             Assert.NotNull(ex.Payload);
             
             Offerings.Verify(o => o.EnrollStudentInOfferingAsync(It.IsAny<Student>(), It.IsAny<Offering>()), Times.Never);
+        }
+
+        [Theory, AutoData]
+        public async Task Enroll_IgnoresExternalInConflictCheck(Student student, Offering offering, Offering other, Meeting conflict, Meeting external)
+        {
+            Students.Setup(s => s.GetAsync(It.IsAny<Guid>())).ReturnsAsync(student);
+            Offerings.Setup(o => o.GetAsync(It.IsAny<Guid>())).ReturnsAsync(offering);
+            Offerings.Setup(o => o.GetInProgressOfferingsForStudentAsync(It.IsAny<Student>()))
+                .ReturnsAsync(new[] {other});
+
+            external.External = true;
+            
+            offering.Meetings = new[] { conflict, external };
+            other.Meetings = new[] {conflict};
+
+            await _sut.EnrollInOffering(student.Id, offering.Id);
+            
+            Students.Verify(s => s.GetAsync(student.Id), Times.Once);
+            Offerings.Verify(o => o.GetAsync(offering.Id), Times.Once);
+            
+            Offerings.Verify(o => o.EnrollStudentInOfferingAsync(student, offering), Times.Once);
+        }
+        
+        [Theory, AutoData]
+        public async Task Enroll_IgnoresExternalInConflictCheck_OtherExternal(Student student, Offering offering, Offering other, Meeting conflict, Meeting external)
+        {
+            Students.Setup(s => s.GetAsync(It.IsAny<Guid>())).ReturnsAsync(student);
+            Offerings.Setup(o => o.GetAsync(It.IsAny<Guid>())).ReturnsAsync(offering);
+            Offerings.Setup(o => o.GetInProgressOfferingsForStudentAsync(It.IsAny<Student>()))
+                .ReturnsAsync(new[] {other});
+
+            external.External = true;
+            
+            offering.Meetings = new[] {conflict};
+            other.Meetings = new[] { conflict, external };
+
+            await _sut.EnrollInOffering(student.Id, offering.Id);
+            
+            Students.Verify(s => s.GetAsync(student.Id), Times.Once);
+            Offerings.Verify(o => o.GetAsync(offering.Id), Times.Once);
+            
+            Offerings.Verify(o => o.EnrollStudentInOfferingAsync(student, offering), Times.Once);
         }
         
         [Theory, AutoData]
