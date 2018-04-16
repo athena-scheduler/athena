@@ -17,7 +17,9 @@ const offeringColors = [
 
 let nextColor = 0;
 
+let isFirstLoad = true;
 let searchTimeout = null;
+let loadedCallback = null;
 
 let calendar = null;
 let studentId = null;
@@ -49,6 +51,13 @@ function reloadSchedule() {
                 }
                 
                 self.calendar.renderEvent(ev, false);
+            }
+            
+            if (isFirstLoad) {
+                isFirstLoad = false;
+                if (loadedCallback) {
+                    loadedCallback();
+                }
             }
         })
         .fail(function (err) {
@@ -230,6 +239,10 @@ export function completeSchedule() {
         });
 }
 
+export function setLoadedCallback(cb) {
+    loadedCallback = cb;
+}
+
 export function init(studentId, readOnly) {
     self.studentId = studentId;
     self.isReadOnly = readOnly;
@@ -239,7 +252,7 @@ export function init(studentId, readOnly) {
     const calendarDiv = $('#calendar');
 
     function makeRemoveButton(event) {
-        return $(`<span class="right hidden-print"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
+        return $(`<span class="right"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
             .click(function () {
                 $.ajax({
                     url: apiRoot + '/student/' + self.studentId + '/offerings/' + event.offeringId,
