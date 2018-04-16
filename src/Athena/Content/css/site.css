@@ -236,3 +236,7 @@ ul.tabs {
 @page {
     size: portrait;
 }
+
+.remove-target {
+    cursor: pointer;
+}

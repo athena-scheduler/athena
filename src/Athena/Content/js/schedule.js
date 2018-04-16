@@ -267,7 +267,7 @@ export function init(studentId, readOnly) {
     const calendarDiv = $('#calendar');
 
     function makeRemoveButton(event) {
-        return $(`<span class="right"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
+        return $(`<span class="right remove-target"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
             .click(function () {
                 $.ajax({
                     url: apiRoot + '/student/' + self.studentId + '/offerings/' + event.offeringId,
