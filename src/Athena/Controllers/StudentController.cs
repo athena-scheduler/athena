@@ -7,8 +7,5 @@ namespace Athena.Controllers
     {
         [HttpGet]
         public IActionResult Profile() => View();
-
-        [HttpGet("completed-courses")]
-        public IActionResult ConfigureCompletedCourses() => View();
     }
 }
