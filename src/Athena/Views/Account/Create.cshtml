@@ -5,43 +5,44 @@
     Layout = "_Layout";
 }
 
-<h3>Welcome to Athena, @Model.Name</h3>
+<div class="valign-wrapper vh-80">
+    <div class="row">
+        <div class="col s12">
+            <h3>Welcome to Athena, @Model.Name</h3>
+        </div>
 
-<div class="row">
-    <div class="col s12">
-        Thanks for logging in via @(Model.LoginProvider). While we get a few things finalized, please confirm that the
-        following information is correct:
+        <div class="col s12 flow-text">
+            Thanks for logging in via @(Model.LoginProvider). While we get a few things finalized, please confirm that the
+            following information is correct:
+        </div>
+        
+        <form class="col s12" asp-action="CreateAccount" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div class="row">
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">school</i>
+                    @Html.TextBoxFor(m => m.Name)
+                    @Html.LabelFor(m => m.Name)
+                </div>
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">cloud_circle</i>
+                    @Html.TextBoxFor(m => m.LoginProvider, new { disabled = true })
+                    @Html.LabelFor(m => m.LoginProvider, "Authentication Provider")
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s8">
+                    <i class="material-icons prefix">email</i>
+                    @Html.TextBoxFor(m => m.Email)
+                    @Html.LabelFor(m => m.Email)
+                </div>
+                <div class="col s4">
+                    <button class="btn waves-effect waves-light" type="submit">
+                        <i class="material-icons right">person_add</i>
+                        Create My Account
+                    </button>
+                </div>
+            </div>
+            @Html.HiddenFor(m => m.ReturnUrl)
+        </form>
     </div>
 </div>
-<div class="row">
-    <form class="col s12" asp-action="CreateAccount" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-        <div class="row">
-            <div class="input-field col s6">
-                <i class="material-icons prefix">school</i>
-                @Html.TextBoxFor(m => m.Name)
-                @Html.LabelFor(m => m.Name)
-            </div>
-            <div class="input-field col s6">
-                <i class="material-icons prefix">cloud_circle</i>
-                @Html.TextBoxFor(m => m.LoginProvider, new {disabled = true})
-                @Html.LabelFor(m => m.LoginProvider, "Authentication Provider")
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s8">
-                <i class="material-icons prefix">email</i>
-                @Html.TextBoxFor(m => m.Email)
-                @Html.LabelFor(m => m.Email)
-            </div>
-            <div class="col s4">
-                <button class="btn waves-effect waves-light" type="submit">
-                    <i class="material-icons right">person_add</i>
-                    Create My Account
-                </button>
-            </div>
-        </div>
-        @Html.HiddenFor(m => m.ReturnUrl)
-    </form>
-</div>
-
-
