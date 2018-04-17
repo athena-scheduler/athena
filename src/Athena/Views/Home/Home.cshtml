@@ -44,14 +44,37 @@ else
 
 }
 
+@Html.Partial("_CurrentScheduleModal", false)
+@Html.Partial("_UnmetDependencyError")
+
+<div id="remove-class-modal" class="modal">
+    <div class="modal-content">
+        <h4>Confirm Removal</h4>
+        <p>Are you sure you want to remove this course?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect btn" id="Remove-Course-Button">Remove</a>
+        <a href="#!" class="modal-action modal-close waves-effect btn">Cancel</a>
+    </div>
+</div>
+
 @section scripts {
     @if (User.Identity.IsAuthenticated)
     {
         <script type="text/javascript" src="@Url.Content("~/schedule.js")"></script>
         <script type="text/javascript">
             $(function () {
-                athena.schedule.init('@(student.Id)', true);
-                
+                athena.schedule.init('@(student.Id)', false);
+
+                const removeBtn = $("#Remove-Course-Button");
+                removeBtn.click(function () {
+                    $.ajax({
+                        url: apiRoot + '/student/@(student.Id)/offerings/' + removeBtn.attr('data-confirm-id'),
+                        method: 'DELETE',
+                        complete: athena.schedule.reloadAll
+                    });
+                });
+                 
                 $('.printBtn').on('click', function () {
                     window.print();
                 });
