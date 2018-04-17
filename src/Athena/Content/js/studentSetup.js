@@ -49,6 +49,7 @@ function makeCard(id, title, description) {
                             <div class="card-reveal grey darken-2 white-text">
                                <span class="card-title activator"> 
                                     <span class="card-title-target"></span>
+                                    <i class="material-icons right">close</i>
                                 </span>
                                 <p></p>
                             </div>
