@@ -45,10 +45,16 @@ function makeCard(id, title, description) {
                     <div class="col xl4 s6">
                         <div class="card grey darken-2 white-text">
                             <div class="card-content">
-                                <span class="card-title activator"></span>
+                                <span class="card-title activator"> 
+                                    <span class="card-title-target"> </span>
+                                     <i class="material-icons right">info</i>
+                                </span>
                             </div>
                             <div class="card-reveal grey darken-2 white-text">
-                                <span class="card-title"></span>
+                               <span class="card-title activator"> 
+                                    <span class="card-title-target"></span>
+                                    <i class="material-icons right">close</i>
+                                </span>
                                 <p></p>
                             </div>
                             <div class="card-action">
@@ -60,7 +66,7 @@ function makeCard(id, title, description) {
     const card = wrapper.find('.card');
     
     card.parent().prop('id', id);
-    wrapper.find('.card-title').text(title);
+    wrapper.find('.card-title-target').text(title);
     wrapper.find('.card-reveal>p').text(description);
     wrapper.find('.card-title').click(function () {
         // This fires before materialize reveals the card so the statement is backwards
