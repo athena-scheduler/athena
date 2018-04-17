@@ -314,6 +314,14 @@ export function init(studentId, readOnly) {
     if (!self.isReadOnly)
     {
         $('#course-search').on("paste keyup", doSearch);
+        
+        const unmetDependencyModal = $("#unmet-dependency-error");
+        unmetDependencyModal.modal({
+            ready: function () {
+                $(this.$overlay[0]).css('z-index', 8000);
+                unmetDependencyModal.css('z-index', 9000);
+            }
+        });
         $('#add-courses').modal({
             ready: function () {
                 utils.focusInput('#course-search');
