@@ -7,14 +7,5 @@ namespace Athena.Controllers
     {
         [HttpGet]
         public IActionResult Profile() => View();
-        
-        [HttpGet("welcome")]
-        public IActionResult UserSetup(string returnUrl = null) => View("UserSetup", returnUrl);
-
-        [HttpPost("welcome")]
-        public IActionResult UserSetupComplete(string returnUrl = null) => RedirectToLocal(returnUrl);
-
-        [HttpGet("completed-courses")]
-        public IActionResult ConfigureCompletedCourses() => View();
     }
 }
