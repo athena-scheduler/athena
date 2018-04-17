@@ -6,6 +6,10 @@
 @import 'schedule.css';
 @import 'footer.css';
 
+.calendar-wrapper {
+    margin-top: 5vh;
+}
+
 .carousel .carousel-item {
     width: 100%;
 }

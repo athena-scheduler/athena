@@ -36,7 +36,10 @@
 }
 else
 {
-    @Html.Partial("_StudentDetails")
+    <div class="row calendar-wrapper">
+        @Html.Partial("_CurrentSchedule", true)
+    </div>
+    @Html.Partial("_CurrentScheduleModal", true)
 
 }
 
