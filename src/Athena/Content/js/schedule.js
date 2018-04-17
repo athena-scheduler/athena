@@ -267,10 +267,10 @@ export function init(studentId, readOnly) {
     const calendarDiv = $('#calendar');
 
     function makeRemoveButton(event) {
-        return $(`<span data-target="modal2" class="right modal-trigger remove-target"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
+        return $(`<span data-target="remove-class-modal" class="right modal-trigger remove-target"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
             .click(function () {
                 $("#Remove-Course-Button").attr("data-confirm-id", event.offeringId);
-                $("#modal2").modal('open');
+                $("#remove-class-modal").modal('open');
             });
     }
 

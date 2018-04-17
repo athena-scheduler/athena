@@ -50,10 +50,10 @@ else
 @Html.Partial("_CurrentScheduleModal", false)
 @Html.Partial("_UnmetDependencyError")
 
-<div id="modal2" class="modal">
+<div id="remove-class-modal" class="modal">
     <div class="modal-content">
         <h4>Confirm Removal</h4>
-        <p>Please confirm that you would like to remove this class from your schedule.</p>
+        <p>Are you sure you want to remove this course?</p>
     </div>
     <div class="modal-footer">
         <a href="#!" class="modal-action modal-close waves-effect btn" id="Remove-Course-Button">Remove</a>
@@ -66,11 +66,7 @@ else
     {
         <script type="text/javascript" src="@Url.Content("~/schedule.js")"></script>
         <script type="text/javascript">
-            function loadOtherPage(link) {
-                $("<iframe class='printpage'>") // create a new iframe element
-                    .attr("src", link) // point the iframe to the page link you want to print
-                    .appendTo("body");
-            }
+
             function ConfirmRemove(event) {
                 $.ajax({
                     url: apiRoot + '/student/' + self.studentId + '/offerings/' + event.offeringId,
