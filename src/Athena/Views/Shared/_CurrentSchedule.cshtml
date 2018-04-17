@@ -8,13 +8,7 @@
             <span class="right">
                 <a class="btn blue darken-4 tooltipped print-trigger hidden-print" data-position="bottom" data-delay="50" data-tooltip="Print schedule here"><i class="material-icons">print</i></a>
                 <button class="btn blue darken-4 tooltipped complete_course_btn modal-trigger hidden-print" id="complete-courses-trigger" data-position="bottom" data-delay="50" data-tooltip="Complete Courses" href="#modal1" disabled><i class="material-icons">check</i></button>
-
-                @if (!Model){
-                    <a class="btn blue darken-4 tooltipped complete_course_btn modal-trigger hidden-print" data-position="bottom" data-delay="50" data-tooltip="Add Courses" href="#add-courses"><i class="material-icons">add_box</i></a>
-                }
-                @if (Model){
-                    <a class=" btn blue darken-4 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Schedule Courses" href="@Url.Action(nameof(ScheduleController.ScheduleEditor), "Schedule")"><i class="material-icons">edit</i></a>
-                }
+                <a class="btn blue darken-4 tooltipped complete_course_btn modal-trigger hidden-print" data-position="bottom" data-delay="50" data-tooltip="Add Courses" href="#add-courses"><i class="material-icons">add_box</i></a>
             </span>
         </h3>
     </div>

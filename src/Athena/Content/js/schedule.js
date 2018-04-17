@@ -219,7 +219,7 @@ function doSearch() {
     );
 }
 
-function reloadAll() {
+export function reloadAll() {
     $('.tooltipped').tooltip('remove');
     reloadSchedule();
     doSearch();
@@ -252,13 +252,10 @@ export function init(studentId, readOnly) {
     const calendarDiv = $('#calendar');
 
     function makeRemoveButton(event) {
-        return $(`<span class="right"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
+        return $(`<span data-target="modal2" class="right modal-trigger"><i class="material-icons red-text text-accent-1" style="font-size: 16px;">close</i></span>`)
             .click(function () {
-                $.ajax({
-                    url: apiRoot + '/student/' + self.studentId + '/offerings/' + event.offeringId,
-                    method: 'DELETE',
-                    complete: reloadAll
-                });
+                $("#Remove-Course-Button").attr("data-confirm-id", event.offeringId);
+                $("#modal2").modal('open');
             });
     }
 
