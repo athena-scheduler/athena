@@ -42,26 +42,26 @@ function updateEnrolledPrograms(studentId, focus) {
 
 function makeCard(id, title, description) {
     const wrapper = $(`
-                    <div class="col xl4 s6">
-                        <div class="card grey darken-2 white-text">
-                            <div class="card-content">
-                                <span class="card-title activator"> 
-                                    <span class="card-title-target"> </span>
-                                     <i class="material-icons right">info</i>
-                                </span>
-                            </div>
-                            <div class="card-reveal grey darken-2 white-text">
-                               <span class="card-title activator"> 
-                                    <span class="card-title-target"></span>
-                                    <i class="material-icons right">close</i>
-                                </span>
-                                <p></p>
-                            </div>
-                            <div class="card-action">
-                            </div>
-                        </div>
-                    </div>
-                `);
+        <div class="col xl4 s6">
+            <div class="card grey darken-2 white-text">
+                <div class="card-content">
+                    <span class="card-title activator"> 
+                        <span class="card-title-target activator"> </span>
+                         <i class="material-icons right">info</i>
+                    </span>
+                </div>
+                <div class="card-reveal grey darken-2 white-text">
+                   <span class="card-title"> 
+                        <span class="card-title-target"></span>
+                        <i class="material-icons right">close</i>
+                    </span>
+                    <p></p>
+                </div>
+                <div class="card-action">
+                </div>
+            </div>
+        </div>
+    `);
 
     const card = wrapper.find('.card');
     
