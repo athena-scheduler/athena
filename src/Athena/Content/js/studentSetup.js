@@ -1,4 +1,4 @@
-import * as utils from './utils'
+import * as utils from './utils';
 
 let institutionSearchTimeout = null;
 let programSearchTimeout = null;
@@ -6,7 +6,7 @@ let programSearchTimeout = null;
 let enrolledInstitutions = [];
 let enrolledPrograms = [];
 
-function updateEnrolledInstitutions(studentId) {
+function updateEnrolledInstitutions(studentId, focus) {
     $.get(apiRoot + "/student/" + studentId + "/institutions")
         .done(function(data) {
             enrolledInstitutions = data;
@@ -17,11 +17,13 @@ function updateEnrolledInstitutions(studentId) {
             console.error("Failed to get institutions");
         });
     
-    $("#institution-search").val("");
-    utils.focusInput("#institution-search");
+    if (focus) {
+        $("#institution-search").val("");
+        utils.focusInput("#institution-search");    
+    }
 }
 
-function updateEnrolledPrograms(studentId) {
+function updateEnrolledPrograms(studentId, focus) {
     $.get(apiRoot + "/student/" + studentId + "/programs")
         .done(function(data) {
             enrolledPrograms = data;
@@ -32,8 +34,10 @@ function updateEnrolledPrograms(studentId) {
             console.error("Failed to get Programs");
         });
     
-    $("#program-search").val("");
-    utils.focusInput("#program-search");
+    if (focus) {
+        $("#program-search").val("");
+        utils.focusInput("#program-search");
+    }
 }
 
 function makeCard(id, title, description) {
@@ -81,23 +85,30 @@ function setInstutitonSearchResults(studentId, data) {
     const results = $("#institution-results");
 
     results.html("");
-    for (let i of data) {
-        const card = makeCard(i.id, i.name, i.description);
-        const link = $('<a href="#">Enroll</a>');
+    
+    for (let chunk of utils.chunk(data,  3)) {
+        const rowWrapper = $(`<div class="row"></div>`);
+        
+        for (let i of chunk) {
+            const card = makeCard(i.id, i.name, i.description);
+            const link = $('<a href="#">Enroll</a>');
 
-        link.click(function () {
-            $.ajax({
-                url: apiRoot + '/student/' + studentId + '/institutions/' + i.id,
-                type: 'PUT',
-                complete: function () {
-                    updateEnrolledInstitutions(studentId);
-                }
+            link.click(function () {
+                $.ajax({
+                    url: apiRoot + '/student/' + studentId + '/institutions/' + i.id,
+                    type: 'PUT',
+                    complete: function () {
+                        updateEnrolledInstitutions(studentId, true);
+                    }
+                });
+                card.remove();
             });
-            card.remove();
-        });
 
-        card.find('.card-action').append(link);
-        results.append(card);
+            card.find('.card-action').append(link);
+            rowWrapper.append(card);
+        }
+
+        results.append(rowWrapper);
     }
 }
 
@@ -105,22 +116,29 @@ function setInstitutionResults(studentId, data) {
     const results = $("#institution-results");
 
     results.html('');
-    for (let i of data) {
-        const card = makeCard(i.id, i.name, i.description);
-        const link = $('<a href="#">Unenroll</a>');
+    
+    for (let chunk of utils.chunk(data, 3)) {
+        const rowWrapper = $(`<div class="row"></div>`);
 
-        link.click(function () {
-            $.ajax({
-                url: apiRoot + '/student/' + studentId + '/institutions/' + i.id,
-                type: 'DELETE',
-                complete: function () {
-                    updateEnrolledInstitutions(studentId);
-                }
+        for (let i of data) {
+            const card = makeCard(i.id, i.name, i.description);
+            const link = $('<a href="#">Unenroll</a>');
+
+            link.click(function () {
+                $.ajax({
+                    url: apiRoot + '/student/' + studentId + '/institutions/' + i.id,
+                    type: 'DELETE',
+                    complete: function () {
+                        updateEnrolledInstitutions(studentId, true);
+                    }
+                });
             });
-        });
 
-        card.find('.card-action').append(link);
-        results.append(card);
+            card.find('.card-action').append(link);
+            rowWrapper.append(card);
+        }
+        
+        results.append(rowWrapper);
     }
 }
 
@@ -128,52 +146,66 @@ function setProgramResults(studentId, data) {
     const results = $("#program-results");
 
     results.html("");
-    for (let p of data) {
-        const card = makeCard(p.id, p.name, p.description);
-        const link = $('<a href="#">Unenroll</a>');
+    
+    for (let chunk of utils.chunk(data, 3)) {
+        const rowWrapper = $(`<div class="row"></div>`);
+        
+        for (let p of chunk) {
+            const card = makeCard(p.id, p.name, p.description);
+            const link = $('<a href="#">Unenroll</a>');
 
-        link.click(function () {
-            $.ajax({
-                url: apiRoot + '/student/' + studentId + '/programs/' + p.id,
-                type: 'DELETE',
-                complete: function() {
-                    updateEnrolledPrograms(studentId);
-                }
+            link.click(function () {
+                $.ajax({
+                    url: apiRoot + '/student/' + studentId + '/programs/' + p.id,
+                    type: 'DELETE',
+                    complete: function() {
+                        updateEnrolledPrograms(studentId, true);
+                    }
+                });
             });
-        });
 
-        card.find('.card-action').append(link);
-        results.append(card);
+            card.find('.card-action').append(link);
+            rowWrapper.append(card);
+        }
+        
+        results.append(rowWrapper);
     }
+    
 }
 
 function setProgramSearchResults(studentId, data) {
     const results = $("#program-results");
 
     results.html("");
-    for (let p of data) {
-        const card = makeCard(p.id, p.name, p.description);
-        const link = $('<a href="#">Enroll</a>');
+    for (let chunk of utils.chunk(data,  3)) {
+        const rowWrapper = $(`<div class="row"></div>`);
 
-        link.click(function () {
-            $.ajax({
-                url: apiRoot + '/student/' + studentId + '/programs/' + p.id,
-                type: 'PUT',
-                complete: function () {
-                    updateEnrolledPrograms(studentId);
-                }
+        for (let p of chunk) {
+            const card = makeCard(p.id, p.name, p.description);
+            const link = $('<a href="#">Enroll</a>');
+
+            link.click(function () {
+                $.ajax({
+                    url: apiRoot + '/student/' + studentId + '/programs/' + p.id,
+                    type: 'PUT',
+                    complete: function () {
+                        updateEnrolledPrograms(studentId, true);
+                    }
+                });
+                card.remove();
             });
-            card.remove();
-        });
 
-        card.find('.card-action').append(link);
-        results.append(card);
+            card.find('.card-action').append(link);
+            rowWrapper.append(card);
+        }
+        
+        results.append(rowWrapper);
     }
 }
 
 export function init (studentId) {
-    updateEnrolledInstitutions(studentId);
-    updateEnrolledPrograms(studentId);
+    updateEnrolledInstitutions(studentId, false);
+    updateEnrolledPrograms(studentId, false);
 
     $("#institution-search").on("paste keyup",
         function() {

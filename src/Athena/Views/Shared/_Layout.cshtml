@@ -41,7 +41,14 @@
 <script type="text/javascript" src="@Url.Content("~/athena.js")"></script>
 <script type="text/javascript">
     const apiRoot = "@Url.Content("~/api/v1")";
-    $('.modal').modal();
+    $(function () {
+        $('.modal').modal();
+        $('.print-trigger').click(function () {
+            window.open("@Url.Action(nameof(ScheduleController.PrintSchedule), "Schedule")",
+                'window',
+                'toolbar=no, menubar=no, resizable=yes');
+        });
+    });
 </script>
 
 <profile name="RenderScripts">

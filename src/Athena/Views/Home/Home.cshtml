@@ -5,35 +5,42 @@
 
 @if (!User.Identity.IsAuthenticated)
 {
-    <div class="notLoggedIn" style="padding-top:5rem">
-        <h1>
-            Welcome to the Athena Scheduling Assistant!
-        </h1>
-        <p class="flow-text" style="padding-bottom:5rem">
-            This tool was designed by students for students, to create a more streamlined approach to the scheduling process for both students and universities.
-        </p>
-        <div class="row center">
-            <div class="col s4">
-                <i class="large material-icons blue-text text-accent-3">verified_user</i>
-                <h4>Security</h4>
-                <p>Create an account using your existing Google or Microsoft login provided by your university. We don't even store your password!</p>
-            </div>
-            <div class="col s4">
-                <i class="large material-icons blue-text text-accent-3">event_available</i>
-                <h4>Scheduling & Things</h4>
-                <p>Athena helps schedule the classes you need and manage the institutions and programs you're enrolled in.</p>
-            </div>
-            <div class="col s4">
-                <i class="large material-icons blue-text text-accent-3">mood</i>
-                <h4>Simplicity</h4>
-                <p>Enjoy Athena's inuitive functionality and stress-free user experience. We offer a solution to the many, MANY, overly complicated and numerous scheduling systems that universities already use.</p>
-            </div>
+    <div class="valign-wrapper vh-80">
+        <div class="row">
+            <div class="center">
+                    <h2>
+                        Welcome!
+                    </h2>
+                    <p class="flow-text">
+                        This tool was designed by students for students, to allow for a more streamlined approach to allow students to schedule their course work for each semester and allow them to track thier progression through their degree.
+                    </p>
+                    <div class="row center">
+                        <div class="col s4">
+                            <i class="large material-icons blue-text text-accent-3">verified_user</i>
+                            <h4>Security</h4>
+                            <p>Create an account using your existing Google or Microsoft login provided by your university. We don't even store your password!</p>
+                        </div>
+                        <div class="col s4">
+                            <i class="large material-icons blue-text text-accent-3">event_available</i>
+                            <h4>Scheduling & Things</h4>
+                            <p>Athena helps schedule the classes you need and manage the institutions and programs you're enrolled in.</p>
+                        </div>
+                        <div class="col s4">
+                            <i class="large material-icons blue-text text-accent-3">mood</i>
+                            <h4>Simplicity</h4>
+                            <p>Enjoy Athena's inuitive functionality and stress-free user experience. We offer a solution to the many, MANY, overly complicated and numerous scheduling systems that universities already use.</p>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 }
 else
 {
-    @Html.Partial("_StudentDetails")
+    <div class="row calendar-wrapper">
+        @Html.Partial("_CurrentSchedule", true)
+    </div>
+    @Html.Partial("_CurrentScheduleModal", true)
 
 }
 
@@ -44,10 +51,10 @@ else
         <script type="text/javascript">
             $(function () {
                 athena.schedule.init('@(student.Id)', true);
-            });
-
-            $('.printBtn').on('click', function () {
-                window.print();
+                
+                $('.printBtn').on('click', function () {
+                    window.print();
+                });
             });
         </script>
     }

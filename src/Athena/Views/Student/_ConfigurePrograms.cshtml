@@ -1,0 +1,24 @@
+﻿@{
+    var student = User.ToAthenaUser().Student;
+}
+
+<p class="flow-text">
+    Before you can schedule for classes, we need to know what programs you're enrolled with.
+</p>
+
+<div class="row">
+    <div class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">search</i>
+                        <input type="text" class="flow-text" id="program-search"/>
+                        <label for="institution-search">Search</label>
+                    </div>
+                </div>
+                <div class="row" id="program-results">
+                    <div class="col s12">
+                        <div class="progress"><div class="indeterminate"></div></div>
+                    </div>
+                </div>
+    </div>
+</div>

@@ -155,7 +155,7 @@ namespace Athena.Controllers
                         
                         _log.Information("{user} created an account via {provider}", info.Principal.Identity.Name, info.ProviderDisplayName);
 
-                        return RedirectToAction(nameof(StudentController.UserSetup), "Student", new {returnUrl});
+                        return RedirectToAction(nameof(StudentController.Profile), "Student");
                     }
                 }
 
