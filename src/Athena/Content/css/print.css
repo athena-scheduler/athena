@@ -1,5 +1,11 @@
 @import '~fullcalendar/dist/fullcalendar.css';
 
+@media print{
+    @page {
+        size: portrait;
+    }
+}
+
 .fc-event, .fc-event-dot {
     background-color: white;
 }
