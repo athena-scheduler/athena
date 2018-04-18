@@ -25,6 +25,11 @@
         </div>
     </li>
 </ul>
+<div class="row">
+    <div class="col s2 offset-s10">
+        <a class="btn btn-block blue darken-4" href="@Url.Action(nameof(HomeController.Home), "Home")">Save</a>
+    </div>
+</div>
 
 @section scripts
     {
@@ -34,6 +39,13 @@
         $(function() {
             athena.studentSetup.init('@(student.Id)');
             athena.completedCourses.init("@(student.Id)");
+
+            $(".collapsible").collapsible({
+                onOpen: function(e) {
+                    e.find('input').focus();
+                    e.find('input:text:visible:first').focus();
+                }
+            });
         });
     </script>
 }
