@@ -39,9 +39,9 @@ namespace Athena.Controllers.api
         {
             var student = (await _students.GetAsync(id)).NotFoundIfNull();
             var offering = (await _offerings.GetAsync(offeringId)).NotFoundIfNull();
-                
-            await offering.CheckForConflictingTimeSlots(student, _offerings);
+
             await offering.CheckForMetPrerequisites(student, _requirements);
+            await offering.CheckForConflictingTimeSlots(student, _offerings);
 
             await _offerings.EnrollStudentInOfferingAsync(student, offering);
         }
