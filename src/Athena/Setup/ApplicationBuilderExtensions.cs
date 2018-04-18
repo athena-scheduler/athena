@@ -23,11 +23,8 @@ namespace Athena.Setup
         public static IApplicationBuilder UseAthena(this IApplicationBuilder app, IHostingEnvironment env,
             IConfiguration configuration)
         {
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.All
-            });
-            
+            app.UseForwardedHeaders();
+
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
