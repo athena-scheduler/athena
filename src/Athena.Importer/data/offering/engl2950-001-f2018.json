@@ -1,0 +1,37 @@
+{
+  "id": "898D7886-D29F-6E42-BC24-E95973AC7940",
+  "course": {{
+  "id": "56433C72-C5A0-CC43-9AF1-4D0E39025249",
+  "name": "	Science And Technical Report Writing",
+  "institution": {
+    "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+    "name": "_",
+    "description": ""
+  }
+},
+  "campus": {{
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+},
+  "start": "2018/08/27",
+  "end": "2018/12/14",
+  "meetings": [
+  {
+      "id": "971725DF-1F2E-B940-89BB-B15088C47D4F",
+      "offering": "898D7886-D29F-6E42-BC24-E95973AC7940",
+      "day": "MONDAY",
+      "time": "08:00:00",
+      "duration": "01:20:00",
+      "room": "FH 2150"
+    }
+  {
+      "id": "A62EBE7E-228C-A94F-8184-FC85C269A21F",
+      "offering": "898D7886-D29F-6E42-BC24-E95973AC7940",
+      "day": "WEDNESDAY",
+      "time": "08:00:00",
+      "duration": "01:20:00",
+      "room": "FH 2150"
+    }]
+}

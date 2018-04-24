@@ -1,0 +1,53 @@
+{
+  "id": "2E09A18A-5AD9-834E-9891-C4141EA9B12F",
+  "course": {{
+  "id": "333C39EB-0AF0-E044-B19C-4BBAAC9A07AF",
+  "name": "General Chemistry I",
+  "institution": {
+    "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+    "name": "_",
+    "description": ""
+  }
+},
+  "campus": {{
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+},
+  "start": "2018/08/28",
+  "end": "2018/12/14",
+  "meetings": [
+  {
+      "id": "86A5AE32-97EF-C243-BB9F-B2BC7A17C877",
+      "offering": "2E09A18A-5AD9-834E-9891-C4141EA9B12F",
+      "day": "MONDAY",
+      "time": "09:10:00",
+      "duration": "00:55:00",
+      "room": "WO 1201"
+    }
+  {
+      "id": "5428075C-DF93-EF4B-BAF1-E1FEB667726C",
+      "offering": "2E09A18A-5AD9-834E-9891-C4141EA9B12F",
+      "day": "WEDNESDAY",
+      "time": "09:10:00",
+      "duration": "00:55:00",
+      "room": "WO 1201"
+    }
+  {
+      "id": "C67AA286-FEF2-364C-AD0D-F47CAEF20915",
+      "offering": "2E09A18A-5AD9-834E-9891-C4141EA9B12F",
+      "day": "TUESDAY",
+      "time": "08:00:00",
+      "duration": "00:55:00",
+      "room": "BO 2047"
+    }
+  {
+      "id": "99A8D493-65CC-3649-BBEA-BE78CF8AAA3B",
+      "offering": "2E09A18A-5AD9-834E-9891-C4141EA9B12F",
+      "day": "FRIDAY",
+      "time": "09:10:00",
+      "duration": "00:55:00",
+      "room": "WO 1201"
+    }]
+}

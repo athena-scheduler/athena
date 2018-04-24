@@ -1,0 +1,37 @@
+{
+  "id": "AA6EF77E-E148-2346-9F48-3ABC87BB74B1",
+  "course": {{
+  "id": "4EF38B46-F071-0B4A-A373-71B53B82E6CF",
+  "name": "Electric Circuits II",
+  "institution": {
+    "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+    "name": "_",
+    "description": ""
+  }
+},
+  "campus": {{
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+},
+  "start": "2018/08/27",
+  "end": "2018/12/14",
+  "meetings": [
+  {
+      "id": "BADC848C-05BC-BA40-A379-72A453F8730E",
+      "offering": "AA6EF77E-E148-2346-9F48-3ABC87BB74B1",
+      "day": "MONDAY",
+      "time": "11:10:00",
+      "duration": "01:20:00",
+      "room": "PL 2450"
+    }
+  {
+      "id": "95927923-1A31-5C40-B4B4-316FB7A83EA9",
+      "offering": "AA6EF77E-E148-2346-9F48-3ABC87BB74B1",
+      "day": "WEDNESDAY",
+      "time": "11:10:00",
+      "duration": "01:20:00",
+      "room": "PL 2450"
+    }]
+}

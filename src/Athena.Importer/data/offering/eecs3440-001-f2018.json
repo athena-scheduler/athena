@@ -1,0 +1,29 @@
+{
+  "id": "490D2528-1A24-FA4E-9F68-84B209CD98A7",
+  "course": {{
+  "id": "D6132AC3-7A22-A440-B939-397024A5F88D",
+  "name": "Electronics Laboratory",
+  "institution": {
+    "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+    "name": "_",
+    "description": ""
+  }
+},
+  "campus": {{
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+},
+  "start": "2018/08/27",
+  "end": "2018/12/14",
+  "meetings": [
+  {
+      "id": "F96170A7-5897-894D-B242-3BEB26FB0E54",
+      "offering": "490D2528-1A24-FA4E-9F68-84B209CD98A7",
+      "day": "WEDNESDAY",
+      "time": "6:30:00",
+      "duration": "2:20:00",
+      "room": "NE 1018"
+    }]
+}

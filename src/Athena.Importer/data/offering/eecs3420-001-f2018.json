@@ -1,0 +1,45 @@
+{
+  "id": "5ABC2F36-5F33-9348-96CC-D57256312001",
+  "course": {{
+  "id": "AF04EA93-ABB0-3C48-87FB-C3CF8FE8F6EA",
+  "name": "Electronics II",
+  "institution": {
+    "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+    "name": "_",
+    "description": ""
+  }
+},
+  "campus": {{
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+},
+  "start": "2018/08/27",
+  "end": "2018/12/14",
+  "meetings": [
+  {
+      "id": "D49A5034-457B-2441-BF13-F47E4CDF5F25",
+      "offering": "5ABC2F36-5F33-9348-96CC-D57256312001",
+      "day": "MONDAY",
+      "time": "13:00:00",
+      "duration": "00:55:00",
+      "room": "PL 3060"
+    }
+  {
+      "id": "E4CF41CD-9555-E845-8D49-C0F6AA0B6374",
+      "offering": "5ABC2F36-5F33-9348-96CC-D57256312001",
+      "day": "WEDNESDAY",
+      "time": "13:00:00",
+      "duration": "00:55:00",
+      "room": "PL 3060"
+    }
+  {
+      "id": "F24CEFA5-5CB2-F747-B9F6-29C5A0EC7345",
+      "offering": "5ABC2F36-5F33-9348-96CC-D57256312001",
+      "day": "FRIDAY",
+      "time": "13:00:00",
+      "duration": "00:55:00",
+      "room": "PL 3060"
+    }]
+}

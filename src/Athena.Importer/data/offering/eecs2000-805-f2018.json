@@ -1,0 +1,29 @@
+{
+  "id": "A42D6972-104F-7B43-B6A8-1F5200E78131",
+  "course": {{
+  "id": "F20424F7-0B30-3444-BCD1-1856A719A42D",
+  "name": "Professional Development",
+  "institution": {
+    "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+    "name": "_",
+    "description": ""
+  }
+},
+  "campus": {{
+    "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
+    "name": "UPRC",
+    "description": "University Partnership Ridge Campus",
+    "location": "32121 Lorain Rd, North Ridgeville, OH 44039"
+},
+  "start": "2018/08/28",
+  "end": "2018/12/14",
+  "meetings": [
+  {
+      "id": "7C80E0E6-58D2-9D43-B30C-75EB29C8309E",
+      "offering": "A42D6972-104F-7B43-B6A8-1F5200E78131",
+      "day": "TUESDAY",
+      "time": "11:30:00",
+      "duration": "00:55:00",
+      "room": "UPRC 301"
+    }]
+}
