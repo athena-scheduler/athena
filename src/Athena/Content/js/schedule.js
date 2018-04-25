@@ -61,6 +61,7 @@ function reloadSchedule() {
             }
         })
         .fail(function (err) {
+            checkExpiredSession(err);
             console.error(err);
             $("#complete-courses-trigger").prop("disabled", true);
             window.Materialize.toast('Failed to load enrolled courses', 3000, 'red darken-4');
@@ -138,6 +139,8 @@ function setSearchResults(data) {
                         utils.focusInput('#course-search');
                     },
                     error: function (err) {
+                        checkExpiredSession(err);
+                        
                         const payload = err.responseJSON;
                         if (err.status === 409 && payload.details)
                         {
@@ -225,10 +228,11 @@ function doSearch() {
                 url: apiRoot + '/student/' + self.studentId + '/schedule/offerings/available',
                 data: { q: q }
             }).done(setSearchResults)
-            .fail(function () {
-                setSearchResults([]);
-                console.error("Failed to search for completed courses")
-            })
+              .fail(function (err) {
+                  checkExpiredSession(err);
+                  setSearchResults([]);
+                  console.error("Failed to search for completed courses")
+              })
         },
         250
     );
@@ -249,7 +253,8 @@ export function render() {
 export function completeSchedule() {
     $.get(apiRoot + '/student/' + self.studentId + '/schedule/complete')
         .done(reloadAll)
-        .fail(function () {
+        .fail(function (err) {
+            checkExpiredSession(err);
             Materialize.toast("Failed to update schedule", 5000, "red darken-4")
         });
 }

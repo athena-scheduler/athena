@@ -37,7 +37,8 @@ function markNotComplete(courseId) {
     $.ajax({
         url: apiRoot + '/student/' + self.StudentId + '/courses/completed/' + courseId,
         type: 'DELETE',
-        complete: fetchCompletedCourses
+        complete: fetchCompletedCourses,
+        error: checkExpiredSession
     });
 }
 
@@ -48,7 +49,8 @@ function markCourseComplete(courseId) {
         complete: function () {
             fetchCompletedCourses();
             doIncompleteSearch();
-        }
+        },
+        error: checkExpiredSession
     })
 }
 
@@ -111,6 +113,7 @@ function fetchCompletedCourses() {
             setCompletedCourses(data);
         })
         .fail(function (err) {
+            checkExpiredSession(err);
             console.error("broke: ", err)
         });
 }
@@ -122,6 +125,7 @@ function fetchIncompleteCourses() {
             setIncompleteCourses(data);
         })
         .fail(function (err) {
+            checkExpiredSession(err);
             console.error("broke: ", err)
         });
 }
@@ -137,10 +141,11 @@ function doIncompleteSearch() {
         url: apiRoot + '/student/' + self.StudentId + '/courses/incomplete',
         data: { query: q }
     }).done(setIncompleteCourses)
-        .fail(function (data) {
-            setIncompleteCourses([]);
-            console.error("Failed to search courses");
-        });
+      .fail(function (err) {
+          checkExpiredSession(err);
+          setIncompleteCourses([]);
+          console.error("Failed to search courses");
+      });
 }
 
 export function init(studentId) {
@@ -166,10 +171,11 @@ export function init(studentId) {
                         url: apiRoot + '/student/' + self.StudentId + '/courses/completed',
                         data: { query: q }
                     }).done(setCompletedCourses)
-                        .fail(function (data) {
-                            setCompletedCourses([]);
-                            console.error("Failed to search courses");
-                        });
+                      .fail(function (err) {
+                          checkExpiredSession(err);
+                          setCompletedCourses([]);
+                          console.error("Failed to search courses");
+                      });
                 },
                 250
             );
