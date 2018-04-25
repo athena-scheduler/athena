@@ -13,6 +13,7 @@ function updateEnrolledInstitutions(studentId, focus) {
             setInstitutionResults(studentId, enrolledInstitutions);
         })
         .fail(function (err) {
+            checkExpiredSession(err);
             setInstitutionResults(studentId, []);
             console.error("Failed to get institutions");
         });
@@ -30,6 +31,7 @@ function updateEnrolledPrograms(studentId, focus) {
             setProgramResults(studentId,  enrolledPrograms);
         })
         .fail(function(err) {
+            checkExpiredSession(err);
             setProgramResults(studentId,  []);
             console.error("Failed to get Programs");
         });
@@ -99,7 +101,8 @@ function setInstutitonSearchResults(studentId, data) {
                     type: 'PUT',
                     complete: function () {
                         updateEnrolledInstitutions(studentId, true);
-                    }
+                    },
+                    error: checkExpiredSession
                 });
                 card.remove();
             });
@@ -130,7 +133,8 @@ function setInstitutionResults(studentId, data) {
                     type: 'DELETE',
                     complete: function () {
                         updateEnrolledInstitutions(studentId, true);
-                    }
+                    },
+                    error: checkExpiredSession
                 });
             });
 
@@ -160,7 +164,8 @@ function setProgramResults(studentId, data) {
                     type: 'DELETE',
                     complete: function() {
                         updateEnrolledPrograms(studentId, true);
-                    }
+                    },
+                    error: checkExpiredSession
                 });
             });
 
@@ -190,7 +195,8 @@ function setProgramSearchResults(studentId, data) {
                     type: 'PUT',
                     complete: function () {
                         updateEnrolledPrograms(studentId, true);
-                    }
+                    },
+                    error: checkExpiredSession
                 });
                 card.remove();
             });
@@ -227,7 +233,8 @@ export function init (studentId) {
                         data: { q: q }
                     }).done(function(data){
                         setInstutitonSearchResults(studentId, data)
-                    }).fail(function() {
+                    }).fail(function(err) {
+                        checkExpiredSession(err);
                         setInstutitonSearchResults(studentId,  []);
                         console.error("Failed to search institutions");
                     });
@@ -260,7 +267,8 @@ export function init (studentId) {
                         }
                     }).done(function(data) {
                         setProgramSearchResults(studentId, data)
-                    }).fail(function(data) {
+                    }).fail(function(err) {
+                        checkExpiredSession(err);
                         setProgramSearchResults(studentId, []);
                         console.error("Failed to search programs");
                     });

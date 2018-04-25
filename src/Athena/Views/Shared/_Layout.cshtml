@@ -41,6 +41,13 @@
 <script type="text/javascript" src="@Url.Content("~/athena.js")"></script>
 <script type="text/javascript">
     const apiRoot = "@Url.Content("~/api/v1")";
+    
+    function checkExpiredSession(err) {
+        if (err.status === 401 || err.status === 403) {
+            window.location.replace("@Url.Action(nameof(AccountController.Login), "Account", new { returnUrl = Url.RouteUrl(ViewContext.RouteData.Values) })");
+        }
+    }
+    
     $(function () {
         $('.modal').modal();
         $('.print-trigger').click(function () {
