@@ -1,0 +1,29 @@
+{
+  "id": "4680822A-5A3A-4C43-A851-AF5BE9F342A4",
+  "course": {
+  "id": "F20424F7-0B30-3444-BCD1-1856A719A42D",
+  "name": "Professional Development",
+  "institution": {
+    "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+    "name": "_",
+    "description": ""
+  }
+},
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+},
+  "start": "2018/08/28",
+  "end": "2018/12/14",
+  "meetings": [
+  {
+      "id": "EC315F32-68D1-5D47-9652-CE60D7BB591E",
+      "offering": "4680822A-5A3A-4C43-A851-AF5BE9F342A4",
+      "day": "TUESDAY",
+      "time": "11:30:00",
+      "duration": "00:55:00",
+      "room": "NE 1039"
+  }]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "FC09D3E2-A64B-1641-BDAF-9090C337E3C8",
+  "course": {
+  "id": "69083531-1192-BC45-A26D-DDABE6AFF7F2",
+  "name": "Electrical Energy Conversion",
+  "institution": {
+    "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+    "name": "_",
+    "description": ""
+  }
+},
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+},
+  "start": "2018/08/27",
+  "end": "2018/12/14",
+  "meetings": [
+  {
+      "id": "0A6909A9-5271-2240-9523-6D6ED2829BEA",
+      "offering": "FC09D3E2-A64B-1641-BDAF-9090C337E3C8",
+      "day": "TUESDAY",
+      "time": "11:10:00",
+      "duration": "01:20:00",
+      "room": "PL 3060"
+  },
+  {
+      "id": "7F920224-47D2-B849-9F97-D6EB3F356F38",
+      "offering": "FC09D3E2-A64B-1641-BDAF-9090C337E3C8",
+      "day": "THURSDAY",
+      "time": "11:10:00",
+      "duration": "01:20:00",
+      "room": "PL 3060"
+  }
+]
+}

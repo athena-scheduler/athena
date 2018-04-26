@@ -1,0 +1,29 @@
+{
+  "id": "65633342-892C-4F42-9D15-0996B9A42B26",
+  "course": {
+  "id": "0A6CA01F-4941-D645-878F-F1A6E9BA4933",
+  "name": "Energy Conversion Laboratory",
+  "institution": {
+    "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+    "name": "_",
+    "description": ""
+  }
+},
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+},
+  "start": "2018/08/27",
+  "end": "2018/12/14",
+  "meetings": [
+  {
+      "id": "C8CE6BDC-617B-294E-9642-253F73FF334C",
+      "offering": "65633342-892C-4F42-9D15-0996B9A42B26",
+      "day": "MONDAY",
+      "time": "6:30:00",
+      "duration": "2:20:00",
+      "room": "NE 1475"
+  }]
+}

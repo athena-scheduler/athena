@@ -1,0 +1,37 @@
+{
+  "id": "32E101CF-BD62-3C40-977E-6B5E354B605C",
+  "course": {
+  "id": "FD89A478-9E4D-A848-ACEF-8622BC36007B",
+  "name": "Communication Systems",
+  "institution": {
+    "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+    "name": "_",
+    "description": ""
+  }
+},
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+},
+  "start": "2018/08/27",
+  "end": "2018/12/14",
+  "meetings": [
+  {
+      "id": "D5898AEB-36A6-BC4D-9A6E-DF18F095D257",
+      "offering": "32E101CF-BD62-3C40-977E-6B5E354B605C",
+      "day": "TUESDAY",
+      "time": "11:10:00",
+      "duration": "01:20:00",
+      "room": "PL 2470"
+  },
+  {
+      "id": "508BB51E-0313-4E47-8E79-F2F99863BECF",
+      "offering": "32E101CF-BD62-3C40-977E-6B5E354B605C",
+      "day": "THURSDAY",
+      "time": "11:10:00",
+      "duration": "01:20:00",
+      "room": "PL 2470"
+  }]
+}

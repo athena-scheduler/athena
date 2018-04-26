@@ -1,0 +1,37 @@
+{
+  "id": "BDBCBA11-9BD6-4843-A96B-2D2E64502027",
+  "course": {
+  "id": "60147978-3EA5-FC46-B756-4530A8C2162A",
+  "name": "Elementary Differential Equations",
+  "institution": {
+    "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+    "name": "_",
+    "description": ""
+  }
+},
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+},
+  "start": "2018/08/28",
+  "end": "2018/12/14",
+  "meetings": [
+  {
+      "id": "11BFD82E-D56B-F641-BAF7-A7D4C51C7DF7",
+      "offering": "BDBCBA11-9BD6-4843-A96B-2D2E64502027",
+      "day": "TUESDAY",
+      "time": "17:30:00",
+      "duration": "1:20:00",
+      "room": "FH 1200"
+  },
+  {
+      "id": "5F239450-03DB-7D41-ADCB-BF64BD2CF56F",
+      "offering": "BDBCBA11-9BD6-4843-A96B-2D2E64502027",
+      "day": "THURSDAY",
+      "time": "17:30:00",
+      "duration": "1:20:00",
+      "room": "FH 1200"
+  }]
+}

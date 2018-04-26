@@ -1,0 +1,37 @@
+{
+  "id": "445FF18D-8954-734E-998D-27E10643A5DB",
+  "course": {
+  "id": "317525FA-3C8B-E149-91A3-16933B0E9F36",
+  "name": "Numerical Methods And Linear Algebra",
+  "institution": {
+    "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+    "name": "_",
+    "description": ""
+  }
+},
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+},
+  "start": "2018/08/27",
+  "end": "2018/12/14",
+  "meetings": [
+  {
+      "id": "94898EB0-8A2F-B047-8256-3E974ADF6B26",
+      "offering": "445FF18D-8954-734E-998D-27E10643A5DB",
+      "day": "TUESDAY",
+      "time": "14:30:00",
+      "duration": "01:20:00",
+      "room": "FH 1230"
+  },
+  {
+      "id": "FB7B543F-D9CC-4347-BB07-D5681D4835DB",
+      "offering": "445FF18D-8954-734E-998D-27E10643A5DB",
+      "day": "THURSDAY",
+      "time": "14:30:00",
+      "duration": "01:20:00",
+      "room": "FH 1230"
+  }]
+}

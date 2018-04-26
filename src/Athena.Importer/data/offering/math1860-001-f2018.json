@@ -1,0 +1,37 @@
+{
+  "id": "22C8FBC5-61F2-D649-909B-61AE65716DCB",
+  "course": {
+  "id": "82C9DD98-20FC-E44B-BA68-7AAA2E3E6C1D",
+  "name": "Single Variable Calculus II",
+  "institution": {
+    "id": "dcf8a9ef-1480-475d-a437-bf36d6409b66",
+    "name": "_",
+    "description": ""
+  }
+},
+  "campus": {
+    "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
+    "name": "Main Campus",
+    "description": "Main Campus",
+    "location": "2801 W Bancroft St, Toledo, OH 43606"
+},
+  "start": "2018/08/27",
+  "end": "2018/12/14",
+  "meetings": [
+  {
+      "id": "EC85383B-D238-3F48-B22D-01BAFA2DE701",
+      "offering": "22C8FBC5-61F2-D649-909B-61AE65716DCB",
+      "day": "MONDAY",
+      "time": "17:45:00",
+      "duration": "01:50:00",
+      "room": "FH 1200"
+  },
+  {
+      "id": "48CFCD5E-9A0F-0441-81B0-A2790DD18043",
+      "offering": "22C8FBC5-61F2-D649-909B-61AE65716DCB",
+      "day": "WEDNESDAY",
+      "time": "17:45:00",
+      "duration": "01:50:00",
+      "room": "FH 1200"
+  }]
+}
