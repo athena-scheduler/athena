@@ -1,6 +1,6 @@
 {
   "id": "4E5C9190-0280-D846-BF5D-C88687B8454C",
-  "course": {{
+  "course": {
   "id": "CE9E2CD4-8EFE-8043-AC6C-017072555EB4",
   "name": "Solid State Devices",
   "institution": {
@@ -9,7 +9,7 @@
     "description": ""
   }
 },
-  "campus": {{
+  "campus": {
     "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
     "name": "Main Campus",
     "description": "Main Campus",
@@ -25,7 +25,7 @@
       "time": "16:00:00",
       "duration": "2:20:00",
       "room": "NE 1018"
-    }
+  },
   {
       "id": "0F0E31AC-AFDC-254E-9D73-1C66AA89CD03",
       "offering": "4E5C9190-0280-D846-BF5D-C88687B8454C",
@@ -33,7 +33,7 @@
       "time": "17:30:00",
       "duration": "01:20:00",
       "room": "PL 2470"
-    }
+  },
   {
       "id": "B5A642D5-7E8F-6F4E-8482-2E6240694B1C",
       "offering": "4E5C9190-0280-D846-BF5D-C88687B8454C",
@@ -41,5 +41,5 @@
       "time": "17:30:00",
       "duration": "01:20:00",
       "room": "PL 2470"
-    }]
+  }]
 }

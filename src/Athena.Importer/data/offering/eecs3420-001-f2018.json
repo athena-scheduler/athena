@@ -1,6 +1,6 @@
 {
   "id": "5ABC2F36-5F33-9348-96CC-D57256312001",
-  "course": {{
+  "course": {
   "id": "AF04EA93-ABB0-3C48-87FB-C3CF8FE8F6EA",
   "name": "Electronics II",
   "institution": {
@@ -9,7 +9,7 @@
     "description": ""
   }
 },
-  "campus": {{
+  "campus": {
     "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
     "name": "Main Campus",
     "description": "Main Campus",
@@ -25,7 +25,7 @@
       "time": "13:00:00",
       "duration": "00:55:00",
       "room": "PL 3060"
-    }
+  },
   {
       "id": "E4CF41CD-9555-E845-8D49-C0F6AA0B6374",
       "offering": "5ABC2F36-5F33-9348-96CC-D57256312001",
@@ -33,7 +33,7 @@
       "time": "13:00:00",
       "duration": "00:55:00",
       "room": "PL 3060"
-    }
+  },
   {
       "id": "F24CEFA5-5CB2-F747-B9F6-29C5A0EC7345",
       "offering": "5ABC2F36-5F33-9348-96CC-D57256312001",

@@ -1,6 +1,6 @@
 {
   "id": "BDBCBA11-9BD6-4843-A96B-2D2E64502027",
-  "course": {{
+  "course": {
   "id": "60147978-3EA5-FC46-B756-4530A8C2162A",
   "name": "Elementary Differential Equations",
   "institution": {
@@ -9,7 +9,7 @@
     "description": ""
   }
 },
-  "campus": {{
+  "campus": {
     "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
     "name": "Main Campus",
     "description": "Main Campus",
@@ -25,7 +25,7 @@
       "time": "17:30:00",
       "duration": "1:20:00",
       "room": "FH 1200"
-    }
+  },
   {
       "id": "5F239450-03DB-7D41-ADCB-BF64BD2CF56F",
       "offering": "BDBCBA11-9BD6-4843-A96B-2D2E64502027",
@@ -33,5 +33,5 @@
       "time": "17:30:00",
       "duration": "1:20:00",
       "room": "FH 1200"
-    }]
+  }]
 }

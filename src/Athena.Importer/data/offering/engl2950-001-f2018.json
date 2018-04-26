@@ -1,6 +1,6 @@
 {
   "id": "898D7886-D29F-6E42-BC24-E95973AC7940",
-  "course": {{
+  "course": {
   "id": "56433C72-C5A0-CC43-9AF1-4D0E39025249",
   "name": "	Science And Technical Report Writing",
   "institution": {
@@ -9,7 +9,7 @@
     "description": ""
   }
 },
-  "campus": {{
+  "campus": {
     "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
     "name": "Main Campus",
     "description": "Main Campus",
@@ -25,7 +25,7 @@
       "time": "08:00:00",
       "duration": "01:20:00",
       "room": "FH 2150"
-    }
+  },
   {
       "id": "A62EBE7E-228C-A94F-8184-FC85C269A21F",
       "offering": "898D7886-D29F-6E42-BC24-E95973AC7940",
@@ -33,5 +33,5 @@
       "time": "08:00:00",
       "duration": "01:20:00",
       "room": "FH 2150"
-    }]
+  }]
 }

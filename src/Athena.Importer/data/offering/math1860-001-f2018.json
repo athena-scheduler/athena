@@ -1,6 +1,6 @@
 {
   "id": "22C8FBC5-61F2-D649-909B-61AE65716DCB",
-  "course": {{
+  "course": {
   "id": "82C9DD98-20FC-E44B-BA68-7AAA2E3E6C1D",
   "name": "Single Variable Calculus II",
   "institution": {
@@ -9,7 +9,7 @@
     "description": ""
   }
 },
-  "campus": {{
+  "campus": {
     "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
     "name": "Main Campus",
     "description": "Main Campus",
@@ -25,7 +25,7 @@
       "time": "17:45:00",
       "duration": "01:50:00",
       "room": "FH 1200"
-    }
+  },
   {
       "id": "48CFCD5E-9A0F-0441-81B0-A2790DD18043",
       "offering": "22C8FBC5-61F2-D649-909B-61AE65716DCB",
@@ -33,5 +33,5 @@
       "time": "17:45:00",
       "duration": "01:50:00",
       "room": "FH 1200"
-    }]
+  }]
 }

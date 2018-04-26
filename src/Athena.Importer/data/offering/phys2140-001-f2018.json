@@ -1,6 +1,6 @@
 {
   "id": "5C35EC12-12F1-1840-B512-3F05CD6EF330",
-  "course": {{
+  "course": {
   "id": "899CAC34-2676-FC4E-B668-6FEC85C8B74B",
   "name": "Phys-Sci and Eng Majors II",
   "institution": {
@@ -9,7 +9,7 @@
     "description": ""
   }
 },
-  "campus": {{
+  "campus": {
     "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
     "name": "Main Campus",
     "description": "Main Campus",
@@ -25,7 +25,7 @@
       "time": "10:00:00",
       "duration": "00:55:00",
       "room": "MH 1005"
-    }
+  },
   {
       "id": "338529FA-8BFE-2F43-AA97-FE4367D28660",
       "offering": "5C35EC12-12F1-1840-B512-3F05CD6EF330",
@@ -33,7 +33,7 @@
       "time": "08:00:00",
       "duration": "00:55:00",
       "room": "FH 2050"
-    }
+  },
   {
       "id": "8F79F626-A1AC-604C-A780-D71F306276DD",
       "offering": "5C35EC12-12F1-1840-B512-3F05CD6EF330",
@@ -41,7 +41,7 @@
       "time": "10:00:00",
       "duration": "00:55:00",
       "room": "MH 1005"
-    }
+  },
   {
       "id": "F0EDA08F-2516-AC4C-93DF-4D3B0624167E",
       "offering": "5C35EC12-12F1-1840-B512-3F05CD6EF330",
@@ -49,7 +49,7 @@
       "time": "10:00:00",
       "duration": "00:55:00",
       "room": "MH 1005"
-    }
+  },
   {
       "id": "18D60EF5-0F5B-2346-BB0D-9DEBEBADD2ED",
       "offering": "5C35EC12-12F1-1840-B512-3F05CD6EF330",
@@ -57,5 +57,5 @@
       "time": "10:00:00",
       "duration": "00:55:00",
       "room": "MH 1005"
-    }]
+  }]
 }

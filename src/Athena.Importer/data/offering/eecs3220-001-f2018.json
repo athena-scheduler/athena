@@ -1,6 +1,6 @@
 {
   "id": "AA6EF77E-E148-2346-9F48-3ABC87BB74B1",
-  "course": {{
+  "course": {
   "id": "4EF38B46-F071-0B4A-A373-71B53B82E6CF",
   "name": "Electric Circuits II",
   "institution": {
@@ -9,7 +9,7 @@
     "description": ""
   }
 },
-  "campus": {{
+  "campus": {
     "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
     "name": "Main Campus",
     "description": "Main Campus",
@@ -25,7 +25,7 @@
       "time": "11:10:00",
       "duration": "01:20:00",
       "room": "PL 2450"
-    }
+  },
   {
       "id": "95927923-1A31-5C40-B4B4-316FB7A83EA9",
       "offering": "AA6EF77E-E148-2346-9F48-3ABC87BB74B1",
@@ -33,5 +33,5 @@
       "time": "11:10:00",
       "duration": "01:20:00",
       "room": "PL 2450"
-    }]
+  }]
 }

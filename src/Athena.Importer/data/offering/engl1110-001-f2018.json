@@ -1,6 +1,6 @@
 {
   "id": "55084925-33EE-CF4C-8FE3-6B6C7288B405",
-  "course": {{
+  "course": {
   "id": "22C895DD-28FE-CB42-A2A7-390B8DBB55C1",
   "name": "College Composition I",
   "institution": {
@@ -9,7 +9,7 @@
     "description": ""
   }
 },
-  "campus": {{
+  "campus": {
     "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
     "name": "Main Campus",
     "description": "Main Campus",
@@ -25,7 +25,7 @@
       "time": "08:00:00",
       "duration": "01:50:00",
       "room": "FH 2270"
-    }
+  },
   {
       "id": "2BF57FDB-3862-6346-84F8-FF61801017FA",
       "offering": "55084925-33EE-CF4C-8FE3-6B6C7288B405",
@@ -33,5 +33,5 @@
       "time": "08:00:00",
       "duration": "01:50:00",
       "room": "FH 2270"
-    }]
+  }]
 }

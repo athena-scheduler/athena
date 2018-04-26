@@ -1,6 +1,6 @@
 {
   "id": "490D2528-1A24-FA4E-9F68-84B209CD98A7",
-  "course": {{
+  "course": {
   "id": "D6132AC3-7A22-A440-B939-397024A5F88D",
   "name": "Electronics Laboratory",
   "institution": {
@@ -9,7 +9,7 @@
     "description": ""
   }
 },
-  "campus": {{
+  "campus": {
     "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
     "name": "Main Campus",
     "description": "Main Campus",

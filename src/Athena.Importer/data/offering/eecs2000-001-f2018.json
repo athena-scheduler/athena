@@ -1,6 +1,6 @@
 {
   "id": "4680822A-5A3A-4C43-A851-AF5BE9F342A4",
-  "course": {{
+  "course": {
   "id": "F20424F7-0B30-3444-BCD1-1856A719A42D",
   "name": "Professional Development",
   "institution": {
@@ -9,7 +9,7 @@
     "description": ""
   }
 },
-  "campus": {{
+  "campus": {
     "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
     "name": "Main Campus",
     "description": "Main Campus",
@@ -25,5 +25,5 @@
       "time": "11:30:00",
       "duration": "00:55:00",
       "room": "NE 1039"
-    }]
+  }]
 }

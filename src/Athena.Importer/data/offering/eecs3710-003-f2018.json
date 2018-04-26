@@ -1,6 +1,6 @@
 {
   "id": "8B9C79A6-F498-9D4E-AD22-5EACF3312D3B",
-  "course": {{
+  "course": {
   "id": "EFBAAD10-FA47-BB46-87DE-123052F959ED",
   "name": "Electromagnetics I",
   "institution": {
@@ -9,7 +9,7 @@
     "description": ""
   }
 },
-  "campus": {{
+  "campus": {
     "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
     "name": "Main Campus",
     "description": "Main Campus",
@@ -25,7 +25,7 @@
       "time": "10:00:00",
       "duration": "00:55:00",
       "room": "PL 1030"
-    }
+  },
   {
       "id": "8AE710B1-2302-FE44-BDFE-24528250F97B",
       "offering": "8B9C79A6-F498-9D4E-AD22-5EACF3312D3B",
@@ -33,7 +33,7 @@
       "time": "10:00:00",
       "duration": "00:55:00",
       "room": "PL 1030"
-    }
+  },
   {
       "id": "015E913F-8A27-8C44-9115-0588DF04235F",
       "offering": "8B9C79A6-F498-9D4E-AD22-5EACF3312D3B",
@@ -41,5 +41,5 @@
       "time": "10:00:00",
       "duration": "00:55:00",
       "room": "PL 1030"
-    }]
+  }]
 }

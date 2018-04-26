@@ -1,6 +1,6 @@
 {
   "id": "2E09A18A-5AD9-834E-9891-C4141EA9B12F",
-  "course": {{
+  "course": {
   "id": "333C39EB-0AF0-E044-B19C-4BBAAC9A07AF",
   "name": "General Chemistry I",
   "institution": {
@@ -9,7 +9,7 @@
     "description": ""
   }
 },
-  "campus": {{
+  "campus": {
     "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
     "name": "Main Campus",
     "description": "Main Campus",
@@ -25,7 +25,7 @@
       "time": "09:10:00",
       "duration": "00:55:00",
       "room": "WO 1201"
-    }
+  },
   {
       "id": "5428075C-DF93-EF4B-BAF1-E1FEB667726C",
       "offering": "2E09A18A-5AD9-834E-9891-C4141EA9B12F",
@@ -33,7 +33,7 @@
       "time": "09:10:00",
       "duration": "00:55:00",
       "room": "WO 1201"
-    }
+  },
   {
       "id": "C67AA286-FEF2-364C-AD0D-F47CAEF20915",
       "offering": "2E09A18A-5AD9-834E-9891-C4141EA9B12F",
@@ -41,7 +41,7 @@
       "time": "08:00:00",
       "duration": "00:55:00",
       "room": "BO 2047"
-    }
+  },
   {
       "id": "99A8D493-65CC-3649-BBEA-BE78CF8AAA3B",
       "offering": "2E09A18A-5AD9-834E-9891-C4141EA9B12F",
@@ -49,5 +49,5 @@
       "time": "09:10:00",
       "duration": "00:55:00",
       "room": "WO 1201"
-    }]
+  }]
 }

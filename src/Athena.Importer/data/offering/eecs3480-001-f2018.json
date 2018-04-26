@@ -1,6 +1,6 @@
 {
   "id": "65633342-892C-4F42-9D15-0996B9A42B26",
-  "course": {{
+  "course": {
   "id": "0A6CA01F-4941-D645-878F-F1A6E9BA4933",
   "name": "Energy Conversion Laboratory",
   "institution": {
@@ -9,7 +9,7 @@
     "description": ""
   }
 },
-  "campus": {{
+  "campus": {
     "id": "7c11598d-d362-4ff0-b9a4-93824f4d946b",
     "name": "Main Campus",
     "description": "Main Campus",
@@ -25,5 +25,5 @@
       "time": "6:30:00",
       "duration": "2:20:00",
       "room": "NE 1475"
-    }]
+  }]
 }

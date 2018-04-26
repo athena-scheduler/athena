@@ -1,6 +1,6 @@
 {
   "id": "A42D6972-104F-7B43-B6A8-1F5200E78131",
-  "course": {{
+  "course": {
   "id": "F20424F7-0B30-3444-BCD1-1856A719A42D",
   "name": "Professional Development",
   "institution": {
@@ -9,7 +9,7 @@
     "description": ""
   }
 },
-  "campus": {{
+  "campus": {
     "id": "e5d5a444-1e1f-4dbf-956c-ee376ec65927",
     "name": "UPRC",
     "description": "University Partnership Ridge Campus",
@@ -25,5 +25,5 @@
       "time": "11:30:00",
       "duration": "00:55:00",
       "room": "UPRC 301"
-    }]
+  }]
 }
